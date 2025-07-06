@@ -26,7 +26,7 @@ Each generated *.md file will be created next to this script (or in
 import argparse
 import re
 
-FEATURES_PATH = Path(__file__).with_name("features.json")
+FEATURES_PATH = Path(__file__).parent.with_name("features.json")
 
 PREFIX_RE = re.compile(r"^\d+_+")  # matches numeric prefix like '01_'
 
