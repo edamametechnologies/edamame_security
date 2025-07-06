@@ -1,0 +1,57 @@
+name: Update Features Wiki
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-wiki:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: pip install mdutils
+
+      - name: Generate wiki markdown files
+        run: |
+          python src/build_feature_wiki.py \
+            --screenshots-dir macos \
+            --output-dir wiki
+
+      - name: Clone wiki repository
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git clone https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.wiki.git wiki_repo
+
+      - name: Copy generated markdown files and images
+        run: |
+          cp wiki/*.md wiki_repo/
+          mkdir -p wiki_repo/images
+          cp -r wiki/images/* wiki_repo/images/
+
+      - name: Commit and push to wiki
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd wiki_repo
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add .
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "docs: update feature wiki (automated)"
+            git push origin HEAD
+          fi 
