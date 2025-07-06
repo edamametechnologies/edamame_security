@@ -64,6 +64,7 @@ def write_feature_page(feature: Dict, screenshots_dir: Path, output_dir: Path, i
     # Add description
     md.new_header(level=1, title=title_en)
     md.new_paragraph(feature["description"]["en"])
+    md.new_line()
 
     # Embed a feature-level screenshot if exists (look for '<feature>.png')
     screenshot = find_screenshot(screenshots_dir, feature["name"])
@@ -80,6 +81,7 @@ def write_feature_page(feature: Dict, screenshots_dir: Path, output_dir: Path, i
         sub_title = sub["title"]["en"]
         md.new_header(level=2, title=sub_title)
         md.new_paragraph(sub["description"]["en"])
+        md.new_line()
 
         sub_shot = find_screenshot(screenshots_dir, sub["name"])
         if sub_shot:
@@ -96,8 +98,13 @@ def write_feature_page(feature: Dict, screenshots_dir: Path, output_dir: Path, i
             for item in items:
                 bullet = f"**{item['title']['en']}** – {item['description']['en']}"
                 md.new_list([bullet])
+            md.new_line()
+
+        # horizontal separator between sub-features
+        md.new_line("---")
 
     md.new_table_of_contents(table_title="Contents", depth=2)
+    md.new_line()
     md.create_md_file()
     print(f"Generated {md.file_name}.md")
     return screenshot  # return for index page
@@ -114,9 +121,11 @@ def build_index(pages: List[Dict], output_dir: Path):
     headers = ["Feature", "Description"]
     table: List[str] = []
     for pg in pages:
-        thumb_md = pg["thumb_md"] if pg["thumb_md"] else ""
-        link_md = index.new_inline_link(link=f"feature-{pg['slug']}.md", text=pg["title"])
-        table.extend([f"{thumb_md}\n{link_md}", pg["desc"]])
+        thumb_md = pg["thumb_md"]
+        link_md = index.new_inline_link(link=f"feature-{pg['slug']}", text=pg["title"])
+        # Combine thumbnail and link; if no thumbnail just show link
+        first_cell = f"{thumb_md}<br/>{link_md}" if thumb_md else link_md
+        table.extend([first_cell, pg["desc"]])
 
     index.new_table(columns=2, rows=len(pages)+1, text=headers+table, text_align="left")
     index.create_md_file()
