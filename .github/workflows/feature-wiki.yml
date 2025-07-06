@@ -36,9 +36,9 @@ jobs:
         
       - name: Copy generated markdown files and images
         run: |
-          cp wiki/*.md wiki_repo/
-          mkdir -p wiki_repo/images
-          cp -r wiki/images/* wiki_repo/images/
+          cp wiki/*.md /tmp/wiki/
+          mkdir -p /tmp/wiki/images
+          cp -r wiki/images/* /tmp/wiki/images/
 
       - name: Push to wiki
         run: |
