@@ -29,29 +29,30 @@ jobs:
             --screenshots-dir macos \
             --output-dir wiki
 
-      - name: Clone wiki repository
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Clone wiki
         run: |
-          git clone https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.wiki.git wiki_repo
-
+          mkdir -p /tmp/wiki/
+          git clone https://${{ secrets.DEV_GITHUB_TOKEN }}@github.com/edamametechnologies/edamame_security.wiki.git /tmp/wiki
+        
       - name: Copy generated markdown files and images
         run: |
           cp wiki/*.md wiki_repo/
           mkdir -p wiki_repo/images
           cp -r wiki/images/* wiki_repo/images/
 
-      - name: Commit and push to wiki
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Push to wiki
         run: |
-          cd wiki_repo
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
+          cd /tmp/wiki
+          git config --global user.email "dev@edamame.tech"
+          git config --global user.name "EDAMAME Dev"
           git add .
-          if git diff --cached --quiet; then
-            echo "No changes to commit."
+          # Try to commit. If it fails (non-zero exit code), it means no changes.
+          # If it succeeds (zero exit code), then push.
+          if git commit -m "docs: Updated wiki files"; then
+            echo "Changes committed, pushing to wiki..."
+            git push
           else
-            git commit -m "docs: update feature wiki (automated)"
-            git push origin HEAD
-          fi 
+            echo "No changes to commit to wiki."
+            # Exit with 0 to indicate success (no push needed/attempted)
+            exit 0
+          fi
