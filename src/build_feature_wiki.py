@@ -6,7 +6,7 @@ from mdutils.mdutils import MdUtils
 from shutil import copy2
 
 """
-This script generates Markdown wiki pages for each feature defined in
+This script generates beautiful Markdown wiki pages for each feature defined in
 `edamame_security/features.json` and attaches the relevant screenshots.
 
 Requirements:
@@ -56,84 +56,232 @@ def find_screenshot(base_dir: Path, needle: str) -> Optional[Path]:
     return None
 
 
+def add_feature_badge(md: MdUtils, feature_name: str):
+    """Add a feature badge/label for visual appeal."""
+    badge_color = "blue"
+    badge_text = f"Feature: {feature_name}"
+    badge_url = f"https://img.shields.io/badge/{badge_text.replace(' ', '%20').replace(':', '%3A')}-{badge_color}"
+    md.new_line(f"![{badge_text}]({badge_url})")
+    md.new_line()
+
+
+def add_screenshot_with_caption(md: MdUtils, screenshot_path: Path, title: str, caption: str = None):
+    """Add a properly formatted screenshot with caption and styling."""
+    if not caption:
+        caption = title
+    
+    # Create a centered image with caption
+    md.new_line()
+    md.new_line("---")
+    md.new_line()
+    md.new_line(f"<div align=\"center\">")
+    md.new_line()
+    md.new_line(f"![{title}](images/{screenshot_path.name})")
+    md.new_line()
+    md.new_line(f"*{caption}*")
+    md.new_line()
+    md.new_line("</div>")
+    md.new_line()
+    md.new_line("---")
+    md.new_line()
+
+
 def write_feature_page(feature: Dict, screenshots_dir: Path, output_dir: Path, images_dir: Path, used_images: Set[Path]):
     slug = sanitize_filename(feature["name"])
     title_en = feature["title"]["en"]
     md = MdUtils(file_name=str(output_dir / f"feature-{slug}"), title=title_en)
 
-    # Add description
-    md.new_header(level=1, title=title_en)
-    md.new_paragraph(feature["description"]["en"])
+    # Add front matter style header
+    md.new_line("---")
+    md.new_line()
+    
+    # Add feature badge
+    add_feature_badge(md, feature["name"])
+
+    # Add main title with emoji
+    md.new_header(level=1, title=f"🔐 {title_en}")
+    md.new_line()
+    
+    # Add description in a styled block
+    md.new_line("> **Overview**")
+    md.new_line(f"> {feature['description']['en']}")
     md.new_line()
 
-    # Embed a feature-level screenshot if exists (look for '<feature>.png')
+    # Embed a feature-level screenshot if exists
     screenshot = find_screenshot(screenshots_dir, feature["name"])
     if screenshot:
-        # copy into images dir for relative linking
         dest = images_dir / screenshot.name
         if dest not in used_images:
             copy2(screenshot, dest)
             used_images.add(dest)
-        md.new_line(md.new_inline_image(text=title_en, path=f"images/{dest.name}"))
+        
+        md.new_header(level=2, title="🖼️ Feature Overview")
+        add_screenshot_with_caption(md, dest, title_en, f"Main interface for {title_en}")
 
-    # Sub-features
-    for sub in feature.get("sub_features", []):
-        sub_title = sub["title"]["en"]
-        md.new_header(level=2, title=sub_title)
-        md.new_paragraph(sub["description"]["en"])
+    # Sub-features with better formatting
+    sub_features = feature.get("sub_features", [])
+    if sub_features:
+        md.new_header(level=2, title="⚙️ Sub-Features")
         md.new_line()
-
-        sub_shot = find_screenshot(screenshots_dir, sub["name"])
-        if sub_shot:
-            dest_sub = images_dir / sub_shot.name
-            if dest_sub not in used_images:
-                copy2(sub_shot, dest_sub)
-                used_images.add(dest_sub)
-            md.new_line(md.new_inline_image(text=sub_title, path=f"images/{dest_sub.name}"))
-
-        # Items as bullet list
-        items: List[Dict] = sub.get("items", [])
-        if items:
-            md.new_header(level=3, title="UI Elements & Data")
-            for item in items:
-                bullet = f"**{item['title']['en']}** – {item['description']['en']}"
-                md.new_list([bullet])
+        
+        for i, sub in enumerate(sub_features, 1):
+            sub_title = sub["title"]["en"]
+            
+            # Add sub-feature header with numbering and icon
+            md.new_header(level=3, title=f"{i}. 🔧 {sub_title}")
+            md.new_line()
+            
+            # Add description in a styled format
+            md.new_line("**Description:**")
+            md.new_line(f"{sub['description']['en']}")
             md.new_line()
 
-        # horizontal separator between sub-features
-        md.new_line("---")
+            # Add screenshot if available
+            sub_shot = find_screenshot(screenshots_dir, sub["name"])
+            if sub_shot:
+                dest_sub = images_dir / sub_shot.name
+                if dest_sub not in used_images:
+                    copy2(sub_shot, dest_sub)
+                    used_images.add(dest_sub)
+                
+                add_screenshot_with_caption(md, dest_sub, sub_title, f"Screenshot of {sub_title}")
 
-    md.new_table_of_contents(table_title="Contents", depth=2)
+            # Items as a well-formatted list
+            items: List[Dict] = sub.get("items", [])
+            if items:
+                md.new_header(level=4, title="📝 UI Elements & Data")
+                md.new_line()
+                
+                # Create a more structured list
+                for item in items:
+                    md.new_line(f"- **{item['title']['en']}**")
+                    md.new_line(f"  - {item['description']['en']}")
+                    md.new_line()
+
+            # Add a styled separator between sub-features
+            if i < len(sub_features):
+                md.new_line()
+                md.new_line("---")
+                md.new_line()
+
+    # Add table of contents at the end to avoid conflicts
+    md.new_header(level=2, title="📋 Contents")
+    md.new_table_of_contents(table_title="", depth=3)
     md.new_line()
+
+    # Add footer with navigation
+    md.new_line()
+    md.new_line("---")
+    md.new_line()
+    md.new_header(level=2, title="🏠 Navigation")
+    md.new_line("- [← Back to Feature Overview](Home)")
+    md.new_line("- [📖 Full Documentation](https://github.com/edamametechnologies/edamame_security/wiki)")
+    md.new_line()
+    
+    # Add metadata footer
+    md.new_line("---")
+    md.new_line("*This page was automatically generated from feature definitions.*")
+    md.new_line()
+
     md.create_md_file()
-    print(f"Generated {md.file_name}.md")
-    return screenshot  # return for index page
+    print(f"✅ Generated {md.file_name}.md")
+    return screenshot
 
 
 def build_index(pages: List[Dict], output_dir: Path):
-    """Generate Home.md index file linking to feature pages with thumbnails."""
-    index = MdUtils(file_name=str(output_dir / "Home"), title="EDAMAME Feature Documentation")
+    """Generate beautiful Home.md index file linking to feature pages with thumbnails."""
+    index = MdUtils(file_name=str(output_dir / "Home"), title="EDAMAME Security - Feature Documentation")
 
-    index.new_header(level=1, title="Feature Overview")
-    index.new_paragraph("This wiki documents every major feature of EDAMAME Security with screenshots and a breakdown of underlying UI elements.")
+    # Add beautiful header with raw markdown to avoid TOC conflicts
+    index.new_line("---")
+    index.new_line()
+    index.new_line("<div align=\"center\">")
+    index.new_line()
+    index.new_line("# 🔐 EDAMAME Security")
+    index.new_line("## Feature Documentation")
+    index.new_line()
+    index.new_line("![EDAMAME](https://img.shields.io/badge/EDAMAME-Security-blue?style=for-the-badge)")
+    index.new_line("![Features](https://img.shields.io/badge/Features-" + str(len(pages)) + "-green?style=for-the-badge)")
+    index.new_line()
+    index.new_line("</div>")
+    index.new_line()
+    index.new_line("---")
+    index.new_line()
 
-    # Build table two columns (screenshot + link)
-    headers = ["Feature", "Description"]
-    table: List[str] = []
+    # Add overview section using raw markdown
+    index.new_line("## 📖 Overview")
+    index.new_line()
+    index.new_line("> This wiki documents every major feature of EDAMAME Security with detailed screenshots,")
+    index.new_line("> comprehensive descriptions, and a complete breakdown of UI elements and functionality.")
+    index.new_line()
+
+    # Add quick navigation using raw markdown
+    index.new_line("## 🚀 Quick Navigation")
+    index.new_line()
+    
+    # Create a grid-like structure for features
+    for i, pg in enumerate(pages, 1):
+        feature_link = index.new_inline_link(link=f"feature-{pg['slug']}", text=pg["title"])
+        index.new_line(f"{i}. {feature_link}")
+    
+    index.new_line()
+    index.new_line("---")
+    index.new_line()
+
+    # Add detailed feature cards using raw markdown
+    index.new_line("## 📋 Feature Details")
+    index.new_line()
+    
     for pg in pages:
-        thumb_md = pg["thumb_md"]
-        link_md = index.new_inline_link(link=f"feature-{pg['slug']}", text=pg["title"])
-        # Combine thumbnail and link; if no thumbnail just show link
-        first_cell = f"{thumb_md}<br/>{link_md}" if thumb_md else link_md
-        table.extend([first_cell, pg["desc"]])
+        # Create a card-like structure for each feature
+        index.new_line("### " + pg["title"])
+        index.new_line()
+        
+        # Add thumbnail if available
+        if pg["thumb_md"]:
+            index.new_line("<div align=\"center\">")
+            index.new_line()
+            index.new_line(pg["thumb_md"])
+            index.new_line()
+            index.new_line("</div>")
+            index.new_line()
+        
+        # Add description
+        index.new_line(f"**Description:** {pg['desc']}")
+        index.new_line()
+        
+        # Add action button
+        feature_link = index.new_inline_link(link=f"feature-{pg['slug']}", text="📖 View Details")
+        index.new_line(f"**Action:** {feature_link}")
+        index.new_line()
+        index.new_line("---")
+        index.new_line()
 
-    index.new_table(columns=2, rows=len(pages)+1, text=headers+table, text_align="left")
+    # Add footer using raw markdown
+    index.new_line()
+    index.new_line("---")
+    index.new_line()
+    index.new_line("## ℹ️ About")
+    index.new_line()
+    index.new_line("- **Repository:** [EDAMAME Security](https://github.com/edamametechnologies/edamame_security)")
+    index.new_line("- **Documentation:** Auto-generated from feature definitions")
+    index.new_line("- **Last Updated:** " + str(Path().cwd().stat().st_mtime))
+    index.new_line()
+    index.new_line("---")
+    index.new_line()
+    index.new_line("<div align=\"center\">")
+    index.new_line()
+    index.new_line("*Made with ❤️ by the EDAMAME Team*")
+    index.new_line()
+    index.new_line("</div>")
+    index.new_line()
+
     index.create_md_file()
-    print("Generated Home.md")
+    print("✅ Generated beautiful Home.md")
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Generate feature wiki pages with screenshots.")
+    parser = argparse.ArgumentParser(description="Generate beautiful feature wiki pages with screenshots.")
     parser.add_argument("--screenshots-dir", required=True, type=Path, help="Directory containing PNG screenshots")
     parser.add_argument("--output-dir", type=Path, default=Path.cwd(), help="Where to write markdown files")
     args = parser.parse_args()
@@ -146,11 +294,20 @@ def main():
     images_dir.mkdir(exist_ok=True)
 
     used_images: Set[Path] = set()
-
     index_pages: List[Dict] = []
 
+    print("🚀 Starting beautiful wiki generation...")
+    print(f"📁 Screenshots directory: {screenshots_dir}")
+    print(f"📁 Output directory: {output_dir}")
+    print()
+
     data = load_features()
-    for feature in data.get("features", []):
+    features = data.get("features", [])
+    
+    print(f"📊 Processing {len(features)} features...")
+    print()
+
+    for feature in features:
         slug = sanitize_filename(feature["name"])
         thumb = write_feature_page(
             feature,
@@ -169,7 +326,12 @@ def main():
             }
         )
 
+    print()
     build_index(index_pages, output_dir)
+    print()
+    print("🎉 Beautiful wiki generation complete!")
+    print(f"📄 Generated {len(features)} feature pages + 1 index page")
+    print(f"🖼️ Processed {len(used_images)} screenshots")
 
 
 if __name__ == "__main__":

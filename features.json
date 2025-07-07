@@ -18,8 +18,8 @@
               "fr": "Conseiller de Sécurité – Vue d’ensemble en temps réel"
             },
             "description": {
-              "en": "Consolidated dashboard showing your Security Posture Score, active threats, failed policies and the highest‑impact actions to improve your score.",
-              "fr": "Tableau de bord consolidé affichant votre score de posture de sécurité, les menaces actives, les politiques en échec et les actions à plus fort impact pour améliorer votre score."
+              "en": "Central security dashboard that provides a real-time overview of your development workstation's security posture. Displays your current security score, active threats requiring attention, compliance status with organizational policies, and prioritized recommendations to strengthen your system without impacting development productivity.",
+              "fr": "Tableau de bord de sécurité central qui fournit une vue d'ensemble en temps réel de la posture de sécurité de votre station de travail de développement. Affiche votre score de sécurité actuel, menaces actives nécessitant attention, statut de conformité avec les politiques organisationnelles."
             },
             "items": [
               {
@@ -119,8 +119,8 @@
               "fr": "Recommandations"
             },
             "description": {
-              "en": "Prioritised list of AI‑generated security fixes with step‑by‑step instructions.",
-              "fr": "Liste priorisée de correctifs de sécurité générés par IA avec instructions pas à pas."
+              "en": "AI-powered security recommendations engine that analyzes your system and provides prioritized, actionable steps to improve security. Each recommendation includes detailed technical explanations, risk impact assessment, and automated remediation options where possible. Designed to integrate seamlessly with developer workflows while maintaining system security.",
+              "fr": "Moteur de recommandations de sécurité alimenté par IA qui analyse votre système et fournit des étapes priorisées et actionnables pour améliorer la sécurité. Chaque recommandation inclut des explications techniques détaillées, évaluation d'impact des risques et options de remédiation automatisées lorsque possible."
             },
             "items": [
               {
@@ -240,12 +240,12 @@
       {
         "name": "posture",
         "title": {
-          "en": "Threats & Posture",
-          "fr": "Menaces et posture"
+          "en": "Security Posture & Threats",
+          "fr": "Posture de Sécurité et Menaces"
         },
         "description": {
-          "en": "Comprehensive, AI‑scored assessment of your device across network, system and credential domains.",
-          "fr": "Évaluation globale, notée par IA, de votre appareil sur les domaines réseau, système et identifiants."
+          "en": "Comprehensive security assessment engine that evaluates your development workstation against industry best practices and compliance frameworks. Provides real-time threat detection, vulnerability analysis, and automated hardening recommendations to secure your SDLC endpoints without disrupting development workflows.",
+          "fr": "Moteur d'évaluation de sécurité complet qui évalue votre station de travail de développement selon les meilleures pratiques et cadres de conformité. Fournit détection de menaces en temps réel, analyse de vulnérabilités et recommandations de durcissement automatisées."
         },
         "sub_features": [
           {
@@ -255,8 +255,8 @@
               "fr": "Score de sécurité – Évaluation du risque en temps réel"
             },
             "description": {
-              "en": "Radar‑style view of category scores (Network, System Integrity, Services, Applications, Credentials) feeding the overall posture score.",
-              "fr": "Vue de type radar des scores par catégorie (Réseau, Intégrité système, Services, Applications, Identifiants) alimentant le score global de posture."
+              "en": "Comprehensive security assessment that evaluates your development workstation across five critical domains: Network Security, System Integrity, Services Configuration, Application Security, and Credential Management. Uses industry-standard security frameworks and best practices to generate an overall security score and detailed category breakdowns.",
+              "fr": "Évaluation de sécurité complète qui évalue votre station de travail de développement sur cinq domaines critiques : Sécurité réseau, Intégrité système, Configuration des services, Sécurité des applications et Gestion des identifiants. Utilise des cadres de sécurité standards de l'industrie."
             },
             "items": [
               {
@@ -674,8 +674,8 @@
       {
         "name": "identity",
         "title": {
-          "en": "Identity",
-          "fr": "Identité"
+          "en": "Identity & Credential Security",
+          "fr": "Sécurité des Identités et Identifiants"
         },
         "description": {
           "en": "Credential‑leak monitoring that tracks breaches across all your developer and personal accounts.",
@@ -689,8 +689,8 @@
               "fr": "Surveillance des fuites d’identifiants"
             },
             "description": {
-              "en": "Continuously checks multiple e‑mail addresses against breach feeds and dark‑web dumps.",
-              "fr": "Vérifie en continu plusieurs adresses e‑mail dans les flux de fuites et dépôts du dark‑web."
+              "en": "Continuously monitors your developer and personal email addresses against known data breaches and dark web credential dumps. Automatically detects compromised accounts and provides AI-driven remediation guidance to secure your development environment and protect client data access.",
+              "fr": "Surveille continuellement vos adresses email développeur et personnelles contre les fuites de données connues et dépôts d'identifiants du dark web. Détecte automatiquement les comptes compromis et fournit des conseils de remédiation pilotés par IA."
             },
             "items": [
               {
@@ -812,12 +812,12 @@
       {
         "name": "lan",
         "title": {
-          "en": "Network",
-          "fr": "Réseau"
+          "en": "Network Security & Discovery",
+          "fr": "Sécurité et Découverte Réseau"
         },
         "description": {
-          "en": "AI‑powered local‑network discovery that pinpoints risky devices and misconfigurations.",
-          "fr": "Découverte du réseau local pilotée par IA identifiant les appareils et mauvaises configurations à risque."
+          "en": "Advanced network scanning and device discovery tool that identifies all devices on your development network. Uses NMAP-inspired scanning techniques with AI-powered risk analysis to detect vulnerable IoT devices, open ports, and potential security misconfigurations that could compromise your development environment.",
+          "fr": "Outil avancé de scan réseau et découverte d'appareils qui identifie tous les appareils sur votre réseau de développement. Utilise des techniques de scan inspirées de NMAP avec analyse de risque par IA pour détecter les appareils IoT vulnérables, ports ouverts et mauvaises configurations potentielles."
         },
         "sub_features": [
           {
@@ -827,8 +827,8 @@
               "fr": "Radar réseau – Vue IA"
             },
             "description": {
-              "en": "Interactive radar plotting every detected device with colour‑coded criticality and real‑time scan beam.",
-              "fr": "Radar interactif référençant chaque appareil détecté avec criticité codée par couleur et faisceau de scan en temps réel."
+              "en": "Interactive network visualization that displays all discovered devices on your local network using radar-style presentation. Each device is positioned based on network topology and color-coded by security risk level. Provides real-time scanning capabilities to detect new devices, open ports, and potential security vulnerabilities that could impact your development environment.",
+              "fr": "Visualisation réseau interactive qui affiche tous les appareils découverts sur votre réseau local en utilisant une présentation de type radar. Chaque appareil est positionné selon la topologie réseau et codé par couleur selon le niveau de risque de sécurité. Fournit des capacités de scan en temps réel."
             },
             "items": [
               {
@@ -1245,12 +1245,12 @@
       {
         "name": "secured",
         "title": {
-          "en": "Trust",
-          "fr": "Confiance"
+          "en": "Zero Trust & Compliance",
+          "fr": "Zéro Confiance et Conformité"
         },
         "description": {
-          "en": "Zero‑trust domain connection with policy enforcement and shareable security certification.",
-          "fr": "Connexion de domaine zéro‑trust avec application de politiques et certification de sécurité partageable."
+          "en": "Zero-trust integration layer that connects your development workstation to organizational security policies and compliance frameworks. Enables secure access to corporate resources while maintaining developer autonomy. Generates signed compliance reports for ISO27001, SOC2, and other frameworks to prove your device meets security requirements.",
+          "fr": "Couche d'intégration zéro-trust qui connecte votre station de travail de développement aux politiques de sécurité organisationnelles et cadres de conformité. Permet l'accès sécurisé aux ressources d'entreprise tout en maintenant l'autonomie du développeur."
         },
         "sub_features": [
           {
@@ -1516,8 +1516,8 @@
       {
         "name": "capture",
         "title": {
-          "en": "Traffic",
-          "fr": "Trafic"
+          "en": "Network Traffic Analysis",
+          "fr": "Analyse du Trafic Réseau"
         },
         "description": {
           "en": "Real‑time packet capture with AI anomaly detection and process‑level insight.",
