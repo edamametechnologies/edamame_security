@@ -1,1620 +1,1399 @@
 {
-    "features": [
-      {
-        "name": "advisor",
-        "title": {
-          "en": "Advisor",
-          "fr": "Conseiller"
-        },
-        "description": {
-          "en": "Autonomous security‑posture advisor providing AI‑driven recommendations and one‑click remediations based on real‑time risk assessment.",
-          "fr": "Conseiller de posture de sécurité autonome offrant des recommandations pilotées par IA et des remédiations en un clic, basées sur l'évaluation du risque en temps réel."
-        },
-        "sub_features": [
-          {
-            "name": "advisor_main",
-            "title": {
-              "en": "Security Advisor – Real‑Time Overview",
-              "fr": "Conseiller de Sécurité – Vue d'ensemble en temps réel"
-            },
-            "description": {
-              "en": "Central security dashboard that provides a real-time overview of your development workstation's security posture. Displays your current security score, active threats requiring attention, compliance status with organizational policies, and prioritized recommendations to strengthen your system without impacting development productivity.",
-              "fr": "Tableau de bord de sécurité central qui fournit une vue d'ensemble en temps réel de la posture de sécurité de votre station de travail de développement. Affiche votre score de sécurité actuel, menaces actives nécessitant attention, statut de conformité avec les politiques organisationnelles."
-            },
-            "items": [
-              {
-                "name": "security_state",
-                "title": {
-                  "en": "Security Posture Score – Real‑Time Risk Assessment",
-                  "fr": "Score de Posture de Sécurité – Évaluation du risque en temps réel"
-                },
-                "description": {
-                  "en": "Continuously updated score summarising overall device risk, factoring in live threat data, policy compliance and network exposure.",
-                  "fr": "Score mis à jour en continu résumant le risque global du périphérique, intégrant les données de menaces en direct, la conformité aux politiques et l'exposition réseau."
-                }
-              },
-              {
-                "name": "todo_count",
-                "title": {
-                  "en": "Action‑Item Counter",
-                  "fr": "Compteur d'actions"
-                },
-                "description": {
-                  "en": "Shows how many remediation tasks remain to reach the next security‑score milestone.",
-                  "fr": "Indique le nombre de tâches de remédiation restantes pour atteindre le prochain palier de score de sécurité."
-                }
-              },
-              {
-                "name": "progress_summary",
-                "title": {
-                  "en": "Improvement Progress",
-                  "fr": "Progression des améliorations"
-                },
-                "description": {
-                  "en": "Visual gauge of completed fixes versus outstanding issues, expressed in percentage and colour coding.",
-                  "fr": "Indicateur visuel des correctifs terminés par rapport aux problèmes restants, exprimé en pourcentage et code couleur."
-                }
-              },
-              {
-                "name": "active_threats_summary",
-                "title": {
-                  "en": "Active Threats Snapshot",
-                  "fr": "Instantané des menaces actives"
-                },
-                "description": {
-                  "en": "Real‑time count of unresolved threats categorised by criticality.",
-                  "fr": "Nombre en temps réel des menaces non résolues, classées par criticité."
-                }
-              },
-              {
-                "name": "failed_policies_summary",
-                "title": {
-                  "en": "Non‑Compliant Policies",
-                  "fr": "Politiques non conformes"
-                },
-                "description": {
-                  "en": "Quick list of organisational or industry policies your device currently fails to meet.",
-                  "fr": "Liste rapide des politiques organisationnelles ou industrielles que votre appareil ne respecte pas actuellement."
-                }
-              },
-              {
-                "name": "network_devices_summary",
-                "title": {
-                  "en": "Devices with Open Ports",
-                  "fr": "Appareils avec ports ouverts"
-                },
-                "description": {
-                  "en": "Highlights local devices exposing services that may require hardening or review.",
-                  "fr": "Met en évidence les appareils locaux exposant des services pouvant nécessiter un durcissement ou une vérification."
-                }
-              },
-              {
-                "name": "pwned_breaches_summary",
-                "title": {
-                  "en": "Credential‑Leak Overview",
-                  "fr": "Aperçu des fuites de données"
-                },
-                "description": {
-                  "en": "Displays the number of breach events affecting monitored identities and their criticality.",
-                  "fr": "Affiche le nombre d'événements de fuite affectant les identités surveillées et leur criticité."
-                }
-              },
-              {
-                "name": "suspicious_sessions_summary",
-                "title": {
-                  "en": "Suspicious Network Sessions",
-                  "fr": "Sessions réseau suspectes"
-                },
-                "description": {
-                  "en": "Counts and describes currently flagged sessions or anomalous traffic flows.",
-                  "fr": "Compte et décrit les sessions actuellement signalées ou les flux de trafic anormaux."
-                }
-              }
-            ]
-          },
-          {
-            "name": "advisor_advices",
-            "title": {
-              "en": "Recommendations",
-              "fr": "Recommandations"
-            },
-            "description": {
-              "en": "AI-powered security recommendations engine that analyzes your system and provides prioritized, actionable steps to improve security. Each recommendation includes detailed technical explanations, risk impact assessment, and automated remediation options where possible. Designed to integrate seamlessly with developer workflows while maintaining system security.",
-              "fr": "Moteur de recommandations de sécurité alimenté par IA qui analyse votre système et fournit des étapes priorisées et actionnables pour améliorer la sécurité. Chaque recommandation inclut des explications techniques détaillées, évaluation d'impact des risques et options de remédiation automatisées lorsque possible."
-            },
-            "items": [
-              {
-                "name": "advice_list",
-                "title": {
-                  "en": "Actionable Advice",
-                  "fr": "Conseils actionnables"
-                },
-                "description": {
-                  "en": "Security improvements ordered by risk‑reduction impact.",
-                  "fr": "Améliorations de sécurité classées par impact de réduction du risque."
-                }
-              },
-              {
-                "name": "priority_filter",
-                "title": {
-                  "en": "Priority Filter",
-                  "fr": "Filtre de priorité"
-                },
-                "description": {
-                  "en": "Toggle view between High, Medium and Low criticality items.",
-                  "fr": "Permet d'afficher uniquement les éléments de criticité Haute, Moyenne ou Basse."
-                }
-              },
-              {
-                "name": "advice_type_filter",
-                "title": {
-                  "en": "Category Filter",
-                  "fr": "Filtre de catégorie"
-                },
-                "description": {
-                  "en": "Filter advice by domain: threats, policies, network or breaches.",
-                  "fr": "Filtre les conseils par domaine : menaces, politiques, réseau ou fuites."
-                }
-              },
-              {
-                "name": "mark_done_button",
-                "title": {
-                  "en": "Mark as Done",
-                  "fr": "Marquer comme fait"
-                },
-                "description": {
-                  "en": "One‑click acknowledgement to record a remediation as completed.",
-                  "fr": "Permet d'enregistrer d'un clic qu'une remédiation est terminée."
-                }
-              },
-              {
-                "name": "view_details_button",
-                "title": {
-                  "en": "Details",
-                  "fr": "Détails"
-                },
-                "description": {
-                  "en": "Expands an item to reveal full technical background and fix steps.",
-                  "fr": "Déploie un élément pour afficher le contexte technique complet et les étapes de correction."
-                }
-              },
-              {
-                "name": "remediation_instructions",
-                "title": {
-                  "en": "Step‑by‑Step Fix",
-                  "fr": "Correctif pas à pas"
-                },
-                "description": {
-                  "en": "Clear, ordered tasks—manual or automated—to eliminate the issue.",
-                  "fr": "Liste claire et ordonnée de tâches – manuelles ou automatiques – pour éliminer le problème."
-                }
-              },
-              {
-                "name": "threat_details",
-                "title": {
-                  "en": "Threat Intel",
-                  "fr": "Renseignements sur la menace"
-                },
-                "description": {
-                  "en": "Technical impact, MITRE techniques and exploitation context.",
-                  "fr": "Impact technique, techniques MITRE et contexte d'exploitation."
-                }
-              },
-              {
-                "name": "policy_information",
-                "title": {
-                  "en": "Policy Information",
-                  "fr": "Informations de politique"
-                },
-                "description": {
-                  "en": "Explains requirement, compliance status and remediation path.",
-                  "fr": "Explique l'exigence, l'état de conformité et la voie de remédiation."
-                }
-              },
-              {
-                "name": "device_information",
-                "title": {
-                  "en": "Device Insight",
-                  "fr": "Informations appareils"
-                },
-                "description": {
-                  "en": "IP, MAC, vendor, open ports and current criticality for each device.",
-                  "fr": "IP, MAC, fabricant, ports ouverts et criticité actuelle pour chaque appareil."
-                }
-              },
-              {
-                "name": "breach_information",
-                "title": {
-                  "en": "Breach Insight",
-                  "fr": "Informations sur la fuite"
-                },
-                "description": {
-                  "en": "Service name, data classes leaked, and recommended credential actions.",
-                  "fr": "Nom du service, types de données divulguées et actions recommandées sur les identifiants."
-                }
-              }
-            ]
-          }
-        ]
-      },  
-      {
-        "name": "posture",
-        "title": {
-          "en": "Security Posture & Threats",
-          "fr": "Posture de Sécurité et Menaces"
-        },
-        "description": {
-          "en": "Comprehensive security assessment engine that evaluates your development workstation against industry best practices and compliance frameworks. Provides real-time threat detection, vulnerability analysis, and automated hardening recommendations to secure your SDLC endpoints without disrupting development workflows.",
-          "fr": "Moteur d'évaluation de sécurité complet qui évalue votre station de travail de développement selon les meilleures pratiques et cadres de conformité. Fournit détection de menaces en temps réel, analyse de vulnérabilités et recommandations de durcissement automatisées."
-        },
-        "sub_features": [
-          {
-            "name": "posture_main",
-            "title": {
-              "en": "Security Score – Real‑Time Risk Assessment",
-              "fr": "Score de sécurité – Évaluation du risque en temps réel"
-            },
-            "description": {
-              "en": "Comprehensive security assessment that evaluates your development workstation across five critical domains: Network Security, System Integrity, Services Configuration, Application Security, and Credential Management. Uses industry-standard security frameworks and best practices to generate an overall security score and detailed category breakdowns.",
-              "fr": "Évaluation de sécurité complète qui évalue votre station de travail de développement sur cinq domaines critiques : Sécurité réseau, Intégrité système, Configuration des services, Sécurité des applications et Gestion des identifiants. Utilise des cadres de sécurité standards de l'industrie."
-            },
-            "items": [
-              {
-                "name": "overall_score",
-                "title": {
-                  "en": "Overall Security Score",
-                  "fr": "Score de sécurité global"
-                },
-                "description": {
-                  "en": "0‑100 score combining all categories with weightings from the Edamame threat model.",
-                  "fr": "Score de 0 à 100 combinant toutes les catégories avec les pondérations du modèle de menace Edamame."
-                }
-              },
-              {
-                "name": "security_stars",
-                "title": {
-                  "en": "Star Rating",
-                  "fr": "Notation étoilée"
-                },
-                "description": {
-                  "en": "Five‑star visual equivalent of the numeric posture score.",
-                  "fr": "Équivalent visuel en cinq étoiles du score numérique de posture."
-                }
-              },
-              {
-                "name": "network_score",
-                "title": {
-                  "en": "Network Security Score",
-                  "fr": "Score de sécurité réseau"
-                },
-                "description": {
-                  "en": "Risk score related to open ports, unusual traffic and device exposure.",
-                  "fr": "Score de risque lié aux ports ouverts, trafic inhabituel et exposition des appareils."
-                }
-              },
-              {
-                "name": "system_integrity_score",
-                "title": {
-                  "en": "System Integrity Score",
-                  "fr": "Score d'intégrité système"
-                },
-                "description": {
-                  "en": "Evaluates OS hardening, encryption, UAC/Defender status and critical configuration.",
-                  "fr": "Évalue le durcissement de l'OS, le chiffrement, l'état UAC/Defender et la configuration critique."
-                }
-              },
-              {
-                "name": "system_services_score",
-                "title": {
-                  "en": "System Services Score",
-                  "fr": "Score des services système"
-                },
-                "description": {
-                  "en": "Looks at privileged/background services and their security footprint.",
-                  "fr": "Analyse les services privilégiés/d'arrière‑plan et leur empreinte de sécurité."
-                }
-              },
-              {
-                "name": "applications_score",
-                "title": {
-                  "en": "Applications Security Score",
-                  "fr": "Score de sécurité des applications"
-                },
-                "description": {
-                  "en": "Checks app patch status, CVEs and sandbox restrictions.",
-                  "fr": "Vérifie l'état de mise à jour des applis, les CVE et les restrictions de sandbox."
-                }
-              },
-              {
-                "name": "credentials_score",
-                "title": {
-                  "en": "Credentials Security Score",
-                  "fr": "Score de sécurité des identifiants"
-                },
-                "description": {
-                  "en": "Assesses password strength, MFA usage and breach exposure.",
-                  "fr": "Évalue la robustesse des mots de passe, l'usage MFA et l'exposition aux fuites."
-                }
-              },
-              {
-                "name": "compute_progress",
-                "title": {
-                  "en": "Score Computation Progress",
-                  "fr": "Progrès du calcul du score"
-                },
-                "description": {
-                  "en": "Real‑time indicator while the scoring engine re‑analyses telemetry.",
-                  "fr": "Indicateur temps réel pendant que le moteur de score ré‑analyse la télémétrie."
-                }
-              },
-              {
-                "name": "threat_model_info",
-                "title": {
-                  "en": "Threat Model Version",
-                  "fr": "Version du modèle de menace"
-                },
-                "description": {
-                  "en": "Signature, date and engine version used for this assessment.",
-                  "fr": "Signature, date et version du moteur utilisées pour cette évaluation."
-                }
-              },
-              {
-                "name": "last_compute_time",
-                "title": {
-                  "en": "Last Score Update",
-                  "fr": "Dernière mise à jour du score"
-                },
-                "description": {
-                  "en": "UTC timestamp of the most recent score calculation.",
-                  "fr": "Horodatage UTC du calcul de score le plus récent."
-                }
-              }
-            ]
-          },
-  
-          {
-            "name": "posture_threats",
-            "title": {
-              "en": "Active Threats – Unresolved Issues",
-              "fr": "Menaces actives – Problèmes non résolus"
-            },
-            "description": {
-              "en": "Colour‑coded treemap of outstanding threats, ordered by severity and domain.",
-              "fr": "Carte arborescente codée par couleur des menaces en suspens, classées par gravité et domaine."
-            },
-            "items": [
-              {
-                "name": "active_threats_list",
-                "title": {
-                  "en": "Threat List",
-                  "fr": "Liste des menaces"
-                },
-                "description": {
-                  "en": "Live enumeration of critical, high, medium and low threats.",
-                  "fr": "Énumération en direct des menaces critiques, hautes, moyennes et basses."
-                }
-              },
-              {
-                "name": "threat_severity_levels",
-                "title": {
-                  "en": "Threat Severity Levels",
-                  "fr": "Niveaux de gravité des menaces"
-                },
-                "description": {
-                  "en": "Critical, Very‑High, High, Medium, Low – each with colour coding.",
-                  "fr": "Critique, Très‑haute, Haute, Moyenne, Basse – chacune avec code couleur."
-                }
-              },
-              {
-                "name": "threat_categories",
-                "title": {
-                  "en": "Threat Categories",
-                  "fr": "Catégories de menaces"
-                },
-                "description": {
-                  "en": "Network, System Integrity, Services, Applications, Credentials.",
-                  "fr": "Réseau, Intégrité système, Services, Applications, Identifiants."
-                }
-              },
-              {
-                "name": "remediation_button",
-                "title": {
-                  "en": "View Remediation",
-                  "fr": "Voir la remédiation"
-                },
-                "description": {
-                  "en": "Opens detailed, step‑by‑step guidance to fix the threat.",
-                  "fr": "Ouvre un guide détaillé, pas à pas, pour corriger la menace."
-                }
-              },
-              {
-                "name": "auto_remediate_button",
-                "title": {
-                  "en": "Auto‑Remediate",
-                  "fr": "Remédiation auto"
-                },
-                "description": {
-                  "en": "Runs a safe, scripted fix where possible.",
-                  "fr": "Lance un correctif scripté et sécurisé lorsque c'est possible."
-                }
-              },
-              {
-                "name": "threat_details",
-                "title": {
-                  "en": "Technical Details",
-                  "fr": "Détails techniques"
-                },
-                "description": {
-                  "en": "Exploit path, required privileges and verification checks.",
-                  "fr": "Chemin d'exploitation, privilèges requis et vérifications."
-                }
-              },
-              {
-                "name": "newly_active_indicator",
-                "title": {
-                  "en": "Newly Active Badge",
-                  "fr": "Badge menace nouvelle"
-                },
-                "description": {
-                  "en": "Highlights threats that surfaced since the last scan.",
-                  "fr": "Met en évidence les menaces apparues depuis le dernier scan."
-                }
-              }
-            ]
-          },
-  
-          {
-            "name": "posture_inactive",
-            "title": {
-              "en": "Resolved Issues – Rollback Available",
-              "fr": "Problèmes résolus – Annulation possible"
-            },
-            "description": {
-              "en": "Historical list of fixed threats; provides safe rollback where applicable.",
-              "fr": "Liste historique des menaces corrigées ; propose une annulation sécurisée lorsque applicable."
-            },
-            "items": [
-              {
-                "name": "inactive_threats_list",
-                "title": {
-                  "en": "Inactive Threats List",
-                  "fr": "Liste des menaces inactives"
-                },
-                "description": {
-                  "en": "Threats that have been remediated or are no longer relevant.",
-                  "fr": "Menaces ayant été corrigées ou n'étant plus pertinentes."
-                }
-              },
-              {
-                "name": "rollback_button",
-                "title": {
-                  "en": "Rollback",
-                  "fr": "Rollback"
-                },
-                "description": {
-                  "en": "Restores the previous state before a remediation was applied.",
-                  "fr": "Restaure l'état précédent avant qu'une remédiation ne soit appliquée."
-                }
-              },
-              {
-                "name": "threat_resolution_date",
-                "title": {
-                  "en": "Resolution Date",
-                  "fr": "Date de résolution"
-                },
-                "description": {
-                  "en": "Timestamp of when the threat was marked as resolved.",
-                  "fr": "Horodatage lorsque la menace a été marquée résolue."
-                }
-              },
-              {
-                "name": "newly_inactive_indicator",
-                "title": {
-                  "en": "Just Resolved Badge",
-                  "fr": "Badge récemment résolu"
-                },
-                "description": {
-                  "en": "Highlights threats resolved since the last check.",
-                  "fr": "Met en évidence les menaces résolues depuis la dernière vérification."
-                }
-              },
-              {
-                "name": "auto_rollback_button",
-                "title": {
-                  "en": "Auto‑Rollback",
-                  "fr": "Retour auto"
-                },
-                "description": {
-                  "en": "Automatically reverts multiple remediations if needed.",
-                  "fr": "Révertit automatiquement plusieurs remédiations si nécessaire."
-                }
-              }
-            ]
-          },
-  
-          {
-            "name": "posture_compliance",
-            "title": {
-              "en": "Compliance Auditing – Standards Alignment",
-              "fr": "Audit de conformité – Alignement sur les normes"
-            },
-            "description": {
-              "en": "Maps each security check to frameworks such as CIS L1, ISO 27001/2 or SOC 2, marking pass/fail state.",
-              "fr": "Associe chaque contrôle de sécurité à des cadres tels que CIS L1, ISO 27001/2 ou SOC 2, en indiquant l'état réussi/échoué."
-            },
-            "items": [
-              {
-                "name": "compliance_scores",
-                "title": {
-                  "en": "Compliance Scores",
-                  "fr": "Scores de conformité"
-                },
-                "description": {
-                  "en": "Numeric scores per framework, e.g. 85 % CIS, 92 % ISO.",
-                  "fr": "Scores numériques par cadre, ex. 85 % CIS, 92 % ISO."
-                }
-              },
-              {
-                "name": "compliance_categories",
-                "title": {
-                  "en": "Compliance Frameworks",
-                  "fr": "Cadres de conformité"
-                },
-                "description": {
-                  "en": "CIS Benchmark, ISO 27001, SOC 2, Personal Posture, Internal Service, etc.",
-                  "fr": "CIS Benchmark, ISO 27001, SOC 2, Posture personnelle, Service interne, etc."
-                }
-              },
-              {
-                "name": "tag_prefixes",
-                "title": {
-                  "en": "Tag Prefixes",
-                  "fr": "Préfixes de tags"
-                },
-                "description": {
-                  "en": "Metadata tags (e.g. ISO, SOC2) used for filtering threat lists.",
-                  "fr": "Tags de métadonnées (par ex. ISO, SOC2) pour filtrer les listes de menaces."
-                }
-              },
-              {
-                "name": "threat_status",
-                "title": {
-                  "en": "Threat Compliance Status",
-                  "fr": "Statut de conformité des menaces"
-                },
-                "description": {
-                  "en": "Indicates whether each threat passes (green) or fails (red) a framework.",
-                  "fr": "Indique si chaque menace passe (vert) ou échoue (rouge) un cadre."
-                }
-              },
-              {
-                "name": "compliance_percentage",
-                "title": {
-                  "en": "Compliance Percentage",
-                  "fr": "Pourcentage de conformité"
-                },
-                "description": {
-                  "en": "Overall compliance percentage across all evaluated frameworks.",
-                  "fr": "Pourcentage global de conformité sur tous les cadres évalués."
-                }
-              }
-            ]
-          },
-  
-          {
-            "name": "posture_history",
-            "title": {
-              "en": "Security History – Score & Remediation Timeline",
-              "fr": "Historique de sécurité – Chronologie des scores et remédiations"
-            },
-            "description": {
-              "en": "Trend view of your score evolution, threats handled and automatic fixes over time.",
-              "fr": "Vue des tendances de l'évolution de votre score, des menaces traitées et des correctifs automatiques au fil du temps."
-            },
-            "items": [
-              {
-                "name": "score_history_chart",
-                "title": {
-                  "en": "Score History Chart",
-                  "fr": "Graphique historique du score"
-                },
-                "description": {
-                  "en": "Line graph of posture score over days/weeks.",
-                  "fr": "Graphique en ligne du score de posture sur jours/semaines."
-                }
-              },
-              {
-                "name": "remediation_history",
-                "title": {
-                  "en": "Remediation Log",
-                  "fr": "Journal des remédiations"
-                },
-                "description": {
-                  "en": "Chronological list of fixes applied (manual or auto).",
-                  "fr": "Liste chronologique des correctifs appliqués (manuels ou auto)."
-                }
-              },
-              {
-                "name": "rollback_history",
-                "title": {
-                  "en": "Rollback Log",
-                  "fr": "Journal des retours"
-                },
-                "description": {
-                  "en": "Records of each rollback operation and reason.",
-                  "fr": "Enregistre chaque opération de retour et sa raison."
-                }
-              },
-              {
-                "name": "threat_timeline",
-                "title": {
-                  "en": "Threat Timeline",
-                  "fr": "Chronologie des menaces"
-                },
-                "description": {
-                  "en": "Interactive timeline of threats appearing/resolving.",
-                  "fr": "Chronologie interactive des menaces apparaissant/se résolvant."
-                }
-              },
-              {
-                "name": "search_filter",
-                "title": {
-                  "en": "Timeline Search",
-                  "fr": "Recherche chronologique"
-                },
-                "description": {
-                  "en": "Filter history by date, threat, or action type.",
-                  "fr": "Filtre l'historique par date, menace ou type d'action."
-                }
-              }
-            ]
-          }
-        ]
+  "features": [
+    {
+      "name": "advisor",
+      "title": {
+        "en": "Advisor",
+        "fr": "Conseiller"
       },
-      {
-        "name": "identity",
-        "title": {
-          "en": "Identity & Credential Security",
-          "fr": "Sécurité des Identités et Identifiants"
-        },
-        "description": {
-          "en": "Credential‑leak monitoring that tracks breaches across all your developer and personal accounts.",
-          "fr": "Surveillance des fuites d'identifiants couvrant tous vos comptes développeur et personnels."
-        },
-        "sub_features": [
-          {
-            "name": "identity_main",
-            "title": {
-              "en": "Credential Leak Monitoring",
-              "fr": "Surveillance des fuites d'identifiants"
-            },
-            "description": {
-              "en": "Continuously monitors your developer and personal email addresses against known data breaches and dark web credential dumps. Automatically detects compromised accounts and provides AI-driven remediation guidance to secure your development environment and protect client data access.",
-              "fr": "Surveille continuellement vos adresses email développeur et personnelles contre les fuites de données connues et dépôts d'identifiants du dark web. Détecte automatiquement les comptes compromis et fournit des conseils de remédiation pilotés par IA."
-            },
-            "items": [
-              {
-                "name": "email_address_input",
-                "title": { "en": "Email Address Input", "fr": "Saisie d'adresse email" },
-                "description": {
-                "en": "Field for adding an email address to be monitored for credential leaks.",
-                "fr": "Champ permettant d'ajouter une adresse email à surveiller pour les fuites d'identifiants."
-                }
+      "description": {
+        "en": "Autonomous security‑posture advisor providing AI‑driven recommendations and one‑click remediations based on real‑time risk assessment.",
+        "fr": "Conseiller de posture de sécurité autonome offrant des recommandations pilotées par IA et des remédiations en un clic, basées sur l'évaluation du risque en temps réel."
+      },
+      "sub_features": [
+        {
+          "name": "advisor_main",
+          "title": {
+            "en": "Security Advisor – Real‑Time Overview",
+            "fr": "Conseiller de Sécurité – Vue d'ensemble en temps réel"
+          },
+          "description": {
+            "en": "Central security dashboard that provides a real-time overview of your workstation's security posture. Displays your current security score, active threats requiring attention, compliance status with organizational policies, and prioritized recommendations to strengthen your system without impacting productivity.",
+            "fr": "Tableau de bord de sécurité central qui fournit une vue d'ensemble en temps réel de la posture de sécurité de votre station de travail. Affiche votre score de sécurité actuel, menaces actives nécessitant attention, statut de conformité avec les politiques organisationnelles."
+          },
+          "items": [
+            {
+              "name": "security_state",
+              "title": {
+                "en": "Security Posture Score – Real‑Time Risk Assessment",
+                "fr": "Score de Posture de Sécurité – Évaluation du risque en temps réel"
+              },
+              "description": {
+                "en": "Continuously updated score summarising overall device risk, factoring in live threat data, policy compliance and network exposure.",
+                "fr": "Score mis à jour en continu résumant le risque global du périphérique, intégrant les données de menaces en direct, la conformité aux politiques et l'exposition réseau."
+              }
             },
             {
-                "name": "email_list",
-                "title": { "en": "Monitored Email Addresses", "fr": "Adresses email surveillées" },
-                "description": {
+              "name": "todo_count",
+              "title": {
+                "en": "Action‑Item Counter",
+                "fr": "Compteur d'actions"
+              },
+              "description": {
+                "en": "Shows how many remediation tasks remain to reach the next security‑score milestone.",
+                "fr": "Indique le nombre de tâches de remédiation restantes pour atteindre le prochain palier de score de sécurité."
+              }
+            },
+            {
+              "name": "progress_summary",
+              "title": {
+                "en": "Improvement Progress",
+                "fr": "Progression des améliorations"
+              },
+              "description": {
+                "en": "Visual gauge of completed fixes versus outstanding issues, expressed in percentage and colour coding.",
+                "fr": "Indicateur visuel des correctifs terminés par rapport aux problèmes restants, exprimé en pourcentage et code couleur."
+              }
+            },
+            {
+              "name": "active_threats_summary",
+              "title": {
+                "en": "Active Threats Snapshot",
+                "fr": "Instantané des menaces actives"
+              },
+              "description": {
+                "en": "Real‑time count of unresolved threats categorised by criticality.",
+                "fr": "Nombre en temps réel des menaces non résolues, classées par criticité."
+              }
+            },
+            {
+              "name": "failed_policies_summary",
+              "title": {
+                "en": "Non‑Compliant Policies",
+                "fr": "Politiques non conformes"
+              },
+              "description": {
+                "en": "Quick list of organisational policies your device currently fails to meet.",
+                "fr": "Liste rapide des politiques organisationnelles ou industrielles que votre appareil ne respecte pas actuellement."
+              }
+            },
+            {
+              "name": "network_devices_summary",
+              "title": {
+                "en": "Devices with Open Ports",
+                "fr": "Appareils avec ports ouverts"
+              },
+              "description": {
+                "en": "Highlights local devices exposing services that may require hardening or review.",
+                "fr": "Met en évidence les appareils locaux exposant des services pouvant nécessiter un durcissement ou une vérification."
+              }
+            },
+            {
+              "name": "pwned_breaches_summary",
+              "title": {
+                "en": "Credential‑Leak Overview",
+                "fr": "Aperçu des fuites de données"
+              },
+              "description": {
+                "en": "Displays the number of breach events affecting monitored identities and their criticality.",
+                "fr": "Affiche le nombre d'événements de fuite affectant les identités surveillées et leur criticité."
+              }
+            },
+            {
+              "name": "suspicious_sessions_summary",
+              "title": {
+                "en": "Suspicious Network Sessions",
+                "fr": "Sessions réseau suspectes"
+              },
+              "description": {
+                "en": "Counts and describes currently flagged sessions or anomalous traffic flows.",
+                "fr": "Compte et décrit les sessions actuellement signalées ou les flux de trafic anormaux."
+              }
+            }
+          ]
+        },
+        {
+          "name": "advisor_advices",
+          "title": {
+            "en": "Recommendations",
+            "fr": "Recommandations"
+          },
+          "description": {
+            "en": "Recommendations that provides prioritized, actionable steps to improve security. Each recommendation includes detailed technical explanations, risk impact assessment, and automated remediation options where possible.",
+            "fr": "Recommandations qui fournit des étapes priorisées et actionnables pour améliorer la sécurité. Chaque recommandation inclut des explications techniques détaillées, évaluation d'impact des risques et options de remédiation automatisées lorsque possible."
+          }
+        }
+      ]
+    },
+    {
+      "name": "posture",
+      "title": {
+        "en": "Security Posture & Threats",
+        "fr": "Posture de Sécurité et Menaces"
+      },
+      "description": {
+        "en": "Comprehensive security assessment engine that evaluates your workstation against industry best practices and compliance frameworks. Provides real-time threat detection, vulnerability analysis, and automated hardening recommendations to secure your SDLC endpoints without disrupting development workflows.",
+        "fr": "Moteur d'évaluation de sécurité complet qui évalue votre station de travail selon les meilleures pratiques et cadres de conformité. Fournit détection de menaces en temps réel, analyse de vulnérabilités et recommandations de durcissement automatisées."
+      },
+      "sub_features": [
+        {
+          "name": "posture_main",
+          "title": {
+            "en": "Security Score – Real‑Time Risk Assessment",
+            "fr": "Score de sécurité – Évaluation du risque en temps réel"
+          },
+          "description": {
+            "en": "Comprehensive security assessment that evaluates your workstation across five critical domains: Network Security, System Integrity, Services Configuration, Application Security, and Credential Management. Uses industry-standard security frameworks and best practices to generate an overall security score and detailed category breakdowns.",
+            "fr": "Évaluation de sécurité complète qui évalue votre station de travail sur cinq domaines critiques : Sécurité réseau, Intégrité système, Configuration des services, Sécurité des applications et Gestion des identifiants. Utilise des cadres de sécurité standards de l'industrie."
+          },
+          "items": [
+            {
+              "name": "overall_score",
+              "title": {
+                "en": "Overall Security Score",
+                "fr": "Score de sécurité global"
+              },
+              "description": {
+                "en": "Score combining all categories with weightings from the EDAMAME threat model.",
+                "fr": "Score combinant toutes les catégories avec les pondérations du modèle de menace EDAMAME."
+              }
+            },
+            {
+              "name": "security_stars",
+              "title": {
+                "en": "Star Rating",
+                "fr": "Notation étoilée"
+              },
+              "description": {
+                "en": "Five‑star visual equivalent of the numeric posture score.",
+                "fr": "Équivalent visuel en cinq étoiles du score numérique de posture."
+              }
+            },
+            {
+              "name": "network_score",
+              "title": {
+                "en": "Network Security Score",
+                "fr": "Score de sécurité réseau"
+              },
+              "description": {
+                "en": "Risk score related to open ports, unusual traffic and device exposure.",
+                "fr": "Score de risque lié aux ports ouverts, trafic inhabituel et exposition des appareils."
+              }
+            },
+            {
+              "name": "system_integrity_score",
+              "title": {
+                "en": "System Integrity Score",
+                "fr": "Score d'intégrité système"
+              },
+              "description": {
+                "en": "Evaluates OS hardening, encryption, security stack status and critical configuration.",
+                "fr": "Évalue le durcissement de l'OS, le chiffrement, l'état de la pile de sécurité et la configuration critique."
+              }
+            },
+            {
+              "name": "system_services_score",
+              "title": {
+                "en": "System Services Score",
+                "fr": "Score des services système"
+              },
+              "description": {
+                "en": "Looks at privileged/background services and their security footprint.",
+                "fr": "Analyse les services privilégiés/d'arrière‑plan et leur empreinte de sécurité."
+              }
+            },
+            {
+              "name": "applications_score",
+              "title": {
+                "en": "Applications Security Score",
+                "fr": "Score de sécurité des applications"
+              },
+              "description": {
+                "en": "Checks app patch status and sandbox restrictions.",
+                "fr": "Vérifie l'état de mise à jour des applis et les restrictions de sandbox."
+              }
+            },
+            {
+              "name": "credentials_score",
+              "title": {
+                "en": "Credentials Security Score",
+                "fr": "Score de sécurité des identifiants"
+              },
+              "description": {
+                "en": "Assesses password strength, MFA usage and breach exposure.",
+                "fr": "Évalue la robustesse des mots de passe, l'usage MFA et l'exposition aux fuites."
+              }
+            }
+          ]
+        },
+        {
+          "name": "posture_threats",
+          "title": {
+            "en": "Active Threats – Unresolved Issues",
+            "fr": "Menaces actives – Problèmes non résolus"
+          },
+          "description": {
+            "en": "Colour‑coded treemap of outstanding threats, ordered by severity and domain.",
+            "fr": "Carte arborescente codée par couleur des menaces en suspens, classées par gravité et domaine."
+          },
+          "items": [
+            {
+              "name": "active_threats_list",
+              "title": {
+                "en": "Threat List",
+                "fr": "Liste des menaces"
+              },
+              "description": {
+                "en": "Live enumeration of critical, high, medium and low threats.",
+                "fr": "Énumération en direct des menaces critiques, hautes, moyennes et basses."
+              }
+            },
+            {
+              "name": "threat_severity_levels",
+              "title": {
+                "en": "Threat Severity Levels",
+                "fr": "Niveaux de gravité des menaces"
+              },
+              "description": {
+                "en": "Critical, Very‑High, High, Medium, Low – each with colour coding.",
+                "fr": "Critique, Très‑haute, Haute, Moyenne, Basse – chacune avec code couleur."
+              }
+            },
+            {
+              "name": "threat_categories",
+              "title": {
+                "en": "Threat Categories",
+                "fr": "Catégories de menaces"
+              },
+              "description": {
+                "en": "Network, System Integrity, Services, Applications, Credentials.",
+                "fr": "Réseau, Intégrité système, Services, Applications, Identifiants."
+              }
+            },
+            {
+              "name": "remediation_button",
+              "title": {
+                "en": "View Remediation",
+                "fr": "Voir la remédiation"
+              },
+              "description": {
+                "en": "Opens detailed, step‑by‑step guidance or automated remediation to fix the threat where possible.",
+                "fr": "Ouvre un guide détaillé, pas à pas, ou une remédiation automatique pour corriger la menace lorsque c'est possible."
+              }
+            },
+            {
+              "name": "auto_remediate_button",
+              "title": {
+                "en": "Auto‑Remediate",
+                "fr": "Remédiation auto"
+              },
+              "description": {
+                "en": "Runs a safe, scripted fix of existing threats where possible.",
+                "fr": "Lance un correctif scripté et sécurisé lorsque c'est possible."
+              }
+            },
+            {
+              "name": "threat_details",
+              "title": {
+                "en": "Technical Details",
+                "fr": "Détails techniques"
+              },
+              "description": {
+                "en": "Description, performed checks and required privileges.",
+                "fr": "Description, vérifications effectuées et privilèges requis."
+              }
+            },
+            {
+              "name": "newly_active_indicator",
+              "title": {
+                "en": "Newly Active Badge",
+                "fr": "Badge menace nouvelle"
+              },
+              "description": {
+                "en": "Highlights threats that surfaced since the last scan.",
+                "fr": "Met en évidence les menaces apparues depuis le dernier scan."
+              }
+            }
+          ]
+        },
+        {
+          "name": "posture_inactive",
+          "title": {
+            "en": "Resolved Issues – Rollback Available",
+            "fr": "Problèmes résolus – Annulation possible"
+          },
+          "description": {
+            "en": "Historical list of fixed threats; provides safe rollback where applicable.",
+            "fr": "Liste historique des menaces corrigées ; propose une annulation sécurisée lorsque applicable."
+          },
+          "items": [
+            {
+              "name": "inactive_threats_list",
+              "title": {
+                "en": "Inactive Threats List",
+                "fr": "Liste des menaces inactives"
+              },
+              "description": {
+                "en": "Threats that have been remediated or are no longer relevant.",
+                "fr": "Menaces ayant été corrigées ou n'étant plus pertinentes."
+              }
+            },
+            {
+              "name": "rollback_button",
+              "title": {
+                "en": "Rollback",
+                "fr": "Rollback"
+              },
+              "description": {
+                "en": "Restores the previous state before a remediation was applied.",
+                "fr": "Restaure l'état précédent avant qu'une remédiation ne soit appliquée."
+              }
+            },
+            {
+              "name": "auto_rollback_button",
+              "title": {
+                "en": "Auto‑Rollback",
+                "fr": "Retour auto"
+              },
+              "description": {
+                "en": "Automatically reverts multiple remediations if needed.",
+                "fr": "Révertit automatiquement plusieurs remédiations si nécessaire."
+              }
+            }
+          ]
+        },
+        {
+          "name": "posture_compliance",
+          "title": {
+            "en": "Compliance Auditing – Standards Alignment",
+            "fr": "Audit de conformité – Alignement sur les normes"
+          },
+          "description": {
+            "en": "Maps each security check to frameworks such as CIS L1, ISO 27001/2 or SOC 2, marking pass/fail state.",
+            "fr": "Associe chaque contrôle de sécurité à des cadres tels que CIS L1, ISO 27001/2 ou SOC 2, en indiquant l'état réussi/échoué."
+          },
+          "items": [
+            {
+              "name": "threat_name",
+              "title": {
+                "en": "Threat Name",
+                "fr": "Nom de la menace"
+              },
+              "description": {
+                "en": "Name of the threat.",
+                "fr": "Nom de la menace."
+              }
+            },
+            {
+              "name": "threat_tag_prefixes",
+              "title": {
+                "en": "Tag Prefixes of the threat",
+                "fr": "Préfixes de tags de la menace"
+              },
+              "description": {
+                "en": "Metadata tags (e.g. ISO, SOC2) used for filtering threat lists.",
+                "fr": "Tags de métadonnées (par ex. ISO, SOC2) pour filtrer les listes de menaces."
+              }
+            },
+            {
+              "name": "threat_status",
+              "title": {
+                "en": "Threat Status",
+                "fr": "Statut de la menace"
+              },
+              "description": {
+                "en": "Indicates whether each threat can be evaluated (grey), pass (green) or fail (red).",
+                "fr": "Indique si chaque menace peut être évaluée (gris), passer (vert) ou échouer (rouge)."
+              }
+            }
+          ]
+        },
+        {
+          "name": "posture_history",
+          "title": {
+            "en": "Security History – Score & Remediation Timeline",
+            "fr": "Historique de sécurité – Chronologie des scores et remédiations"
+          },
+          "description": {
+            "en": "History of your score evolution, threats handled and automatic fixes over time.",
+            "fr": "Historique de l'évolution de votre score, des menaces traitées et des correctifs automatiques au fil du temps."
+          },
+          "items": [
+            {
+              "name": "remediation_history",
+              "title": {
+                "en": "Remediation Log",
+                "fr": "Journal des remédiations"
+              },
+              "description": {
+                "en": "Chronological list of fixes applied (manual or auto).",
+                "fr": "Liste chronologique des correctifs appliqués (manuels ou auto)."
+              }
+            },
+            {
+              "name": "rollback_history",
+              "title": {
+                "en": "Rollback Log",
+                "fr": "Journal des retours"
+              },
+              "description": {
+                "en": "Records of each rollback operation and reason.",
+                "fr": "Enregistre chaque opération de retour et sa raison."
+              }
+            },
+            {
+              "name": "threat_timeline",
+              "title": {
+                "en": "Threat Timeline",
+                "fr": "Chronologie des menaces"
+              },
+              "description": {
+                "en": "Interactive timeline of threats appearing/resolving.",
+                "fr": "Chronologie interactive des menaces apparaissant/se résolvant."
+              }
+            },
+            {
+              "name": "search_filter",
+              "title": {
+                "en": "Timeline Search",
+                "fr": "Recherche chronologique"
+              },
+              "description": {
+                "en": "Filter history by date, threat, or action type.",
+                "fr": "Filtre l'historique par date, menace ou type d'action."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "identity",
+      "title": {
+        "en": "Identity & Credential Security",
+        "fr": "Sécurité des Identités et Identifiants"
+      },
+      "description": {
+        "en": "Credential‑leak monitoring that tracks breaches across all your professional and personal accounts.",
+        "fr": "Surveillance des fuites d'identifiants couvrant tous vos comptes professionnels et personnels."
+      },
+      "sub_features": [
+        {
+          "name": "identity_main",
+          "title": {
+            "en": "Credential Leak Monitoring",
+            "fr": "Surveillance des fuites d'identifiants"
+          },
+          "description": {
+            "en": "Continuously monitors your professional and personal email addresses against known data breaches and dark web credential dumps. Automatically detects compromised accounts and provides AI-driven remediation guidance to secure your development environment and protect client data access.",
+            "fr": "Surveille continuellement vos adresses email professionnelles et personnelles contre les fuites de données connues et dépôts d'identifiants du dark web. Détecte automatiquement les comptes compromis et fournit des conseils de remédiation pilotés par IA."
+          },
+          "items": [
+            {
+              "name": "email_list",
+              "title": {
+                "en": "Monitored Email Addresses",
+                "fr": "Adresses email surveillées"
+              },
+              "description": {
                 "en": "Sortable list of every address under surveillance with breach counters and status badges.",
                 "fr": "Liste triable de chaque adresse suivie avec compteurs de fuites et badges de statut."
-                }
+              }
             },
             {
-                "name": "breach_count",
-                "title": { "en": "Total Breach Count", "fr": "Nombre total de fuites" },
-                "description": {
+              "name": "breach_count",
+              "title": {
+                "en": "Total Breach Count",
+                "fr": "Nombre total de fuites"
+              },
+              "description": {
                 "en": "Numeric badge showing how many distinct breach incidents affect all monitored emails.",
                 "fr": "Badge numérique indiquant le nombre total d'incidents de fuite touchant les emails surveillés."
-                }
+              }
             },
             {
-                "name": "breach_list",
-                "title": { "en": "Data Breaches List", "fr": "Liste des violations de données" },
-                "description": {
+              "name": "breach_list",
+              "title": {
+                "en": "Data Breaches List",
+                "fr": "Liste des violations de données"
+              },
+              "description": {
                 "en": "Scrollable table of detected breaches with columns for service, breach date and criticality.",
                 "fr": "Tableau défilant des violations détectées avec colonnes service, date de fuite et criticité."
-                }
+              }
             },
             {
-                "name": "breach_details",
-                "title": { "en": "Breach Details Panel", "fr": "Panneau de détails de violation" },
-                "description": {
+              "name": "breach_details",
+              "title": {
+                "en": "Breach Details Panel",
+                "fr": "Panneau de détails de violation"
+              },
+              "description": {
                 "en": "Expandable card revealing attack narrative, data exposed, and remediation checklist.",
                 "fr": "Carte extensible révélant le contexte de l'attaque, les données exposées et la checklist de remédiation."
-                }
+              }
             },
             {
-                "name": "breach_criticality",
-                "title": { "en": "Breach Criticality Level", "fr": "Niveau de criticité de la violation" },
-                "description": {
+              "name": "breach_criticality",
+              "title": {
+                "en": "Breach Criticality Level",
+                "fr": "Niveau de criticité de la violation"
+              },
+              "description": {
                 "en": "Colour badge (red = high, orange = medium, yellow = low) based on data sensitivity and password reuse risk.",
                 "fr": "Badge couleur (rouge = élevé, orange = moyen, jaune = faible) selon la sensibilité des données et le risque de réutilisation de mot de passe."
-                }
+              }
             },
             {
-                "name": "data_classes",
-                "title": { "en": "Compromised Data Classes", "fr": "Classes de données compromises" },
-                "description": {
+              "name": "data_classes",
+              "title": {
+                "en": "Compromised Data Classes",
+                "fr": "Classes de données compromises"
+              },
+              "description": {
                 "en": "Chip list of leaked fields: passwords, tokens, addresses, payment data, etc.",
                 "fr": "Liste de puces des champs divulgués : mots de passe, jetons, adresses, données de paiement, etc."
-                }
+              }
             },
             {
-                "name": "breach_date",
-                "title": { "en": "Breach Date", "fr": "Date de la violation" },
-                "description": {
+              "name": "breach_date",
+              "title": {
+                "en": "Breach Date",
+                "fr": "Date de la violation"
+              },
+              "description": {
                 "en": "Shows both occurrence and public‑disclosure dates when available.",
                 "fr": "Affiche les dates d'occurrence et de divulgation publique lorsque disponibles."
-                }
+              }
             },
             {
-                "name": "affected_accounts_count",
-                "title": { "en": "Affected Accounts", "fr": "Comptes affectés" },
-                "description": {
+              "name": "affected_accounts_count",
+              "title": {
+                "en": "Affected Accounts",
+                "fr": "Comptes affectés"
+              },
+              "description": {
                 "en": "Number of user records compromised in the breach (rounded if dataset is massive).",
                 "fr": "Nombre d'enregistrements utilisateur compromis (arrondi si le jeu de données est massif)."
-                }
+              }
             },
             {
-                "name": "dismiss_breach_button",
-                "title": { "en": "Dismiss Breach", "fr": "Ignorer la violation" },
-                "description": {
+              "name": "dismiss_breach_button",
+              "title": {
+                "en": "Dismiss Breach",
+                "fr": "Ignorer la violation"
+              },
+              "description": {
                 "en": "Marks the incident as acknowledged and hides its alert badge until new evidence appears.",
                 "fr": "Marque l'incident comme reconnu et masque son badge d'alerte jusqu'à nouvelle preuve."
-                }
+              }
             },
             {
-                "name": "breach_remediation",
-                "title": { "en": "Breach Remediation Guide", "fr": "Guide de remédiation de violation" },
-                "description": {
+              "name": "breach_remediation",
+              "title": {
+                "en": "Breach Remediation Guide",
+                "fr": "Guide de remédiation de violation"
+              },
+              "description": {
                 "en": "AI‑generated steps: reset passwords, enable MFA, revoke sessions, watch for phishing.",
                 "fr": "Étapes générées par IA : réinitialiser les mots de passe, activer MFA, révoquer les sessions, surveiller le phishing."
-                }
-            },
-            {
-                "name": "auto_detected_emails",
-                "title": { "en": "Auto‑Detected Emails", "fr": "Emails détectés automatiquement" },
-                "description": {
-                "en": "Addresses harvested from OS profiles, browser accounts or Git configs that the user hasn't added manually.",
-                "fr": "Adresses extraites des profils OS, comptes navigateur ou configs Git que l'utilisateur n'a pas ajoutées manuellement."
-                }
-            },
-            {
-                "name": "add_email_button",
-                "title": { "en": "Add Email", "fr": "Ajouter email" },
-                "description": {
-                "en": "Opens a modal to input and subscribe a new address for breach monitoring.",
-                "fr": "Ouvre une fenêtre modale pour saisir et abonner une nouvelle adresse au suivi des fuites."
-                }
-            },
-            {
-                "name": "remove_email_button",
-                "title": { "en": "Remove Email", "fr": "Supprimer email" },
-                "description": {
-                "en": "Deletes an address from monitoring and clears associated breach alerts.",
-                "fr": "Supprime une adresse de la surveillance et efface les alertes de fuite associées."
-                }
+              }
             }
-            ]            
-          }
-        ]
-      },  
-      {
-        "name": "lan",
-        "title": {
-          "en": "Network Security & Discovery",
-          "fr": "Sécurité et Découverte Réseau"
-        },
-        "description": {
-          "en": "Advanced network scanning and device discovery tool that identifies all devices on your development network. Uses NMAP-inspired scanning techniques with AI-powered risk analysis to detect vulnerable IoT devices, open ports, and potential security misconfigurations that could compromise your development environment.",
-          "fr": "Outil avancé de scan réseau et découverte d'appareils qui identifie tous les appareils sur votre réseau de développement. Utilise des techniques de scan inspirées de NMAP avec une analyse de risque basée sur l'IA pour détecter les appareils IoT vulnérables, les ports ouverts et les mauvaises configurations de sécurité qui pourraient compromettre votre environnement de développement."
-        },
-        "sub_features": [
-          {
-            "name": "lan_community_sharing",
-            "title": {
-              "en": "Community Device Sharing",
-              "fr": "Partage d'Appareils Communautaire"
-            },
-            "description": {
-              "en": "Share device information securely with other Edamame users on your network. Desktop devices with admin privileges can help mobile devices discover MAC addresses and additional network details that require elevated permissions. All shared data is cryptographically signed and filtered to ensure freshness and relevance.",
-              "fr": "Partagez les informations d'appareils de manière sécurisée avec d'autres utilisateurs Edamame sur votre réseau. Les appareils de bureau avec privilèges administrateur peuvent aider les appareils mobiles à découvrir les adresses MAC et détails réseau supplémentaires nécessitant des permissions élevées. Toutes les données partagées sont cryptographiquement signées et filtrées pour assurer fraîcheur et pertinence."
-            }
-          },
-          {
-            "name": "lan_mdns_discovery",
-            "title": {
-              "en": "Smart Service Discovery",
-              "fr": "Découverte Intelligente de Services"
-            },
-            "description": {
-              "en": "Automatically discovers all network services and smart devices using advanced mDNS techniques. Identifies device types, extracts hardware addresses from network protocols, and maps service relationships. Provides comprehensive visibility into printers, smart TVs, IoT devices, and other network-connected equipment without requiring manual configuration.",
-              "fr": "Découvre automatiquement tous les services réseau et appareils intelligents en utilisant des techniques mDNS avancées. Identifie les types d'appareils, extrait les adresses matérielles des protocoles réseau et mappe les relations de services. Fournit une visibilité complète sur les imprimantes, téléviseurs intelligents, appareils IoT et autres équipements connectés sans configuration manuelle."
-            }
-          },
-          {
-            "name": "lan_port_scanning",
-            "title": {
-              "en": "Service Detection & Analysis",
-              "fr": "Détection et Analyse de Services"
-            },
-            "description": {
-              "en": "Scans network devices to identify running services and their versions. Analyzes service responses to determine software details and potential security implications. Helps you understand what services are exposed on your network and whether they need attention or hardening.",
-              "fr": "Scanne les appareils réseau pour identifier les services en cours d'exécution et leurs versions. Analyse les réponses de service pour déterminer les détails logiciels et implications de sécurité potentielles. Vous aide à comprendre quels services sont exposés sur votre réseau et s'ils nécessitent attention ou durcissement."
-            }
-          },
-          {
-            "name": "lan_cve_analysis",
-            "title": {
-              "en": "Vulnerability Assessment",
-              "fr": "Évaluation des Vulnérabilités"
-            },
-            "description": {
-              "en": "Automatically checks discovered services and devices against known security vulnerabilities. Provides real-time alerts when vulnerable services are detected and assesses the security risk level of each device. Helps prioritize which devices need security updates or additional protection measures.",
-              "fr": "Vérifie automatiquement les services et appareils découverts contre les vulnérabilités de sécurité connues. Fournit des alertes en temps réel lorsque des services vulnérables sont détectés et évalue le niveau de risque de sécurité de chaque appareil. Aide à prioriser quels appareils nécessitent des mises à jour de sécurité ou mesures de protection supplémentaires."
-            }
-          },
-          {
-            "name": "lan_device_profiling",
-            "title": {
-              "en": "Intelligent Device Recognition",
-              "fr": "Reconnaissance Intelligente d'Appareils"
-            },
-            "description": {
-              "en": "Automatically identifies device types using multiple detection methods including network ports, service signatures, manufacturer information, and device behavior patterns. Recognizes printers, IoT devices, smart TVs, cameras, gaming consoles, and more. Provides instant clarity about what devices are on your network.",
-              "fr": "Identifie automatiquement les types d'appareils en utilisant plusieurs méthodes de détection incluant les ports réseau, signatures de service, informations fabricant et motifs de comportement. Reconnaît imprimantes, appareils IoT, téléviseurs intelligents, caméras, consoles de jeu et plus. Fournit une clarté instantanée sur les appareils présents sur votre réseau."
-            }
-          },
-          {
-            "name": "lan_risk_classification",
-            "title": {
-              "en": "Security Risk Scoring",
-              "fr": "Scoring de Risque de Sécurité"
-            },
-            "description": {
-              "en": "Assigns security risk levels to each discovered device based on vulnerability exposure and service configuration. Devices with many vulnerabilities receive high-risk ratings, while secure devices get low-risk scores. Helps you focus security efforts on the most problematic devices first.",
-              "fr": "Attribue des niveaux de risque de sécurité à chaque appareil découvert basé sur l'exposition aux vulnérabilités et la configuration des services. Les appareils avec beaucoup de vulnérabilités reçoivent des notes de risque élevé, tandis que les appareils sécurisés obtiennent des scores de faible risque. Vous aide à concentrer les efforts de sécurité sur les appareils les plus problématiques en premier."
-            }
-          },
-          {
-            "name": "lan_anomaly_detection",
-            "title": {
-              "en": "AI-Powered Anomaly Detection",
-              "fr": "Détection d'Anomalies Alimentée par IA"
-            },
-            "description": {
-              "en": "Uses advanced machine learning to identify unusual network behavior and suspicious connections. Analyzes communication patterns, data volumes, and timing to detect potential security threats or compromised devices. Learns normal network behavior to spot deviations that might indicate security issues.",
-              "fr": "Utilise l'apprentissage automatique avancé pour identifier les comportements réseau inhabituels et connexions suspectes. Analyse les motifs de communication, volumes de données et timing pour détecter les menaces de sécurité potentielles ou appareils compromis. Apprend le comportement réseau normal pour repérer les déviations pouvant indiquer des problèmes de sécurité."
-            }
-          },
-          {
-            "name": "lan_notification_system",
-            "title": {
-              "en": "Device Activity Monitoring",
-              "fr": "Surveillance d'Activité des Appareils"
-            },
-            "description": {
-              "en": "Tracks when devices join or leave your network and monitors their activity status. Sends notifications when new devices appear or when previously seen devices become active again. Helps you stay aware of network changes and potential unauthorized device access.",
-              "fr": "Suit quand les appareils rejoignent ou quittent votre réseau et surveille leur statut d'activité. Envoie des notifications lorsque de nouveaux appareils apparaissent ou quand des appareils précédemment vus deviennent actifs à nouveau. Vous aide à rester conscient des changements réseau et accès d'appareils non autorisés potentiels."
-            }
-          }
-        ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "lan",
+      "title": {
+        "en": "Network Security & Discovery",
+        "fr": "Sécurité et Découverte Réseau"
       },
-      {
-        "name": "secured",
-        "title": {
-          "en": "Zero Trust & Compliance",
-          "fr": "Zéro Confiance et Conformité"
-        },
-        "description": {
-          "en": "Zero-trust integration layer that connects your development workstation to organizational security policies and compliance frameworks. Enables secure access to corporate resources while maintaining developer autonomy. Generates signed compliance reports for ISO27001, SOC2, and other frameworks to prove your device meets security requirements.",
-          "fr": "Couche d'intégration zéro-trust qui connecte votre station de travail de développement aux politiques de sécurité organisationnelles et cadres de conformité. Permet l'accès sécurisé aux ressources d'entreprise tout en maintenant l'autonomie du développeur."
-        },
-        "sub_features": [
-          {
-            "name": "secured_main",
-            "title": {
-              "en": "Domain Connection – Decentralised Trust Layer",
-              "fr": "Connexion de domaine – Couche de confiance décentralisée"
-            },
-            "description": {
-              "en": "Displays connection state, authenticated user and live policy‑compliance indicators.",
-              "fr": "Affiche l'état de connexion, l'utilisateur authentifié et les indicateurs de conformité aux politiques en direct."
-            },
-            "items": [
-              {
-                "name": "connection_status",
-                "title": {
-                  "en": "Connection Status",
-                  "fr": "Statut de connexion"
-                },
-                "description": {
-                  "en": "Shows whether the device is bound to a domain and the current user identity.",
-                  "fr": "Indique si l'appareil est rattaché à un domaine et l'identité utilisateur courante."
-                }
-              },
-              {
-                "name": "user_domain_input",
-                "title": {
-                  "en": "User@Domain Input",
-                  "fr": "Saisie utilisateur@domaine"
-                },
-                "description": {
-                  "en": "Field to specify the account that should be linked to the domain.",
-                  "fr": "Champ pour spécifier le compte devant être lié au domaine."
-                }
-              },
-              {
-                "name": "pin_code_input",
-                "title": {
-                  "en": "PIN Code Input",
-                  "fr": "Saisie code PIN"
-                },
-                "description": {
-                  "en": "Enter the one‑time PIN supplied by your administrator.",
-                  "fr": "Saisissez le code PIN à usage unique fourni par votre administrateur."
-                }
-              },
-              {
-                "name": "connect_button",
-                "title": {
-                  "en": "Connect",
-                  "fr": "Se connecter"
-                },
-                "description": {
-                  "en": "Initiates secure onboarding to the trust domain.",
-                  "fr": "Démarre l'intégration sécurisée au domaine de confiance."
-                }
-              },
-              {
-                "name": "disconnect_button",
-                "title": {
-                  "en": "Disconnect",
-                  "fr": "Se déconnecter"
-                },
-                "description": {
-                  "en": "Removes the device from the domain trust layer.",
-                  "fr": "Retire l'appareil de la couche de confiance du domaine."
-                }
-              },
-              {
-                "name": "request_pin_button",
-                "title": {
-                  "en": "Request PIN",
-                  "fr": "Demander PIN"
-                },
-                "description": {
-                  "en": "Sends a request to admins for a new onboarding PIN.",
-                  "fr": "Envoie une demande aux administrateurs pour un nouveau PIN d'onboarding."
-                }
-              },
-              {
-                "name": "connection_indicators",
-                "title": {
-                  "en": "Success Indicators",
-                  "fr": "Indicateurs de succès"
-                },
-                "description": {
-                  "en": "Green tick once the trust handshake and policy fetch succeed.",
-                  "fr": "Coche verte après la poignée de main de confiance et la récupération des politiques."
-                }
-              },
-              {
-                "name": "last_network_activity",
-                "title": {
-                  "en": "Last Network Activity",
-                  "fr": "Dernière activité réseau"
-                },
-                "description": {
-                  "en": "Timestamp of last secure channel heartbeat.",
-                  "fr": "Horodatage du dernier heartbeat du canal sécurisé."
-                }
-              },
-              {
-                "name": "backend_error_display",
-                "title": {
-                  "en": "Backend Errors",
-                  "fr": "Erreurs backend"
-                },
-                "description": {
-                  "en": "Displays any server‑side issues preventing connection.",
-                  "fr": "Affiche les problèmes côté serveur empêchant la connexion."
-                }
-              }
-            ]
+      "description": {
+        "en": "Advanced network scanning and device discovery tool that identifies all devices on your network. Uses NMAP-inspired scanning techniques with AI-powered risk analysis to detect vulnerable devices, open ports, and potential security misconfigurations that could compromise your environment.",
+        "fr": "Outil avancé de scan réseau et découverte d'appareils qui identifie tous les appareils sur votre réseau. Utilise des techniques de scan inspirées de NMAP avec une analyse de risque basée sur l'IA pour détecter les appareils vulnérables, les ports ouverts et les mauvaises configurations de sécurité qui pourraient compromettre votre environnement."
+      },
+      "sub_features": [
+        {
+          "name": "lan_community_sharing",
+          "title": {
+            "en": "Community Device Sharing",
+            "fr": "Partage d'Appareils Communautaire"
           },
-          {
-            "name": "secured_certification",
-            "title": {
-              "en": "Certify – Shareable Security Proof",
-              "fr": "Certifier – Preuve de sécurité partageable"
-            },
-            "description": {
-              "en": "Generate a signed, tamper‑proof report of your current Security Score for third‑party validation.",
-              "fr": "Générez un rapport signé et infalsifiable de votre score de sécurité actuel pour validation par des tiers."
-            },
-            "items": [
-              {
-                "name": "email_input",
-                "title": { "en": "Email Address", "fr": "Adresse email" },
-                "description": {
-                  "en": "Destination address to receive the certification report or verification link.",
-                  "fr": "Adresse de destination pour recevoir le rapport de certification ou le lien de vérification."
-                }
-              },
-              {
-                "name": "get_signature_button",
-                "title": { "en": "Get Score Signature", "fr": "Obtenir la signature du score" },
-                "description": {
-                  "en": "One‑click action to request a cryptographically signed hash of your current Security Posture Score.",
-                  "fr": "Action en un clic pour demander un hachage cryptographiquement signé de votre score de posture de sécurité actuel."
-                }
-              },
-              {
-                "name": "signature_input",
-                "title": { "en": "Signature Field", "fr": "Champ signature" },
-                "description": {
-                  "en": "Read‑only box where the generated signature string appears (or can be pasted for verification).",
-                  "fr": "Champ en lecture seule où apparaît la chaîne de signature générée (ou peut être collée pour vérification)."
-                }
-              },
-              {
-                "name": "request_report_button",
-                "title": { "en": "Request Report", "fr": "Demander le rapport" },
-                "description": {
-                  "en": "Creates a PDF/JSON report of compliance evidence and emails it to the specified address.",
-                  "fr": "Crée un rapport PDF/JSON de preuves de conformité et l'envoie à l'adresse spécifiée."
-                }
-              },
-              {
-                "name": "certification_description",
-                "title": { "en": "Process Overview", "fr": "Vue d'ensemble du processus" },
-                "description": {
-                  "en": "Explains how signatures are generated, verified and stored on the decentralised trust ledger.",
-                  "fr": "Explique comment les signatures sont générées, vérifiées et stockées sur le registre de confiance décentralisé."
-                }
-              },
-              {
-                "name": "last_report_info",
-                "title": { "en": "Last Report", "fr": "Dernier rapport" },
-                "description": {
-                  "en": "Timestamp and status (SUCCESS / FAILED) of the most recent certification request.",
-                  "fr": "Horodatage et statut (SUCCÈS / ÉCHEC) de la dernière demande de certification."
-                }
-              },
-              {
-                "name": "signature_display",
-                "title": { "en": "Signature Display", "fr": "Affichage de la signature" },
-                "description": {
-                  "en": "Base64‑encoded signature string with copy‑to‑clipboard icon.",
-                  "fr": "Chaîne de signature encodée Base64 avec icône de copie dans le presse‑papiers."
-                }
-              }
-            ]
-          },
-          {
-            "name": "secured_policy",
-            "title": {
-              "en": "Policies – Compliance Status",
-              "fr": "Politiques – État de conformité"
-            },
-            "description": {
-              "en": "Live summary of every domain policy with pass/fail badge and remediation hints.",
-              "fr": "Résumé en temps réel de chaque politique de domaine avec badge réussi/échoué et pistes de remédiation."
-            },
-            "items": [
-              {
-                "name": "policy_list",
-                "title": { "en": "Policy List", "fr": "Liste des politiques" },
-                "description": {
-                  "en": "Table of organisation‑defined security policies applicable to this device.",
-                  "fr": "Table des politiques de sécurité définies par l'organisation applicables à cet appareil."
-                }
-              },
-              {
-                "name": "policy_status",
-                "title": { "en": "Compliance Status", "fr": "Statut de conformité" },
-                "description": {
-                  "en": "Pass (green), Fail (red) or Warning (orange) badge for each policy.",
-                  "fr": "Badge Pass (vert), Fail (rouge) ou Avertissement (orange) pour chaque politique."
-                }
-              },
-              {
-                "name": "policy_requirements",
-                "title": { "en": "Policy Requirements", "fr": "Exigences de la politique" },
-                "description": {
-                  "en": "Human‑readable description of the technical or administrative requirement.",
-                  "fr": "Description lisible de l'exigence technique ou administrative."
-                }
-              },
-              {
-                "name": "compliance_reasons",
-                "title": { "en": "Non‑Compliance Reasons", "fr": "Raisons de non‑conformité" },
-                "description": {
-                  "en": "Explains why a policy failed, with links to relevant posture checks.",
-                  "fr": "Explique pourquoi une politique a échoué, avec liens vers les contrôles de posture pertinents."
-                }
-              },
-              {
-                "name": "minimum_score_requirements",
-                "title": { "en": "Minimum Score", "fr": "Score minimum" },
-                "description": {
-                  "en": "Displays required Security Posture Score threshold (e.g. ≥ 3.5 ★).",
-                  "fr": "Affiche le seuil requis de score de posture de sécurité (ex. ≥ 3,5 ★)."
-                }
-              },
-              {
-                "name": "security_checks_status",
-                "title": { "en": "Security Checks", "fr": "Vérifications de sécurité" },
-                "description": {
-                  "en": "Sub‑controls (disk encryption, UAC, MFA) indicating individual pass/fail states.",
-                  "fr": "Sous‑contrôles (chiffrement disque, UAC, MFA) indiquant les états pass/fail individuels."
-                }
-              },
-              {
-                "name": "tag_requirements",
-                "title": { "en": "Required Tags", "fr": "Tags requis" },
-                "description": {
-                  "en": "Labels such as ISO, SOC2, HIPAA that must be satisfied for the policy.",
-                  "fr": "Étiquettes telles que ISO, SOC2, HIPAA devant être satisfaites pour la politique."
-                }
-              },
-              {
-                "name": "policy_providers",
-                "title": { "en": "Policy Provider", "fr": "Fournisseur de politique" },
-                "description": {
-                  "en": "Resource owner (GitHub, Google Workspace, Azure AD) enforcing the rule.",
-                  "fr": "Propriétaire de ressource (GitHub, Google Workspace, Azure AD) appliquant la règle."
-                }
-              }
-            ]
+          "description": {
+            "en": "Share device information securely with other EDAMAME users on your network. Desktop devices with admin privileges can help mobile devices discover MAC addresses and additional network details that require elevated permissions. All shared data is cryptographically signed and filtered to ensure freshness and relevance.",
+            "fr": "Partagez les informations d'appareils de manière sécurisée avec d'autres utilisateurs EDAMAME sur votre réseau. Les appareils de bureau avec privilèges administrateur peuvent aider les appareils mobiles à découvrir les adresses MAC et détails réseau supplémentaires nécessitant des permissions élevées. Toutes les données partagées sont cryptographiquement signées et filtrées pour assurer fraîcheur et pertinence."
           }
-        ]
-      },  
-      {
-        "name": "capture",
-        "title": {
-          "en": "Network Traffic Analysis",
-          "fr": "Analyse du Trafic Réseau"
         },
-        "description": {
-          "en": "Real‑time packet capture with AI anomaly detection and process‑level insight.",
-          "fr": "Capture de paquets en temps réel avec détection d'anomalies IA et visibilité au niveau des processus."
-        },
-        "sub_features": [
-          {
-            "name": "capture_main",
-            "title": {
-              "en": "Traffic Sunburst – Live Visualisation",
-              "fr": "Sunburst de trafic – Visualisation en direct"
-            },
-            "description": {
-              "en": "Animated sunburst showing domains, protocols and geographies touched by your device in real time.",
-              "fr": "Sunburst animé affichant en temps réel les domaines, protocoles et zones géographiques contactés par votre appareil."
-            },
-            "items": [
-              {
-                "name": "capture_control_button",
-                "title": {
-                  "en": "Start / Stop Capture",
-                  "fr": "Démarrer / arrêter la capture"
-                },
-                "description": {
-                  "en": "Toggles the packet‑capture engine and live visualisation.",
-                  "fr": "Active ou désactive le moteur de capture de paquets et la visualisation en direct."
-                }
-              },
-              {
-                "name": "capture_status",
-                "title": {
-                  "en": "Capture Status",
-                  "fr": "Statut de capture"
-                },
-                "description": {
-                  "en": "Indicator showing RUNNING or PAUSED with timestamp.",
-                  "fr": "Indicateur affichant EN COURS ou PAUSE avec horodatage."
-                }
-              },
-              {
-                "name": "whitelist_name",
-                "title": {
-                  "en": "Whitelist Name",
-                  "fr": "Nom de la liste blanche"
-                },
-                "description": {
-                  "en": "Profile against which captured traffic will be compared.",
-                  "fr": "Profil auquel le trafic capturé sera comparé."
-                }
-              },
-              {
-                "name": "whitelist_conformance",
-                "title": {
-                  "en": "Whitelist Conformance",
-                  "fr": "Conformité à la liste blanche"
-                },
-                "description": {
-                  "en": "Shows PASS / FAIL if sessions deviate from the whitelist.",
-                  "fr": "Indique PASS / FAIL si les sessions dévient de la liste blanche."
-                }
-              },
-              {
-                "name": "anomaly_detection",
-                "title": {
-                  "en": "Anomaly Detection",
-                  "fr": "Détection d'anomalies"
-                },
-                "description": {
-                  "en": "AI flagging suspicious sessions in real time.",
-                  "fr": "IA signalant les sessions suspectes en temps réel."
-                }
-              },
-              {
-                "name": "blacklist_detection",
-                "title": {
-                  "en": "Blacklist Hits",
-                  "fr": "Détections liste noire"
-                },
-                "description": {
-                  "en": "Alerts when traffic targets known malicious hosts.",
-                  "fr": "Alerte lorsque le trafic cible des hôtes malveillants connus."
-                }
-              },
-              {
-                "name": "session_filter",
-                "title": {
-                  "en": "Session Filters",
-                  "fr": "Filtres de session"
-                },
-                "description": {
-                  "en": "Toggle UDP/TCP, inbound/outbound, added/activated views.",
-                  "fr": "Active/désactive les vues UDP/TCP, entrant/sortant, ajouté/activé."
-                }
-              },
-              {
-                "name": "traffic_statistics",
-                "title": {
-                  "en": "Traffic Stats",
-                  "fr": "Statistiques trafic"
-                },
-                "description": {
-                  "en": "Totals for inbound, outbound and session count.",
-                  "fr": "Totaux pour entrant, sortant et nombre de sessions."
-                }
-              }
-            ]
+        {
+          "name": "lan_mdns_discovery",
+          "title": {
+            "en": "Smart Service Discovery",
+            "fr": "Découverte Intelligente de Services"
           },
-          {
-            "name": "capture",
-            "title": {
-              "en": "Traffic",
-              "fr": "Trafic"
-            },
-            "description": {
-              "en": "Real‑time packet capture with AI anomaly detection and process‑level insight.",
-              "fr": "Capture de paquets en temps réel avec détection d'anomalies IA et visibilité au niveau des processus."
-            },
-            "sub_features": [
-              {
-                "name": "capture_main",
-                "title": {
-                  "en": "Traffic Sunburst – Live Visualisation",
-                  "fr": "Sunburst de trafic – Visualisation en direct"
-                },
-                "description": {
-                  "en": "Animated sunburst showing domains, protocols and geographies touched by your device in real time.",
-                  "fr": "Sunburst animé affichant en temps réel les domaines, protocoles et zones géographiques contactés par votre appareil."
-                },
-                "items": [
-                  {
-                    "name": "capture_control_button",
-                    "title": { "en": "Start / Stop Capture", "fr": "Démarrer / arrêter la capture" },
-                    "description": {
-                      "en": "Toggles the packet‑capture engine and live visualisation.",
-                      "fr": "Active ou désactive le moteur de capture de paquets et la visualisation en direct."
-                    }
-                  },
-                  {
-                    "name": "capture_status",
-                    "title": { "en": "Capture Status", "fr": "Statut de capture" },
-                    "description": {
-                      "en": "Indicator showing RUNNING or PAUSED with timestamp.",
-                      "fr": "Indicateur affichant EN COURS ou PAUSE avec horodatage."
-                    }
-                  },
-                  {
-                    "name": "whitelist_name",
-                    "title": { "en": "Whitelist Name", "fr": "Nom de la liste blanche" },
-                    "description": {
-                      "en": "Profile against which captured traffic will be compared.",
-                      "fr": "Profil auquel le trafic capturé sera comparé."
-                    }
-                  },
-                  {
-                    "name": "whitelist_conformance",
-                    "title": { "en": "Whitelist Conformance", "fr": "Conformité à la liste blanche" },
-                    "description": {
-                      "en": "Shows PASS / FAIL if sessions deviate from the whitelist.",
-                      "fr": "Indique PASS / FAIL si les sessions dévient de la liste blanche."
-                    }
-                  },
-                  {
-                    "name": "anomaly_detection",
-                    "title": { "en": "Anomaly Detection", "fr": "Détection d'anomalies" },
-                    "description": {
-                      "en": "AI flagging suspicious sessions in real time.",
-                      "fr": "IA signalant les sessions suspectes en temps réel."
-                    }
-                  },
-                  {
-                    "name": "blacklist_detection",
-                    "title": { "en": "Blacklist Hits", "fr": "Détections liste noire" },
-                    "description": {
-                      "en": "Alerts when traffic targets known malicious hosts.",
-                      "fr": "Alerte lorsque le trafic cible des hôtes malveillants connus."
-                    }
-                  },
-                  {
-                    "name": "session_filter",
-                    "title": { "en": "Session Filters", "fr": "Filtres de session" },
-                    "description": {
-                      "en": "Toggle UDP/TCP, inbound/outbound, added/activated views.",
-                      "fr": "Active/désactive les vues UDP/TCP, entrant/sortant, ajouté/activé."
-                    }
-                  },
-                  {
-                    "name": "traffic_statistics",
-                    "title": { "en": "Traffic Stats", "fr": "Statistiques trafic" },
-                    "description": {
-                      "en": "Totals for inbound, outbound and session count.",
-                      "fr": "Totaux pour entrant, sortant et nombre de sessions."
-                    }
-                  }
-                ]
-              },          
-              {
-                "name": "capture_sessions",
-                "title": {
-                  "en": "Sessions – Connection Details",
-                  "fr": "Sessions – Détails des connexions"
-                },
-                "description": {
-                  "en": "Detailed analysis of network sessions including connection patterns, data flows and security assessment.",
-                  "fr": "Analyse détaillée des sessions réseau incluant les modèles de connexion, flux de données et évaluation de sécurité."
-                },
-                "items": [
-                  {
-                    "name": "sessions_list",
-                    "title": { "en": "Network Sessions List", "fr": "Liste des sessions réseau" },
-                    "description": {
-                      "en": "Sortable table of every active or recently captured session.",
-                      "fr": "Tableau triable de chaque session active ou récemment capturée."
-                    }
-                  },
-                  {
-                    "name": "session_details",
-                    "title": { "en": "Session Details Panel", "fr": "Panneau de détails de session" },
-                    "description": {
-                      "en": "Side panel exposing DNS, TLS, ASN and geolocation for a selected session.",
-                      "fr": "Panneau latéral affichant DNS, TLS, ASN et géolocalisation pour la session sélectionnée."
-                    }
-                  },
-                  {
-                    "name": "source_destination",
-                    "title": { "en": "Source & Destination", "fr": "Source & destination" },
-                    "description": {
-                      "en": "Displays local process plus remote hostname / IP.",
-                      "fr": "Affiche le processus local et le nom d'hôte / IP distant."
-                    }
-                  },
-                  {
-                    "name": "port_protocol",
-                    "title": { "en": "Port & Protocol", "fr": "Port & protocole" },
-                    "description": {
-                      "en": "Service mapping (e.g. https 443, ssh 22).",
-                      "fr": "Correspondance service (ex. https 443, ssh 22)."
-                    }
-                  },
-                  {
-                    "name": "bytes_transferred",
-                    "title": { "en": "Bytes Transferred", "fr": "Octets transférés" },
-                    "description": {
-                      "en": "Live throughput in / out plus total volume.",
-                      "fr": "Débit en temps réel entrant / sortant et volume total."
-                    }
-                  },
-                  {
-                    "name": "session_duration",
-                    "title": { "en": "Session Duration", "fr": "Durée de la session" },
-                    "description": {
-                      "en": "Elapsed time since session start or re‑activation.",
-                      "fr": "Temps écoulé depuis le début ou la réactivation de la session."
-                    }
-                  },
-                  {
-                    "name": "criticality_indicator",
-                    "title": { "en": "Session Criticality", "fr": "Criticité de session" },
-                    "description": {
-                      "en": "Colour badge: green normal, orange suspicious, red abnormal.",
-                      "fr": "Badge couleur : vert normal, orange suspect, rouge anormal."
-                    }
-                  },
-                  {
-                    "name": "dismiss_session_button",
-                    "title": { "en": "Dismiss Session", "fr": "Ignorer la session" },
-                    "description": {
-                      "en": "Hides or whitelists the selected session from future alerts.",
-                      "fr": "Masque ou place en liste blanche la session sélectionnée pour les futures alertes."
-                    }
-                  },
-                  {
-                    "name": "session_remediation",
-                    "title": { "en": "Session Remediation Guide", "fr": "Guide de remédiation de session" },
-                    "description": {
-                      "en": "Suggests firewall rules or process quarantine to mitigate risk.",
-                      "fr": "Propose des règles de pare‑feu ou la mise en quarantaine du processus pour atténuer le risque."
-                    }
-                  }
-                ]
-              },          
-              {
-                "name": "capture_processes",
-                "title": {
-                  "en": "Processes – Per‑App Activity",
-                  "fr": "Processus – Activité par application"
-                },
-                "description": {
-                  "en": "Process‑level network activity monitoring showing which applications are accessing the network.",
-                  "fr": "Surveillance de l'activité réseau au niveau des processus montrant quelles applications accèdent au réseau."
-                },
-                "items": [
-                  {
-                    "name": "process_list",
-                    "title": { "en": "Active Processes", "fr": "Processus actifs" },
-                    "description": {
-                      "en": "Table of processes that generated traffic during the capture window.",
-                      "fr": "Tableau des processus ayant généré du trafic pendant la fenêtre de capture."
-                    }
-                  },
-                  {
-                    "name": "process_names",
-                    "title": { "en": "Process Name", "fr": "Nom du processus" },
-                    "description": {
-                      "en": "Human‑readable application or binary name.",
-                      "fr": "Nom lisible de l'application ou du binaire."
-                    }
-                  },
-                  {
-                    "name": "process_ids",
-                    "title": { "en": "PID", "fr": "PID" },
-                    "description": {
-                      "en": "Operating‑system Process Identifier.",
-                      "fr": "Identifiant de processus du système d'exploitation."
-                    }
-                  },
-                  {
-                    "name": "process_paths",
-                    "title": { "en": "Executable Path", "fr": "Chemin exécutable" },
-                    "description": {
-                      "en": "Full filesystem path for binary verification and trust checks.",
-                      "fr": "Chemin complet dans le système de fichiers pour la vérification et la confiance du binaire."
-                    }
-                  },
-                  {
-                    "name": "process_users",
-                    "title": { "en": "User Account", "fr": "Compte utilisateur" },
-                    "description": {
-                      "en": "OS account under which the process is running.",
-                      "fr": "Compte du système d'exploitation sous lequel le processus s'exécute."
-                    }
-                  },
-                  {
-                    "name": "network_activity",
-                    "title": { "en": "Current Network Activity", "fr": "Activité réseau en cours" },
-                    "description": {
-                      "en": "Live inbound/outbound throughput for the process.",
-                      "fr": "Débit entrant/sortant en direct pour le processus."
-                    }
-                  },
-                  {
-                    "name": "bandwidth_usage",
-                    "title": { "en": "Total Bandwidth", "fr": "Bande passante totale" },
-                    "description": {
-                      "en": "Cumulative bytes transferred since capture start.",
-                      "fr": "Octets cumulés transférés depuis le début de la capture."
-                    }
-                  },
-                  {
-                    "name": "connection_count",
-                    "title": { "en": "Connection Count", "fr": "Nombre de connexions" },
-                    "description": {
-                      "en": "How many sessions the process opened during capture.",
-                      "fr": "Nombre de sessions ouvertes par le processus durant la capture."
-                    }
-                  }
-                ]
-              },          
-              {
-                "name": "capture_history",
-                "title": {
-                  "en": "Anomaly History – Threat Logs",
-                  "fr": "Historique d'anomalies – Journaux de menaces"
-                },
-                "description": {
-                  "en": "Chronological log of suspicious or high‑risk network events detected by AI.",
-                  "fr": "Journal chronologique des événements réseau suspects ou à haut risque détectés par IA."
-                },
-                "items": [
-                  {
-                    "name": "traffic_timeline",
-                    "title": { "en": "Traffic History Timeline", "fr": "Chronologie historique du trafic" },
-                    "description": {
-                      "en": "Scrollable timeline of captures with drill‑down to session level.",
-                      "fr": "Chronologie défilante des captures avec zoom jusqu'au niveau session."
-                    }
-                  },
-                  {
-                    "name": "anomaly_history",
-                    "title": { "en": "Anomaly Log", "fr": "Journal des anomalies" },
-                    "description": {
-                      "en": "Log of every suspicious / abnormal detection and its disposition.",
-                      "fr": "Journal de chaque détection suspecte / anormale et de sa disposition."
-                    }
-                  },
-                  {
-                    "name": "session_history",
-                    "title": { "en": "Historical Sessions", "fr": "Sessions historiques" },
-                    "description": {
-                      "en": "Archive of past sessions with ability to re‑analyse PCAPs.",
-                      "fr": "Archive des sessions passées avec possibilité de ré‑analyser les PCAP."
-                    }
-                  },
-                  {
-                    "name": "traffic_trends",
-                    "title": { "en": "Traffic Trends", "fr": "Tendances trafic" },
-                    "description": {
-                      "en": "Line/area graphs showing bandwidth trends over days or weeks.",
-                      "fr": "Graphiques ligne/aire montrant les tendances de bande passante sur jours ou semaines."
-                    }
-                  },
-                  {
-                    "name": "security_events",
-                    "title": { "en": "Security Event Timeline", "fr": "Chronologie des événements de sécurité" },
-                    "description": {
-                      "en": "Highlights when blacklist hits or anomaly spikes occurred.",
-                      "fr": "Met en évidence les moments où des détections liste noire ou pics d'anomalies se sont produits."
-                    }
-                  },
-                  {
-                    "name": "bandwidth_history",
-                    "title": { "en": "Bandwidth Usage History", "fr": "Historique de bande passante" },
-                    "description": {
-                      "en": "Cumulative upload / download totals per capture run.",
-                      "fr": "Totaux cumulés d'envoi / réception par session de capture."
-                    }
-                  },
-                  {
-                    "name": "search_filter",
-                    "title": { "en": "History Search & Filter", "fr": "Recherche & filtre historique" },
-                    "description": {
-                      "en": "Find specific events by domain, ASN or process name.",
-                      "fr": "Trouve des événements spécifiques par domaine, ASN ou nom de processus."
-                    }
-                  }
-                ]
-              }
-            ]
+          "description": {
+            "en": "Automatically discovers all network services and smart devices using advanced mDNS techniques. Identifies device types, extracts hardware addresses from network protocols, and maps service relationships. Provides comprehensive visibility into printers, smart TVs, IoT devices, and other network-connected equipment without requiring manual configuration.",
+            "fr": "Découvre automatiquement tous les services réseau et appareils intelligents en utilisant des techniques mDNS avancées. Identifie les types d'appareils, extrait les adresses matérielles des protocoles réseau et mappe les relations de services. Fournit une visibilité complète sur les imprimantes, téléviseurs intelligents, appareils IoT et autres équipements connectés sans configuration manuelle."
           }
-        ]
-      }
-    ]
-  }
+        },
+        {
+          "name": "lan_port_scanning",
+          "title": {
+            "en": "Service Detection & Analysis",
+            "fr": "Détection et Analyse de Services"
+          },
+          "description": {
+            "en": "Scans network devices to identify running services and their versions. Analyzes service responses to determine software details and potential security implications. Helps you understand what services are exposed on your network and whether they need attention or hardening.",
+            "fr": "Scanne les appareils réseau pour identifier les services en cours d'exécution et leurs versions. Analyse les réponses de service pour déterminer les détails logiciels et implications de sécurité potentielles. Vous aide à comprendre quels services sont exposés sur votre réseau et s'ils nécessitent attention ou durcissement."
+          }
+        },
+        {
+          "name": "lan_cve_analysis",
+          "title": {
+            "en": "Vulnerability Assessment",
+            "fr": "Évaluation des Vulnérabilités"
+          },
+          "description": {
+            "en": "Automatically checks discovered services and devices against known security vulnerabilities. Provides real-time alerts when vulnerable services are detected and assesses the security risk level of each device. Helps prioritize which devices need security updates or additional protection measures.",
+            "fr": "Vérifie automatiquement les services et appareils découverts contre les vulnérabilités de sécurité connues. Fournit des alertes en temps réel lorsque des services vulnérables sont détectés et évalue le niveau de risque de sécurité de chaque appareil. Aide à prioriser quels appareils nécessitent des mises à jour de sécurité ou mesures de protection supplémentaires."
+          }
+        },
+        {
+          "name": "lan_device_profiling",
+          "title": {
+            "en": "Intelligent Device Recognition",
+            "fr": "Reconnaissance Intelligente d'Appareils"
+          },
+          "description": {
+            "en": "Automatically identifies device types using multiple detection methods including network ports, service signatures, manufacturer information, and device behavior patterns. Recognizes printers, IoT devices, smart TVs, cameras, gaming consoles, and more. Provides instant clarity about what devices are on your network.",
+            "fr": "Identifie automatiquement les types d'appareils en utilisant plusieurs méthodes de détection incluant les ports réseau, signatures de service, informations fabricant et motifs de comportement. Reconnaît imprimantes, appareils IoT, téléviseurs intelligents, caméras, consoles de jeu et plus. Fournit une clarté instantanée sur les appareils présents sur votre réseau."
+          }
+        },
+        {
+          "name": "lan_risk_classification",
+          "title": {
+            "en": "Security Risk Scoring",
+            "fr": "Scoring de Risque de Sécurité"
+          },
+          "description": {
+            "en": "Assigns security risk levels to each discovered device based on vulnerability exposure and service configuration. Devices with many vulnerabilities receive high-risk ratings, while secure devices get low-risk scores. Helps you focus security efforts on the most problematic devices first.",
+            "fr": "Attribue des niveaux de risque de sécurité à chaque appareil découvert basé sur l'exposition aux vulnérabilités et la configuration des services. Les appareils avec beaucoup de vulnérabilités reçoivent des notes de risque élevé, tandis que les appareils sécurisés obtiennent des scores de faible risque. Vous aide à concentrer les efforts de sécurité sur les appareils les plus problématiques en premier."
+          }
+        },
+        {
+          "name": "lan_notification_system",
+          "title": {
+            "en": "Device Activity Monitoring",
+            "fr": "Surveillance d'Activité des Appareils"
+          },
+          "description": {
+            "en": "Tracks when devices join or leave your network and monitors their activity status. Sends notifications when new devices appear or when previously seen devices become active again. Helps you stay aware of network changes and potential unauthorized device access.",
+            "fr": "Suit quand les appareils rejoignent ou quittent votre réseau et surveille leur statut d'activité. Envoie des notifications lorsque de nouveaux appareils apparaissent ou quand des appareils précédemment vus deviennent actifs à nouveau. Vous aide à rester conscient des changements réseau et accès d'appareils non autorisés potentiels."
+          }
+        }
+      ]
+    },
+    {
+      "name": "secured",
+      "title": {
+        "en": "Zero Trust & Compliance",
+        "fr": "Zéro Confiance et Conformité"
+      },
+      "description": {
+        "en": "Zero-trust integration layer that connects your workstation to organizational security policies and compliance frameworks. Enables secure access to corporate resources while maintaining user autonomy. Generates signed compliance reports for ISO27001, SOC2, and other frameworks to prove your device meets security requirements.",
+        "fr": "Couche d'intégration zéro-trust qui connecte votre station de travail aux politiques de sécurité organisationnelles et cadres de conformité. Permet l'accès sécurisé aux ressources d'entreprise tout en maintenant l'autonomie de l'utilisateur."
+      },
+      "sub_features": [
+        {
+          "name": "secured_main",
+          "title": {
+            "en": "Domain Connection – Decentralised Trust Layer",
+            "fr": "Connexion de domaine – Couche de confiance décentralisée"
+          },
+          "description": {
+            "en": "Displays connection state, authenticated user and live policy‑compliance indicators.",
+            "fr": "Affiche l'état de connexion, l'utilisateur authentifié et les indicateurs de conformité aux politiques en direct."
+          },
+          "items": [
+            {
+              "name": "connection_status",
+              "title": {
+                "en": "Connection Status",
+                "fr": "Statut de connexion"
+              },
+              "description": {
+                "en": "Shows whether the device is bound to a domain and the current user identity.",
+                "fr": "Indique si l'appareil est rattaché à un domaine et l'identité utilisateur courante."
+              }
+            },
+            {
+              "name": "user_domain_input",
+              "title": {
+                "en": "User@Domain Input",
+                "fr": "Saisie utilisateur@domaine"
+              },
+              "description": {
+                "en": "Field to specify the account that should be linked to a domain as defined in EDAMAME backend.",
+                "fr": "Champ pour spécifier le compte devant être lié au domaine comme défini dans le backend EDAMAME."
+              }
+            },
+            {
+              "name": "pin_code_input",
+              "title": {
+                "en": "PIN Code Input",
+                "fr": "Saisie code PIN"
+              },
+              "description": {
+                "en": "Enter the one‑time PIN supplied by EDAMAME backend to confirm your identity.",
+                "fr": "Saisissez le code PIN à usage unique fourni par le backend EDAMAME pour confirmer votre identité."
+              }
+            },
+            {
+              "name": "connect_button",
+              "title": {
+                "en": "Connect",
+                "fr": "Se connecter"
+              },
+              "description": {
+                "en": "Initiates continuous reporting of the security score of the device to the EDAMAME backend.",
+                "fr": "Démarre la transmission continue du score de sécurité de l'appareil au backend EDAMAME."
+              }
+            },
+            {
+              "name": "disconnect_button",
+              "title": {
+                "en": "Disconnect",
+                "fr": "Se déconnecter"
+              },
+              "description": {
+                "en": "Stop the device from reporting its security score to the EDAMAME backend.",
+                "fr": "Arrête la transmission du score de sécurité de l'appareil au backend EDAMAME."
+              }
+            },
+            {
+              "name": "request_pin_button",
+              "title": {
+                "en": "Request PIN",
+                "fr": "Demander PIN"
+              },
+              "description": {
+                "en": "Sends a request to EDAMAME backend for a new onboarding PIN.",
+                "fr": "Envoie une demande au backend EDAMAME pour un nouveau PIN d'onboarding."
+              }
+            },
+            {
+              "name": "last_network_activity",
+              "title": {
+                "en": "Last Network Activity",
+                "fr": "Dernière activité réseau"
+              },
+              "description": {
+                "en": "Timestamp of last network activity.",
+                "fr": "Horodatage de la dernière activité réseau."
+              }
+            },
+            {
+              "name": "backend_error_display",
+              "title": {
+                "en": "Backend Errors",
+                "fr": "Erreurs backend"
+              },
+              "description": {
+                "en": "Displays any server‑side issues preventing connection.",
+                "fr": "Affiche les problèmes côté serveur empêchant la connexion."
+              }
+            }
+          ]
+        },
+        {
+          "name": "secured_certification",
+          "title": {
+            "en": "Certify – Shareable Security Proof",
+            "fr": "Certifier – Preuve de sécurité partageable"
+          },
+          "description": {
+            "en": "Generate a signed, tamper‑proof report of your current Security Score for third‑party validation.",
+            "fr": "Générez un rapport signé et infalsifiable de votre score de sécurité actuel pour validation par des tiers."
+          },
+          "items": [
+            {
+              "name": "email_input",
+              "title": {
+                "en": "Email Address",
+                "fr": "Adresse email"
+              },
+              "description": {
+                "en": "Destination address to receive the certification report or verification link.",
+                "fr": "Adresse de destination pour recevoir le rapport de certification ou le lien de vérification."
+              }
+            },
+            {
+              "name": "get_signature_button",
+              "title": {
+                "en": "Get Score Signature",
+                "fr": "Obtenir la signature du score"
+              },
+              "description": {
+                "en": "One‑click action to request a cryptographically signed hash of your current Security Posture Score.",
+                "fr": "Action en un clic pour demander un hachage cryptographiquement signé de votre score de posture de sécurité actuel."
+              }
+            },
+            {
+              "name": "request_report_button",
+              "title": {
+                "en": "Request Report",
+                "fr": "Demander le rapport"
+              },
+              "description": {
+                "en": "Trigger the EDAMAME backend to generate a report of compliance evidence and send it to the specified address.",
+                "fr": "Déclenche le backend EDAMAME pour générer un rapport de preuves de conformité et l'envoyer à l'adresse spécifiée."
+              }
+            },
+            {
+              "name": "last_report_info",
+              "title": {
+                "en": "Last Report",
+                "fr": "Dernier rapport"
+              },
+              "description": {
+                "en": "Timestamp and status (SUCCESS / FAILED) of the most recent certification request.",
+                "fr": "Horodatage et statut (SUCCÈS / ÉCHEC) de la dernière demande de certification."
+              }
+            }
+          ]
+        },
+        {
+          "name": "secured_policy",
+          "title": {
+            "en": "Policies – Compliance Status",
+            "fr": "Politiques – État de conformité"
+          },
+          "description": {
+            "en": "Live summary of every domain policy with pass/fail badge and remediation hints.",
+            "fr": "Résumé en temps réel de chaque politique de domaine avec badge réussi/échoué et pistes de remédiation."
+          },
+          "items": [
+            {
+              "name": "policy_list",
+              "title": {
+                "en": "Policy List",
+                "fr": "Liste des politiques"
+              },
+              "description": {
+                "en": "Table of organisation‑defined security policies applicable to this device.",
+                "fr": "Table des politiques de sécurité définies par l'organisation applicables à cet appareil."
+              }
+            },
+            {
+              "name": "policy_status",
+              "title": {
+                "en": "Compliance Status",
+                "fr": "Statut de conformité"
+              },
+              "description": {
+                "en": "Pass (green), Fail (red) or Warning (orange) badge for each policy.",
+                "fr": "Badge Pass (vert), Fail (rouge) ou Avertissement (orange) pour chaque politique."
+              }
+            },
+            {
+              "name": "policy_requirements",
+              "title": {
+                "en": "Policy Requirements",
+                "fr": "Exigences de la politique"
+              },
+              "description": {
+                "en": "Human‑readable description of the technical or administrative requirement.",
+                "fr": "Description lisible de l'exigence technique ou administrative."
+              }
+            },
+            {
+              "name": "compliance_reasons",
+              "title": {
+                "en": "Non‑Compliance Reasons",
+                "fr": "Raisons de non‑conformité"
+              },
+              "description": {
+                "en": "Explains why a policy failed, with links to relevant posture checks.",
+                "fr": "Explique pourquoi une politique a échoué, avec liens vers les contrôles de posture pertinents."
+              }
+            },
+            {
+              "name": "minimum_score_requirements",
+              "title": {
+                "en": "Minimum Score",
+                "fr": "Score minimum"
+              },
+              "description": {
+                "en": "Displays required Security Posture Score threshold (e.g. ≥ 3.5 ★).",
+                "fr": "Affiche le seuil requis de score de posture de sécurité (ex. ≥ 3,5 ★)."
+              }
+            },
+            {
+              "name": "security_checks_status",
+              "title": {
+                "en": "Security Checks",
+                "fr": "Vérifications de sécurité"
+              },
+              "description": {
+                "en": "Sub‑controls indicating individual pass/fail states.",
+                "fr": "Sous‑contrôles indiquant les états pass/fail individuels."
+              }
+            },
+            {
+              "name": "tag_requirements",
+              "title": {
+                "en": "Required Tags",
+                "fr": "Tags requis"
+              },
+              "description": {
+                "en": "Labels such as ISO, SOC2, CIS, etc. that must be satisfied for the policy.",
+                "fr": "Étiquettes telles que ISO, SOC2, CIS, etc. devant être satisfaites pour la politique."
+              }
+            },
+            {
+              "name": "policy_providers",
+              "title": {
+                "en": "Policy Provider",
+                "fr": "Fournisseur de politique"
+              },
+              "description": {
+                "en": "Resource (GitHub, Google Workspace, Azure AD, etc.) for which the policy is enforced.",
+                "fr": "Ressource (GitHub, Google Workspace, Azure AD, etc.) pour laquelle la politique est appliquée."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "capture",
+      "title": {
+        "en": "Network Traffic Analysis",
+        "fr": "Analyse du Trafic Réseau"
+      },
+      "description": {
+        "en": "Real‑time packet capture with ML anomaly detection and process‑level insight.",
+        "fr": "Capture de paquets en temps réel avec détection d'anomalies ML et visibilité au niveau des processus."
+      },
+      "sub_features": [
+        {
+          "name": "capture",
+          "title": {
+            "en": "Traffic",
+            "fr": "Trafic"
+          },
+          "description": {
+            "en": "Real‑time packet capture with AI anomaly detection and process‑level insight.",
+            "fr": "Capture de paquets en temps réel avec détection d'anomalies IA et visibilité au niveau des processus."
+          },
+          "sub_features": [
+            {
+              "name": "capture_main",
+              "title": {
+                "en": "Traffic Sunburst – Live Visualisation",
+                "fr": "Sunburst de trafic – Visualisation en direct"
+              },
+              "description": {
+                "en": "Animated sunburst showing domains, protocols and geographies touched by your device in real time.",
+                "fr": "Sunburst animé affichant en temps réel les domaines, protocoles et zones géographiques contactés par votre appareil."
+              },
+              "items": [
+                {
+                  "name": "capture_control_button",
+                  "title": {
+                    "en": "Start / Stop Capture",
+                    "fr": "Démarrer / arrêter la capture"
+                  },
+                  "description": {
+                    "en": "Toggles the packet‑capture engine and live visualisation.",
+                    "fr": "Active ou désactive le moteur de capture de paquets et la visualisation en direct."
+                  }
+                },
+                {
+                  "name": "capture_status",
+                  "title": {
+                    "en": "Capture Status",
+                    "fr": "Statut de capture"
+                  },
+                  "description": {
+                    "en": "Indicator showing RUNNING or PAUSED with timestamp.",
+                    "fr": "Indicateur affichant EN COURS ou PAUSE avec horodatage."
+                  }
+                },
+                {
+                  "name": "whitelist_name",
+                  "title": {
+                    "en": "Whitelist Name",
+                    "fr": "Nom de la liste blanche"
+                  },
+                  "description": {
+                    "en": "Profile against which captured traffic will be compared.",
+                    "fr": "Profil auquel le trafic capturé sera comparé."
+                  }
+                },
+                {
+                  "name": "whitelist_conformance",
+                  "title": {
+                    "en": "Whitelist Conformance",
+                    "fr": "Conformité à la liste blanche"
+                  },
+                  "description": {
+                    "en": "Shows PASS / FAIL if sessions deviate from the whitelist.",
+                    "fr": "Indique PASS / FAIL si les sessions dévient de la liste blanche."
+                  }
+                },
+                {
+                  "name": "anomaly_detection",
+                  "title": {
+                    "en": "Anomaly Detection",
+                    "fr": "Détection d'anomalies"
+                  },
+                  "description": {
+                    "en": "AI flagging suspicious sessions in real time.",
+                    "fr": "IA signalant les sessions suspectes en temps réel."
+                  }
+                },
+                {
+                  "name": "blacklist_detection",
+                  "title": {
+                    "en": "Blacklist Hits",
+                    "fr": "Détections liste noire"
+                  },
+                  "description": {
+                    "en": "Alerts when traffic targets known malicious hosts.",
+                    "fr": "Alerte lorsque le trafic cible des hôtes malveillants connus."
+                  }
+                },
+                {
+                  "name": "session_filter",
+                  "title": {
+                    "en": "Session Filters",
+                    "fr": "Filtres de session"
+                  },
+                  "description": {
+                    "en": "Toggle UDP/TCP, inbound/outbound, added/activated views.",
+                    "fr": "Active/désactive les vues UDP/TCP, entrant/sortant, ajouté/activé."
+                  }
+                },
+                {
+                  "name": "traffic_statistics",
+                  "title": {
+                    "en": "Traffic Stats",
+                    "fr": "Statistiques trafic"
+                  },
+                  "description": {
+                    "en": "Totals for inbound, outbound and session count.",
+                    "fr": "Totaux pour entrant, sortant et nombre de sessions."
+                  }
+                }
+              ]
+            },
+            {
+              "name": "capture_sessions",
+              "title": {
+                "en": "Sessions – Connection Details",
+                "fr": "Sessions – Détails des connexions"
+              },
+              "description": {
+                "en": "Detailed analysis of network sessions including connection patterns, data flows and security assessment.",
+                "fr": "Analyse détaillée des sessions réseau incluant les modèles de connexion, flux de données et évaluation de sécurité."
+              },
+              "items": [
+                {
+                  "name": "sessions_list",
+                  "title": {
+                    "en": "Network Sessions List",
+                    "fr": "Liste des sessions réseau"
+                  },
+                  "description": {
+                    "en": "Sortable table of every active or recently captured session.",
+                    "fr": "Tableau triable de chaque session active ou récemment capturée."
+                  }
+                },
+                {
+                  "name": "session_details",
+                  "title": {
+                    "en": "Session Details Panel",
+                    "fr": "Panneau de détails de session"
+                  },
+                  "description": {
+                    "en": "Side panel exposing DNS, TLS, ASN and geolocation for a selected session.",
+                    "fr": "Panneau latéral affichant DNS, TLS, ASN et géolocalisation pour la session sélectionnée."
+                  }
+                },
+                {
+                  "name": "source_destination",
+                  "title": {
+                    "en": "Source & Destination",
+                    "fr": "Source & destination"
+                  },
+                  "description": {
+                    "en": "Displays local process plus remote hostname / IP.",
+                    "fr": "Affiche le processus local et le nom d'hôte / IP distant."
+                  }
+                },
+                {
+                  "name": "port_protocol",
+                  "title": {
+                    "en": "Port & Protocol",
+                    "fr": "Port & protocole"
+                  },
+                  "description": {
+                    "en": "Service mapping (e.g. https 443, ssh 22).",
+                    "fr": "Correspondance service (ex. https 443, ssh 22)."
+                  }
+                },
+                {
+                  "name": "bytes_transferred",
+                  "title": {
+                    "en": "Bytes Transferred",
+                    "fr": "Octets transférés"
+                  },
+                  "description": {
+                    "en": "Live throughput in / out plus total volume.",
+                    "fr": "Débit en temps réel entrant / sortant et volume total."
+                  }
+                },
+                {
+                  "name": "session_duration",
+                  "title": {
+                    "en": "Session Duration",
+                    "fr": "Durée de la session"
+                  },
+                  "description": {
+                    "en": "Elapsed time since session start or re‑activation.",
+                    "fr": "Temps écoulé depuis le début ou la réactivation de la session."
+                  }
+                },
+                {
+                  "name": "criticality_indicator",
+                  "title": {
+                    "en": "Session Criticality",
+                    "fr": "Criticité de session"
+                  },
+                  "description": {
+                    "en": "Colour badge: green normal, orange suspicious, red abnormal.",
+                    "fr": "Badge couleur : vert normal, orange suspect, rouge anormal."
+                  }
+                },
+                {
+                  "name": "dismiss_session_button",
+                  "title": {
+                    "en": "Dismiss Session",
+                    "fr": "Ignorer la session"
+                  },
+                  "description": {
+                    "en": "Hides or whitelists the selected session from future alerts.",
+                    "fr": "Masque ou place en liste blanche la session sélectionnée pour les futures alertes."
+                  }
+                },
+                {
+                  "name": "session_remediation",
+                  "title": {
+                    "en": "Session Remediation Guide",
+                    "fr": "Guide de remédiation de session"
+                  },
+                  "description": {
+                    "en": "Suggests firewall rules or process quarantine to mitigate risk.",
+                    "fr": "Propose des règles de pare‑feu ou la mise en quarantaine du processus pour atténuer le risque."
+                  }
+                }
+              ]
+            },
+            {
+              "name": "capture_processes",
+              "title": {
+                "en": "Processes – Per‑App Activity",
+                "fr": "Processus – Activité par application"
+              },
+              "description": {
+                "en": "Process‑level network activity monitoring showing which applications are accessing the network.",
+                "fr": "Surveillance de l'activité réseau au niveau des processus montrant quelles applications accèdent au réseau."
+              },
+              "items": [
+                {
+                  "name": "process_list",
+                  "title": {
+                    "en": "Active Processes",
+                    "fr": "Processus actifs"
+                  },
+                  "description": {
+                    "en": "Table of processes that generated traffic during the capture window.",
+                    "fr": "Tableau des processus ayant généré du trafic pendant la fenêtre de capture."
+                  }
+                },
+                {
+                  "name": "process_names",
+                  "title": {
+                    "en": "Process Name",
+                    "fr": "Nom du processus"
+                  },
+                  "description": {
+                    "en": "Human‑readable application or binary name.",
+                    "fr": "Nom lisible de l'application ou du binaire."
+                  }
+                },
+                {
+                  "name": "process_ids",
+                  "title": {
+                    "en": "PID",
+                    "fr": "PID"
+                  },
+                  "description": {
+                    "en": "Operating‑system Process Identifier.",
+                    "fr": "Identifiant de processus du système d'exploitation."
+                  }
+                },
+                {
+                  "name": "process_paths",
+                  "title": {
+                    "en": "Executable Path",
+                    "fr": "Chemin exécutable"
+                  },
+                  "description": {
+                    "en": "Full filesystem path for binary verification and trust checks.",
+                    "fr": "Chemin complet dans le système de fichiers pour la vérification et la confiance du binaire."
+                  }
+                },
+                {
+                  "name": "process_users",
+                  "title": {
+                    "en": "User Account",
+                    "fr": "Compte utilisateur"
+                  },
+                  "description": {
+                    "en": "OS account under which the process is running.",
+                    "fr": "Compte du système d'exploitation sous lequel le processus s'exécute."
+                  }
+                },
+                {
+                  "name": "network_activity",
+                  "title": {
+                    "en": "Current Network Activity",
+                    "fr": "Activité réseau en cours"
+                  },
+                  "description": {
+                    "en": "Live inbound/outbound throughput for the process.",
+                    "fr": "Débit entrant/sortant en direct pour le processus."
+                  }
+                },
+                {
+                  "name": "bandwidth_usage",
+                  "title": {
+                    "en": "Total Bandwidth",
+                    "fr": "Bande passante totale"
+                  },
+                  "description": {
+                    "en": "Cumulative bytes transferred since capture start.",
+                    "fr": "Octets cumulés transférés depuis le début de la capture."
+                  }
+                },
+                {
+                  "name": "connection_count",
+                  "title": {
+                    "en": "Connection Count",
+                    "fr": "Nombre de connexions"
+                  },
+                  "description": {
+                    "en": "How many sessions the process opened during capture.",
+                    "fr": "Nombre de sessions ouvertes par le processus durant la capture."
+                  }
+                }
+              ]
+            },
+            {
+              "name": "capture_history",
+              "title": {
+                "en": "Anomaly History – Threat Logs",
+                "fr": "Historique d'anomalies – Journaux de menaces"
+              },
+              "description": {
+                "en": "Chronological log of suspicious or high‑risk network events detected by AI.",
+                "fr": "Journal chronologique des événements réseau suspects ou à haut risque détectés par IA."
+              },
+              "items": [
+                {
+                  "name": "traffic_timeline",
+                  "title": {
+                    "en": "Traffic History Timeline",
+                    "fr": "Chronologie historique du trafic"
+                  },
+                  "description": {
+                    "en": "Scrollable timeline of captures with drill‑down to session level.",
+                    "fr": "Chronologie défilante des captures avec zoom jusqu'au niveau session."
+                  }
+                },
+                {
+                  "name": "anomaly_history",
+                  "title": {
+                    "en": "Anomaly Log",
+                    "fr": "Journal des anomalies"
+                  },
+                  "description": {
+                    "en": "Log of every suspicious / abnormal detection and its disposition.",
+                    "fr": "Journal de chaque détection suspecte / anormale et de sa disposition."
+                  }
+                },
+                {
+                  "name": "session_history",
+                  "title": {
+                    "en": "Historical Sessions",
+                    "fr": "Sessions historiques"
+                  },
+                  "description": {
+                    "en": "Archive of past sessions with ability to re‑analyse PCAPs.",
+                    "fr": "Archive des sessions passées avec possibilité de ré‑analyser les PCAP."
+                  }
+                },
+                {
+                  "name": "traffic_trends",
+                  "title": {
+                    "en": "Traffic Trends",
+                    "fr": "Tendances trafic"
+                  },
+                  "description": {
+                    "en": "Line/area graphs showing bandwidth trends over days or weeks.",
+                    "fr": "Graphiques ligne/aire montrant les tendances de bande passante sur jours ou semaines."
+                  }
+                },
+                {
+                  "name": "security_events",
+                  "title": {
+                    "en": "Security Event Timeline",
+                    "fr": "Chronologie des événements de sécurité"
+                  },
+                  "description": {
+                    "en": "Highlights when blacklist hits or anomaly spikes occurred.",
+                    "fr": "Met en évidence les moments où des détections liste noire ou pics d'anomalies se sont produits."
+                  }
+                },
+                {
+                  "name": "bandwidth_history",
+                  "title": {
+                    "en": "Bandwidth Usage History",
+                    "fr": "Historique de bande passante"
+                  },
+                  "description": {
+                    "en": "Cumulative upload / download totals per capture run.",
+                    "fr": "Totaux cumulés d'envoi / réception par session de capture."
+                  }
+                },
+                {
+                  "name": "search_filter",
+                  "title": {
+                    "en": "History Search & Filter",
+                    "fr": "Recherche & filtre historique"
+                  },
+                  "description": {
+                    "en": "Find specific events by domain, ASN or process name.",
+                    "fr": "Trouve des événements spécifiques par domaine, ASN ou nom de processus."
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
