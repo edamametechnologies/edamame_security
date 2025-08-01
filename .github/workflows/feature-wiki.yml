@@ -18,7 +18,9 @@ jobs:
           edamame_pin: ${{ secrets.EDAMAME_POSTURE_PIN }}
           edamame_id: ${{ github.run_id }}
           checkout: true
-
+          wait_for_api: true
+          wait_for_https: true
+          
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
