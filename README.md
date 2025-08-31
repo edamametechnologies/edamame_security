@@ -2,46 +2,97 @@
 
 ## Overview
 
-EDAMAME Security is your all-in-one tool to secure, understand and prove your dev workstation—from OS to network. 
+EDAMAME Security is your all‑in‑one tool to secure, understand, and prove the security of your development workstation—from OS to network.
 
 **⚠️ Note: This application is currently closed source. This repository is used for issue tracking and community feedback.**
 
 ## Key Features
 
-### 🛡️ Security Benchmarks
-Assess your workstation against industry standards including:
-- CIS Benchmarks
-- SOC2 compliance requirements
-- ISO27001 standards
+### 🛡️ Security Advisor for System and Network Issues
+- At‑a‑glance view of outstanding issues
+- Sort issues by priority and category
+- Be notified of new issues in real time
 
-### 🔧 One-Click Remediation
-Automatically fix common security issues without requiring deep security expertise. Get your workstation secure with minimal effort.
+### 🛡️ System Security Benchmarks and One-Click Remediations
+- Assess your workstation against industry standards, including:
+    - CIS Benchmarks
+    - SOC 2 / ISO 27001 compliance requirements
+    - Privacy requirements
+- Visualize all elements comprising your system attack surface with their status in real time
+- Automatically fix common system security issues without requiring deep security expertise
+    - Get a detailed description of each issue
+    - Perform one‑click remediations with technical explanations
+- Run batch automated remediations to harden your system with one click
+- Keep a history of remediations and roll back if needed
 
-### 🌐 Network Visibility
-- **Built-in network scanning** (inspired by 'nmap')
-- **Traffic monitoring** (inspired by 'Wireshark')
-- Comprehensive network analysis and visibility
+### 🌐 Built‑in Network Scanning (inspired by Nmap)
+- Host discovery on local LAN segments
+- Gateway and host discovery beyond direct LAN segments (useful for complex LAN setups)
+- Fast TCP/UDP port scanning of known service ports
+- Automated, safe, rate‑limited cyclic scans
+- Service and version detection (HTTP banner analysis)
+- Smart service discovery (mDNS)
+- MAC address capture and vendor lookup
+- CVE lookup for open ports and vendors
+- Automated device classification (computers, cameras, routers, etc.)
+- Customizable device names
+- Device criticality analysis based on open ports and CVEs
+- Anonymized, RAG‑based AI analysis of device vulnerabilities
+- Flag critical device ports as safe when applicable
+- LAN sharing of device metadata (e.g., your PC app feeds your phone app missing metadata like MAC addresses)
+- Get notifications for new devices
+- Searchable history of network events and seen networks
+
+### 📶 Traffic Monitoring (inspired by Wireshark)
+- Capture traffic sessions with domain and process context
+- At‑a‑glance, real‑time traffic view using sunburst visualization
+- Flexible table view of traffic sessions
+- Flag blacklisted traffic
+- ML‑based traffic anomaly detection
+- Anonymized, RAG‑based AI analysis of suspicious sessions
+- Flag suspicious sessions as safe when applicable
+- Get notifications for new suspicious sessions
+- Searchable history of suspicious sessions
 
 ### 🔐 Digital Identity Management
-- Integrated with [HaveIBeenPwned.com](https://haveibeenpwned.com)
 - Monitor and manage your online identity exposure
-- Stay informed about data breaches affecting your accounts
+- Integrated with [HaveIBeenPwned.com](https://haveibeenpwned.com)
+- Anonymized, RAG‑based AI analysis of data breaches
+- Flag breaches as safe when properly handled
+- Get notifications about data breaches affecting your email accounts
 
 ### 📊 Compliance Reports
-Generate tamper-proof reports to demonstrate security compliance to clients with a single click. Perfect for:
-- Contractors proving baseline security requirements
-- Teams demonstrating SOC2 or ISO27001 compliance
-- Audit preparation and compliance verification
+- Compute and anonymously sign your current security posture through EDAMAME's backend
+- Generate SOC 2 or ISO 27001 one‑click compliance reports and make them available to third parties (employers, partners, etc.)
+- Connect to the no‑MDM platform at [hub.edamame.tech](https://hub.edamame.tech), enabling:
+   - Continuously report your security posture without compromising privacy to gain access to protected resources
+   - Compatible with identity providers (Google, Microsoft), Git platforms (GitHub, GitLab), VPNs (Tailscale, NetBird), and firewalls (Fortinet)
 
-### 🎯 Certified Compliance Report Generation
-Contractors required to prove their device meets baseline security requirements (SOC2 or ISO27001) can generate a compliance report with a single click.
+### Download the Application
 
-### 🔒 Privacy-First Management
-Connects to our "no MDM" platform ([dashboard.edamame.tech](https://dashboard.edamame.tech)), enabling:
-- Continuous reporting of security posture
-- Integration with access control systems
-- Zero Trust implementation for code, secrets, and test data access
-- Device management without traditional MDM overhead
+#### macOS
+- Install from [EDAMAME](https://edamame.s3.eu-west-1.amazonaws.com/macos/edamame-latest.pkg) for an all-in-one intallation or the [Mac App Store](https://apps.apple.com/app/edamame-security/id1636777324) for an Apple vetted sanboxed main app and EDAMAME to install the [EDAMAME Helper](https://github.com/edamametechnologies/edamame_helper/releases) open-source system helper for the required system access
+
+
+#### Windows
+1. Install from [EDAMAME](https://edamame.s3.eu-west-1.amazonaws.com/windows/edamame-latest.msix) or the [Microsoft Store](https://www.microsoft.com/store/apps/9N399LMTKQLQ) for a Microsoft vetted sandboxed main app
+2. Install the [EDAMAME Helper](https://github.com/edamametechnologies/edamame_helper/releases) open-source system helper for the required system access
+3. Install [npcap](https://npcap.com/#download) to enable traffic capture
+
+#### Linux
+```bash
+# Import GPG key and add repository
+wget -O - https://edamame.s3.eu-west-1.amazonaws.com/repo/public.key | sudo gpg --dearmor -o /usr/share/keyrings/edamame.gpg
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/edamame.gpg] https://edamame.s3.eu-west-1.amazonaws.com/repo stable main" | sudo tee /etc/apt/sources.list.d/edamame.list
+
+# Install EDAMAME Security
+sudo apt update
+sudo apt install edamame-security
+```
+
+#### Mobile
+- iOS: [App Store](https://apps.apple.com/app/edamame-security-mobile/id6448937722)
+- Android/ChromeOS: [Google Play Store](https://play.google.com/store/apps/details?id=com.edamametech.edamame)
 
 ## Repository Purpose
 
@@ -54,9 +105,13 @@ This repository serves as the public issue tracker for EDAMAME Security. While t
 
 ## Getting Started
 
-To download and use EDAMAME Security, visit https://github.com/edamametechnologies.
+To download and use EDAMAME Security, visit [github.com/edamametechnologies](https://github.com/edamametechnologies).
 
-## Support & Issues
+## Feature Wiki
+
+- Full feature descriptions with screenshots are available in the project wiki: [github.com/edamametechnologies/edamame_security/wiki](https://github.com/edamametechnologies/edamame_security/wiki)
+
+## Support and Issues
 
 If you encounter any issues or have feature requests, please:
 

@@ -132,7 +132,7 @@
         "fr": "Posture de Sécurité et Menaces"
       },
       "description": {
-        "en": "Comprehensive security assessment engine that evaluates your workstation against industry best practices and compliance frameworks. Provides real-time threat detection, vulnerability analysis, and automated hardening recommendations to secure your SDLC endpoints without disrupting development workflows.",
+        "en": "Comprehensive security assessment engine that evaluates your workstation against industry best practices and compliance frameworks. Provides real-time threat detection, vulnerability analysis, and automated hardening recommendations to secure your endpoints without disrupting development workflows.",
         "fr": "Moteur d'évaluation de sécurité complet qui évalue votre station de travail selon les meilleures pratiques et cadres de conformité. Fournit détection de menaces en temps réel, analyse de vulnérabilités et recommandations de durcissement automatisées."
       },
       "sub_features": [
