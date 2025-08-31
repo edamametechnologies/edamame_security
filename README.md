@@ -71,7 +71,7 @@ EDAMAME Security is your all‑in‑one tool to secure, understand, and prove th
 ### Download the Application
 
 #### macOS
-- Install from [EDAMAME](https://edamame.s3.eu-west-1.amazonaws.com/macos/edamame-latest.pkg) for an all-in-one intallation or the [Mac App Store](https://apps.apple.com/app/edamame-security/id1636777324) for an Apple vetted sanboxed main app and EDAMAME to install the [EDAMAME Helper](https://github.com/edamametechnologies/edamame_helper/releases) open-source system helper for the required system access
+- Install from [EDAMAME](https://edamame.s3.eu-west-1.amazonaws.com/macos/edamame-latest.pkg) for an all-in-one installation or the [Mac App Store](https://apps.apple.com/app/edamame-security/id1636777324) for an Apple‑vetted sandboxed main app; use EDAMAME to install the [EDAMAME Helper](https://github.com/edamametechnologies/edamame_helper/releases) open‑source system helper for the required system access
 
 
 #### Windows
