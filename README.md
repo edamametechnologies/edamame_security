@@ -9,6 +9,7 @@ EDAMAME Security is your all‑in‑one tool to secure, understand, and prove th
 ## Key Features
 
 ### 🛡️ Security Advisor for System and Network Issues
+- Holistic security posture report using frontier LLM
 - At‑a‑glance view of outstanding issues
 - Sort issues by priority and category
 - Be notified of new issues in real time
@@ -69,6 +70,14 @@ EDAMAME Security is your all‑in‑one tool to secure, understand, and prove th
    - Compatible with identity providers (Google, Microsoft), Git platforms (GitHub, GitLab), VPNs (Tailscale, NetBird), and firewalls (Fortinet)
 
 ### Download the Application
+
+| Feature | macOS | Windows | Linux | iOS | Android/ChromeOS |
+| --- | --- | --- | --- | --- | --- |
+| System | ✓ | ✓ | ✓ | ✓ | ✓ |
+| LAN | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Identity | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Traffic | ✓ | requires Npcap | beta | - | - |
+| Helper | mandatory | optional | built-in | none | none |
 
 #### macOS
 - Install from [EDAMAME](https://edamame.s3.eu-west-1.amazonaws.com/macos/edamame-latest.pkg) for an all-in-one installation or the [Mac App Store](https://apps.apple.com/app/edamame-security/id1636777324) for an Apple‑vetted sandboxed main app; use EDAMAME to install the [EDAMAME Helper](https://github.com/edamametechnologies/edamame_helper/releases) open‑source system helper for the required system access
