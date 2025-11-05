@@ -14,6 +14,27 @@ EDAMAME Security is your all‑in‑one tool to secure, understand, and prove th
 - Sort issues by priority and category
 - Be notified of new issues in real time
 
+### 🤖 AI Assistant (Agentic System)
+- Intelligent automation that analyzes and resolves security issues automatically
+- Three operational modes:
+  - **"Do It For Me"** - Fully automatic handling of routine security tasks
+  - **"Analyze & Recommend"** - Review AI decisions before execution
+  - **"Backend AI Analysis"** - Deep network security scans and comprehensive reports
+- Supports multiple LLM providers:
+  - **Claude (Anthropic)** - Detailed reasoning and nuanced security decisions
+  - **OpenAI (GPT)** - Fast responses and general-purpose analysis
+  - **Ollama (Local)** - Privacy-focused, runs entirely on your machine
+- Complete transparency with full action history and reasoning
+- Undo capability for all automated actions
+- **MCP (Model Context Protocol) integration**:
+  - Secure localhost-only server (port 3000) with Streamable HTTP transport
+  - PSK authentication for external AI tools
+  - 9 security automation tools (advisor, score, agentic)
+  - Connect Claude Desktop, MCP Inspector, or build custom workflows
+  - Test interactively with MCP Inspector: `npx @modelcontextprotocol/inspector --server-url http://127.0.0.1:3000/mcp --transport http`
+- Interactive features: email reports, custom security questions
+- See [AGENTIC.md](AGENTIC.md) for detailed user guide and MCP testing instructions
+
 ### 🛡️ System Security Benchmarks and One-Click Remediations
 - Assess your workstation against industry standards, including:
     - CIS Benchmarks
