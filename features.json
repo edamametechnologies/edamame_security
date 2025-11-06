@@ -126,6 +126,98 @@
       ]
     },
     {
+      "name": "agentic",
+      "title": {
+        "en": "AI Assistant",
+        "fr": "Assistant IA"
+      },
+      "description": {
+        "en": "Intelligent security automation that analyzes and resolves security issues automatically using Large Language Models. Processes security todos with AI reasoning, provides transparent decision-making, and maintains complete action history with undo capability.",
+        "fr": "Automatisation de sécurité intelligente qui analyse et résout automatiquement les problèmes de sécurité à l'aide de grands modèles de langage. Traite les todos de sécurité avec raisonnement IA, fournit une prise de décision transparente et maintient un historique complet des actions avec capacité d'annulation."
+      },
+      "sub_features": [
+        {
+          "name": "agentic_main",
+          "title": {
+            "en": "AI Assistant – Automated Security Management",
+            "fr": "Assistant IA – Gestion de Sécurité Automatisée"
+          },
+          "description": {
+            "en": "Automated security todo processing with three operational modes: 'Do It For Me' (fully automatic), 'Analyze & Recommend' (review before execution), and 'Backend AI Analysis' (deep security scans). Supports Claude, OpenAI, and Ollama providers with complete transparency and undo capability.",
+            "fr": "Traitement automatisé des todos de sécurité avec trois modes opérationnels : 'Faites-le pour moi' (entièrement automatique), 'Analyser et Recommander' (révision avant exécution) et 'Analyse IA Backend' (scans de sécurité profonds). Prend en charge les fournisseurs Claude, OpenAI et Ollama avec transparence complète et capacité d'annulation."
+          },
+          "items": [
+            {
+              "name": "do_it_for_me",
+              "title": {
+                "en": "Do It For Me",
+                "fr": "Faites-le pour moi"
+              },
+              "description": {
+                "en": "Fully automatic mode where AI analyzes all pending todos, auto-resolves safe actions immediately, and escalates complex/risky issues for manual review.",
+                "fr": "Mode entièrement automatique où l'IA analyse tous les todos en attente, résout automatiquement les actions sûres immédiatement et escalade les problèmes complexes/risqués pour révision manuelle."
+              }
+            },
+            {
+              "name": "analyze_recommend",
+              "title": {
+                "en": "Analyze & Recommend",
+                "fr": "Analyser et Recommander"
+              },
+              "description": {
+                "en": "Review mode where AI makes identical decisions but waits for your approval before executing. Perfect for learning AI behavior and sensitive environments.",
+                "fr": "Mode révision où l'IA prend des décisions identiques mais attend votre approbation avant d'exécuter. Parfait pour apprendre le comportement de l'IA et les environnements sensibles."
+              }
+            },
+            {
+              "name": "backend_analysis",
+              "title": {
+                "en": "Backend AI Analysis",
+                "fr": "Analyse IA Backend"
+              },
+              "description": {
+                "en": "Deep security scan where backend AI analyzes all network traffic and system data, generates comprehensive security reports, and creates new security recommendations.",
+                "fr": "Scan de sécurité profond où l'IA backend analyse tout le trafic réseau et les données système, génère des rapports de sécurité complets et crée de nouvelles recommandations de sécurité."
+              }
+            },
+            {
+              "name": "action_history",
+              "title": {
+                "en": "Action History",
+                "fr": "Historique des Actions"
+              },
+              "description": {
+                "en": "Complete audit trail of all AI actions with status tracking (Auto-Resolved, Requires Confirmation, Escalated, Failed, Obsolete), filtering capabilities, and bulk operations (Confirm All, Undo All).",
+                "fr": "Piste d'audit complète de toutes les actions IA avec suivi d'état (Résolu Auto, Nécessite Confirmation, Escaladé, Échoué, Obsolète), capacités de filtrage et opérations groupées (Confirmer Tout, Annuler Tout)."
+              }
+            },
+            {
+              "name": "llm_providers",
+              "title": {
+                "en": "LLM Provider Configuration",
+                "fr": "Configuration du Fournisseur LLM"
+              },
+              "description": {
+                "en": "Supports multiple AI providers: Claude (Anthropic) for detailed reasoning, OpenAI (GPT) for fast responses, and Ollama for privacy-focused local processing. Easy API key setup with connection testing.",
+                "fr": "Prend en charge plusieurs fournisseurs IA : Claude (Anthropic) pour raisonnement détaillé, OpenAI (GPT) pour réponses rapides et Ollama pour traitement local axé sur la confidentialité. Configuration facile de clé API avec test de connexion."
+              }
+            },
+            {
+              "name": "mcp_server",
+              "title": {
+                "en": "MCP Server Integration",
+                "fr": "Intégration Serveur MCP"
+              },
+              "description": {
+                "en": "Streamable HTTP MCP server (localhost-only, port 3000) with PSK authentication. Enables external AI tools like Claude Desktop to securely access 9 security automation tools (advisor, score, agentic). Connect via npx mcp-remote for Claude Desktop or test with MCP Inspector.",
+                "fr": "Serveur MCP HTTP Streamable (localhost uniquement, port 3000) avec authentification PSK. Permet aux outils IA externes comme Claude Desktop d'accéder en toute sécurité à 9 outils d'automatisation de sécurité (conseiller, score, agentique). Connectez via npx mcp-remote pour Claude Desktop ou testez avec MCP Inspector."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "posture",
       "title": {
         "en": "Security Posture & Threats",
