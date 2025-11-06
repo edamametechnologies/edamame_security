@@ -20,6 +20,9 @@ EDAMAME Security is your all‑in‑one tool to secure, understand, and prove th
   - **"Do It For Me"** - Fully automatic handling of routine security tasks
   - **"Analyze & Recommend"** - Review AI decisions before execution
   - **"Backend AI Analysis"** - Deep network security scans and comprehensive reports
+- Scheduled automation with granular control:
+  - **"Auto run"** toggle - Schedule automatic processing at regular intervals (5min/1h/1day)
+  - **"Auto confirm"** toggle - Control whether scheduled runs execute safe actions immediately or wait for approval
 - Supports multiple LLM providers:
   - **Claude (Anthropic)** - Detailed reasoning and nuanced security decisions
   - **OpenAI (GPT)** - Fast responses and general-purpose analysis

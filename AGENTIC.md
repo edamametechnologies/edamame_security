@@ -84,6 +84,42 @@ When you click the AI Assistant section in the Advisor tab, you'll see three ope
 - Periodic deep security audits
 - Finding patterns across your network
 
+### 🎛️ Automated Processing Controls
+
+The AI Assistant provides two powerful toggles for scheduled automation:
+
+#### **"Auto run" Toggle**
+Enable scheduled automatic processing of security todos at regular intervals (5 min, 1 hour, or 1 day):
+
+- **When enabled:** AI Assistant automatically runs at your chosen interval
+- **When disabled:** You manually trigger "Do It For Me" or "Analyze & Recommend" when needed
+- **Best for:** Continuous security monitoring and maintenance
+
+#### **"Auto confirm" Toggle**
+Controls whether scheduled runs automatically execute safe actions or just analyze them:
+
+- **When enabled (Auto mode):** Scheduled runs execute "auto_resolve" decisions immediately
+  - Safe actions are performed without waiting for approval
+  - Escalated items still require manual review
+  - Perfect for hands-off security maintenance
+
+- **When disabled (Manual mode):** Scheduled runs only analyze and record decisions
+  - All "auto_resolve" decisions wait for your confirmation
+  - Nothing is executed automatically
+  - You review and approve actions in the UI when convenient
+  - Escalated items still flagged for manual review
+
+**Example workflow:**
+1. Enable "Auto run" with 1-hour interval
+2. Enable "Auto confirm"
+3. Result: Every hour, AI processes new security todos and executes safe actions automatically
+4. You only see escalated items that need your expertise
+
+**Safety note:** Both toggles appear only when:
+- AI provider is configured (Claude, OpenAI, or Ollama)
+- API connection is tested and working
+- This ensures automation only runs when AI is properly set up
+
 ### 📊 Action History
 
 Every action the AI takes is logged in the **Action History** section:
