@@ -19,23 +19,24 @@ EDAMAME Security is your all‑in‑one tool to secure, understand, and prove th
 - Three operational modes:
   - **"Do It For Me"** - Fully automatic handling of routine security tasks
   - **"Analyze & Recommend"** - Review AI decisions before execution
-  - **"Backend AI Analysis"** - Deep network security scans and comprehensive reports
+  - **"Backend AI Analysis"** - Deep network security scans and comprehensive reports (click **Request report** to start the scan, then **Read latest report** to view the newest results)
 - Scheduled automation with granular control:
   - **"Auto run"** toggle - Schedule automatic processing at regular intervals (5min/1h/1day)
   - **"Auto confirm"** toggle - Control whether scheduled runs execute safe actions immediately or wait for approval
+- Collapsible automation panel with live workflow status updates, Do It For Me / Analyze & Recommend buttons, and an inline cancel action for in-flight jobs.
 - Supports multiple LLM providers:
   - **Claude (Anthropic)** - Detailed reasoning and nuanced security decisions
   - **OpenAI (GPT)** - Fast responses and general-purpose analysis
   - **Ollama (Local)** - Privacy-focused, runs entirely on your machine
-- Complete transparency with full action history and reasoning
+- Complete transparency with filterable action history, Confirm/Undo All controls, detailed reasoning per action, and deep links back to Remed, LANscan, Capture, and Pwned views.
 - Undo capability for all automated actions
 - **MCP (Model Context Protocol) integration**:
-  - Secure localhost-only server (port 3000) with Streamable HTTP transport
+  - Secure localhost-only server (port 3000) with Streamable HTTP transport (exposed on desktop builds; mobile hides the control)
   - PSK authentication for external AI tools
   - 9 security automation tools (advisor, score, agentic)
   - Connect Claude Desktop, MCP Inspector, or build custom workflows
   - Test interactively with MCP Inspector: `npx @modelcontextprotocol/inspector --server-url http://127.0.0.1:3000/mcp --transport http`
-- Interactive features: email reports, custom security questions
+- Interactive features: email reports, custom security questions once you open the latest report dialog
 - See [AGENTIC.md](AGENTIC.md) for detailed user guide and MCP testing instructions
 
 ### 🛡️ System Security Benchmarks and One-Click Remediations

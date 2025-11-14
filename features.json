@@ -143,8 +143,8 @@
             "fr": "Assistant IA – Gestion de Sécurité Automatisée"
           },
           "description": {
-            "en": "Automated security todo processing with three operational modes: 'Do It For Me' (fully automatic), 'Analyze & Recommend' (review before execution), and 'Backend AI Analysis' (deep security scans). Supports Claude, OpenAI, and Ollama providers with complete transparency and undo capability.",
-            "fr": "Traitement automatisé des todos de sécurité avec trois modes opérationnels : 'Faites-le pour moi' (entièrement automatique), 'Analyser et Recommander' (révision avant exécution) et 'Analyse IA Backend' (scans de sécurité profonds). Prend en charge les fournisseurs Claude, OpenAI et Ollama avec transparence complète et capacité d'annulation."
+            "en": "Automated security todo processing with three operational modes: 'Do It For Me' (fully automatic), 'Analyze & Recommend' (review before execution), and 'Backend AI Analysis' (deep security scans triggered via Request report ➜ Read latest report). Supports Claude, OpenAI, and Ollama providers with complete transparency and undo capability.",
+            "fr": "Traitement automatisé des todos de sécurité avec trois modes opérationnels : 'Faites-le pour moi' (entièrement automatique), 'Analyser et Recommander' (révision avant exécution) et 'Analyse IA Backend' (scans profonds déclenchés via Demander un rapport ➜ Lire le dernier rapport). Prend en charge les fournisseurs Claude, OpenAI et Ollama avec transparence complète et capacité d'annulation."
           },
           "items": [
             {
@@ -170,14 +170,47 @@
               }
             },
             {
+              "name": "agentic_automation_controls",
+              "title": {
+                "en": "Immediate Automation Controls",
+                "fr": "Commandes d'automatisation immédiates"
+              },
+              "description": {
+                "en": "Collapsible panel with Do It For Me, Analyze & Recommend, and Cancel buttons, mirroring the in-app workflow with contextual tooltips.",
+                "fr": "Panneau repliable avec les boutons Faites-le pour moi, Analyser et Recommander et Annuler, reflétant le flux de travail de l'application avec des info-bulles contextuelles."
+              }
+            },
+            {
+              "name": "agentic_scheduler",
+              "title": {
+                "en": "Scheduled Automation",
+                "fr": "Automatisation planifiée"
+              },
+              "description": {
+                "en": "Auto run toggle with 5 min / 1 h / 1 day intervals plus an Auto confirm switch to choose between unattended runs and manual approvals.",
+                "fr": "Bascule d'exécution automatique avec intervalles de 5 min / 1 h / 1 jour et interrupteur Auto-confirmer pour choisir entre exécutions sans surveillance ou validations manuelles."
+              }
+            },
+            {
               "name": "backend_analysis",
               "title": {
                 "en": "Backend AI Analysis",
                 "fr": "Analyse IA Backend"
               },
               "description": {
-                "en": "Deep security scan where backend AI analyzes all network traffic and system data, generates comprehensive security reports, and creates new security recommendations.",
-                "fr": "Scan de sécurité profond où l'IA backend analyse tout le trafic réseau et les données système, génère des rapports de sécurité complets et crée de nouvelles recommandations de sécurité."
+                "en": "Deep security scan that you start with Request report; backend AI analyzes network traffic and system data, then the Read latest report button opens the freshly generated findings and recommendations.",
+                "fr": "Scan de sécurité profond lancé avec Demander un rapport ; l'IA backend analyse le trafic réseau et les données système, puis le bouton Lire le dernier rapport ouvre les résultats et recommandations générés."
+              }
+            },
+            {
+              "name": "agentic_status",
+              "title": {
+                "en": "Live Workflow Status",
+                "fr": "Statut de workflow en direct"
+              },
+              "description": {
+                "en": "Displays streaming phases (Starting, Fetching analysis, Analyzing, Decided, Executing) and completion summaries driven by the Agentic workflow API.",
+                "fr": "Affiche les phases en streaming (Démarrage, Récupération de l'analyse, Analyse, Décision, Exécution) et les résumés de fin fournis par l'API de workflow agentique."
               }
             },
             {
@@ -187,8 +220,8 @@
                 "fr": "Historique des Actions"
               },
               "description": {
-                "en": "Complete audit trail of all AI actions with status tracking (Auto-Resolved, Requires Confirmation, Escalated, Failed, Obsolete), filtering capabilities, and bulk operations (Confirm All, Undo All).",
-                "fr": "Piste d'audit complète de toutes les actions IA avec suivi d'état (Résolu Auto, Nécessite Confirmation, Escaladé, Échoué, Obsolète), capacités de filtrage et opérations groupées (Confirmer Tout, Annuler Tout)."
+                "en": "Complete audit trail of all AI actions with status tracking (Auto-Resolved, Requires Confirmation, Escalated, Failed, Obsolete), filtering capabilities, bulk operations (Confirm All, Undo All), and deep links back to Remed, LANscan, Capture, and Pwned views with token/time metrics.",
+                "fr": "Piste d'audit complète de toutes les actions IA avec suivi d'état (Résolu Auto, Nécessite Confirmation, Escaladé, Échoué, Obsolète), capacités de filtrage, opérations groupées (Confirmer Tout, Annuler Tout) et liens profonds vers les vues Remed, LANscan, Capture et Pwned avec mesures de jetons/temps."
               }
             },
             {

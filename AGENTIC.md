@@ -74,7 +74,11 @@ When you click the AI Assistant section in the Advisor tab, you'll see three ope
 #### 3. **"Backend AI Analysis"** (Deep Scan) 🔬
 **Use when:** You want the backend to pre-analyze your network data
 
-**What happens:**
+**How it works now:**
+1. Click **Request report** to start a backend scan. The AI runs in the background and prepares the latest analysis.
+2. When processing finishes, a **Read latest report** button appears. Click it to open the dialog with the newest report.
+
+**Behind the scenes:**
 - Backend AI scans all network traffic and system data
 - Generates new security recommendations
 - Creates todos for you to review or for the AI Assistant to process
@@ -83,6 +87,36 @@ When you click the AI Assistant section in the Advisor tab, you'll see three ope
 - Discovering hidden threats
 - Periodic deep security audits
 - Finding patterns across your network
+
+### 🔧 Interface Overview
+
+#### Collapsible header & quick context
+- The **Agentic** header (with the Beta badge) mirrors `AgenticHeader` and lets you collapse or expand the entire experience with one tap.
+- When expanded, every section below stays in sync with the live agentic context returned by `getAgenticContextStream()`.
+
+#### Immediate automation controls
+- `AgenticControls` exposes the **Do It For Me** and **Analyze & Recommend** buttons exactly as implemented in the app—both are disabled until an AI provider is configured and nothing is currently running.
+- A dedicated **Cancel** button appears while `_isProcessing` is true, giving you an immediate escape hatch without waiting for the backend to finish.
+
+#### Scheduled automation toggles
+- The **Auto run** switch is wired to `AgenticService().setAutoProcessing` and supports the same 5 min / 1 h / 1 day intervals (`_intervalOptions = [300, 3600, 86400]`) you see in the UI dropdown.
+- The adjacent **Auto confirm** switch maps to the `mode` parameter (0 = auto, 1 = manual), so scheduled jobs can either execute safe actions or pause for approval.
+- Both switches stay disabled until your AI provider is fully configured and tested, matching the `isConfigReady` guard in code.
+
+#### Backend AI report controls
+- `AgenticBackendControls` now shows two buttons side-by-side:
+  1. **Request report** – kicks off the remediation stream (`getAdvisorRemediationStream`) and is automatically disabled while a run is in progress or when prerequisites (LAN, Identity, Capture data) are missing.
+  2. **Read latest report** – appears only after `_advisorReportReady` becomes true and opens the same dialog as `_showAdvisorRemediationDialogWithParameter("")`.
+- Tooltips surface the same `aiAnalysisNeedConfig` string when configuration is incomplete, so the docs call this out explicitly.
+
+#### MCP server controls (desktop only)
+- `AgenticMcpControls` is rendered everywhere but the app purposely hides the button on Android/iOS (`Platform.isAndroid || Platform.isIOS`) because the local MCP server only ships on desktop builds.
+- Clicking the hub icon opens the PSK + port configuration dialog exactly like the code path described in the MCP section below.
+
+#### Live workflow status & summaries
+- `AgenticStatus` streams the precise workflow phases emitted from `AgenticWorkflowStatusAPI`: **Starting**, **Fetching analysis**, **AI analyzing**, **Decision made**, **Executing**, and finally **Completed**.
+- When the workflow emits **Completed**, the widget shows the same aggregated counts you see in the UI (auto-resolved, requires confirmation, escalated, failed).
+- The status card doubles as a result banner, reusing the success/failure styling controlled by `resultSuccess`.
 
 ### 🎛️ Automated Processing Controls
 
@@ -149,6 +183,9 @@ Every action the AI takes is logged in the **Action History** section:
 - Cannot be executed or undone (no longer relevant)
 
 #### Action History Features
+
+- 🔗 **Open native context** – The **View Details** action launches the same Remed, LANscan, Capture, or Pwned cards used elsewhere in the Advisor tab (see `_navigateToActionDetail` in code).
+- 🧠 **Detailed action cards** – Each entry exposes timestamps, processing duration, token counts, undo info, and priority exactly as defined in `AgenticActionDetailsCard`.
 
 **Filtering:**
 - Filter by status (Auto-resolved, Requires confirmation, Escalated, Failed)
@@ -444,12 +481,15 @@ The backend AI performs a holistic analysis of your security posture and generat
      - 🌐 **LAN Scanning** (LAN tab)  
      - 📡 **Traffic Monitoring** (Capture tab - requires Helper)
 
-#### 2. **Run Analysis**
-   - Click the **"AI Analysis"** button in the AI Assistant section
+#### 2. **Request a Report**
+   - Click the **"Request report"** button in the AI Assistant section (it stays disabled until the prerequisites in the Advisor tab are satisfied, mirroring the `aiAnalysisDisabled` flag in code)
    - What happens:
      1. A sanitized version of your most important todos is sent to the backend
-     2. Backend AI generates a comprehensive security report
-     3. Report appears in a dialog with your analysis results
+     2. Backend AI generates a comprehensive security report in the background
+     3. Once ready, the **"Read latest report"** button becomes available
+
+#### 3. **Read & Interact**
+   - Click **"Read latest report"** to open the dialog with the newest analysis
 
 #### 3. **Interactive Features**
 
@@ -468,9 +508,10 @@ Once the report is displayed, you can:
 - Great for understanding specific alerts or getting targeted advice
 
 **Example Flow:**
-1. Click "AI Analysis" → See holistic security report
-2. Click "Ask a Question" → "Is my home network secure enough for remote work?"
-3. Get specific recommendations → Click "Request Report" → Receive full analysis via email
+1. Click "Request report" → Backend AI prepares your holistic security report
+2. When prompted, click "Read latest report" → View the analysis dialog
+3. Click "Ask a Question" → "Is my home network secure enough for remote work?"
+4. Get specific recommendations → Click "Request Report" (in-dialog) → Receive full analysis via email
 
 ## Tips & Best Practices
 
