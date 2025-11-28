@@ -179,18 +179,51 @@ choco upgrade npcap
 
 ### Linux
 
-#### APT Repository (Debian/Ubuntu)
+#### APT Repository (Debian/Ubuntu) - Recommended
 ```bash
 # Import GPG key and add repository
 wget -O - https://edamame.s3.eu-west-1.amazonaws.com/repo/public.key | sudo gpg --dearmor -o /usr/share/keyrings/edamame.gpg
 echo "deb [arch=amd64 signed-by=/usr/share/keyrings/edamame.gpg] https://edamame.s3.eu-west-1.amazonaws.com/repo stable main" | sudo tee /etc/apt/sources.list.d/edamame.list
 
-# Install EDAMAME Security (includes built-in helper)
+# Update package list
 sudo apt update
+
+# Install EDAMAME Security (GUI app)
 sudo apt install edamame-security
+
+# Launch the app
+/usr/lib/edamame-security/edamame_security &
 ```
 
-**Note**: The EDAMAME Helper is built into the Linux package - no separate installation required.
+The `edamame-security` package provides:
+- **EDAMAME Security GUI**: Rich graphical interface for security management
+- **EDAMAME Posture CLI**: Command-line interface (includes built-in helper)
+- Real-time monitoring and notifications
+- System tray integration
+- GRPC-based communication for hybrid CLI/GUI operation
+
+To update to the latest version:
+```bash
+sudo apt update
+sudo apt upgrade edamame-security
+```
+
+#### Individual Components
+
+You can also install individual components separately:
+
+```bash
+# Install only EDAMAME Posture CLI (lightweight, no GUI, includes built-in helper)
+sudo apt install edamame-posture
+
+# Install only EDAMAME CLI (GRPC client for advanced users)
+sudo apt install edamame-cli
+```
+
+**Package Architecture**:
+- `edamame-security`: GUI app (depends on and uses `edamame-posture`)
+- `edamame-posture`: Standalone CLI tool with built-in helper functionality
+- `edamame-cli`: GRPC client for remote control of edamame-posture
 
 ### Mobile
 
