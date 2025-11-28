@@ -96,7 +96,7 @@ EDAMAME Security is your all‑in‑one tool to secure, understand, and prove th
 
 https://github.com/user-attachments/assets/72fb4115-ac79-4267-b79c-fba2a5dfed9e
 
-### Download the Application
+## Download and Installation
 
 | Feature | macOS | Windows | Linux | iOS | Android/ChromeOS |
 | --- | --- | --- | --- | --- | --- |
@@ -106,29 +106,101 @@ https://github.com/user-attachments/assets/72fb4115-ac79-4267-b79c-fba2a5dfed9e
 | Traffic | ✓ | requires Npcap | beta | - | - |
 | Helper | mandatory | optional | built-in | none | none |
 
-#### macOS
-- Install from [EDAMAME](https://edamame.s3.eu-west-1.amazonaws.com/macos/edamame-latest.pkg) for an all-in-one installation or the [Mac App Store](https://apps.apple.com/app/edamame-security/id1636777324) for an Apple‑vetted sandboxed main app; use EDAMAME to install the [EDAMAME Helper](https://github.com/edamametechnologies/edamame_helper/releases) open‑source system helper for the required system access
+### macOS
 
+#### Homebrew Installation (Recommended)
+The easiest way to install on macOS:
 
-#### Windows
-1. Install from [EDAMAME](https://edamame.s3.eu-west-1.amazonaws.com/windows/edamame-latest.msix) or the [Microsoft Store](https://www.microsoft.com/store/apps/9N399LMTKQLQ) for a Microsoft vetted sandboxed main app
-2. Install the [EDAMAME Helper](https://github.com/edamametechnologies/edamame_helper/releases) open-source system helper for the required system access
-3. Install [npcap](https://npcap.com/#download) to enable traffic capture
+```bash
+# Add the EDAMAME tap
+brew tap edamametechnologies/tap
 
-#### Linux
+# Install EDAMAME Security
+brew install --cask edamame
+
+# Install EDAMAME Helper (required for full system access)
+brew install --cask edamame-helper
+```
+
+To update to the latest versions:
+```bash
+brew upgrade --cask edamame
+brew upgrade --cask edamame-helper
+```
+
+**Note**: Both packages are required for full functionality. The main app provides the UI, while the helper enables privileged security operations.
+
+#### Mac App Store
+- Download from the [Mac App Store](https://apps.apple.com/app/edamame-security/id1636777324) for an Apple-vetted sandboxed app
+- **Note**: Mac App Store version requires separate [EDAMAME Helper](https://github.com/edamametechnologies/edamame_helper/releases) installation for full system access
+
+#### Direct Download
+- Download the all-in-one installer: [edamame-latest.pkg](https://edamame.s3.eu-west-1.amazonaws.com/macos/edamame-latest.pkg)
+- Includes both the main app and the EDAMAME Helper for complete functionality
+
+### Windows
+
+#### Chocolatey Installation (Recommended)
+The easiest way to install on Windows:
+
+```powershell
+# Install EDAMAME Security
+choco install edamame
+
+# Install EDAMAME Helper (required for full system access)
+choco install edamame-helper
+
+# Install Npcap (required for traffic capture)
+choco install npcap
+```
+
+To update to the latest versions:
+```powershell
+choco upgrade edamame
+choco upgrade edamame-helper
+choco upgrade npcap
+```
+
+**Note**: All three packages are recommended for full functionality:
+- **edamame**: Main application with UI
+- **edamame-helper**: Enables privileged security operations
+- **npcap**: Enables network traffic capture and monitoring
+
+#### Microsoft Store
+- Download from the [Microsoft Store](https://www.microsoft.com/store/apps/9N399LMTKQLQ) for a Microsoft-vetted sandboxed app
+- **Note**: Requires separate installation of:
+  1. [EDAMAME Helper](https://github.com/edamametechnologies/edamame_helper/releases) for system access
+  2. [Npcap](https://npcap.com/#download) for traffic capture
+
+#### Direct Download
+1. Download the installer: [edamame-latest.msix](https://edamame.s3.eu-west-1.amazonaws.com/windows/edamame-latest.msix)
+2. Install the [EDAMAME Helper](https://github.com/edamametechnologies/edamame_helper/releases)
+3. Install [Npcap](https://npcap.com/#download) to enable traffic capture
+
+### Linux
+
+#### APT Repository (Debian/Ubuntu)
 ```bash
 # Import GPG key and add repository
 wget -O - https://edamame.s3.eu-west-1.amazonaws.com/repo/public.key | sudo gpg --dearmor -o /usr/share/keyrings/edamame.gpg
 echo "deb [arch=amd64 signed-by=/usr/share/keyrings/edamame.gpg] https://edamame.s3.eu-west-1.amazonaws.com/repo stable main" | sudo tee /etc/apt/sources.list.d/edamame.list
 
-# Install EDAMAME Security
+# Install EDAMAME Security (includes built-in helper)
 sudo apt update
 sudo apt install edamame-security
 ```
 
-#### Mobile
-- iOS: [App Store](https://apps.apple.com/app/edamame-security-mobile/id6448937722)
-- Android/ChromeOS: [Google Play Store](https://play.google.com/store/apps/details?id=com.edamametech.edamame)
+**Note**: The EDAMAME Helper is built into the Linux package - no separate installation required.
+
+### Mobile
+
+#### iOS
+- Download from the [App Store](https://apps.apple.com/app/edamame-security-mobile/id6448937722)
+- No helper required on iOS
+
+#### Android/ChromeOS
+- Download from [Google Play Store](https://play.google.com/store/apps/details?id=com.edamametech.edamame)
+- No helper required on Android/ChromeOS
 
 ## Repository Purpose
 
