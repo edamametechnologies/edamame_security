@@ -179,7 +179,9 @@ choco upgrade npcap
 
 ### Linux
 
-#### APT Repository (Debian/Ubuntu) - Recommended
+#### APT Repository (Debian/Ubuntu/Raspbian) - Recommended
+
+> **Raspberry Pi Users**: EDAMAME Security supports Raspberry Pi OS on all models (armhf for 32-bit, arm64 for 64-bit OS).
 ```bash
 # Import GPG key and add repository
 wget -O - https://edamame.s3.eu-west-1.amazonaws.com/repo/public.key | sudo gpg --dearmor -o /usr/share/keyrings/edamame.gpg
