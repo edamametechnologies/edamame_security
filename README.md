@@ -177,11 +177,35 @@ choco upgrade npcap
 - **edamame-helper**: Enables privileged security operations
 - **npcap**: Enables network traffic capture and monitoring
 
-#### Microsoft Store
+#### Microsoft Store installation
+
+Step 1: Install and Open the app from Microsoft Store
+
 - Download from the [Microsoft Store](https://www.microsoft.com/store/apps/9N399LMTKQLQ) for a Microsoft-vetted sandboxed app
-- **Note**: Requires separate installation of:
-  1. [EDAMAME Helper](https://github.com/edamametechnologies/edamame_helper/releases) for system access
-  2. [Npcap](https://npcap.com/#download) for traffic capture
+<img width="711" height="634" alt="Screenshot 2025-12-08 at 5 17 43 PM" src="https://github.com/user-attachments/assets/dd6ccc1d-5959-46cc-99c8-89b724fff014" />
+<br>
+Step 2: Install Edamame Helper from Todo action(s)
+In the advisor Tab of the app click on this Todo action item for the Helper software…
+<img width="717" height="146" alt="Screenshot 2025-12-08 at 5 19 19 PM" src="https://github.com/user-attachments/assets/3db8d298-3cf7-4e7c-b452-18cb6ccedb49" />
+
+…and click on “Push to installˮ.
+<br><br/>
+<img width="724" height="431" alt="Screenshot 2025-12-08 at 5 20 06 PM" src="https://github.com/user-attachments/assets/c2b23276-1ff4-44d0-b1a6-1ed836e4cc04" />
+<br><br/>
+This Helper is needed due to the limitations of Apps installed from the Microsoft Store.
+
+If you prefer you can download directly the Edamame Helper Binary
+[EDAMAME Helper](https://github.com/edamametechnologies/edamame_helper/releases) for system access
+
+After the binary is downloaded run the downloaded install package in “Downloadsˮ.
+
+Click on “More infoˮ then “Run anywayˮ to allow the install.
+
+<img width="614" height="575" alt="Screenshot 2025-12-08 at 5 22 40 PM" src="https://github.com/user-attachments/assets/aeb0d067-463e-4a67-84cc-7232cf0ae153" />
+
+Step 4 (Optional): Install ncap
+Install npcap to enable traffic capture
+[Npcap](https://npcap.com/#download) for traffic capture
 
 #### Direct Download
 1. Download the installer: [edamame-latest.msix](https://edamame.s3.eu-west-1.amazonaws.com/windows/edamame-latest.msix)
