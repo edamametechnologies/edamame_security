@@ -131,8 +131,19 @@ brew upgrade --cask edamame-helper
 **Note**: Both packages are required for full functionality. The main app provides the UI, while the helper enables privileged security operations.
 
 #### Mac App Store
+
+Step 1: : Install and Open the app from App Store
 - Download from the [Mac App Store](https://apps.apple.com/app/edamame-security/id1636777324) for an Apple-vetted sandboxed app
-- **Note**: Mac App Store version requires separate [EDAMAME Helper](https://github.com/edamametechnologies/edamame_helper/releases) installation for full system access
+<img width="550" height="434" alt="Screenshot 2025-12-08 at 5 12 20 PM" src="https://github.com/user-attachments/assets/1daae4f4-1aa9-4ecc-91f0-ff842dc3c409" />
+
+Step 2: Install Edamame Helper from Todo action(s)
+- Click on this Todo action item for the Helper software…
+<img width="723" height="108" alt="Screenshot 2025-12-08 at 5 13 04 PM" src="https://github.com/user-attachments/assets/cfdc89fd-63bc-489a-b3b4-784b26544efe" /><img width="719" height="425" alt="Screenshot 2025-12-08 at 5 15 46 PM" src="https://github.com/user-attachments/assets/3e5f8825-2401-4f50-ae26-b286e4055ab3" />
+<br/> and click on "Push to install"
+
+or
+
+- Install directly the edamame helper manually [EDAMAME Helper](https://github.com/edamametechnologies/edamame_helper/releases) installation for full system access
 
 #### Direct Download
 - Download the all-in-one installer: [edamame-latest.pkg](https://edamame.s3.eu-west-1.amazonaws.com/macos/edamame-latest.pkg)
