@@ -198,7 +198,7 @@ Every action the AI takes is logged in the **Action History** section:
 
 **Individual Actions:**
 - 👁️ **View Details** - See full reasoning and technical details
-- ✅ **Confirm** - Execute a recommended action
+-**Confirm** - Execute a recommended action
 - ↩️ **Undo** - Revert a completed action
 - 🔄 **Retry** - Attempt a failed action again
 
@@ -290,15 +290,15 @@ MCP is a protocol that lets LLMs securely access external tools and data. In Eda
 ### Privacy & Security
 
 **Your Data:**
-- ✅ Todo data is sent to LLM for analysis (encrypted in transit)
-- ✅ Context is sanitized before sent to the LLM (see edamame_foundation for the open source code used)
-- ✅ You control what the AI can do (undo capability on all actions)
-- ✅ All actions are logged and transparent
+-Todo data is sent to LLM for analysis (encrypted in transit)
+-Context is sanitized before sent to the LLM (see edamame_foundation for the open source code used)
+-You control what the AI can do (undo capability on all actions)
+-All actions are logged and transparent
 
 **With Ollama (Local LLM):**
-- ✅ **Zero cloud dependency** - Everything runs locally
-- ✅ **Complete privacy** - No data ever leaves your machine
-- ✅ **Full control** - You manage the model and its behavior
+-**Zero cloud dependency** - Everything runs locally
+-**Complete privacy** - No data ever leaves your machine
+-**Full control** - You manage the model and its behavior
 
 **Best Practices:**
 - Start with "Analyze & Recommend" mode to learn the AI's behavior
@@ -430,9 +430,9 @@ Replace `YOUR_PSK_HERE` with your actual PSK from Step 1.
 **Step 4: Test in Browser**
 
 Inspector opens at `http://localhost:5173` and shows:
-- ✅ Connection: "Connected" (green)
-- ✅ Tools: 9 tools listed (advisor, score, agentic)
-- ✅ Interactive: Click any tool → Enter params → See results
+-Connection: "Connected" (green)
+-Tools: 9 tools listed (advisor, score, agentic)
+-Interactive: Click any tool → Enter params → See results
 
 **What to try:**
 
