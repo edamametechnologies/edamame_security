@@ -276,10 +276,10 @@ sudo apt install edamame-cli
 
 This repository serves as the public issue tracker for EDAMAME Security. While the application itself is closed source, we use this space to:
 
-- 📋 Track bug reports and feature requests
-- 💬 Engage with the community
-- 📢 Share updates and announcements
-- 🤝 Collect feedback from users
+- Track bug reports and feature requests
+- Engage with the community
+- Share updates and announcements
+- Collect feedback from users
 
 ## Getting Started
 
