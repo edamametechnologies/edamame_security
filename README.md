@@ -4,17 +4,17 @@
 
 EDAMAME Security is your all‑in‑one tool to secure, understand, and prove the security of your development workstation—from OS to network.
 
-**⚠️ Note: This application is currently closed source. This repository is used for issue tracking and community feedback.**
+**Note: This application is currently closed source. This repository is used for issue tracking and community feedback.**
 
 ## Key Features
 
-### 🛡️ Security Advisor for System and Network Issues
+### Security Advisor for System and Network Issues
 - Holistic security posture report using frontier LLM
 - At‑a‑glance view of outstanding issues
 - Sort issues by priority and category
 - Be notified of new issues in real time
 
-### 🤖 AI Assistant (Agentic System)
+### AI Assistant (Agentic System)
 - Intelligent automation that analyzes and resolves security issues automatically
 - Three operational modes:
   - **"Do It For Me"** - Fully automatic handling of routine security tasks
@@ -39,7 +39,7 @@ EDAMAME Security is your all‑in‑one tool to secure, understand, and prove th
 - Interactive features: email reports, custom security questions once you open the latest report dialog
 - See [AGENTIC.md](AGENTIC.md) for detailed user guide and MCP testing instructions
 
-### 🛡️ System Security Benchmarks and One-Click Remediations
+### System Security Benchmarks and One-Click Remediations
 - Assess your workstation against industry standards, including:
     - CIS Benchmarks
     - SOC 2 / ISO 27001 compliance requirements
@@ -51,7 +51,7 @@ EDAMAME Security is your all‑in‑one tool to secure, understand, and prove th
 - Run batch automated remediations to harden your system with one click
 - Keep a history of remediations and roll back if needed
 
-### 🌐 Built‑in Network Scanning (inspired by Nmap)
+### Built‑in Network Scanning (inspired by Nmap)
 - Host discovery on local LAN segments
 - Gateway and host discovery beyond direct LAN segments (useful for complex LAN setups)
 - Fast TCP/UDP port scanning of known service ports
@@ -69,7 +69,7 @@ EDAMAME Security is your all‑in‑one tool to secure, understand, and prove th
 - Get notifications for new devices
 - Searchable history of network events and seen networks
 
-### 📶 Traffic Monitoring (inspired by Wireshark)
+### Traffic Monitoring (inspired by Wireshark)
 - Capture traffic sessions with domain and process context
 - At‑a‑glance, real‑time traffic view using sunburst visualization
 - Flexible table view of traffic sessions
@@ -80,7 +80,7 @@ EDAMAME Security is your all‑in‑one tool to secure, understand, and prove th
 - Get notifications for new suspicious sessions
 - Searchable history of suspicious sessions
 
-### 🔐 Digital Identity Management
+### Digital Identity Management
 - Monitor and manage your online identity exposure
 - Integrated with [HaveIBeenPwned.com](https://haveibeenpwned.com)
 - Anonymized, RAG‑based AI analysis of data breaches
@@ -103,7 +103,7 @@ https://github.com/user-attachments/assets/72fb4115-ac79-4267-b79c-fba2a5dfed9e
 | System | ✓ | ✓ | ✓ | ✓ | ✓ |
 | LAN | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Identity | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Traffic | ✓ | requires Npcap | beta | - | - |
+| Traffic | ✓ | requires Npcap | ✓ | - | - |
 | Helper | mandatory | optional | built-in | none | none |
 
 ### macOS
