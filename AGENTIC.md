@@ -272,10 +272,10 @@ The AI Assistant uses advanced language models to understand and reason about se
 - **Requires:** Ollama installed locally, custom base URL
 - **Cost:** Free (runs on your hardware)
 
-### MCP (Model Context Protocol) Integration
+### Model Context Protocol (MCP) integration
 
 **What is MCP?**
-MCP is a protocol that lets LLMs securely access external tools and data. In Edamame:
+MCP is a protocol that lets LLMs securely access external tools and data. In EDAMAME Security:
 
 - **MCP Server** runs locally on your machine
 - **LLM** connects to it over a secure channel (with PSK authentication)
@@ -289,16 +289,16 @@ MCP is a protocol that lets LLMs securely access external tools and data. In Eda
 
 ### Privacy & Security
 
-**Your Data:**
--Todo data is sent to LLM for analysis (encrypted in transit)
--Context is sanitized before sent to the LLM (see edamame_foundation for the open source code used)
--You control what the AI can do (undo capability on all actions)
--All actions are logged and transparent
+**Your data:**
+- Todo data is sent to the LLM for analysis (encrypted in transit)
+- Context is sanitized before being sent to the LLM (see `edamame_foundation` for the open-source code used)
+- You control what the AI can do (undo capability on all actions)
+- All actions are logged and transparent
 
-**With Ollama (Local LLM):**
--**Zero cloud dependency** - Everything runs locally
--**Complete privacy** - No data ever leaves your machine
--**Full control** - You manage the model and its behavior
+**With Ollama (local LLM):**
+- **Zero cloud dependency**: everything runs locally
+- **Complete privacy**: no data leaves your machine
+- **Full control**: you manage the model and its behavior
 
 **Best Practices:**
 - Start with "Analyze & Recommend" mode to learn the AI's behavior

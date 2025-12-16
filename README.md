@@ -30,7 +30,7 @@ EDAMAME Security is your all‑in‑one tool to secure, understand, and prove th
   - **Ollama (Local)** - Privacy-focused, runs entirely on your machine
 - Complete transparency with filterable action history, Confirm/Undo All controls, detailed reasoning per action, and deep links back to Remed, LANscan, Capture, and Pwned views.
 - Undo capability for all automated actions
-- **MCP (Model Context Protocol) integration**:
+- **Model Context Protocol (MCP) integration**:
   - Secure localhost-only server (port 3000) with Streamable HTTP transport (exposed on desktop builds; mobile hides the control)
   - PSK authentication for external AI tools
   - 9 security automation tools (advisor, score, agentic)
@@ -87,7 +87,7 @@ EDAMAME Security is your all‑in‑one tool to secure, understand, and prove th
 - Flag breaches as safe when properly handled
 - Get notifications about data breaches affecting your email accounts
 
-### 📊 Compliance Reports
+### Compliance Reports
 - Compute and anonymously sign your current security posture through EDAMAME's backend
 - Generate SOC 2 or ISO 27001 one‑click compliance reports and make them available to third parties (employers, partners, etc.)
 - Connect to the no‑MDM platform at [hub.edamame.tech](https://hub.edamame.tech), enabling:
@@ -272,18 +272,18 @@ sudo apt install edamame-cli
 - Download from [Google Play Store](https://play.google.com/store/apps/details?id=com.edamametech.edamame)
 - No helper required on Android/ChromeOS
 
-## Repository Purpose
+## Repository purpose
 
-This repository serves as the public issue tracker for EDAMAME Security. While the application itself is closed source, we use this space to:
+This repository serves as the public issue tracker for EDAMAME Security. The application itself is **closed source**; we use this space to:
 
 - Track bug reports and feature requests
 - Engage with the community
 - Share updates and announcements
 - Collect feedback from users
 
-## Getting Started
+## Getting started
 
-To download and use EDAMAME Security, visit [github.com/edamametechnologies](https://github.com/edamametechnologies).
+To download EDAMAME Security, see [edamame.tech](https://www.edamame.tech).
 
 ## Feature Wiki
 
