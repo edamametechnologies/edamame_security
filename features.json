@@ -128,25 +128,36 @@
     {
       "name": "agentic",
       "title": {
-        "en": "AI Assistant",
-        "fr": "Assistant IA"
+        "en": "AI",
+        "fr": "IA"
       },
       "description": {
-        "en": "Intelligent security automation that analyzes and resolves security issues automatically using Large Language Models. Processes security todos with AI reasoning, provides transparent decision-making, and maintains complete action history with undo capability.",
-        "fr": "Automatisation de sécurité intelligente qui analyse et résout automatiquement les problèmes de sécurité à l'aide de grands modèles de langage. Traite les todos de sécurité avec raisonnement IA, fournit une prise de décision transparente et maintient un historique complet des actions avec capacité d'annulation."
+        "en": "Intelligent security automation that analyzes and resolves security issues automatically using Large Language Models. Features two dedicated subtabs: Agent for automated security management with Cloud LLM or your own API keys, and MCP Server for external AI tool integration.",
+        "fr": "Automatisation de sécurité intelligente qui analyse et résout automatiquement les problèmes de sécurité à l'aide de grands modèles de langage. Comprend deux sous-onglets dédiés : Agent pour la gestion de sécurité automatisée avec Cloud LLM ou vos propres clés API, et Serveur MCP pour l'intégration d'outils IA externes."
       },
       "sub_features": [
         {
-          "name": "agentic_main",
+          "name": "agentic_agent",
           "title": {
-            "en": "AI Assistant – Automated Security Management",
-            "fr": "Assistant IA – Gestion de Sécurité Automatisée"
+            "en": "Agent – Automated Security Management",
+            "fr": "Agent – Gestion de Sécurité Automatisée"
           },
           "description": {
-            "en": "Automated security todo processing with three operational modes: 'Do It For Me' (fully automatic), 'Analyze & Recommend' (review before execution), and 'Backend AI Analysis' (deep security scans triggered via Request report ➜ Read latest report). Supports Claude, OpenAI, and Ollama providers with complete transparency and undo capability.",
-            "fr": "Traitement automatisé des todos de sécurité avec trois modes opérationnels : 'Faites-le pour moi' (entièrement automatique), 'Analyser et Recommander' (révision avant exécution) et 'Analyse IA Backend' (scans profonds déclenchés via Demander un rapport ➜ Lire le dernier rapport). Prend en charge les fournisseurs Claude, OpenAI et Ollama avec transparence complète et capacité d'annulation."
+            "en": "Automated security todo processing with two containers: Settings (action controls, Cloud LLM sign-in, own LLM configuration) and History (complete action audit trail). Supports 'Do It For Me' (fully automatic), 'Analyze & Recommend' (review before execution), and scheduled automation with auto-confirm options.",
+            "fr": "Traitement automatisé des todos de sécurité avec deux conteneurs : Paramètres (contrôles d'action, connexion Cloud LLM, configuration LLM propre) et Historique (piste d'audit complète des actions). Prend en charge 'Faites-le pour moi' (entièrement automatique), 'Analyser et Recommander' (révision avant exécution) et automatisation planifiée avec options de confirmation automatique."
           },
           "items": [
+            {
+              "name": "settings_container",
+              "title": {
+                "en": "Settings Container",
+                "fr": "Conteneur Paramètres"
+              },
+              "description": {
+                "en": "Main configuration area containing action controls, live status, Cloud LLM sign-in/out, and own LLM provider setup with collapsible API key configuration.",
+                "fr": "Zone de configuration principale contenant les contrôles d'action, le statut en direct, la connexion/déconnexion Cloud LLM et la configuration du fournisseur LLM propre avec configuration de clé API repliable."
+              }
+            },
             {
               "name": "do_it_for_me",
               "title": {
@@ -170,17 +181,6 @@
               }
             },
             {
-              "name": "agentic_automation_controls",
-              "title": {
-                "en": "Immediate Automation Controls",
-                "fr": "Commandes d'automatisation immédiates"
-              },
-              "description": {
-                "en": "Collapsible panel with Do It For Me, Analyze & Recommend, and Cancel buttons, mirroring the in-app workflow with contextual tooltips.",
-                "fr": "Panneau repliable avec les boutons Faites-le pour moi, Analyser et Recommander et Annuler, reflétant le flux de travail de l'application avec des info-bulles contextuelles."
-              }
-            },
-            {
               "name": "agentic_scheduler",
               "title": {
                 "en": "Scheduled Automation",
@@ -192,25 +192,36 @@
               }
             },
             {
-              "name": "backend_analysis",
+              "name": "cloud_llm",
               "title": {
-                "en": "Backend AI Analysis",
-                "fr": "Analyse IA Backend"
+                "en": "Cloud LLM (EDAMAME)",
+                "fr": "Cloud LLM (EDAMAME)"
               },
               "description": {
-                "en": "Deep security scan that you start with Request report; backend AI analyzes network traffic and system data, then the Read latest report button opens the freshly generated findings and recommendations.",
-                "fr": "Scan de sécurité profond lancé avec Demander un rapport ; l'IA backend analyse le trafic réseau et les données système, puis le bouton Lire le dernier rapport ouvre les résultats et recommandations générés."
+                "en": "Sign in to EDAMAME's Cloud LLM service for managed AI processing. OAuth-based authentication with subscription management. Automatically disables own LLM configuration when active.",
+                "fr": "Connectez-vous au service Cloud LLM d'EDAMAME pour un traitement IA géré. Authentification basée sur OAuth avec gestion d'abonnement. Désactive automatiquement la configuration LLM propre lorsqu'actif."
               }
             },
             {
-              "name": "agentic_status",
+              "name": "own_llm",
               "title": {
-                "en": "Live Workflow Status",
-                "fr": "Statut de workflow en direct"
+                "en": "Use Your Own LLM",
+                "fr": "Utiliser votre propre LLM"
               },
               "description": {
-                "en": "Displays streaming phases (Starting, Fetching analysis, Analyzing, Decided, Executing) and completion summaries driven by the Agentic workflow API.",
-                "fr": "Affiche les phases en streaming (Démarrage, Récupération de l'analyse, Analyse, Décision, Exécution) et les résumés de fin fournis par l'API de workflow agentique."
+                "en": "Configure your own LLM provider: Claude (Anthropic), OpenAI (GPT), or Ollama (local). Collapsible inline widget with API key setup and connection testing. Automatically signs out of Cloud LLM when selecting a provider.",
+                "fr": "Configurez votre propre fournisseur LLM : Claude (Anthropic), OpenAI (GPT) ou Ollama (local). Widget inline repliable avec configuration de clé API et test de connexion. Se déconnecte automatiquement du Cloud LLM lors de la sélection d'un fournisseur."
+              }
+            },
+            {
+              "name": "history_container",
+              "title": {
+                "en": "History Container",
+                "fr": "Conteneur Historique"
+              },
+              "description": {
+                "en": "Complete audit trail of all AI actions with status tracking, filtering, bulk operations, and navigation to related views.",
+                "fr": "Piste d'audit complète de toutes les actions IA avec suivi d'état, filtrage, opérations groupées et navigation vers les vues associées."
               }
             },
             {
@@ -220,30 +231,76 @@
                 "fr": "Historique des Actions"
               },
               "description": {
-                "en": "Complete audit trail of all AI actions with status tracking (Auto-Resolved, Requires Confirmation, Escalated, Failed, Obsolete), filtering capabilities, bulk operations (Confirm All, Undo All), and deep links back to Remed, LANscan, Capture, and Pwned views with token/time metrics.",
-                "fr": "Piste d'audit complète de toutes les actions IA avec suivi d'état (Résolu Auto, Nécessite Confirmation, Escaladé, Échoué, Obsolète), capacités de filtrage, opérations groupées (Confirmer Tout, Annuler Tout) et liens profonds vers les vues Remed, LANscan, Capture et Pwned avec mesures de jetons/temps."
+                "en": "Complete audit trail with status tracking (Auto-Resolved, Requires Confirmation, Escalated, Failed, Obsolete), filtering capabilities, bulk operations (Confirm All, Undo All), and deep links to Remed, LANscan, Capture, and Pwned views.",
+                "fr": "Piste d'audit complète avec suivi d'état (Résolu Auto, Nécessite Confirmation, Escaladé, Échoué, Obsolète), capacités de filtrage, opérations groupées (Confirmer Tout, Annuler Tout) et liens profonds vers les vues Remed, LANscan, Capture et Pwned."
+              }
+            }
+          ]
+        },
+        {
+          "name": "agentic_mcp_server",
+          "title": {
+            "en": "MCP Server – External AI Integration",
+            "fr": "Serveur MCP – Intégration IA Externe"
+          },
+          "description": {
+            "en": "Dedicated subtab for MCP (Model Context Protocol) server management. Start/stop the localhost server, generate PSK authentication keys, and get integration instructions for external AI tools like Claude Desktop.",
+            "fr": "Sous-onglet dédié à la gestion du serveur MCP (Model Context Protocol). Démarrez/arrêtez le serveur localhost, générez des clés d'authentification PSK et obtenez des instructions d'intégration pour les outils IA externes comme Claude Desktop."
+          },
+          "items": [
+            {
+              "name": "server_status",
+              "title": {
+                "en": "Server Status",
+                "fr": "Statut du Serveur"
+              },
+              "description": {
+                "en": "Displays whether the MCP server is running or stopped with real-time status updates.",
+                "fr": "Affiche si le serveur MCP est en cours d'exécution ou arrêté avec des mises à jour de statut en temps réel."
               }
             },
             {
-              "name": "llm_providers",
+              "name": "server_controls",
               "title": {
-                "en": "LLM Provider Configuration",
-                "fr": "Configuration du Fournisseur LLM"
+                "en": "Start/Stop Controls",
+                "fr": "Contrôles Démarrer/Arrêter"
               },
               "description": {
-                "en": "Supports multiple AI providers: Claude (Anthropic) for detailed reasoning, OpenAI (GPT) for fast responses, and Ollama for privacy-focused local processing. Easy API key setup with connection testing.",
-                "fr": "Prend en charge plusieurs fournisseurs IA : Claude (Anthropic) pour raisonnement détaillé, OpenAI (GPT) pour réponses rapides et Ollama pour traitement local axé sur la confidentialité. Configuration facile de clé API avec test de connexion."
+                "en": "Buttons to start and stop the MCP server with visual feedback on operation status.",
+                "fr": "Boutons pour démarrer et arrêter le serveur MCP avec retour visuel sur l'état de l'opération."
               }
             },
             {
-              "name": "mcp_server",
+              "name": "psk_management",
               "title": {
-                "en": "MCP Server Integration",
-                "fr": "Intégration Serveur MCP"
+                "en": "PSK Authentication",
+                "fr": "Authentification PSK"
               },
               "description": {
-                "en": "Streamable HTTP MCP server (localhost-only, port 3000) with PSK authentication. Enables external AI tools like Claude Desktop to securely access 9 security automation tools (advisor, score, agentic). Connect via npx mcp-remote for Claude Desktop or test with MCP Inspector.",
-                "fr": "Serveur MCP HTTP Streamable (localhost uniquement, port 3000) avec authentification PSK. Permet aux outils IA externes comme Claude Desktop d'accéder en toute sécurité à 9 outils d'automatisation de sécurité (conseiller, score, agentique). Connectez via npx mcp-remote pour Claude Desktop ou testez avec MCP Inspector."
+                "en": "Generate and copy the Pre-Shared Key required for secure MCP server connections.",
+                "fr": "Générez et copiez la clé pré-partagée requise pour des connexions sécurisées au serveur MCP."
+              }
+            },
+            {
+              "name": "integration_instructions",
+              "title": {
+                "en": "Integration Instructions",
+                "fr": "Instructions d'Intégration"
+              },
+              "description": {
+                "en": "Step-by-step guide for connecting external AI tools (Claude Desktop, MCP Inspector) to the EDAMAME MCP server.",
+                "fr": "Guide étape par étape pour connecter des outils IA externes (Claude Desktop, MCP Inspector) au serveur MCP EDAMAME."
+              }
+            },
+            {
+              "name": "available_tools",
+              "title": {
+                "en": "Available MCP Tools",
+                "fr": "Outils MCP Disponibles"
+              },
+              "description": {
+                "en": "Lists the 9 security automation tools accessible via MCP: advisor, score, agentic, and more.",
+                "fr": "Liste les 9 outils d'automatisation de sécurité accessibles via MCP : conseiller, score, agentique, et plus."
               }
             }
           ]
