@@ -3,31 +3,32 @@ Politique de confidentialité EDAMAME Cloud LLM (FR)
 ===================================================
 
 
-En vous connectant à EDAMAME Cloud LLM, vous acceptez de partager les informations suivantes avec EDAMAME :
+En vous connectant à EDAMAME Cloud LLM, vous acceptez de partager les informations suivantes :
+
+**Données envoyées à OpenAI (via le backend EDAMAME) :**
+* Résumé de la posture de sécurité (score, nombre de menaces, nombre de tâches)
+* Recommandations de sécurité et contexte de remédiation
+* Noms des menaces et politiques analysées
+* Informations sur les appareils et sessions réseau (IDs, identifiants - pas d'adresses IP)
+* Pour les vérifications de fuites de données : noms des fuites et adresses email associées
+
+**Données NON envoyées au LLM :**
 * L'identifiant unique de votre machine
-* Le nom et la version de votre système d'exploitation
-* Votre adresse IPv4 publique et/ou adresse IPv6
-* Votre adresse e-mail (pour l'authentification)
-* Les données de posture de sécurité de votre appareil pour analyse
-* Les requêtes et le contexte envoyés à l'assistant IA
+* Vos adresses IP (IPv4/IPv6)
+* Votre adresse MAC
+* Les détails de votre système d'exploitation
+* Votre domaine ou nom d'utilisateur
 
-Ces informations sont utilisées uniquement par EDAMAME pour :
-* Authentifier votre accès au service Cloud LLM
-* Fournir des analyses et recommandations de sécurité assistées par IA
-* Améliorer la qualité de nos évaluations de sécurité
+**Avis important :**
+* EDAMAME agit comme un service de transit - nous ne conservons ni n'analysons vos requêtes LLM
+* Vos données sont traitées par **OpenAI** selon leur [Politique de confidentialité](https://openai.com/privacy)
+* OpenAI peut utiliser les données pour améliorer ses services sauf si vous avez un accord entreprise
 
-**Traitement des données :**
-* Vos requêtes sont traitées par nos modèles IA pour fournir des recommandations de sécurité
-* Le contexte de sécurité de votre appareil est analysé pour personnaliser les conseils
-* Aucune donnée de conversation n'est partagée avec des tiers
-* Les données sont chiffrées en transit et au repos
-
-**Conservation des données :**
+**Authentification :**
+* Votre adresse email est utilisée pour l'authentification auprès des services EDAMAME
 * Les jetons d'authentification sont stockés localement sur votre appareil
-* Les journaux de requêtes sont conservés pour l'amélioration du service et peuvent être anonymisés
 * Vous pouvez vous déconnecter à tout moment pour révoquer l'accès
 
-Pour plus d'informations, consultez notre [Politique de confidentialité](https://www.edamame.tech/privacy).
+Pour plus d'informations sur les pratiques générales de confidentialité d'EDAMAME, consultez notre [Politique de confidentialité](https://www.edamame.tech/privacy).
 
 Si vous n'êtes pas d'accord avec cette politique, veuillez ne pas vous connecter à EDAMAME Cloud LLM.
-

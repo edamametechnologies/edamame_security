@@ -3,31 +3,32 @@ EDAMAME Cloud LLM Privacy Policy (EN)
 =====================================
 
 
-By connecting to EDAMAME Cloud LLM, you agree to share the following information with EDAMAME:
+By connecting to EDAMAME Cloud LLM, you agree to share the following information:
+
+**Data sent to OpenAI (via EDAMAME backend):**
+* Security posture summary (score, threat count, todo count)
+* Security recommendations and remediation context
+* Threat and policy names being analyzed
+* Network device and session information (IDs, handles - no IP addresses)
+* For data breach checks: breach names and associated email addresses
+
+**Data NOT sent to the LLM:**
 * Your machine unique identifier
-* Your operating system name and version
-* Your public IPv4 address and/or IPv6 address
-* Your email address (for authentication)
-* Security posture data from your device for analysis
-* Queries and context sent to the AI assistant
+* Your IP addresses (IPv4/IPv6)
+* Your MAC address
+* Your operating system details
+* Your domain or username
 
-This information is used solely by EDAMAME to:
-* Authenticate your access to the Cloud LLM service
-* Provide AI-powered security analysis and recommendations
-* Improve the quality of our security assessments
+**Important Notice:**
+* EDAMAME acts as a pass-through service - we do not retain or analyze your LLM queries
+* Your data is processed by **OpenAI** according to their [Privacy Policy](https://openai.com/privacy)
+* OpenAI may use data to improve their services unless you have an enterprise agreement
 
-**Data Processing:**
-* Your queries are processed by our AI models to provide security recommendations
-* Security context from your device is analyzed to personalize advice
-* No conversation data is shared with third parties
-* Data is encrypted in transit and at rest
-
-**Data Retention:**
+**Authentication:**
+* Your email address is used for authentication with EDAMAME services
 * Authentication tokens are stored locally on your device
-* Query logs are retained for service improvement and may be anonymized
 * You can disconnect at any time to revoke access
 
-For more information, see our [Privacy Policy](https://www.edamame.tech/privacy).
+For more information about EDAMAME's general privacy practices, see our [Privacy Policy](https://www.edamame.tech/privacy).
 
 If you do not agree with this policy, please do not connect to EDAMAME Cloud LLM.
-
