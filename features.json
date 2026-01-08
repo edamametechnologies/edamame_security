@@ -122,85 +122,6 @@
             "en": "Recommendations that provides prioritized, actionable steps to improve security. Each recommendation includes detailed technical explanations, risk impact assessment, and automated remediation options where possible.",
             "fr": "Recommandations qui fournit des étapes priorisées et actionnables pour améliorer la sécurité. Chaque recommandation inclut des explications techniques détaillées, évaluation d'impact des risques et options de remédiation automatisées lorsque possible."
           }
-        },
-        {
-          "name": "advisor_settings",
-          "title": {
-            "en": "App Settings",
-            "fr": "Paramètres de l'Application"
-          },
-          "description": {
-            "en": "Centralized settings hub with four sub-tabs: Info (app version, elevation status, device info), Notifications (settings and persistent history), Traffic (network statistics viewer), and Debug (log viewer with multi-select). All settings accessible via gear icon in advisor tab.",
-            "fr": "Hub de paramètres centralisé avec quatre sous-onglets : Info (version, statut d'élévation, info appareil), Notifications (paramètres et historique persistant), Trafic (visualiseur de statistiques réseau) et Debug (visualiseur de logs avec multi-sélection). Tous les paramètres accessibles via l'icône d'engrenage dans l'onglet conseiller."
-          },
-          "items": [
-            {
-              "name": "settings_info_tab",
-              "title": {
-                "en": "Info Tab",
-                "fr": "Onglet Info"
-              },
-              "description": {
-                "en": "Displays app version, build info, elevation/admin status, and device identification details.",
-                "fr": "Affiche la version de l'application, les informations de build, le statut d'élévation/admin et les détails d'identification de l'appareil."
-              }
-            },
-            {
-              "name": "settings_notifications_tab",
-              "title": {
-                "en": "Notifications Tab",
-                "fr": "Onglet Notifications"
-              },
-              "description": {
-                "en": "Configure notification preferences per category and view persistent notification history with deep linking support.",
-                "fr": "Configurez les préférences de notification par catégorie et consultez l'historique persistant des notifications avec support de liens profonds."
-              }
-            },
-            {
-              "name": "notification_settings",
-              "title": {
-                "en": "Notification Settings",
-                "fr": "Paramètres de Notification"
-              },
-              "description": {
-                "en": "Toggle notifications on/off for each category: security score changes, advisor updates, network threats, agentic actions, and domain connection status.",
-                "fr": "Activez/désactivez les notifications pour chaque catégorie : changements de score de sécurité, mises à jour du conseiller, menaces réseau, actions agentiques et statut de connexion au domaine."
-              }
-            },
-            {
-              "name": "notification_history",
-              "title": {
-                "en": "Notification History",
-                "fr": "Historique des Notifications"
-              },
-              "description": {
-                "en": "Persistent, scrollable history of all past notifications with timestamps and category badges. Click any notification to deep-link to its related content. Clear history button available.",
-                "fr": "Historique persistant et défilable de toutes les notifications passées avec horodatages et badges de catégorie. Cliquez sur une notification pour accéder directement à son contenu associé. Bouton d'effacement de l'historique disponible."
-              }
-            },
-            {
-              "name": "settings_traffic_tab",
-              "title": {
-                "en": "Traffic Tab",
-                "fr": "Onglet Trafic"
-              },
-              "description": {
-                "en": "Embedded network traffic statistics viewer showing packet counts, analyzer status, session stats, and anomaly detection metrics.",
-                "fr": "Visualiseur de statistiques de trafic réseau intégré affichant les compteurs de paquets, le statut de l'analyseur, les stats de session et les métriques de détection d'anomalies."
-              }
-            },
-            {
-              "name": "settings_debug_tab",
-              "title": {
-                "en": "Debug Tab",
-                "fr": "Onglet Debug"
-              },
-              "description": {
-                "en": "Real-time debug log viewer with multi-line text selection support. Shows core engine logs, API calls, and system events for troubleshooting.",
-                "fr": "Visualiseur de logs de debug en temps réel avec support de sélection de texte multi-ligne. Affiche les logs du moteur core, les appels API et les événements système pour le dépannage."
-              }
-            }
-          ]
         }
       ]
     },
@@ -1664,6 +1585,87 @@
               ]
             }
           ]
+        }
+      ]
+    },
+    {
+      "name": "config",
+      "title": {
+        "en": "Config",
+        "fr": "Config"
+      },
+      "description": {
+        "en": "Centralized app configuration and system information hub. Provides access to version info, notification settings with persistent history, network traffic statistics, and debug logging.",
+        "fr": "Hub centralisé de configuration et d'informations système. Donne accès aux informations de version, aux paramètres de notification avec historique persistant, aux statistiques de trafic réseau et aux logs de débogage."
+      },
+      "sub_features": [
+        {
+          "name": "config_info",
+          "title": {
+            "en": "Info Tab",
+            "fr": "Onglet Info"
+          },
+          "description": {
+            "en": "Displays app version, build info, elevation/admin status, and device identification details.",
+            "fr": "Affiche la version de l'application, les informations de build, le statut d'élévation/admin et les détails d'identification de l'appareil."
+          }
+        },
+        {
+          "name": "config_notifications",
+          "title": {
+            "en": "Notifications Tab",
+            "fr": "Onglet Notifications"
+          },
+          "description": {
+            "en": "Configure notification preferences per category and view persistent notification history with deep linking support.",
+            "fr": "Configurez les préférences de notification par catégorie et consultez l'historique persistant des notifications avec support de liens profonds."
+          },
+          "items": [
+            {
+              "name": "notification_settings",
+              "title": {
+                "en": "Notification Settings",
+                "fr": "Paramètres de Notification"
+              },
+              "description": {
+                "en": "Toggle notifications on/off for each category: security score changes, advisor updates, network threats, agentic actions, and domain connection status.",
+                "fr": "Activez/désactivez les notifications pour chaque catégorie : changements de score de sécurité, mises à jour du conseiller, menaces réseau, actions agentiques et statut de connexion au domaine."
+              }
+            },
+            {
+              "name": "notification_history",
+              "title": {
+                "en": "Notification History",
+                "fr": "Historique des Notifications"
+              },
+              "description": {
+                "en": "Persistent, scrollable history of all past notifications with timestamps. Click any notification to deep-link to its related content. Clear history button available.",
+                "fr": "Historique persistant et défilable de toutes les notifications passées avec horodatages. Cliquez sur une notification pour accéder directement à son contenu associé. Bouton d'effacement de l'historique disponible."
+              }
+            }
+          ]
+        },
+        {
+          "name": "config_traffic",
+          "title": {
+            "en": "Traffic Tab",
+            "fr": "Onglet Trafic"
+          },
+          "description": {
+            "en": "Embedded network traffic statistics viewer showing packet counts, analyzer status, session stats, and anomaly detection metrics.",
+            "fr": "Visualiseur de statistiques de trafic réseau intégré affichant les compteurs de paquets, le statut de l'analyseur, les stats de session et les métriques de détection d'anomalies."
+          }
+        },
+        {
+          "name": "config_debug",
+          "title": {
+            "en": "Debug Tab",
+            "fr": "Onglet Debug"
+          },
+          "description": {
+            "en": "Real-time debug log viewer with multi-line text selection support. Shows core engine logs, API calls, and system events for troubleshooting.",
+            "fr": "Visualiseur de logs de debug en temps réel avec support de sélection de texte multi-ligne. Affiche les logs du moteur core, les appels API et les événements système pour le dépannage."
+          }
         }
       ]
     }
