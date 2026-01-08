@@ -313,6 +313,17 @@
                 "en": "Complete audit trail with status tracking (Auto-Resolved, Requires Confirmation, Escalated, Failed, Obsolete), filtering capabilities, bulk operations (Confirm All, Undo All), and deep links to Remed, LANscan, Capture, and Pwned views.",
                 "fr": "Piste d'audit complète avec suivi d'état (Résolu Auto, Nécessite Confirmation, Escaladé, Échoué, Obsolète), capacités de filtrage, opérations groupées (Confirmer Tout, Annuler Tout) et liens profonds vers les vues Remed, LANscan, Capture et Pwned."
               }
+            },
+            {
+              "name": "token_usage_stats",
+              "title": {
+                "en": "Token Usage Statistics",
+                "fr": "Statistiques d'Utilisation de Tokens"
+              },
+              "description": {
+                "en": "Real-time LLM token consumption tracking displayed in the settings container. Shows input/output token counts for three time windows: last hour, last 24 hours, and last 30 days. Per-action token usage is also visible in action details. Helps monitor AI usage and costs.",
+                "fr": "Suivi en temps réel de la consommation de tokens LLM affiché dans le conteneur paramètres. Affiche les compteurs de tokens entrée/sortie pour trois fenêtres temporelles : dernière heure, dernières 24 heures et derniers 30 jours. L'utilisation de tokens par action est aussi visible dans les détails. Aide à surveiller l'utilisation et les coûts IA."
+              }
             }
           ]
         },
