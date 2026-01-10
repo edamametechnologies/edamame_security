@@ -150,8 +150,8 @@ Controls whether scheduled runs automatically execute safe actions or just analy
 4. You only see escalated items that need your expertise
 
 **Safety note:** Both toggles appear only when:
-- AI provider is configured (Claude, OpenAI, or Ollama)
-- API connection is tested and working
+- AI provider is configured (Cloud LLM, Claude, OpenAI, or Ollama)
+- Connection is tested and working (OAuth authenticated for Cloud LLM, API key validated for others)
 - This ensures automation only runs when AI is properly set up
 
 ### 📊 Action History
@@ -254,19 +254,32 @@ The AI Assistant uses advanced language models to understand and reason about se
 
 **Supported Providers:**
 
-#### 1. **Claude (Anthropic)** 🎨
+#### 1. **Cloud LLM (EDAMAME)**
+- **Type:** Managed AI service hosted by EDAMAME
+- **Best for:** Users who want hassle-free AI with no API key management
+- **Authentication:** OAuth via [EDAMAME Portal](https://portal.edamame.tech) — sign in once, stay connected
+- **Cost:** Free and paying tiers available; see [portal.edamame.tech](https://portal.edamame.tech) for details
+- **Features:**
+  - Zero API key management
+  - Automatic model selection
+  - Usage tracking displayed in the app
+  - Subscription status and plan visible in AI Assistant settings
+- **Availability:** GUI app only (EDAMAME Security); not available in CLI tools (edamame_posture)
+- **Note:** When subscription limit is reached, the app notifies you and prompts for plan upgrade
+
+#### 2. **Claude (Anthropic)**
 - **Models:** Claude Sonnet 4.5, Claude Haiku 4.5
 - **Best for:** Detailed reasoning, nuanced security decisions
 - **Requires:** API key from console.anthropic.com
 - **Cost:** Pay-per-use (most expensive but highest quality)
 
-#### 2. **OpenAI (GPT)** 🤖
+#### 3. **OpenAI (GPT)**
 - **Models:** GPT-5, GPT-5 Mini
 - **Best for:** Fast responses, general-purpose analysis
 - **Requires:** API key from platform.openai.com
 - **Cost:** Pay-per-use (medium cost, good quality)
 
-#### 3. **Ollama (Local)** 💻
+#### 4. **Ollama (Local)**
 - **Models:** Any model you run locally (llama3, mistral, etc.)
 - **Best for:** Privacy-conscious users, no internet dependency
 - **Requires:** Ollama installed locally, custom base URL
@@ -310,6 +323,30 @@ MCP is a protocol that lets LLMs securely access external tools and data. In EDA
 
 ### Setting Up Your AI Provider
 
+#### Option A: Cloud LLM (EDAMAME) - Recommended for Most Users
+
+1. **Open AI Assistant Settings**
+   - Navigate to the AI tab in the app
+   - Expand the AI Assistant section
+
+2. **Sign In to Cloud LLM**
+   - Click "Sign in to Cloud LLM"
+   - You'll be redirected to EDAMAME Portal for OAuth authentication
+   - Sign in with your EDAMAME account (or create one)
+
+3. **Automatic Configuration**
+   - Once signed in, the AI is ready to use immediately
+   - Your subscription plan and usage are displayed in the settings
+   - No API keys to manage
+
+4. **Subscription**
+   - Free and paying tiers available
+   - See [portal.edamame.tech](https://portal.edamame.tech) for pricing and plan details
+
+**Note:** Cloud LLM is available in the GUI app only. For CLI/CI environments, use Claude, OpenAI, or Ollama with API keys.
+
+#### Option B: Bring Your Own LLM (Claude, OpenAI, Ollama)
+
 1. **Open Settings**
    - Click the ⚙️ icon next to "Do It For Me" button
 
@@ -329,6 +366,8 @@ MCP is a protocol that lets LLMs securely access external tools and data. In EDA
 
 6. **Save & Close**
    - Configuration is automatically saved on successful test
+
+**Note:** Selecting your own LLM automatically signs you out of Cloud LLM (and vice versa).
 
 ### MCP Server Setup (Optional - For Advanced Users)
 
@@ -548,8 +587,9 @@ In both modes, risky/complex actions are escalated for manual review. Use "Analy
 
 **Q: How much does it cost?**
 A: Depends on your provider:
-- Claude/OpenAI: pay-per-use
-- Ollama: Free (runs locally)
+- Cloud LLM (EDAMAME): Free and paying tiers; see [portal.edamame.tech](https://portal.edamame.tech) for details
+- Claude/OpenAI: pay-per-use (you pay Anthropic/OpenAI directly)
+- Ollama: Free (runs locally on your hardware)
 
 **Q: Can I use it offline?**
 A: Yes, with Ollama. Configure it to run locally and the AI works without internet.
@@ -558,7 +598,10 @@ A: Yes, with Ollama. Configure it to run locally and the AI works without intern
 A: Click "Undo" on any action.
 
 **Q: Is my data private?**
-A: With cloud providers (Claude/OpenAI), context is sanitized (see edamame_foundation for the open source code used) and is sent directly to their API (encrypted). With Ollama, everything stays local. 
+A: All data is sanitized before being sent to any LLM (see edamame_foundation for the open source code used):
+- **Cloud LLM (EDAMAME):** Sanitized context is sent to EDAMAME's secure backend (encrypted in transit and at rest)
+- **Claude/OpenAI:** Sanitized context is sent directly to their APIs (encrypted in transit)
+- **Ollama:** Everything stays local on your machine — maximum privacy 
 
 **Q: Can I customize AI behavior?**
 A: Currently, choose "Analyze & Recommend" mode for full control.
@@ -568,7 +611,9 @@ A: Every action includes full reasoning in the Action History. Click "View Detai
 
 ## Getting Started Checklist
 
-- [ ] Configure AI provider (Claude, OpenAI, or Ollama)
+- [ ] Configure AI provider:
+  - **Quickest:** Sign in to Cloud LLM (EDAMAME) — no API key needed
+  - **Alternative:** Set up Claude, OpenAI, or Ollama with your own credentials
 - [ ] Test connection successfully
 - [ ] Try "Analyze & Recommend" mode first
 - [ ] Review 5-10 AI decisions to understand reasoning
