@@ -16,10 +16,9 @@ EDAMAME Security is your all‑in‑one tool to secure, understand, and prove th
 
 ### AI Assistant (Agentic System)
 - Intelligent automation that analyzes and resolves security issues automatically
-- Three operational modes:
+- Two operational modes:
   - **"Do It For Me"** - Fully automatic handling of routine security tasks
   - **"Analyze & Recommend"** - Review AI decisions before execution
-  - **"Backend AI Analysis"** - Deep network security scans and comprehensive reports (click **Request report** to start the scan, then **Read latest report** to view the newest results)
 - Scheduled automation with granular control:
   - **"Auto run"** toggle - Schedule automatic processing at regular intervals (5min/1h/1day)
   - **"Auto confirm"** toggle - Control whether scheduled runs execute safe actions immediately or wait for approval

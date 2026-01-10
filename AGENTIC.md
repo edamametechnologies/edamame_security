@@ -71,24 +71,7 @@ When you click the AI Assistant section in the Advisor tab, you'll see three ope
 
 **Example:** AI analyzes the same 10 alerts with the same reasoning, but instead of executing, it shows you "I would dismiss these 9" and waits for your approval on each.
 
-#### 3. **"Backend AI Analysis"** (Deep Scan) 🔬
-**Use when:** You want the backend to pre-analyze your network data
-
-**How it works now:**
-1. Click **Request report** to start a backend scan. The AI runs in the background and prepares the latest analysis.
-2. When processing finishes, a **Read latest report** button appears. Click it to open the dialog with the newest report.
-
-**Behind the scenes:**
-- Backend AI scans all network traffic and system data
-- Generates new security recommendations
-- Creates todos for you to review or for the AI Assistant to process
-
-**Best for:**
-- Discovering hidden threats
-- Periodic deep security audits
-- Finding patterns across your network
-
-### 🔧 Interface Overview
+### Interface Overview
 
 #### Collapsible header & quick context
 - The **Agentic** header (with the Beta badge) mirrors `AgenticHeader` and lets you collapse or expand the entire experience with one tap.
@@ -509,48 +492,6 @@ Inspector opens at `http://localhost:5173` and shows:
 - **No tools showing?**
   - Wait 2-3 seconds after connection
   - Refresh browser page (F5)
-
-### Backend AI Analysis Setup
-
-The backend AI performs a holistic analysis of your security posture and generates comprehensive reports:
-
-#### 1. **Enable Backend Analysis**
-   - Configure monitoring features first:
-     - 🔐 **Breach Detection** (Identity tab)
-     - 🌐 **LAN Scanning** (LAN tab)  
-     - 📡 **Traffic Monitoring** (Capture tab - requires Helper)
-
-#### 2. **Request a Report**
-   - Click the **"Request report"** button in the AI Assistant section (it stays disabled until the prerequisites in the Advisor tab are satisfied, mirroring the `aiAnalysisDisabled` flag in code)
-   - What happens:
-     1. A sanitized version of your most important todos is sent to the backend
-     2. Backend AI generates a comprehensive security report in the background
-     3. Once ready, the **"Read latest report"** button becomes available
-
-#### 3. **Read & Interact**
-   - Click **"Read latest report"** to open the dialog with the newest analysis
-
-#### 3. **Interactive Features**
-
-Once the report is displayed, you can:
-
-**📧 Request Report via Email**
-- Click "Request Report" button
-- Provide your email address
-- Receive the full analysis report in your inbox
-- Useful for sharing with IT teams or keeping records
-
-**💬 Ask Custom Questions**
-- Click "Ask a Question" button
-- Enter your specific security question (e.g., "Why is port 22 open on my router?")
-- Backend AI generates a focused answer based on your current security state
-- Great for understanding specific alerts or getting targeted advice
-
-**Example Flow:**
-1. Click "Request report" → Backend AI prepares your holistic security report
-2. When prompted, click "Read latest report" → View the analysis dialog
-3. Click "Ask a Question" → "Is my home network secure enough for remote work?"
-4. Get specific recommendations → Click "Request Report" (in-dialog) → Receive full analysis via email
 
 ## Tips & Best Practices
 
