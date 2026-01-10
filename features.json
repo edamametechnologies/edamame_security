@@ -231,8 +231,8 @@
                 "fr": "Historique des Actions"
               },
               "description": {
-                "en": "Complete audit trail with status tracking (Auto-Resolved, Requires Confirmation, Escalated, Failed, Obsolete), filtering capabilities, bulk operations (Confirm All, Undo All), and deep links to Remed, LANscan, Capture, and Pwned views.",
-                "fr": "Piste d'audit complète avec suivi d'état (Résolu Auto, Nécessite Confirmation, Escaladé, Échoué, Obsolète), capacités de filtrage, opérations groupées (Confirmer Tout, Annuler Tout) et liens profonds vers les vues Remed, LANscan, Capture et Pwned."
+                "en": "Complete audit trail with status tracking (Auto-Resolved, Requires Confirmation, Escalated, Failed, Obsolete), filtering capabilities, bulk operations (Confirm All, Undo All), and deep links to related security views.",
+                "fr": "Piste d'audit complète avec suivi d'état (Résolu Auto, Nécessite Confirmation, Escaladé, Échoué, Obsolète), capacités de filtrage, opérations groupées (Confirmer Tout, Annuler Tout) et liens vers les vues de sécurité associées."
               }
             },
             {

@@ -167,7 +167,7 @@ Every action the AI takes is logged in the **Action History** section:
 
 #### Action History Features
 
-- 🔗 **Open native context** – The **View Details** action launches the same Remed, LANscan, Capture, or Pwned cards used elsewhere in the Advisor tab (see `_navigateToActionDetail` in code).
+- 🔗 **View Details** – Opens the related security view for the action (remediation, network, traffic, or identity).
 - 🧠 **Detailed action cards** – Each entry exposes timestamps, processing duration, token counts, undo info, and priority exactly as defined in `AgenticActionDetailsCard`.
 
 **Filtering:**
