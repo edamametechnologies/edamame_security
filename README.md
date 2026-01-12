@@ -24,7 +24,7 @@ EDAMAME Security is your all‑in‑one tool to secure, understand, and prove th
   - **"Auto confirm"** toggle - Control whether scheduled runs execute safe actions immediately or wait for approval
 - Collapsible automation panel with live workflow status updates, Do It For Me / Analyze & Recommend buttons, and an inline cancel action for in-flight jobs.
 - Supports multiple LLM providers:
-  - **Cloud LLM (EDAMAME)** - Managed AI service with OAuth authentication via EDAMAME Portal; free and paying tiers (see [portal.edamame.tech](https://portal.edamame.tech)); zero API key management
+  - **Cloud LLM (EDAMAME)** - Managed AI service with OAuth authentication via EDAMAME Portal; free and paying tiers (see [portal.edamame.tech](https://portal.edamame.tech)); optional API keys for headless environments
   - **Claude (Anthropic)** - Detailed reasoning and nuanced security decisions (API key required)
   - **OpenAI (GPT)** - Fast responses and general-purpose analysis (API key required)
   - **Ollama (Local)** - Privacy-focused, runs entirely on your machine (no cloud dependency)

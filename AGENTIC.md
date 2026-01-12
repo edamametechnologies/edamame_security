@@ -239,15 +239,20 @@ The AI Assistant uses advanced language models to understand and reason about se
 
 #### 1. **Cloud LLM (EDAMAME)**
 - **Type:** Managed AI service hosted by EDAMAME
-- **Best for:** Users who want hassle-free AI with no API key management
-- **Authentication:** OAuth via [EDAMAME Portal](https://portal.edamame.tech) — sign in once, stay connected
+- **Best for:** Users who want hassle-free AI with flexible authentication options
+- **Authentication:** 
+  - **OAuth** via [EDAMAME Portal](https://portal.edamame.tech) — sign in once, stay connected (GUI app)
+  - **API Key** for headless/CLI environments — create keys in the Portal, use with `--api-key` flag
 - **Cost:** Free and paying tiers available; see [portal.edamame.tech](https://portal.edamame.tech) for details
 - **Features:**
-  - Zero API key management
+  - Simple OAuth login for desktop apps
+  - API keys available for CI/CD and server environments
   - Automatic model selection
   - Usage tracking displayed in the app
   - Subscription status and plan visible in AI Assistant settings
-- **Availability:** GUI app only (EDAMAME Security); not available in CLI tools (edamame_posture)
+- **Availability:** 
+  - GUI app (EDAMAME Security) — uses OAuth authentication
+  - CLI tools (edamame_posture) — uses API key authentication
 - **Note:** When subscription limit is reached, the app notifies you and prompts for plan upgrade
 
 #### 2. **Claude (Anthropic)**
@@ -320,13 +325,17 @@ MCP is a protocol that lets LLMs securely access external tools and data. In EDA
 3. **Automatic Configuration**
    - Once signed in, the AI is ready to use immediately
    - Your subscription plan and usage are displayed in the settings
-   - No API keys to manage
 
 4. **Subscription**
    - Free and paying tiers available
    - See [portal.edamame.tech](https://portal.edamame.tech) for pricing and plan details
 
-**Note:** Cloud LLM is available in the GUI app only. For CLI/CI environments, use Claude, OpenAI, or Ollama with API keys.
+5. **API Keys for Headless Environments** (Optional)
+   - Go to [portal.edamame.tech](https://portal.edamame.tech) and navigate to API Keys
+   - Create a new API key with a descriptive name
+   - Use with `edamame_posture --api-key <your-key>` or set `EDAMAME_API_KEY` environment variable
+
+**Note:** Cloud LLM supports both OAuth (GUI app) and API keys (CLI/headless). For third-party LLMs in CLI, use Claude, OpenAI, or Ollama with their respective API keys.
 
 #### Option B: Bring Your Own LLM (Claude, OpenAI, Ollama)
 
@@ -553,7 +562,8 @@ A: Every action includes full reasoning in the Action History. Click "View Detai
 ## Getting Started Checklist
 
 - [ ] Configure AI provider:
-  - **Quickest:** Sign in to Cloud LLM (EDAMAME) — no API key needed
+  - **GUI App:** Sign in to Cloud LLM (EDAMAME) via OAuth — simple and secure
+  - **CLI/Headless:** Create an API key at [portal.edamame.tech](https://portal.edamame.tech)
   - **Alternative:** Set up Claude, OpenAI, or Ollama with your own credentials
 - [ ] Test connection successfully
 - [ ] Try "Analyze & Recommend" mode first
