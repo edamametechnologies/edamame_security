@@ -242,7 +242,7 @@ The AI Assistant uses advanced language models to understand and reason about se
 - **Best for:** Users who want hassle-free AI with flexible authentication options
 - **Authentication:** 
   - **OAuth** via [EDAMAME Portal](https://portal.edamame.tech) — sign in once, stay connected (GUI app)
-  - **API Key** for headless/CLI environments — create keys in the Portal, use with `--api-key` flag
+  - **API Key** for headless/CLI environments — create keys in the Portal, set `EDAMAME_LLM_API_KEY` env var
 - **Cost:** Free and paying tiers available; see [portal.edamame.tech](https://portal.edamame.tech) for details
 - **Features:**
   - Simple OAuth login for desktop apps
@@ -333,7 +333,7 @@ MCP is a protocol that lets LLMs securely access external tools and data. In EDA
 5. **API Keys for Headless Environments** (Optional)
    - Go to [portal.edamame.tech](https://portal.edamame.tech) and navigate to API Keys
    - Create a new API key with a descriptive name
-   - Use with `edamame_posture --api-key <your-key>` or set `EDAMAME_API_KEY` environment variable
+   - Use with `--agentic-provider edamame` and set `EDAMAME_LLM_API_KEY` environment variable
 
 **Note:** Cloud LLM supports both OAuth (GUI app) and API keys (CLI/headless). For third-party LLMs in CLI, use Claude, OpenAI, or Ollama with their respective API keys.
 

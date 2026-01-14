@@ -1,9 +1,9 @@
 
-Politique de confidentialité EDAMAME Cloud LLM (FR)
+Politique de confidentialité EDAMAME Portal LLM (FR)
 ===================================================
 
 
-En vous connectant à EDAMAME Cloud LLM, vous acceptez de partager les informations suivantes :
+En vous connectant à EDAMAME Portal LLM, vous acceptez de partager les informations suivantes :
 
 **Données envoyées à OpenAI (via le backend EDAMAME) :**
 * Résumé de la posture de sécurité (score, nombre de menaces, nombre de tâches)
@@ -31,4 +31,4 @@ En vous connectant à EDAMAME Cloud LLM, vous acceptez de partager les informati
 
 Pour plus d'informations sur les pratiques générales de confidentialité d'EDAMAME, consultez notre [Politique de confidentialité](https://www.edamame.tech/privacy).
 
-Si vous n'êtes pas d'accord avec cette politique, veuillez ne pas vous connecter à EDAMAME Cloud LLM.
+Si vous n'êtes pas d'accord avec cette politique, veuillez ne pas vous connecter à EDAMAME Portal LLM.

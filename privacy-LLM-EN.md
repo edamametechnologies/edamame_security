@@ -1,9 +1,9 @@
 
-EDAMAME Cloud LLM Privacy Policy (EN)
+EDAMAME Portal LLM Privacy Policy (EN)
 =====================================
 
 
-By connecting to EDAMAME Cloud LLM, you agree to share the following information:
+By connecting to EDAMAME Portal LLM, you agree to share the following information:
 
 **Data sent to OpenAI (via EDAMAME backend):**
 * Security posture summary (score, threat count, todo count)
@@ -31,4 +31,4 @@ By connecting to EDAMAME Cloud LLM, you agree to share the following information
 
 For more information about EDAMAME's general privacy practices, see our [Privacy Policy](https://www.edamame.tech/privacy).
 
-If you do not agree with this policy, please do not connect to EDAMAME Cloud LLM.
+If you do not agree with this policy, please do not connect to EDAMAME Portal LLM.
