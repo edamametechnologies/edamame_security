@@ -242,7 +242,7 @@ The AI Assistant uses advanced language models to understand and reason about se
 - **Best for:** Users who want hassle-free AI with flexible authentication options
 - **Authentication:** 
   - **OAuth** via [EDAMAME Portal](https://portal.edamame.tech) — sign in once, stay connected (GUI app)
-  - **API Key** for headless/CLI environments — create keys in the Portal, use with `--api-key` flag
+  - **API Key** for headless/CLI environments — create keys in the Portal, set `EDAMAME_LLM_API_KEY` env var
 - **Cost:** Free and paying tiers available; see [portal.edamame.tech](https://portal.edamame.tech) for details
 - **Features:**
   - Simple OAuth login for desktop apps
