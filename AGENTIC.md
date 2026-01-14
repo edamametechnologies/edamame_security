@@ -333,7 +333,7 @@ MCP is a protocol that lets LLMs securely access external tools and data. In EDA
 5. **API Keys for Headless Environments** (Optional)
    - Go to [portal.edamame.tech](https://portal.edamame.tech) and navigate to API Keys
    - Create a new API key with a descriptive name
-   - Use with `edamame_posture --api-key <your-key>` or set `EDAMAME_API_KEY` environment variable
+   - Use with `--agentic-provider edamame` and set `EDAMAME_LLM_API_KEY` environment variable
 
 **Note:** Cloud LLM supports both OAuth (GUI app) and API keys (CLI/headless). For third-party LLMs in CLI, use Claude, OpenAI, or Ollama with their respective API keys.
 

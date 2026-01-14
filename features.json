@@ -330,10 +330,10 @@
       },
       "sub_features": [
         {
-          "name": "posture_main",
+          "name": "posture_score",
           "title": {
-            "en": "Security Score – Real‑Time Risk Assessment",
-            "fr": "Score de sécurité – Évaluation du risque en temps réel"
+            "en": "Score – Real‑Time Risk Assessment",
+            "fr": "Score – Évaluation du risque en temps réel"
           },
           "description": {
             "en": "Comprehensive security assessment that evaluates your workstation across five critical domains: Network Security, System Integrity, Services Configuration, Application Security, and Credential Management. Uses industry-standard security frameworks and best practices to generate an overall security score and detailed category breakdowns.",
@@ -420,10 +420,10 @@
           ]
         },
         {
-          "name": "posture_threats",
+          "name": "posture_active",
           "title": {
-            "en": "Active Threats – Unresolved Issues",
-            "fr": "Menaces actives – Problèmes non résolus"
+            "en": "Active – Unresolved Threats",
+            "fr": "Active – Menaces non résolues"
           },
           "description": {
             "en": "Colour‑coded treemap of outstanding threats, ordered by severity and domain.",
@@ -808,81 +808,138 @@
       },
       "sub_features": [
         {
-          "name": "lan_community_sharing",
+          "name": "lan_radar",
           "title": {
-            "en": "Community Device Sharing",
-            "fr": "Partage d'Appareils Communautaire"
+            "en": "Radar – Interactive Device Visualization",
+            "fr": "Radar – Visualisation Interactive des Appareils"
           },
           "description": {
-            "en": "Share device information securely with other EDAMAME users on your network. Desktop devices with admin privileges can help mobile devices discover MAC addresses and additional network details that require elevated permissions. All shared data is cryptographically signed and filtered to ensure freshness and relevance.",
-            "fr": "Partagez les informations d'appareils de manière sécurisée avec d'autres utilisateurs EDAMAME sur votre réseau. Les appareils de bureau avec privilèges administrateur peuvent aider les appareils mobiles à découvrir les adresses MAC et détails réseau supplémentaires nécessitant des permissions élevées. Toutes les données partagées sont cryptographiquement signées et filtrées pour assurer fraîcheur et pertinence."
+            "en": "Real-time radar visualization showing all discovered devices on your network. Devices are positioned and color-coded by risk level, device type, and activity status. Interactive filtering allows focusing on specific device categories.",
+            "fr": "Visualisation radar en temps réel montrant tous les appareils découverts sur votre réseau. Les appareils sont positionnés et codés par couleur selon le niveau de risque, le type d'appareil et le statut d'activité. Le filtrage interactif permet de se concentrer sur des catégories d'appareils spécifiques."
           }
         },
         {
-          "name": "lan_mdns_discovery",
+          "name": "lan_table",
           "title": {
-            "en": "Smart Service Discovery",
-            "fr": "Découverte Intelligente de Services"
+            "en": "Table – Device List View",
+            "fr": "Table – Vue Liste des Appareils"
           },
           "description": {
-            "en": "Automatically discovers all network services and smart devices using advanced mDNS techniques. Identifies device types, extracts hardware addresses from network protocols, and maps service relationships. Provides comprehensive visibility into printers, smart TVs, IoT devices, and other network-connected equipment without requiring manual configuration.",
-            "fr": "Découvre automatiquement tous les services réseau et appareils intelligents en utilisant des techniques mDNS avancées. Identifie les types d'appareils, extrait les adresses matérielles des protocoles réseau et mappe les relations de services. Fournit une visibilité complète sur les imprimantes, téléviseurs intelligents, appareils IoT et autres équipements connectés sans configuration manuelle."
+            "en": "Sortable table view of all network devices with columns for IP address, hostname, MAC address, device type, open ports, and risk level. Supports text search and filtering.",
+            "fr": "Vue tableau triable de tous les appareils réseau avec colonnes pour adresse IP, nom d'hôte, adresse MAC, type d'appareil, ports ouverts et niveau de risque. Supporte la recherche textuelle et le filtrage."
           }
         },
         {
-          "name": "lan_port_scanning",
+          "name": "lan_detailed",
           "title": {
-            "en": "Service Detection & Analysis",
-            "fr": "Détection et Analyse de Services"
+            "en": "Detailed – Expanded Device Cards",
+            "fr": "Détaillé – Cartes d'Appareils Étendues"
           },
           "description": {
-            "en": "Scans network devices to identify running services and their versions. Analyzes service responses to determine software details and potential security implications. Helps you understand what services are exposed on your network and whether they need attention or hardening.",
-            "fr": "Scanne les appareils réseau pour identifier les services en cours d'exécution et leurs versions. Analyse les réponses de service pour déterminer les détails logiciels et implications de sécurité potentielles. Vous aide à comprendre quels services sont exposés sur votre réseau et s'ils nécessitent attention ou durcissement."
+            "en": "Detailed card view showing comprehensive information for each device including all open ports, services, vulnerabilities, manufacturer details, and historical activity. Supports same filtering as radar view.",
+            "fr": "Vue carte détaillée montrant des informations complètes pour chaque appareil incluant tous les ports ouverts, services, vulnérabilités, détails fabricant et activité historique. Supporte le même filtrage que la vue radar."
           }
         },
         {
-          "name": "lan_cve_analysis",
+          "name": "lan_networks",
           "title": {
-            "en": "Vulnerability Assessment",
-            "fr": "Évaluation des Vulnérabilités"
+            "en": "Networks – Network History Timeline",
+            "fr": "Réseaux – Chronologie Historique des Réseaux"
           },
           "description": {
-            "en": "Automatically checks discovered services and devices against known security vulnerabilities. Provides real-time alerts when vulnerable services are detected and assesses the security risk level of each device. Helps prioritize which devices need security updates or additional protection measures.",
-            "fr": "Vérifie automatiquement les services et appareils découverts contre les vulnérabilités de sécurité connues. Fournit des alertes en temps réel lorsque des services vulnérables sont détectés et évalue le niveau de risque de sécurité de chaque appareil. Aide à prioriser quels appareils nécessitent des mises à jour de sécurité ou mesures de protection supplémentaires."
+            "en": "Historical timeline of all networks you've connected to, with device counts, scan history, and security assessments for each network.",
+            "fr": "Chronologie historique de tous les réseaux auxquels vous vous êtes connecté, avec comptage d'appareils, historique de scan et évaluations de sécurité pour chaque réseau."
           }
         },
         {
-          "name": "lan_device_profiling",
+          "name": "lan_devices",
           "title": {
-            "en": "Intelligent Device Recognition",
-            "fr": "Reconnaissance Intelligente d'Appareils"
+            "en": "Devices – Device History Timeline",
+            "fr": "Appareils – Chronologie Historique des Appareils"
           },
           "description": {
-            "en": "Automatically identifies device types using multiple detection methods including network ports, service signatures, manufacturer information, and device behavior patterns. Recognizes printers, IoT devices, smart TVs, cameras, gaming consoles, and more. Provides instant clarity about what devices are on your network.",
-            "fr": "Identifie automatiquement les types d'appareils en utilisant plusieurs méthodes de détection incluant les ports réseau, signatures de service, informations fabricant et motifs de comportement. Reconnaît imprimantes, appareils IoT, téléviseurs intelligents, caméras, consoles de jeu et plus. Fournit une clarté instantanée sur les appareils présents sur votre réseau."
+            "en": "Historical timeline of all devices ever seen across networks. Track when devices appeared, disappeared, or changed. Delete individual device records from history.",
+            "fr": "Chronologie historique de tous les appareils jamais vus sur les réseaux. Suivez quand les appareils sont apparus, disparus ou ont changé. Supprimez des enregistrements d'appareils individuels de l'historique."
           }
         },
         {
-          "name": "lan_risk_classification",
+          "name": "lan_features",
           "title": {
-            "en": "Security Risk Scoring",
-            "fr": "Scoring de Risque de Sécurité"
+            "en": "Network Discovery Features",
+            "fr": "Fonctionnalités de Découverte Réseau"
           },
           "description": {
-            "en": "Assigns security risk levels to each discovered device based on vulnerability exposure and service configuration. Devices with many vulnerabilities receive high-risk ratings, while secure devices get low-risk scores. Helps you focus security efforts on the most problematic devices first.",
-            "fr": "Attribue des niveaux de risque de sécurité à chaque appareil découvert basé sur l'exposition aux vulnérabilités et la configuration des services. Les appareils avec beaucoup de vulnérabilités reçoivent des notes de risque élevé, tandis que les appareils sécurisés obtiennent des scores de faible risque. Vous aide à concentrer les efforts de sécurité sur les appareils les plus problématiques en premier."
-          }
-        },
-        {
-          "name": "lan_notification_system",
-          "title": {
-            "en": "Device Activity Monitoring",
-            "fr": "Surveillance d'Activité des Appareils"
+            "en": "Core network discovery capabilities available across all LAN subtabs.",
+            "fr": "Capacités de découverte réseau de base disponibles dans tous les sous-onglets LAN."
           },
-          "description": {
-            "en": "Tracks when devices join or leave your network and monitors their activity status. Sends notifications when new devices appear or when previously seen devices become active again. Helps you stay aware of network changes and potential unauthorized device access.",
-            "fr": "Suit quand les appareils rejoignent ou quittent votre réseau et surveille leur statut d'activité. Envoie des notifications lorsque de nouveaux appareils apparaissent ou quand des appareils précédemment vus deviennent actifs à nouveau. Vous aide à rester conscient des changements réseau et accès d'appareils non autorisés potentiels."
-          }
+          "items": [
+            {
+              "name": "lan_community_sharing",
+              "title": {
+                "en": "Community Device Sharing",
+                "fr": "Partage d'Appareils Communautaire"
+              },
+              "description": {
+                "en": "Share device information securely with other EDAMAME users on your network via P2P mesh. Desktop devices with admin privileges help mobile devices discover MAC addresses and additional network details.",
+                "fr": "Partagez les informations d'appareils de manière sécurisée avec d'autres utilisateurs EDAMAME sur votre réseau via mesh P2P. Les appareils de bureau avec privilèges administrateur aident les appareils mobiles à découvrir les adresses MAC et détails réseau supplémentaires."
+              }
+            },
+            {
+              "name": "lan_mdns_discovery",
+              "title": {
+                "en": "Smart Service Discovery",
+                "fr": "Découverte Intelligente de Services"
+              },
+              "description": {
+                "en": "Automatically discovers all network services and smart devices using mDNS. Identifies printers, smart TVs, IoT devices without manual configuration.",
+                "fr": "Découvre automatiquement tous les services réseau et appareils intelligents en utilisant mDNS. Identifie imprimantes, téléviseurs intelligents, appareils IoT sans configuration manuelle."
+              }
+            },
+            {
+              "name": "lan_port_scanning",
+              "title": {
+                "en": "Service Detection & Analysis",
+                "fr": "Détection et Analyse de Services"
+              },
+              "description": {
+                "en": "Scans network devices to identify running services, versions, and potential security implications.",
+                "fr": "Scanne les appareils réseau pour identifier les services en cours d'exécution, versions et implications de sécurité potentielles."
+              }
+            },
+            {
+              "name": "lan_cve_analysis",
+              "title": {
+                "en": "Vulnerability Assessment",
+                "fr": "Évaluation des Vulnérabilités"
+              },
+              "description": {
+                "en": "Automatically checks discovered services against known CVEs and provides real-time vulnerability alerts.",
+                "fr": "Vérifie automatiquement les services découverts contre les CVE connus et fournit des alertes de vulnérabilité en temps réel."
+              }
+            },
+            {
+              "name": "lan_device_profiling",
+              "title": {
+                "en": "Intelligent Device Recognition",
+                "fr": "Reconnaissance Intelligente d'Appareils"
+              },
+              "description": {
+                "en": "Automatically identifies device types using network ports, service signatures, manufacturer OUI, and behavior patterns.",
+                "fr": "Identifie automatiquement les types d'appareils en utilisant les ports réseau, signatures de service, OUI fabricant et motifs de comportement."
+              }
+            },
+            {
+              "name": "lan_risk_classification",
+              "title": {
+                "en": "Security Risk Scoring",
+                "fr": "Scoring de Risque de Sécurité"
+              },
+              "description": {
+                "en": "Assigns High/Medium/Low risk levels to each device based on vulnerability exposure and service configuration.",
+                "fr": "Attribue des niveaux de risque Élevé/Moyen/Faible à chaque appareil basé sur l'exposition aux vulnérabilités et la configuration des services."
+              }
+            }
+          ]
         }
       ]
     },
@@ -1165,424 +1222,246 @@
         "fr": "Analyse du Trafic Réseau"
       },
       "description": {
-        "en": "Real‑time packet capture with ML anomaly detection and process‑level insight.",
-        "fr": "Capture de paquets en temps réel avec détection d'anomalies ML et visibilité au niveau des processus."
+        "en": "Real‑time packet capture with ML anomaly detection and process‑level insight. Desktop only feature requiring helper daemon for elevated privileges.",
+        "fr": "Capture de paquets en temps réel avec détection d'anomalies ML et visibilité au niveau des processus. Fonctionnalité bureau uniquement nécessitant le démon helper pour les privilèges élevés."
       },
       "sub_features": [
         {
-          "name": "capture",
+          "name": "capture_sunburst",
           "title": {
-            "en": "Traffic",
-            "fr": "Trafic"
+            "en": "Sunburst – Live Traffic Visualization",
+            "fr": "Sunburst – Visualisation du Trafic en Direct"
           },
           "description": {
-            "en": "Real‑time packet capture with AI anomaly detection and process‑level insight.",
-            "fr": "Capture de paquets en temps réel avec détection d'anomalies IA et visibilité au niveau des processus."
+            "en": "Animated sunburst diagram showing real-time network connections organized by domain, protocol, and geography. Visual representation of traffic patterns and anomalies.",
+            "fr": "Diagramme sunburst animé montrant les connexions réseau en temps réel organisées par domaine, protocole et géographie. Représentation visuelle des motifs de trafic et anomalies."
           },
-          "sub_features": [
+          "items": [
             {
-              "name": "capture_main",
+              "name": "capture_control_button",
               "title": {
-                "en": "Traffic Sunburst – Live Visualisation",
-                "fr": "Sunburst de trafic – Visualisation en direct"
+                "en": "Start / Stop Capture",
+                "fr": "Démarrer / arrêter la capture"
               },
               "description": {
-                "en": "Animated sunburst showing domains, protocols and geographies touched by your device in real time.",
-                "fr": "Sunburst animé affichant en temps réel les domaines, protocoles et zones géographiques contactés par votre appareil."
-              },
-              "items": [
-                {
-                  "name": "capture_control_button",
-                  "title": {
-                    "en": "Start / Stop Capture",
-                    "fr": "Démarrer / arrêter la capture"
-                  },
-                  "description": {
-                    "en": "Toggles the packet‑capture engine and live visualisation.",
-                    "fr": "Active ou désactive le moteur de capture de paquets et la visualisation en direct."
-                  }
-                },
-                {
-                  "name": "capture_status",
-                  "title": {
-                    "en": "Capture Status",
-                    "fr": "Statut de capture"
-                  },
-                  "description": {
-                    "en": "Indicator showing RUNNING or PAUSED with timestamp.",
-                    "fr": "Indicateur affichant EN COURS ou PAUSE avec horodatage."
-                  }
-                },
-                {
-                  "name": "whitelist_name",
-                  "title": {
-                    "en": "Whitelist Name",
-                    "fr": "Nom de la liste blanche"
-                  },
-                  "description": {
-                    "en": "Profile against which captured traffic will be compared.",
-                    "fr": "Profil auquel le trafic capturé sera comparé."
-                  }
-                },
-                {
-                  "name": "whitelist_conformance",
-                  "title": {
-                    "en": "Whitelist Conformance",
-                    "fr": "Conformité à la liste blanche"
-                  },
-                  "description": {
-                    "en": "Shows PASS / FAIL if sessions deviate from the whitelist.",
-                    "fr": "Indique PASS / FAIL si les sessions dévient de la liste blanche."
-                  }
-                },
-                {
-                  "name": "anomaly_detection",
-                  "title": {
-                    "en": "Anomaly Detection",
-                    "fr": "Détection d'anomalies"
-                  },
-                  "description": {
-                    "en": "AI flagging suspicious sessions in real time.",
-                    "fr": "IA signalant les sessions suspectes en temps réel."
-                  }
-                },
-                {
-                  "name": "blacklist_detection",
-                  "title": {
-                    "en": "Blacklist Hits",
-                    "fr": "Détections liste noire"
-                  },
-                  "description": {
-                    "en": "Alerts when traffic targets known malicious hosts.",
-                    "fr": "Alerte lorsque le trafic cible des hôtes malveillants connus."
-                  }
-                },
-                {
-                  "name": "session_filter",
-                  "title": {
-                    "en": "Session Filters",
-                    "fr": "Filtres de session"
-                  },
-                  "description": {
-                    "en": "Toggle UDP/TCP, inbound/outbound, added/activated views.",
-                    "fr": "Active/désactive les vues UDP/TCP, entrant/sortant, ajouté/activé."
-                  }
-                },
-                {
-                  "name": "traffic_statistics",
-                  "title": {
-                    "en": "Traffic Stats",
-                    "fr": "Statistiques trafic"
-                  },
-                  "description": {
-                    "en": "Totals for inbound, outbound and session count.",
-                    "fr": "Totaux pour entrant, sortant et nombre de sessions."
-                  }
-                }
-              ]
+                "en": "Toggles the packet‑capture engine and live visualisation.",
+                "fr": "Active ou désactive le moteur de capture de paquets et la visualisation en direct."
+              }
             },
             {
-              "name": "capture_sessions",
+              "name": "capture_status",
               "title": {
-                "en": "Sessions – Connection Details",
-                "fr": "Sessions – Détails des connexions"
+                "en": "Capture Status",
+                "fr": "Statut de capture"
               },
               "description": {
-                "en": "Detailed analysis of network sessions including connection patterns, data flows and security assessment.",
-                "fr": "Analyse détaillée des sessions réseau incluant les modèles de connexion, flux de données et évaluation de sécurité."
-              },
-              "items": [
-                {
-                  "name": "sessions_list",
-                  "title": {
-                    "en": "Network Sessions List",
-                    "fr": "Liste des sessions réseau"
-                  },
-                  "description": {
-                    "en": "Sortable table of every active or recently captured session.",
-                    "fr": "Tableau triable de chaque session active ou récemment capturée."
-                  }
-                },
-                {
-                  "name": "session_details",
-                  "title": {
-                    "en": "Session Details Panel",
-                    "fr": "Panneau de détails de session"
-                  },
-                  "description": {
-                    "en": "Side panel exposing DNS, TLS, ASN and geolocation for a selected session.",
-                    "fr": "Panneau latéral affichant DNS, TLS, ASN et géolocalisation pour la session sélectionnée."
-                  }
-                },
-                {
-                  "name": "source_destination",
-                  "title": {
-                    "en": "Source & Destination",
-                    "fr": "Source & destination"
-                  },
-                  "description": {
-                    "en": "Displays local process plus remote hostname / IP.",
-                    "fr": "Affiche le processus local et le nom d'hôte / IP distant."
-                  }
-                },
-                {
-                  "name": "port_protocol",
-                  "title": {
-                    "en": "Port & Protocol",
-                    "fr": "Port & protocole"
-                  },
-                  "description": {
-                    "en": "Service mapping (e.g. https 443, ssh 22).",
-                    "fr": "Correspondance service (ex. https 443, ssh 22)."
-                  }
-                },
-                {
-                  "name": "bytes_transferred",
-                  "title": {
-                    "en": "Bytes Transferred",
-                    "fr": "Octets transférés"
-                  },
-                  "description": {
-                    "en": "Live throughput in / out plus total volume.",
-                    "fr": "Débit en temps réel entrant / sortant et volume total."
-                  }
-                },
-                {
-                  "name": "session_duration",
-                  "title": {
-                    "en": "Session Duration",
-                    "fr": "Durée de la session"
-                  },
-                  "description": {
-                    "en": "Elapsed time since session start or re‑activation.",
-                    "fr": "Temps écoulé depuis le début ou la réactivation de la session."
-                  }
-                },
-                {
-                  "name": "criticality_indicator",
-                  "title": {
-                    "en": "Session Criticality",
-                    "fr": "Criticité de session"
-                  },
-                  "description": {
-                    "en": "Colour badge: green normal, orange suspicious, red abnormal.",
-                    "fr": "Badge couleur : vert normal, orange suspect, rouge anormal."
-                  }
-                },
-                {
-                  "name": "dismiss_session_button",
-                  "title": {
-                    "en": "Dismiss Session",
-                    "fr": "Ignorer la session"
-                  },
-                  "description": {
-                    "en": "Hides or whitelists the selected session from future alerts.",
-                    "fr": "Masque ou place en liste blanche la session sélectionnée pour les futures alertes."
-                  }
-                },
-                {
-                  "name": "session_remediation",
-                  "title": {
-                    "en": "Session Remediation Guide",
-                    "fr": "Guide de remédiation de session"
-                  },
-                  "description": {
-                    "en": "Suggests firewall rules or process quarantine to mitigate risk.",
-                    "fr": "Propose des règles de pare‑feu ou la mise en quarantaine du processus pour atténuer le risque."
-                  }
-                }
-              ]
+                "en": "Indicator showing RUNNING or PAUSED with timestamp.",
+                "fr": "Indicateur affichant EN COURS ou PAUSE avec horodatage."
+              }
             },
             {
-              "name": "capture_processes",
+              "name": "whitelist_name",
               "title": {
-                "en": "Processes – Per‑App Activity",
-                "fr": "Processus – Activité par application"
+                "en": "Whitelist Name",
+                "fr": "Nom de la liste blanche"
               },
               "description": {
-                "en": "Process‑level network activity monitoring showing which applications are accessing the network.",
-                "fr": "Surveillance de l'activité réseau au niveau des processus montrant quelles applications accèdent au réseau."
-              },
-              "items": [
-                {
-                  "name": "process_list",
-                  "title": {
-                    "en": "Active Processes",
-                    "fr": "Processus actifs"
-                  },
-                  "description": {
-                    "en": "Table of processes that generated traffic during the capture window.",
-                    "fr": "Tableau des processus ayant généré du trafic pendant la fenêtre de capture."
-                  }
-                },
-                {
-                  "name": "process_names",
-                  "title": {
-                    "en": "Process Name",
-                    "fr": "Nom du processus"
-                  },
-                  "description": {
-                    "en": "Human‑readable application or binary name.",
-                    "fr": "Nom lisible de l'application ou du binaire."
-                  }
-                },
-                {
-                  "name": "process_ids",
-                  "title": {
-                    "en": "PID",
-                    "fr": "PID"
-                  },
-                  "description": {
-                    "en": "Operating‑system Process Identifier.",
-                    "fr": "Identifiant de processus du système d'exploitation."
-                  }
-                },
-                {
-                  "name": "process_paths",
-                  "title": {
-                    "en": "Executable Path",
-                    "fr": "Chemin exécutable"
-                  },
-                  "description": {
-                    "en": "Full filesystem path for binary verification and trust checks.",
-                    "fr": "Chemin complet dans le système de fichiers pour la vérification et la confiance du binaire."
-                  }
-                },
-                {
-                  "name": "process_users",
-                  "title": {
-                    "en": "User Account",
-                    "fr": "Compte utilisateur"
-                  },
-                  "description": {
-                    "en": "OS account under which the process is running.",
-                    "fr": "Compte du système d'exploitation sous lequel le processus s'exécute."
-                  }
-                },
-                {
-                  "name": "network_activity",
-                  "title": {
-                    "en": "Current Network Activity",
-                    "fr": "Activité réseau en cours"
-                  },
-                  "description": {
-                    "en": "Live inbound/outbound throughput for the process.",
-                    "fr": "Débit entrant/sortant en direct pour le processus."
-                  }
-                },
-                {
-                  "name": "bandwidth_usage",
-                  "title": {
-                    "en": "Total Bandwidth",
-                    "fr": "Bande passante totale"
-                  },
-                  "description": {
-                    "en": "Cumulative bytes transferred since capture start.",
-                    "fr": "Octets cumulés transférés depuis le début de la capture."
-                  }
-                },
-                {
-                  "name": "connection_count",
-                  "title": {
-                    "en": "Connection Count",
-                    "fr": "Nombre de connexions"
-                  },
-                  "description": {
-                    "en": "How many sessions the process opened during capture.",
-                    "fr": "Nombre de sessions ouvertes par le processus durant la capture."
-                  }
-                }
-              ]
+                "en": "Profile against which captured traffic will be compared.",
+                "fr": "Profil auquel le trafic capturé sera comparé."
+              }
             },
             {
-              "name": "capture_history",
+              "name": "anomaly_detection",
               "title": {
-                "en": "Anomaly History – Threat Logs",
-                "fr": "Historique d'anomalies – Journaux de menaces"
+                "en": "ML Anomaly Detection",
+                "fr": "Détection d'Anomalies ML"
               },
               "description": {
-                "en": "Chronological log of suspicious or high‑risk network events detected by AI.",
-                "fr": "Journal chronologique des événements réseau suspects ou à haut risque détectés par IA."
+                "en": "Extended Isolation Forest AI flagging suspicious sessions in real time.",
+                "fr": "IA Extended Isolation Forest signalant les sessions suspectes en temps réel."
+              }
+            },
+            {
+              "name": "session_filters",
+              "title": {
+                "en": "Session Filters",
+                "fr": "Filtres de Session"
               },
-              "items": [
-                {
-                  "name": "traffic_timeline",
-                  "title": {
-                    "en": "Traffic History Timeline",
-                    "fr": "Chronologie historique du trafic"
-                  },
-                  "description": {
-                    "en": "Scrollable timeline of captures with drill‑down to session level.",
-                    "fr": "Chronologie défilante des captures avec zoom jusqu'au niveau session."
-                  }
-                },
-                {
-                  "name": "anomaly_history",
-                  "title": {
-                    "en": "Anomaly Log",
-                    "fr": "Journal des anomalies"
-                  },
-                  "description": {
-                    "en": "Log of every suspicious / abnormal detection and its disposition.",
-                    "fr": "Journal de chaque détection suspecte / anormale et de sa disposition."
-                  }
-                },
-                {
-                  "name": "session_history",
-                  "title": {
-                    "en": "Historical Sessions",
-                    "fr": "Sessions historiques"
-                  },
-                  "description": {
-                    "en": "Archive of past sessions with ability to re‑analyse PCAPs.",
-                    "fr": "Archive des sessions passées avec possibilité de ré‑analyser les PCAP."
-                  }
-                },
-                {
-                  "name": "traffic_trends",
-                  "title": {
-                    "en": "Traffic Trends",
-                    "fr": "Tendances trafic"
-                  },
-                  "description": {
-                    "en": "Line/area graphs showing bandwidth trends over days or weeks.",
-                    "fr": "Graphiques ligne/aire montrant les tendances de bande passante sur jours ou semaines."
-                  }
-                },
-                {
-                  "name": "security_events",
-                  "title": {
-                    "en": "Security Event Timeline",
-                    "fr": "Chronologie des événements de sécurité"
-                  },
-                  "description": {
-                    "en": "Highlights when blacklist hits or anomaly spikes occurred.",
-                    "fr": "Met en évidence les moments où des détections liste noire ou pics d'anomalies se sont produits."
-                  }
-                },
-                {
-                  "name": "bandwidth_history",
-                  "title": {
-                    "en": "Bandwidth Usage History",
-                    "fr": "Historique de bande passante"
-                  },
-                  "description": {
-                    "en": "Cumulative upload / download totals per capture run.",
-                    "fr": "Totaux cumulés d'envoi / réception par session de capture."
-                  }
-                },
-                {
-                  "name": "search_filter",
-                  "title": {
-                    "en": "History Search & Filter",
-                    "fr": "Recherche & filtre historique"
-                  },
-                  "description": {
-                    "en": "Find specific events by domain, ASN or process name.",
-                    "fr": "Trouve des événements spécifiques par domaine, ASN ou nom de processus."
-                  }
-                }
-              ]
+              "description": {
+                "en": "Toggle UDP/TCP, inbound/outbound, Normal/Suspicious/Abnormal criticality levels.",
+                "fr": "Active/désactive UDP/TCP, entrant/sortant, niveaux de criticité Normal/Suspect/Anormal."
+              }
+            },
+            {
+              "name": "traffic_statistics",
+              "title": {
+                "en": "Traffic Stats",
+                "fr": "Statistiques trafic"
+              },
+              "description": {
+                "en": "Totals for inbound, outbound and session count.",
+                "fr": "Totaux pour entrant, sortant et nombre de sessions."
+              }
+            }
+          ]
+        },
+        {
+          "name": "capture_sessions",
+          "title": {
+            "en": "Sessions – Connection Details Table",
+            "fr": "Sessions – Table des Détails de Connexion"
+          },
+          "description": {
+            "en": "Sortable table view of all network sessions with detailed connection information including source/destination, protocol, bytes transferred, and security assessment.",
+            "fr": "Vue tableau triable de toutes les sessions réseau avec informations de connexion détaillées incluant source/destination, protocole, octets transférés et évaluation de sécurité."
+          },
+          "items": [
+            {
+              "name": "sessions_list",
+              "title": {
+                "en": "Network Sessions List",
+                "fr": "Liste des sessions réseau"
+              },
+              "description": {
+                "en": "Sortable table of every active or recently captured session.",
+                "fr": "Tableau triable de chaque session active ou récemment capturée."
+              }
+            },
+            {
+              "name": "session_details_card",
+              "title": {
+                "en": "Session Details Card",
+                "fr": "Carte de Détails de Session"
+              },
+              "description": {
+                "en": "Detailed card exposing DNS, TLS, ASN, geolocation, and process information for a selected session.",
+                "fr": "Carte détaillée affichant DNS, TLS, ASN, géolocalisation et informations de processus pour la session sélectionnée."
+              }
+            },
+            {
+              "name": "criticality_indicator",
+              "title": {
+                "en": "Session Criticality",
+                "fr": "Criticité de session"
+              },
+              "description": {
+                "en": "Colour badge: green normal, orange suspicious, red abnormal.",
+                "fr": "Badge couleur : vert normal, orange suspect, rouge anormal."
+              }
+            },
+            {
+              "name": "dismiss_session_button",
+              "title": {
+                "en": "Dismiss Session",
+                "fr": "Ignorer la session"
+              },
+              "description": {
+                "en": "Add dismiss rule by session, port, or process to filter from future alerts.",
+                "fr": "Ajouter une règle d'ignorance par session, port ou processus pour filtrer des futures alertes."
+              }
+            }
+          ]
+        },
+        {
+          "name": "capture_processes",
+          "title": {
+            "en": "Processes – Per‑App Network Activity",
+            "fr": "Processus – Activité Réseau par Application"
+          },
+          "description": {
+            "en": "Hierarchical view showing network activity grouped by process. See which applications are generating traffic, their connection counts, and bandwidth usage.",
+            "fr": "Vue hiérarchique montrant l'activité réseau groupée par processus. Voyez quelles applications génèrent du trafic, leurs compteurs de connexion et utilisation de bande passante."
+          },
+          "items": [
+            {
+              "name": "process_list",
+              "title": {
+                "en": "Process Tree",
+                "fr": "Arbre des Processus"
+              },
+              "description": {
+                "en": "Expandable tree of processes with their child sessions.",
+                "fr": "Arbre extensible des processus avec leurs sessions enfants."
+              }
+            },
+            {
+              "name": "process_names",
+              "title": {
+                "en": "Process Name",
+                "fr": "Nom du processus"
+              },
+              "description": {
+                "en": "Human‑readable application or binary name.",
+                "fr": "Nom lisible de l'application ou du binaire."
+              }
+            },
+            {
+              "name": "bandwidth_usage",
+              "title": {
+                "en": "Bandwidth Usage",
+                "fr": "Utilisation de Bande Passante"
+              },
+              "description": {
+                "en": "Total inbound/outbound bytes for each process.",
+                "fr": "Total des octets entrant/sortant pour chaque processus."
+              }
+            },
+            {
+              "name": "connection_count",
+              "title": {
+                "en": "Connection Count",
+                "fr": "Nombre de connexions"
+              },
+              "description": {
+                "en": "How many sessions the process opened during capture.",
+                "fr": "Nombre de sessions ouvertes par le processus durant la capture."
+              }
+            }
+          ]
+        },
+        {
+          "name": "capture_history",
+          "title": {
+            "en": "History – Session & Anomaly Timeline",
+            "fr": "Historique – Chronologie des Sessions et Anomalies"
+          },
+          "description": {
+            "en": "Chronological timeline of all captured sessions and detected anomalies. Review historical network activity and security events.",
+            "fr": "Chronologie de toutes les sessions capturées et anomalies détectées. Revoyez l'activité réseau historique et les événements de sécurité."
+          },
+          "items": [
+            {
+              "name": "session_timeline",
+              "title": {
+                "en": "Session Timeline",
+                "fr": "Chronologie des Sessions"
+              },
+              "description": {
+                "en": "Scrollable timeline of historical sessions with drill‑down to session details.",
+                "fr": "Chronologie défilante des sessions historiques avec zoom sur les détails de session."
+              }
+            },
+            {
+              "name": "anomaly_log",
+              "title": {
+                "en": "Anomaly Log",
+                "fr": "Journal des Anomalies"
+              },
+              "description": {
+                "en": "Log of every suspicious/abnormal detection with timestamp and disposition.",
+                "fr": "Journal de chaque détection suspecte/anormale avec horodatage et disposition."
+              }
+            },
+            {
+              "name": "search_filter",
+              "title": {
+                "en": "History Search & Filter",
+                "fr": "Recherche & Filtre Historique"
+              },
+              "description": {
+                "en": "Find specific sessions by domain, ASN, process name, or criticality.",
+                "fr": "Trouvez des sessions spécifiques par domaine, ASN, nom de processus ou criticité."
+              }
             }
           ]
         }
@@ -1595,26 +1474,61 @@
         "fr": "Config"
       },
       "description": {
-        "en": "Centralized app configuration and system information hub. Provides access to version info, notification settings with persistent history, network traffic statistics, and debug logging.",
-        "fr": "Hub centralisé de configuration et d'informations système. Donne accès aux informations de version, aux paramètres de notification avec historique persistant, aux statistiques de trafic réseau et aux logs de débogage."
+        "en": "Centralized app configuration and system information hub. Provides access to version info, notification settings with persistent history, network traffic statistics (desktop only), and debug logging.",
+        "fr": "Hub centralisé de configuration et d'informations système. Donne accès aux informations de version, aux paramètres de notification avec historique persistant, aux statistiques de trafic réseau (bureau uniquement) et aux logs de débogage."
       },
       "sub_features": [
         {
           "name": "config_info",
           "title": {
-            "en": "Info Tab",
-            "fr": "Onglet Info"
+            "en": "Info – App & System Status",
+            "fr": "Info – Statut de l'Application et du Système"
           },
           "description": {
-            "en": "Displays app version, build info, elevation/admin status, and device identification details.",
-            "fr": "Affiche la version de l'application, les informations de build, le statut d'élévation/admin et les détails d'identification de l'appareil."
-          }
+            "en": "Displays app version, build info, device ID, IP addresses, threat model version, and elevation status. Shows detailed threat elevation requirements table.",
+            "fr": "Affiche la version de l'application, les informations de build, l'ID de l'appareil, les adresses IP, la version du modèle de menace et le statut d'élévation. Montre un tableau détaillé des exigences d'élévation des menaces."
+          },
+          "items": [
+            {
+              "name": "device_info",
+              "title": {
+                "en": "Device Information",
+                "fr": "Informations de l'Appareil"
+              },
+              "description": {
+                "en": "Device ID, IPv4/IPv6 addresses, app version, and store/standalone status.",
+                "fr": "ID de l'appareil, adresses IPv4/IPv6, version de l'application et statut store/standalone."
+              }
+            },
+            {
+              "name": "agent_state",
+              "title": {
+                "en": "Agent State",
+                "fr": "État de l'Agent"
+              },
+              "description": {
+                "en": "Shows helper enabled status, admin privileges, full disk access, and global preferences elevation.",
+                "fr": "Affiche le statut du helper, privilèges admin, accès disque complet et élévation des préférences globales."
+              }
+            },
+            {
+              "name": "elevation_table",
+              "title": {
+                "en": "Threat Elevation Table",
+                "fr": "Tableau d'Élévation des Menaces"
+              },
+              "description": {
+                "en": "Sortable table showing each threat with its implementation, remediation, and rollback elevation requirements. Color-coded by current privilege availability.",
+                "fr": "Tableau triable montrant chaque menace avec ses exigences d'élévation d'implémentation, remédiation et rollback. Codé par couleur selon la disponibilité des privilèges actuels."
+              }
+            }
+          ]
         },
         {
           "name": "config_notifications",
           "title": {
-            "en": "Notifications Tab",
-            "fr": "Onglet Notifications"
+            "en": "Notifications – Settings & History",
+            "fr": "Notifications – Paramètres et Historique"
           },
           "description": {
             "en": "Configure notification preferences per category and view persistent notification history with deep linking support.",
@@ -1624,12 +1538,12 @@
             {
               "name": "notification_settings",
               "title": {
-                "en": "Notification Settings",
-                "fr": "Paramètres de Notification"
+                "en": "Notification Settings Grid",
+                "fr": "Grille des Paramètres de Notification"
               },
               "description": {
-                "en": "Toggle notifications on/off for each category: security score changes, advisor updates, network threats, agentic actions, and domain connection status.",
-                "fr": "Activez/désactivez les notifications pour chaque catégorie : changements de score de sécurité, mises à jour du conseiller, menaces réseau, actions agentiques et statut de connexion au domaine."
+                "en": "Toggle notifications on/off for each category: Score, Session, LAN Scan, Advisor, Policy, General, Agentic, and Identity.",
+                "fr": "Activez/désactivez les notifications pour chaque catégorie : Score, Session, Scan LAN, Conseiller, Politique, Général, Agentique et Identité."
               }
             },
             {
@@ -1639,8 +1553,19 @@
                 "fr": "Historique des Notifications"
               },
               "description": {
-                "en": "Persistent, scrollable history of all past notifications with timestamps. Click any notification to deep-link to its related content. Clear history button available.",
-                "fr": "Historique persistant et défilable de toutes les notifications passées avec horodatages. Cliquez sur une notification pour accéder directement à son contenu associé. Bouton d'effacement de l'historique disponible."
+                "en": "Persistent, scrollable history of all past notifications with timestamps. Click any notification to deep-link to its related content.",
+                "fr": "Historique persistant et défilable de toutes les notifications passées avec horodatages. Cliquez sur une notification pour accéder directement à son contenu associé."
+              }
+            },
+            {
+              "name": "clear_history",
+              "title": {
+                "en": "Clear History",
+                "fr": "Effacer l'Historique"
+              },
+              "description": {
+                "en": "Button to clear all notification history entries.",
+                "fr": "Bouton pour effacer toutes les entrées de l'historique des notifications."
               }
             }
           ]
@@ -1648,24 +1573,83 @@
         {
           "name": "config_traffic",
           "title": {
-            "en": "Traffic Tab",
-            "fr": "Onglet Trafic"
+            "en": "Traffic – Network Statistics (Desktop Only)",
+            "fr": "Trafic – Statistiques Réseau (Bureau Uniquement)"
           },
           "description": {
-            "en": "Embedded network traffic statistics viewer showing packet counts, analyzer status, session stats, and anomaly detection metrics.",
-            "fr": "Visualiseur de statistiques de trafic réseau intégré affichant les compteurs de paquets, le statut de l'analyseur, les stats de session et les métriques de détection d'anomalies."
-          }
+            "en": "Embedded network traffic statistics viewer showing packet counts, analyzer status, session statistics, and anomaly detection metrics. Only available on desktop platforms (macOS, Windows, Linux).",
+            "fr": "Visualiseur de statistiques de trafic réseau intégré affichant les compteurs de paquets, le statut de l'analyseur, les statistiques de session et les métriques de détection d'anomalies. Disponible uniquement sur les plateformes bureau (macOS, Windows, Linux)."
+          },
+          "items": [
+            {
+              "name": "packet_stats",
+              "title": {
+                "en": "Packet Statistics",
+                "fr": "Statistiques de Paquets"
+              },
+              "description": {
+                "en": "Total packets captured, dropped, and processed counts.",
+                "fr": "Compteurs des paquets capturés, abandonnés et traités."
+              }
+            },
+            {
+              "name": "analyzer_status",
+              "title": {
+                "en": "Analyzer Status",
+                "fr": "Statut de l'Analyseur"
+              },
+              "description": {
+                "en": "ML anomaly detector training status, sample counts, and model health.",
+                "fr": "Statut d'entraînement du détecteur d'anomalies ML, compteurs d'échantillons et santé du modèle."
+              }
+            },
+            {
+              "name": "session_stats",
+              "title": {
+                "en": "Session Statistics",
+                "fr": "Statistiques de Session"
+              },
+              "description": {
+                "en": "Active sessions, historical sessions, and anomaly counts.",
+                "fr": "Sessions actives, sessions historiques et compteurs d'anomalies."
+              }
+            }
+          ]
         },
         {
           "name": "config_debug",
           "title": {
-            "en": "Debug Tab",
-            "fr": "Onglet Debug"
+            "en": "Debug – Real-Time Logs",
+            "fr": "Debug – Logs en Temps Réel"
           },
           "description": {
             "en": "Real-time debug log viewer with multi-line text selection support. Shows core engine logs, API calls, and system events for troubleshooting.",
             "fr": "Visualiseur de logs de debug en temps réel avec support de sélection de texte multi-ligne. Affiche les logs du moteur core, les appels API et les événements système pour le dépannage."
-          }
+          },
+          "items": [
+            {
+              "name": "log_viewer",
+              "title": {
+                "en": "Log Viewer",
+                "fr": "Visualiseur de Logs"
+              },
+              "description": {
+                "en": "Scrollable log output with auto-scroll and multi-line text selection.",
+                "fr": "Sortie de logs défilable avec défilement automatique et sélection de texte multi-ligne."
+              }
+            },
+            {
+              "name": "log_levels",
+              "title": {
+                "en": "Log Levels",
+                "fr": "Niveaux de Log"
+              },
+              "description": {
+                "en": "Color-coded log levels: Error, Warn, Info, Debug, Trace.",
+                "fr": "Niveaux de log codés par couleur : Error, Warn, Info, Debug, Trace."
+              }
+            }
+          ]
         }
       ]
     }
