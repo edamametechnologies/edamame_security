@@ -65,11 +65,6 @@
         "prefix": "05",
         "multipane": true
       },
-      "ai_overview": {
-        "prefix": "00",
-        "desktop_only": true,
-        "multipane": true
-      },
       "ai_radar": {
         "prefix": "00",
         "desktop_only": true,
@@ -143,106 +138,28 @@
         "fr": "IA"
       },
       "visual": {
-        "en": "The AI tab provides LLM-powered security automation with four subtabs. Overview is the 'Easy Mode' landing page featuring big activation buttons for 'AI Security Watchdog' (manual confirmation required) and 'AI Security Assistant' (auto-confirm enabled), configuration status indicators for Threats/Traffic/Identity/Network modules, OAuth sign-in to EDAMAME Portal, and a list of escalated items requiring attention. Radar displays an interactive visual priority map of AI actions positioned by priority on concentric rings, with sweep animation, type/status filters, and activation controls. Agent provides detailed LLM configuration, action history with filtering, and advanced automation settings. MCP Server (desktop-only) enables Claude Desktop or custom AI tools to control EDAMAME via the Model Context Protocol.",
-        "fr": "L'onglet IA fournit une automatisation de securite par LLM avec quatre sous-onglets. Vue d'ensemble est la page d'accueil 'Mode Facile' avec des boutons d'activation pour le Watchdog et l'Assistant. Radar affiche une carte visuelle interactive des actions IA positionnees par priorite. Agent fournit la configuration LLM detaillee et l'historique des actions. MCP Server permet l'integration avec des outils IA externes."
+        "en": "The AI tab provides LLM-powered security automation with three subtabs. Radar is the easy-onboarding landing page featuring an interactive visual priority map of AI actions positioned by priority on concentric rings, with sweep animation, activation buttons for Watchdog and Assistant modes, type/status filters, configuration status indicators, and OAuth sign-in to EDAMAME Portal. Agent provides detailed LLM configuration, action history with filtering, and advanced automation settings. MCP Server (desktop-only) enables Claude Desktop or custom AI tools to control EDAMAME via the Model Context Protocol.",
+        "fr": "L'onglet IA fournit une automatisation de securite par LLM avec trois sous-onglets. Radar est la page d'accueil pour un onboarding facile, affichant une carte visuelle interactive des actions IA positionnees par priorite avec boutons d'activation Watchdog et Assistant. Agent fournit la configuration LLM detaillee et l'historique des actions. MCP Server permet l'integration avec des outils IA externes."
       },
       "description": {
-        "en": "Use this tab to automate security triage and remediation with AI. Start in Overview to choose Watchdog or Assistant mode, then monitor decisions in Radar and Agent, and keep MCP disabled unless external integrations are required.",
-        "fr": "Utilisez cet onglet pour automatiser le triage et la remediation de securite avec l'IA. Commencez dans Vue d'ensemble pour choisir le mode Watchdog ou Assistant, puis suivez les decisions dans Radar et Agent, et laissez MCP desactive sauf si une integration externe est necessaire."
+        "en": "Use this tab to automate security triage and remediation with AI. Start in Radar to choose Watchdog or Assistant mode and visualize action priorities, then drill into Agent for detailed history and LLM configuration, and keep MCP disabled unless external integrations are required.",
+        "fr": "Utilisez cet onglet pour automatiser le triage et la remediation de securite avec l'IA. Commencez dans Radar pour choisir le mode Watchdog ou Assistant et visualiser les priorites, puis explorez Agent pour l'historique detaille et la configuration LLM, et laissez MCP desactive sauf si une integration externe est necessaire."
       },
       "has_dual_screenshots": true,
       "sub_features": [
         {
-          "name": "ai_overview",
-          "title": {
-            "en": "Overview – Easy Mode Activation",
-            "fr": "Vue d'Ensemble – Activation Mode Facile"
-          },
-          "visual": {
-            "en": "The Overview tab is the 'Easy Mode' landing page for quick AI activation. Two large activation buttons dominate the screen: 'AI Security Watchdog' (shield icon) analyzes security todos and recommends actions requiring your manual confirmation, while 'AI Security Assistant' (wand icon) auto-confirms safe actions and only escalates complex issues. Both buttons show a circling glow when active. Below, configuration status icons (Threats, Traffic, Identity, Network) indicate which modules are set up--green when configured, gray when not. Sign in to EDAMAME Portal using OAuth for Cloud LLM access. The 'Items Needing Attention' section lists escalated actions requiring your review, with filter chips for 'Escalated' and 'Pending Confirmation' when in Watchdog mode. On wide screens (>= 1400px), clicking an item opens a detail pane on the right showing full action context, AI reasoning, and action buttons (multi-pane mode). This streamlined interface lets you activate AI protection in seconds without navigating complex settings.",
-            "fr": "L'onglet Vue d'ensemble est la page d'accueil 'Mode Facile' pour une activation rapide de l'IA. Deux grands boutons d'activation : 'Watchdog de Securite IA' (necessite confirmation manuelle) et 'Assistant de Securite IA' (confirmation automatique). Les icones de statut de configuration indiquent quels modules sont configures. La section 'Elements Necessitant Attention' liste les actions escaladees avec mode multi-panneau sur ecrans larges."
-          },
-          "description": {
-            "en": "Start here for the quickest AI onboarding flow. Choose automation mode, verify module readiness, sign in if needed, then process the attention queue from highest risk to lowest.",
-            "fr": "Commencez ici pour le parcours d'activation IA le plus rapide. Choisissez le mode d'automatisation, verifiez l'etat des modules, connectez-vous si besoin, puis traitez la file d'attention du risque le plus eleve au plus faible."
-          },
-          "items": [
-            {
-              "name": "watchdog_button",
-              "title": {
-                "en": "AI Security Watchdog – Manual Confirmation",
-                "fr": "Watchdog de Sécurité IA – Confirmation Manuelle"
-              },
-              "visual": {
-                "en": "Activate Watchdog mode for supervised AI automation. The AI analyzes security todos, makes decisions, but waits for your approval before executing any action. Shows both 'Escalated' and 'Pending Confirmation' items in the attention list. Perfect for learning AI behavior or sensitive environments.",
-                "fr": "Activez le mode Watchdog pour une automatisation IA supervisée. L'IA analyse et recommande mais attend votre approbation avant d'exécuter."
-              },
-              "description": {
-                "en": "Use Watchdog when human validation is required before any change. Review each proposal and approve only actions that match your policy.",
-                "fr": "Utilisez Watchdog lorsque la validation humaine est requise avant tout changement. Revoyez chaque proposition et approuvez uniquement les actions conformes a votre politique."
-              }
-            },
-            {
-              "name": "assistant_button",
-              "title": {
-                "en": "AI Security Assistant – Auto-Confirm",
-                "fr": "Assistant de Sécurité IA – Confirmation Auto"
-              },
-              "visual": {
-                "en": "Activate Assistant mode for hands-free security. The AI auto-confirms safe actions immediately and only escalates complex or risky issues for your review. Shows only 'Escalated' items in the attention list. Ideal for set-and-forget protection.",
-                "fr": "Activez le mode Assistant pour une sécurité sans intervention. L'IA confirme automatiquement les actions sûres et n'escalade que les problèmes complexes."
-              },
-              "description": {
-                "en": "Use Assistant for autonomous handling of safe actions. Focus your review time on escalated decisions only.",
-                "fr": "Utilisez Assistant pour traiter automatiquement les actions sures. Concentrez votre temps de revue uniquement sur les decisions escaladees."
-              }
-            },
-            {
-              "name": "configuration_status",
-              "title": {
-                "en": "Configuration Status – Module Readiness",
-                "fr": "Statut de Configuration – Préparation des Modules"
-              },
-              "visual": {
-                "en": "Four status icons indicate which security modules are configured: Threats (always ready), Traffic (requires capture), Identity (requires emails configured), Network (requires LAN scan). Green icons show configured modules; gray icons indicate modules that need setup for full AI coverage.",
-                "fr": "Quatre icônes de statut indiquent quels modules de sécurité sont configurés. Les icônes vertes montrent les modules prêts ; les grises ceux à configurer."
-              },
-              "description": {
-                "en": "Check module readiness before relying on automation. Configure any gray module to improve decision quality.",
-                "fr": "Verifiez l'etat des modules avant de vous reposer sur l'automatisation. Configurez tout module grise pour ameliorer la qualite des decisions."
-              }
-            },
-            {
-              "name": "escalated_items_list",
-              "title": {
-                "en": "Items Needing Attention – Action Queue",
-                "fr": "Éléments Nécessitant Attention – File d'Actions"
-              },
-              "visual": {
-                "en": "Scrollable list of AI actions requiring your attention. Filter chips allow toggling between 'Escalated' (high-risk items) and 'Pending Confirmation' (Watchdog mode only). Each item shows type, summary, and click to expand details. Items automatically update as the AI processes new todos.",
-                "fr": "Liste déroulante des actions IA nécessitant votre attention. Les filtres permettent de basculer entre 'Escaladé' et 'En attente de confirmation'."
-              },
-              "description": {
-                "en": "Use this queue for daily AI reviews. Open each item, validate evidence, then confirm, undo, or defer explicitly.",
-                "fr": "Utilisez cette file pour les revues IA quotidiennes. Ouvrez chaque element, validez les preuves, puis confirmez, annulez ou reportez explicitement."
-              }
-            }
-          ],
-          "has_dual_screenshots": true
-        },
-        {
           "name": "ai_radar",
           "title": {
-            "en": "Radar – Visual Action Priority Map",
-            "fr": "Radar – Carte Visuelle de Priorite des Actions"
+            "en": "Radar – Easy Onboarding and Visual Action Priority Map",
+            "fr": "Radar – Onboarding Facile et Carte Visuelle de Priorite des Actions"
           },
           "visual": {
-            "en": "The Radar tab displays an interactive circular visualization of AI security actions positioned by priority on concentric rings (Critical, High, Medium, Low). A rotating sweep animation highlights items as it passes. Each action appears as a colored icon circle with a type badge (shield for threats, fingerprint for identity, wifi for network, swap for traffic, policy for compliance). Process icons, device type icons, and breach logos provide visual identification. Status and type filter chips at the top let you focus on specific categories. Two large activation buttons with glow animation (Watchdog and Assistant) sit at the bottom alongside OAuth connection controls. Click any item to open its detail card in a side pane (multi-pane mode on wide screens) or as an overlay. Items drift slowly within their priority ring with collision avoidance for organic motion.",
-            "fr": "L'onglet Radar affiche une visualisation circulaire interactive des actions de securite IA positionnees par priorite sur des anneaux concentriques. Chaque action apparait comme un cercle d'icone colore avec un badge de type. Des filtres par statut et type permettent de cibler des categories specifiques."
+            "en": "The Radar tab is the AI landing page for quick onboarding and visual security prioritization. An interactive circular visualization displays AI security actions positioned by priority on concentric rings (Critical, High, Medium, Low). A rotating sweep animation highlights items as it passes. Each action appears as a colored icon circle with a type badge (shield for threats, fingerprint for identity, wifi for network, swap for traffic, policy for compliance). Process icons, device type icons, and breach logos provide visual identification. Status and type filter chips at the top let you focus on specific categories. Two large activation buttons with glow animation (Watchdog and Assistant) sit at the bottom alongside OAuth connection controls and configuration status indicators for Threats/Traffic/Identity/Network modules (green when configured, gray when not). Click any item to open its detail card in a side pane (multi-pane mode on wide screens) or as an overlay. Items drift slowly within their priority ring with collision avoidance for organic motion. This streamlined interface lets you activate AI protection in seconds and immediately see your security priorities at a glance.",
+            "fr": "L'onglet Radar est la page d'accueil IA pour un onboarding rapide et une priorisation visuelle de la securite. Une visualisation circulaire interactive affiche les actions de securite IA positionnees par priorite sur des anneaux concentriques. Chaque action apparait comme un cercle d'icone colore avec un badge de type. Des filtres par statut et type permettent de cibler des categories specifiques. Les boutons d'activation Watchdog et Assistant avec les indicateurs de configuration des modules permettent une activation rapide."
           },
           "description": {
-            "en": "Use Radar for visual prioritization when many actions are pending. Filter by type/status, open highest-priority points first, then confirm or escalate from details.",
-            "fr": "Utilisez Radar pour prioriser visuellement quand de nombreuses actions sont en attente. Filtrez par type/statut, ouvrez d'abord les points les plus prioritaires, puis confirmez ou escaladez depuis les details."
+            "en": "Start here for the quickest AI onboarding flow. Choose Watchdog or Assistant mode, verify module readiness via status indicators, sign in if needed, then visually prioritize actions from inner rings (critical) to outer rings (low). Filter by type/status and open highest-priority points first.",
+            "fr": "Commencez ici pour le parcours d'activation IA le plus rapide. Choisissez le mode Watchdog ou Assistant, verifiez l'etat des modules via les indicateurs, connectez-vous si besoin, puis priorisez visuellement les actions des anneaux internes (critique) aux anneaux externes (faible)."
           },
           "has_dual_screenshots": true,
           "items": [
@@ -283,12 +200,12 @@
                 "fr": "Controles d'Activation – Demarrage Rapide IA"
               },
               "visual": {
-                "en": "Large Watchdog and Assistant buttons at the bottom with glow animation when active. OAuth connection controls in the center provide sign-in, disconnect, and portal access. Matches the Overview tab controls for consistent activation.",
-                "fr": "Grands boutons Watchdog et Assistant en bas avec animation de brillance quand actifs. Les controles OAuth au centre fournissent connexion et acces au portail."
+                "en": "Large Watchdog and Assistant buttons at the bottom with glow animation when active. OAuth connection controls in the center provide sign-in, disconnect, and portal access. Configuration status indicators show module readiness at a glance.",
+                "fr": "Grands boutons Watchdog et Assistant en bas avec animation de brillance quand actifs. Les controles OAuth au centre fournissent connexion et acces au portail. Les indicateurs de statut de configuration montrent l'etat des modules d'un coup d'oeil."
               },
               "description": {
-                "en": "Switch automation mode from Radar without losing context. Confirm sign-in state before launching cloud-backed runs.",
-                "fr": "Basculez le mode d'automatisation depuis Radar sans perdre le contexte. Verifiez l'etat de connexion avant de lancer des executions cloud."
+                "en": "Activate or switch automation mode directly from Radar. Confirm sign-in state and module readiness before launching cloud-backed runs.",
+                "fr": "Activez ou basculez le mode d'automatisation directement depuis Radar. Verifiez l'etat de connexion et la preparation des modules avant de lancer des executions cloud."
               }
             }
           ]
