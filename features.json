@@ -1,0 +1,1768 @@
+{
+  "screenshot_metadata": {
+    "_comment": "Screenshot filename mappings for sub_features. Desktop platforms (macos, windows, linux) support multipane with _selected suffix. When display_selected_only is true for a multipane feature, only show the _selected version.",
+    "dual_screenshot_suffix": "_selected",
+    "multi_pane_breakpoint": 1400,
+    "display_selected_only": true,
+    "patterns": {
+      "default": "{prefix}_{subfeature_name}.png",
+      "multipane": "{prefix}_{subfeature_name}_selected.png"
+    },
+    "sub_feature_mappings": {
+      "advisor_main": {
+        "prefix": "01",
+        "multipane": true
+      },
+      "advisor_advices": {
+        "prefix": "01",
+        "multipane": false
+      },
+      "posture_inactive": {
+        "prefix": "02",
+        "multipane": true
+      },
+      "posture_compliance": {
+        "prefix": "02",
+        "multipane": true
+      },
+      "posture_history": {
+        "prefix": "02",
+        "multipane": false
+      },
+      "identity_main": {
+        "prefix": "03",
+        "multipane": true
+      },
+      "lan_radar": {
+        "prefix": "04",
+        "multipane": true
+      },
+      "lan_table": {
+        "prefix": "04",
+        "multipane": true
+      },
+      "lan_detailed": {
+        "prefix": "04",
+        "multipane": true
+      },
+      "lan_networks": {
+        "prefix": "04",
+        "multipane": false
+      },
+      "lan_events": {
+        "prefix": "04",
+        "multipane": true
+      },
+      "secured_connect": {
+        "prefix": "05",
+        "multipane": false
+      },
+      "secured_certification": {
+        "prefix": "05",
+        "multipane": false
+      },
+      "secured_policy": {
+        "prefix": "05",
+        "multipane": true
+      },
+      "ai_overview": {
+        "prefix": "00",
+        "desktop_only": true,
+        "multipane": true
+      },
+      "ai_radar": {
+        "prefix": "00",
+        "desktop_only": true,
+        "multipane": true
+      },
+      "ai_agent": {
+        "prefix": "00",
+        "desktop_only": true,
+        "multipane": true
+      },
+      "ai_mcp_server": {
+        "prefix": "00",
+        "desktop_only": true,
+        "multipane": false
+      },
+      "capture_sunburst": {
+        "prefix": "06",
+        "desktop_only": true,
+        "multipane": true
+      },
+      "capture_sessions": {
+        "prefix": "06",
+        "desktop_only": true,
+        "multipane": true
+      },
+      "capture_processes": {
+        "prefix": "06",
+        "desktop_only": true,
+        "multipane": false
+      },
+      "capture_history": {
+        "prefix": "06",
+        "desktop_only": true,
+        "multipane": true
+      },
+      "config_info": {
+        "prefix": "07",
+        "mobile_prefix": "06",
+        "multipane": true
+      },
+      "config_notifications": {
+        "prefix": "07",
+        "mobile_prefix": "06",
+        "multipane": false
+      },
+      "config_traffic": {
+        "prefix": "07",
+        "desktop_only": true,
+        "multipane": false
+      },
+      "config_debug": {
+        "prefix": "07",
+        "mobile_prefix": "06",
+        "multipane": false
+      },
+      "advisor_score": {
+        "prefix": "01",
+        "multipane": false
+      },
+      "posture_overview": {
+        "prefix": "02",
+        "multipane": true
+      }
+    }
+  },
+  "features": [
+    {
+      "name": "agentic",
+      "title": {
+        "en": "AI",
+        "fr": "IA"
+      },
+      "visual": {
+        "en": "The AI tab provides LLM-powered security automation with four subtabs. Overview is the 'Easy Mode' landing page featuring big activation buttons for 'AI Security Watchdog' (manual confirmation required) and 'AI Security Assistant' (auto-confirm enabled), configuration status indicators for Threats/Traffic/Identity/Network modules, OAuth sign-in to EDAMAME Portal, and a list of escalated items requiring attention. Radar displays an interactive visual priority map of AI actions positioned by priority on concentric rings, with sweep animation, type/status filters, and activation controls. Agent provides detailed LLM configuration, action history with filtering, and advanced automation settings. MCP Server (desktop-only) enables Claude Desktop or custom AI tools to control EDAMAME via the Model Context Protocol.",
+        "fr": "L'onglet IA fournit une automatisation de securite par LLM avec quatre sous-onglets. Vue d'ensemble est la page d'accueil 'Mode Facile' avec des boutons d'activation pour le Watchdog et l'Assistant. Radar affiche une carte visuelle interactive des actions IA positionnees par priorite. Agent fournit la configuration LLM detaillee et l'historique des actions. MCP Server permet l'integration avec des outils IA externes."
+      },
+      "description": {
+        "en": "Use this tab to automate security triage and remediation with AI. Start in Overview to choose Watchdog or Assistant mode, then monitor decisions in Radar and Agent, and keep MCP disabled unless external integrations are required.",
+        "fr": "Utilisez cet onglet pour automatiser le triage et la remediation de securite avec l'IA. Commencez dans Vue d'ensemble pour choisir le mode Watchdog ou Assistant, puis suivez les decisions dans Radar et Agent, et laissez MCP desactive sauf si une integration externe est necessaire."
+      },
+      "has_dual_screenshots": true,
+      "sub_features": [
+        {
+          "name": "ai_overview",
+          "title": {
+            "en": "Overview – Easy Mode Activation",
+            "fr": "Vue d'Ensemble – Activation Mode Facile"
+          },
+          "visual": {
+            "en": "The Overview tab is the 'Easy Mode' landing page for quick AI activation. Two large activation buttons dominate the screen: 'AI Security Watchdog' (shield icon) analyzes security todos and recommends actions requiring your manual confirmation, while 'AI Security Assistant' (wand icon) auto-confirms safe actions and only escalates complex issues. Both buttons show a circling glow when active. Below, configuration status icons (Threats, Traffic, Identity, Network) indicate which modules are set up--green when configured, gray when not. Sign in to EDAMAME Portal using OAuth for Cloud LLM access. The 'Items Needing Attention' section lists escalated actions requiring your review, with filter chips for 'Escalated' and 'Pending Confirmation' when in Watchdog mode. On wide screens (>= 1400px), clicking an item opens a detail pane on the right showing full action context, AI reasoning, and action buttons (multi-pane mode). This streamlined interface lets you activate AI protection in seconds without navigating complex settings.",
+            "fr": "L'onglet Vue d'ensemble est la page d'accueil 'Mode Facile' pour une activation rapide de l'IA. Deux grands boutons d'activation : 'Watchdog de Securite IA' (necessite confirmation manuelle) et 'Assistant de Securite IA' (confirmation automatique). Les icones de statut de configuration indiquent quels modules sont configures. La section 'Elements Necessitant Attention' liste les actions escaladees avec mode multi-panneau sur ecrans larges."
+          },
+          "description": {
+            "en": "Start here for the quickest AI onboarding flow. Choose automation mode, verify module readiness, sign in if needed, then process the attention queue from highest risk to lowest.",
+            "fr": "Commencez ici pour le parcours d'activation IA le plus rapide. Choisissez le mode d'automatisation, verifiez l'etat des modules, connectez-vous si besoin, puis traitez la file d'attention du risque le plus eleve au plus faible."
+          },
+          "items": [
+            {
+              "name": "watchdog_button",
+              "title": {
+                "en": "AI Security Watchdog – Manual Confirmation",
+                "fr": "Watchdog de Sécurité IA – Confirmation Manuelle"
+              },
+              "visual": {
+                "en": "Activate Watchdog mode for supervised AI automation. The AI analyzes security todos, makes decisions, but waits for your approval before executing any action. Shows both 'Escalated' and 'Pending Confirmation' items in the attention list. Perfect for learning AI behavior or sensitive environments.",
+                "fr": "Activez le mode Watchdog pour une automatisation IA supervisée. L'IA analyse et recommande mais attend votre approbation avant d'exécuter."
+              },
+              "description": {
+                "en": "Use Watchdog when human validation is required before any change. Review each proposal and approve only actions that match your policy.",
+                "fr": "Utilisez Watchdog lorsque la validation humaine est requise avant tout changement. Revoyez chaque proposition et approuvez uniquement les actions conformes a votre politique."
+              }
+            },
+            {
+              "name": "assistant_button",
+              "title": {
+                "en": "AI Security Assistant – Auto-Confirm",
+                "fr": "Assistant de Sécurité IA – Confirmation Auto"
+              },
+              "visual": {
+                "en": "Activate Assistant mode for hands-free security. The AI auto-confirms safe actions immediately and only escalates complex or risky issues for your review. Shows only 'Escalated' items in the attention list. Ideal for set-and-forget protection.",
+                "fr": "Activez le mode Assistant pour une sécurité sans intervention. L'IA confirme automatiquement les actions sûres et n'escalade que les problèmes complexes."
+              },
+              "description": {
+                "en": "Use Assistant for autonomous handling of safe actions. Focus your review time on escalated decisions only.",
+                "fr": "Utilisez Assistant pour traiter automatiquement les actions sures. Concentrez votre temps de revue uniquement sur les decisions escaladees."
+              }
+            },
+            {
+              "name": "configuration_status",
+              "title": {
+                "en": "Configuration Status – Module Readiness",
+                "fr": "Statut de Configuration – Préparation des Modules"
+              },
+              "visual": {
+                "en": "Four status icons indicate which security modules are configured: Threats (always ready), Traffic (requires capture), Identity (requires emails configured), Network (requires LAN scan). Green icons show configured modules; gray icons indicate modules that need setup for full AI coverage.",
+                "fr": "Quatre icônes de statut indiquent quels modules de sécurité sont configurés. Les icônes vertes montrent les modules prêts ; les grises ceux à configurer."
+              },
+              "description": {
+                "en": "Check module readiness before relying on automation. Configure any gray module to improve decision quality.",
+                "fr": "Verifiez l'etat des modules avant de vous reposer sur l'automatisation. Configurez tout module grise pour ameliorer la qualite des decisions."
+              }
+            },
+            {
+              "name": "escalated_items_list",
+              "title": {
+                "en": "Items Needing Attention – Action Queue",
+                "fr": "Éléments Nécessitant Attention – File d'Actions"
+              },
+              "visual": {
+                "en": "Scrollable list of AI actions requiring your attention. Filter chips allow toggling between 'Escalated' (high-risk items) and 'Pending Confirmation' (Watchdog mode only). Each item shows type, summary, and click to expand details. Items automatically update as the AI processes new todos.",
+                "fr": "Liste déroulante des actions IA nécessitant votre attention. Les filtres permettent de basculer entre 'Escaladé' et 'En attente de confirmation'."
+              },
+              "description": {
+                "en": "Use this queue for daily AI reviews. Open each item, validate evidence, then confirm, undo, or defer explicitly.",
+                "fr": "Utilisez cette file pour les revues IA quotidiennes. Ouvrez chaque element, validez les preuves, puis confirmez, annulez ou reportez explicitement."
+              }
+            }
+          ],
+          "has_dual_screenshots": true
+        },
+        {
+          "name": "ai_radar",
+          "title": {
+            "en": "Radar – Visual Action Priority Map",
+            "fr": "Radar – Carte Visuelle de Priorite des Actions"
+          },
+          "visual": {
+            "en": "The Radar tab displays an interactive circular visualization of AI security actions positioned by priority on concentric rings (Critical, High, Medium, Low). A rotating sweep animation highlights items as it passes. Each action appears as a colored icon circle with a type badge (shield for threats, fingerprint for identity, wifi for network, swap for traffic, policy for compliance). Process icons, device type icons, and breach logos provide visual identification. Status and type filter chips at the top let you focus on specific categories. Two large activation buttons with glow animation (Watchdog and Assistant) sit at the bottom alongside OAuth connection controls. Click any item to open its detail card in a side pane (multi-pane mode on wide screens) or as an overlay. Items drift slowly within their priority ring with collision avoidance for organic motion.",
+            "fr": "L'onglet Radar affiche une visualisation circulaire interactive des actions de securite IA positionnees par priorite sur des anneaux concentriques. Chaque action apparait comme un cercle d'icone colore avec un badge de type. Des filtres par statut et type permettent de cibler des categories specifiques."
+          },
+          "description": {
+            "en": "Use Radar for visual prioritization when many actions are pending. Filter by type/status, open highest-priority points first, then confirm or escalate from details.",
+            "fr": "Utilisez Radar pour prioriser visuellement quand de nombreuses actions sont en attente. Filtrez par type/statut, ouvrez d'abord les points les plus prioritaires, puis confirmez ou escaladez depuis les details."
+          },
+          "has_dual_screenshots": true,
+          "items": [
+            {
+              "name": "priority_rings",
+              "title": {
+                "en": "Priority Rings – Spatial Risk Mapping",
+                "fr": "Anneaux de Priorite – Cartographie Spatiale du Risque"
+              },
+              "visual": {
+                "en": "Four concentric rings position actions by priority: Critical (innermost, red tint), High (orange), Medium (blue), Low (outermost, subtle). Items closer to center require more urgent attention. Cross-hairs and priority labels provide visual reference.",
+                "fr": "Quatre anneaux concentriques positionnent les actions par priorite : Critique (le plus interieur), Haute, Moyenne, Basse (le plus exterieur)."
+              },
+              "description": {
+                "en": "Resolve inner-ring items first to reduce critical risk fastest. Then work outward by decreasing priority.",
+                "fr": "Resolvez d'abord les elements des anneaux internes pour reduire le risque critique plus vite. Traitez ensuite vers l'exterieur par priorite decroissante."
+              }
+            },
+            {
+              "name": "type_status_filters",
+              "title": {
+                "en": "Filters – Status and Type Selection",
+                "fr": "Filtres – Selection par Statut et Type"
+              },
+              "visual": {
+                "en": "Top-left status filters toggle between All, Escalated, and Pending Confirmation items. Top-right type filters focus on specific categories: Threats, Traffic, Network, Identity, or Policy. Counts appear on each filter badge.",
+                "fr": "Les filtres de statut en haut a gauche et les filtres de type en haut a droite permettent de cibler les elements par categorie avec compteurs."
+              },
+              "description": {
+                "en": "Use filters to isolate one workload type at a time. This keeps triage focused and avoids missing urgent items.",
+                "fr": "Utilisez les filtres pour isoler un type de charge a la fois. Cela garde le triage concentre et evite de manquer des elements urgents."
+              }
+            },
+            {
+              "name": "activation_controls",
+              "title": {
+                "en": "Activation Controls – Quick AI Start",
+                "fr": "Controles d'Activation – Demarrage Rapide IA"
+              },
+              "visual": {
+                "en": "Large Watchdog and Assistant buttons at the bottom with glow animation when active. OAuth connection controls in the center provide sign-in, disconnect, and portal access. Matches the Overview tab controls for consistent activation.",
+                "fr": "Grands boutons Watchdog et Assistant en bas avec animation de brillance quand actifs. Les controles OAuth au centre fournissent connexion et acces au portail."
+              },
+              "description": {
+                "en": "Switch automation mode from Radar without losing context. Confirm sign-in state before launching cloud-backed runs.",
+                "fr": "Basculez le mode d'automatisation depuis Radar sans perdre le contexte. Verifiez l'etat de connexion avant de lancer des executions cloud."
+              }
+            }
+          ]
+        },
+        {
+          "name": "ai_agent",
+          "title": {
+            "en": "Agent – AI-Powered Security Automation",
+            "fr": "Agent – Automatisation de Sécurité par IA"
+          },
+          "visual": {
+            "en": "The Agent tab displays a 'Settings and Status' panel at the top with 'Do it for me' and 'Recommend' action buttons, Cloud LLM connection status with OAuth sign-in, and a 'Use your own LLM' dropdown for BYOLLM configuration. Toggle 'Auto run' to enable scheduled processing. Below, the Action History section shows all AI decisions with color-coded status badges and counts. Filter actions by status (Resolved in green, Pending confirmation in yellow, Escalated for review in orange, Failed in red, Obsolete in gray) or by type (Threats, Policies, Network, Traffic, Identity breaches). Each action card shows the process name, destination, timestamp, and AI reasoning. Click any action to open a detail pane with session information, token usage, and Undo/Confirm buttons.",
+            "fr": "L'onglet Agent affiche un panneau 'Paramètres et Statut' avec les boutons 'Faites-le pour moi' et 'Recommander', le statut de connexion Cloud LLM, et un menu déroulant pour configurer votre propre LLM. L'historique des actions affiche toutes les decisions IA avec des badges de statut colorés et des filtres par type."
+          },
+          "description": {
+            "en": "Use Agent for full control of providers, schedules, and action audit. Configure your LLM source, run the right mode, and review outcomes continuously.",
+            "fr": "Utilisez Agent pour un controle complet des fournisseurs, des planifications et de l'audit des actions. Configurez votre source LLM, executez le mode adequat et suivez les resultats en continu."
+          },
+          "has_dual_screenshots": true,
+          "items": [
+            {
+              "name": "do_it_for_me",
+              "title": {
+                "en": "Do It For Me – Fully Automatic Mode",
+                "fr": "Faites-le pour Moi – Mode Entièrement Automatique"
+              },
+              "visual": {
+                "en": "Click once and the AI analyzes all pending security todos, auto-resolves safe actions immediately (like dismissing known-safe network ports), and escalates complex or risky issues for your manual review. Watch AI reasoning in real-time as it processes each item.",
+                "fr": "Cliquez une fois et l'IA analyse tous les todos de sécurité en attente, résout automatiquement les actions sûres immédiatement et escalade les problèmes complexes pour révision manuelle."
+              },
+              "description": {
+                "en": "Run this mode for fast automated cleanup. Review escalated leftovers afterward to keep control.",
+                "fr": "Lancez ce mode pour un nettoyage automatise rapide. Revoyez ensuite les elements escalades pour garder le controle."
+              }
+            },
+            {
+              "name": "analyze_recommend",
+              "title": {
+                "en": "Analyze & Recommend – Review Before Execution",
+                "fr": "Analyser et Recommander – Réviser Avant Exécution"
+              },
+              "visual": {
+                "en": "The AI makes identical decisions but waits for your approval before executing any action. Perfect for learning AI behavior patterns, sensitive environments, or when you want full control over every change. Review reasoning, risk scores, and recommended actions before confirming.",
+                "fr": "L'IA prend des décisions identiques mais attend votre approbation avant d'exécuter toute action. Parfait pour les environnements sensibles ou quand vous voulez un contrôle total."
+              },
+              "description": {
+                "en": "Use this mode when every change needs approval. Validate reasoning, then execute selected actions.",
+                "fr": "Utilisez ce mode lorsque chaque changement doit etre approuve. Validez le raisonnement, puis executez les actions choisies."
+              }
+            },
+            {
+              "name": "agentic_scheduler",
+              "title": {
+                "en": "Scheduled Automation – Hands-Free Security",
+                "fr": "Automatisation Planifiée – Sécurité Sans Intervention"
+              },
+              "visual": {
+                "en": "Enable 'Auto run' to schedule automatic security processing at regular intervals (5 minutes, 1 hour, or 1 day). Toggle 'Auto confirm' to execute safe actions automatically during scheduled runs, or leave it off to queue items for your review. The interval selector appears after the Auto run toggle.",
+                "fr": "Activez 'Exécution auto' pour planifier le traitement automatique de sécurité à intervalles réguliers. Activez 'Confirmation auto' pour exécuter automatiquement les actions sûres."
+              },
+              "description": {
+                "en": "Schedule recurring runs to maintain baseline hygiene. Start conservatively, then tighten cadence as confidence grows.",
+                "fr": "Planifiez des executions recurrentes pour maintenir l'hygiene de base. Commencez prudemment puis augmentez la cadence avec la confiance."
+              }
+            },
+            {
+              "name": "cloud_llm",
+              "title": {
+                "en": "Cloud LLM – EDAMAME Portal AI Service",
+                "fr": "Cloud LLM – Service IA EDAMAME Portal"
+              },
+              "visual": {
+                "en": "Sign in to EDAMAME Portal (portal.edamame.tech) for managed AI processing with free and paid tiers. Uses OAuth 2.0 with PKCE for secure authentication. Supports social sign-in via Google, Facebook, Apple, and Amazon. Subscription tiers provide different request limits and features. Automatically disables custom LLM configuration when active.",
+                "fr": "Connectez-vous à EDAMAME Portal pour un traitement IA géré avec des niveaux gratuits et payants. Utilise OAuth 2.0 pour une authentification sécurisée."
+              },
+              "description": {
+                "en": "Use Cloud LLM for managed setup with minimal friction. Verify account limits and monitor usage regularly.",
+                "fr": "Utilisez Cloud LLM pour une configuration geree avec peu de friction. Verifiez les limites du compte et surveillez l'usage regulierement."
+              }
+            },
+            {
+              "name": "own_llm",
+              "title": {
+                "en": "Use Your Own LLM – BYOLLM",
+                "fr": "Utilisez Votre Propre LLM – BYOLLM"
+              },
+              "visual": {
+                "en": "Configure your own LLM provider: Claude (Anthropic) for detailed reasoning, OpenAI (GPT) for fast analysis, or Ollama for privacy-focused local processing with no cloud dependency. Enter your API key, test the connection, and start processing. Rate limited to 100 requests/hour for cloud providers; unlimited for local Ollama.",
+                "fr": "Configurez votre propre fournisseur LLM : Claude, OpenAI, ou Ollama pour un traitement local sans dépendance cloud. Entrez votre clé API et testez la connexion."
+              },
+              "description": {
+                "en": "Use BYOLLM for policy, privacy, or local-inference requirements. Test connectivity before enabling large runs.",
+                "fr": "Utilisez BYOLLM pour des exigences de politique, de confidentialite ou d'inference locale. Testez la connectivite avant d'activer de gros traitements."
+              }
+            },
+            {
+              "name": "action_history",
+              "title": {
+                "en": "Action History – Complete Audit Trail",
+                "fr": "Historique des Actions – Piste d'Audit Complète"
+              },
+              "visual": {
+                "en": "Complete audit trail of all AI actions with status tracking: Auto-Resolved (safe actions completed), Requires Confirmation (awaiting your approval), Escalated (high-risk items needing manual review), Failed (processing errors), and Obsolete (no longer relevant). Filter by status, use bulk operations (Confirm All, Undo All), and deep-link to related security views. History retained for 30 days.",
+                "fr": "Piste d'audit complète de toutes les actions IA avec suivi d'état, capacités de filtrage, opérations groupées et liens vers les vues de sécurité associées."
+              },
+              "description": {
+                "en": "Use history as your audit trail of AI decisions. Filter by status/type and apply confirm or undo actions safely.",
+                "fr": "Utilisez l'historique comme piste d'audit des decisions IA. Filtrez par statut/type et appliquez en securite les actions confirmer ou annuler."
+              }
+            },
+            {
+              "name": "token_usage_stats",
+              "title": {
+                "en": "Token Usage – Monitor AI Consumption",
+                "fr": "Utilisation de Tokens – Surveillez la Consommation IA"
+              },
+              "visual": {
+                "en": "Real-time LLM token consumption tracking. View input/output token counts for three time windows: last hour, last 24 hours, and last 30 days. Per-action token usage visible in action details. Helps monitor AI usage and costs across Cloud LLM and BYOLLM providers.",
+                "fr": "Suivi en temps réel de la consommation de tokens LLM. Consultez les compteurs de tokens pour différentes fenêtres temporelles."
+              },
+              "description": {
+                "en": "Track token usage to control cost and detect spikes. Tune schedule or provider when consumption drifts.",
+                "fr": "Suivez l'usage des tokens pour controler les couts et detecter les pics. Ajustez la planification ou le fournisseur en cas de derive."
+              }
+            },
+            {
+              "name": "slack_integration",
+              "title": {
+                "en": "Slack Integration – Team Notifications",
+                "fr": "Intégration Slack – Notifications d'Équipe"
+              },
+              "visual": {
+                "en": "Optional Slack integration for team visibility. Configure separate channels for routine action summaries (auto-resolved counts) and priority escalation alerts (items needing attention). Requires Slack bot token with chat:write permission. Great for security teams monitoring multiple workstations.",
+                "fr": "Intégration Slack optionnelle pour la visibilité d'équipe. Configurez des canaux séparés pour les résumés d'actions et les alertes d'escalade prioritaires."
+              },
+              "description": {
+                "en": "Send routine summaries and critical escalations to team channels. Separate channels to reduce alert fatigue.",
+                "fr": "Envoyez les resumes courants et les escalades critiques vers les canaux d'equipe. Separez les canaux pour reduire la fatigue d'alerte."
+              }
+            }
+          ]
+        },
+        {
+          "name": "ai_mcp_server",
+          "title": {
+            "en": "MCP Server – External AI Integration",
+            "fr": "Serveur MCP – Intégration IA Externe"
+          },
+          "visual": {
+            "en": "The MCP Server tab displays a clean configuration interface for the Model Context Protocol server. At the top, a status indicator shows 'Not running' (red) or 'Running' (green). Configure the server port (default: 3000) in the Port field. Toggle 'Listen on all network interfaces' to expose beyond localhost (use with caution). The Authentication Key (PSK) section provides a 'Generate New Key' button to create a secure pre-shared key that external AI clients like Claude Desktop must use to connect. Click 'Enable MCP Server' to start the server. The PSK acts as a Bearer token for HTTP authentication. This is a desktop-only feature for integrating with Claude Desktop, MCP Inspector, or custom AI workflows.",
+            "fr": "L'onglet Serveur MCP affiche une interface de configuration pour le serveur Model Context Protocol. Un indicateur de statut montre l'etat du serveur. Configurez le port, generez une cle PSK pour l'authentification, et activez le serveur pour permettre aux outils IA externes de se connecter."
+          },
+          "description": {
+            "en": "Use MCP Server only for external AI integrations. Configure port and PSK securely, validate connectivity, and disable when not actively used.",
+            "fr": "Utilisez Serveur MCP uniquement pour les integrations IA externes. Configurez le port et la PSK en securite, validez la connectivite, puis desactivez en dehors de l'usage actif."
+          },
+          "items": [
+            {
+              "name": "server_controls",
+              "title": {
+                "en": "Server Controls – Start/Stop MCP",
+                "fr": "Contrôles Serveur – Démarrer/Arrêter MCP"
+              },
+              "visual": {
+                "en": "Start and stop the MCP server with visual status feedback. The server runs on localhost:3000 using Streamable HTTP transport. Only accessible from your local machine—no external network exposure. Desktop only feature.",
+                "fr": "Démarrez et arrêtez le serveur MCP avec retour visuel de statut. Le serveur fonctionne sur localhost:3000."
+              },
+              "description": {
+                "en": "Start MCP only when external tools need access. Stop it when idle to reduce exposure.",
+                "fr": "Demarrez MCP uniquement lorsque des outils externes en ont besoin. Arretez-le a l'inactivite pour reduire l'exposition."
+              }
+            },
+            {
+              "name": "psk_management",
+              "title": {
+                "en": "PSK Authentication – Secure Access Keys",
+                "fr": "Authentification PSK – Clés d'Accès Sécurisées"
+              },
+              "visual": {
+                "en": "Generate and copy the Pre-Shared Key (PSK) required for secure MCP server connections. The PSK acts as a Bearer token for authentication. Regenerate anytime if compromised.",
+                "fr": "Générez et copiez la clé pré-partagée (PSK) requise pour les connexions sécurisées au serveur MCP."
+              },
+              "description": {
+                "en": "Generate a strong PSK before first use and rotate it quickly after any suspected leak.",
+                "fr": "Generez une PSK robuste avant le premier usage et faites-la tourner rapidement en cas de soupcon de fuite."
+              }
+            },
+            {
+              "name": "integration_instructions",
+              "title": {
+                "en": "Integration Guide – Connect Claude Desktop",
+                "fr": "Guide d'Intégration – Connecter Claude Desktop"
+              },
+              "visual": {
+                "en": "Step-by-step instructions for connecting external AI tools: Claude Desktop configuration, MCP Inspector for testing (npx @modelcontextprotocol/inspector), and custom integration development. Copy-ready configuration snippets included.",
+                "fr": "Instructions étape par étape pour connecter des outils IA externes : configuration de Claude Desktop, MCP Inspector pour les tests."
+              },
+              "description": {
+                "en": "Follow the integration checklist step by step. Validate with MCP Inspector before production use.",
+                "fr": "Suivez la checklist d'integration etape par etape. Validez avec MCP Inspector avant usage en production."
+              }
+            },
+            {
+              "name": "available_tools",
+              "title": {
+                "en": "Available Tools – 9 Security APIs",
+                "fr": "Outils Disponibles – 9 APIs de Sécurité"
+              },
+              "visual": {
+                "en": "Lists all security automation tools accessible via MCP: advisor_get_todos (security tasks), advisor_get_action_history (audit trail), advisor_undo_action (rollback), agentic_process_todos (AI analysis), agentic_execute_action (run pending action), and more. Each tool includes parameter documentation and example usage.",
+                "fr": "Liste tous les outils d'automatisation de sécurité accessibles via MCP : advisor_get_todos, agentic_process_todos, et plus encore."
+              },
+              "description": {
+                "en": "Review available tools to define a safe access scope. Enable only actions approved by your governance model.",
+                "fr": "Passez en revue les outils disponibles pour definir un perimetre d'acces sur. Activez uniquement les actions approuvees par votre gouvernance."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "advisor",
+      "title": {
+        "en": "Security Advisor",
+        "fr": "Conseiller de Securite"
+      },
+      "visual": {
+        "en": "The Advisor is your central security command center with two subtabs: Overview and Score. The Overview shows your Security Score as stars, category summary cards (Policies, Threats, Network, Identity breaches, Traffic) with todo counts, and a Recommendations list with priority badges (High/Medium/Low) and type filters. The Score subtab displays a radar chart visualization of your security posture across five domains (Credentials, Network, System services, System integrity, Applications) with an overall star rating. The Advisor aggregates threats from system security, network anomalies, identity breaches, policy violations, and suspicious traffic into a single actionable dashboard.",
+        "fr": "L'Advisor est votre centre de commande de securite central avec deux sous-onglets : Vue d'ensemble et Score. La Vue d'ensemble affiche votre Score de Securite, cinq cartes colorees montrant les compteurs de todos, et la section Recommandations. Le sous-onglet Score affiche un graphique radar de votre posture de securite."
+      },
+      "description": {
+        "en": "Use Advisor as your daily starting point. Review score and recommendations, prioritize high-impact items, then open the relevant tab to resolve each risk.",
+        "fr": "Utilisez Advisor comme point de depart quotidien. Consultez le score et les recommandations, priorisez les elements a fort impact, puis ouvrez l'onglet approprie pour corriger chaque risque."
+      },
+      "has_dual_screenshots": true,
+      "sub_features": [
+        {
+          "name": "advisor_main",
+          "title": {
+            "en": "Dashboard – Real-Time Security Overview",
+            "fr": "Tableau de Bord – Vue d'Ensemble de Sécurité en Temps Réel"
+          },
+          "visual": {
+            "en": "The Advisor dashboard opens with a prominent header showing your Security Score as a star rating (e.g., 3.0 stars) alongside a 'Security Advisor' banner that displays the total count of issues needing attention (e.g., 'Critical: 34 security issues need attention'). Below, five colorful summary cards display todo counts for each category: Policies (pink), Threats (orange warning triangle), Network (purple wifi icon), Identity breaches (fingerprint icon), and Traffic (connection icon). Click any card to filter the recommendations below. The 'Recommendations/Advices' section shows a scrollable list of action items, each with a colored priority badge (High in red, Medium in yellow, Low in green) and a type tag. Filter by priority to focus on the most critical items first, or by type to see specific categories like network sessions or identity breaches.",
+            "fr": "Le tableau de bord Advisor s'ouvre avec un en-tete affichant votre Score de Securite en etoiles et une banniere indiquant le nombre total de problemes. Cinq cartes colorees affichent les compteurs de todos par categorie. La section Recommandations affiche une liste filtrable d'actions avec des badges de priorite."
+          },
+          "description": {
+            "en": "Use this dashboard as your operational security cockpit. Review score and category counters, then execute recommendations in priority order.",
+            "fr": "Utilisez ce tableau de bord comme cockpit de securite operationnel. Consultez le score et les compteurs par categorie, puis executez les recommandations par ordre de priorite."
+          },
+          "has_dual_screenshots": true,
+          "items": [
+            {
+              "name": "security_state",
+              "title": {
+                "en": "Security Score – Risk Assessment at a Glance",
+                "fr": "Score de Sécurité – Évaluation du Risque en un Coup d'Œil"
+              },
+              "visual": {
+                "en": "A continuously updated score (0-5 stars) summarizing your overall device security risk. Factors in live threat data, policy compliance, network exposure, and system configuration. The score uses the EDAMAME threat model with category-specific weightings for Network, System Integrity, Services, Applications, and Credentials.",
+                "fr": "Un score mis à jour en continu (0-5 étoiles) résumant le risque global de sécurité de votre appareil. Intègre les données de menaces en direct, la conformité aux politiques, l'exposition réseau et la configuration système."
+              },
+              "description": {
+                "en": "Use this score as a trend indicator, not a one-time value. Recheck after each remediation wave.",
+                "fr": "Utilisez ce score comme indicateur de tendance, pas comme valeur ponctuelle. Reverifiez apres chaque vague de remediation."
+              }
+            },
+            {
+              "name": "todo_count",
+              "title": {
+                "en": "Action Items – Tasks Remaining",
+                "fr": "Actions – Tâches Restantes"
+              },
+              "visual": {
+                "en": "Shows how many security tasks remain to improve your score. Each todo represents a specific action—remediate a threat, review a network anomaly, address a credential breach, or fix a policy violation. Click any item to see detailed guidance.",
+                "fr": "Indique le nombre de tâches de sécurité restantes pour améliorer votre score. Chaque todo représente une action spécifique à effectuer."
+              },
+              "description": {
+                "en": "Treat this counter as your remaining security backlog. Reduce it by clearing highest-priority items first.",
+                "fr": "Considerez ce compteur comme votre backlog securite restant. Reduisez-le en traitant d'abord les elements les plus prioritaires."
+              }
+            },
+            {
+              "name": "active_threats_summary",
+              "title": {
+                "en": "Active Threats – Issues Requiring Attention",
+                "fr": "Menaces Actives – Problèmes Nécessitant Attention"
+              },
+              "visual": {
+                "en": "Real-time count of unresolved threats categorized by severity (Critical, High, Medium, Low). Each threat maps to industry frameworks like CIS Benchmarks, SOC 2, and ISO 27001. Click to navigate directly to the threat details.",
+                "fr": "Nombre en temps réel des menaces non résolues, classées par gravité (Critique, Haute, Moyenne, Basse)."
+              },
+              "description": {
+                "en": "Jump from here to unresolved threats and handle critical/high severity first.",
+                "fr": "Utilisez ce point d'entree pour ouvrir les menaces non resolues et traitez d'abord les severites critique/elevee."
+              }
+            },
+            {
+              "name": "failed_policies_summary",
+              "title": {
+                "en": "Non-Compliant Policies",
+                "fr": "Politiques Non Conformes"
+              },
+              "visual": {
+                "en": "Quick list of organizational policies your device currently fails to meet. Policies are defined by your organization via EDAMAME Hub and can include minimum score thresholds, required security checks, and compliance tags.",
+                "fr": "Liste rapide des politiques organisationnelles que votre appareil ne respecte pas actuellement."
+              },
+              "description": {
+                "en": "Use failed policies to identify blocked controls or access paths. Fix dependencies and verify pass state.",
+                "fr": "Utilisez les politiques en echec pour identifier les controles ou acces bloques. Corrigez les dependances puis verifiez le statut passe."
+              }
+            },
+            {
+              "name": "network_devices_summary",
+              "title": {
+                "en": "Network Devices – Open Ports Detected",
+                "fr": "Appareils Réseau – Ports Ouverts Détectés"
+              },
+              "visual": {
+                "en": "Highlights devices on your local network exposing services that may require hardening. Includes CVE vulnerability lookup for discovered ports and services. Click to view detailed device information.",
+                "fr": "Met en évidence les appareils sur votre réseau local exposant des services pouvant nécessiter un durcissement."
+              },
+              "description": {
+                "en": "Review exposed devices and suspicious services before trust decisions. Investigate unknown hosts immediately.",
+                "fr": "Revoyez les appareils exposes et services suspects avant toute decision de confiance. Enquetez immediatement sur les hotes inconnus."
+              }
+            },
+            {
+              "name": "pwned_breaches_summary",
+              "title": {
+                "en": "Identity Breaches – Credential Leaks",
+                "fr": "Violations d'Identité – Fuites d'Identifiants"
+              },
+              "visual": {
+                "en": "Displays the number of data breaches affecting your monitored email addresses (via HaveIBeenPwned.com integration). Shows breach severity based on exposed data types—passwords, tokens, personal information.",
+                "fr": "Affiche le nombre de violations de données affectant vos adresses email surveillées."
+              },
+              "description": {
+                "en": "Use this alert to trigger credential hygiene: password rotation, MFA checks, and account hardening.",
+                "fr": "Utilisez cette alerte pour declencher l'hygiene des identifiants: rotation des mots de passe, verification MFA et durcissement des comptes."
+              }
+            },
+            {
+              "name": "suspicious_sessions_summary",
+              "title": {
+                "en": "Suspicious Sessions – Network Anomalies",
+                "fr": "Sessions Suspectes – Anomalies Réseau"
+              },
+              "visual": {
+                "en": "Counts network sessions flagged as suspicious or anomalous by the ML-based Extended Isolation Forest algorithm. Includes sessions matching blacklist rules. Desktop only—requires traffic capture enabled.",
+                "fr": "Compte les sessions réseau signalées comme suspectes ou anormales par l'algorithme d'apprentissage automatique."
+              },
+              "description": {
+                "en": "Investigate flagged sessions before dismissal. Validate process, destination, and timing against expected behavior.",
+                "fr": "Enquetez sur les sessions signalees avant de les ignorer. Validez processus, destination et timing par rapport au comportement attendu."
+              }
+            }
+          ]
+        },
+        {
+          "name": "advisor_advices",
+          "title": {
+            "en": "Recommendations – Prioritized Action Steps",
+            "fr": "Recommandations – Etapes d'Action Priorisees"
+          },
+          "visual": {
+            "en": "The Recommendations/Advices section (scrollable list below the dashboard) shows all actionable security items. Each card displays: a category icon (fingerprint for Identity breaches, traffic icon for suspicious sessions, shield for threats), type badge (colored label like 'Traffic', 'Identity breaches'), priority badge ('High' in red, 'Medium' in yellow, 'Low' in green), action description (e.g., 'Review suspicious network sessions and mark as safe if legitimate', 'Data breach detected for your email - review details and mark as handled if you've changed passwords'), source details (domain, email, or device), and timestamp. Click any card to open a detail pane on the right showing full context - for traffic sessions: process name, path, memory usage, session count, destination details with port/service, source IP, and action buttons ('Mark process as safe', 'Close'). The multi-pane layout lets you review details without losing your place in the list.",
+            "fr": "La section Recommandations/Conseils affiche tous les elements de securite actionnables. Chaque carte montre le type, la priorite, la description d'action et les details. Cliquez pour ouvrir un panneau de details avec les boutons d'action."
+          },
+          "description": {
+            "en": "Treat recommendations as your execution queue. Open each card, validate context, apply action, and clear or defer explicitly.",
+            "fr": "Traitez les recommandations comme votre file d'execution. Ouvrez chaque carte, validez le contexte, appliquez l'action, puis classez ou reportez explicitement."
+          }
+        },
+        {
+          "name": "advisor_score",
+          "title": {
+            "en": "Score – Multi-Dimensional Security Assessment",
+            "fr": "Score – Évaluation de Sécurité Multi-Dimensionnelle"
+          },
+          "visual": {
+            "en": "The Score tab displays a radar/spider chart visualization centered on the screen, with five axes representing security domains: Credentials (top), Network (right), System services (bottom-right), System integrity (bottom-left), and Applications (left). The purple filled area shows your current score in each domain - areas that extend further toward the outer ring indicate stronger security. Concentric circles mark the 25, 50, and 75 percentile levels. Below the chart, your overall star rating is displayed (0-5 stars, with partial stars for fractional scores). A prominent green 'Show me how to improve!' button links directly to the Threats view where you can remediate issues to raise your score.",
+            "fr": "L'onglet Score affiche une visualisation radar/araignee avec cinq axes representant les domaines de securite. La zone violette montre votre score actuel dans chaque domaine. Votre note globale en etoiles apparait en dessous avec un bouton pour voir comment ameliorer votre score."
+          },
+          "description": {
+            "en": "Use the radar to find weakest security domains quickly. Prioritize remediation on the lowest axes and re-check score improvement.",
+            "fr": "Utilisez le radar pour identifier rapidement les domaines de securite les plus faibles. Priorisez la remediation sur les axes les plus bas puis reverifiez l'amelioration du score."
+          },
+          "items": [
+            {
+              "name": "overall_score",
+              "title": {
+                "en": "Overall Score – 0 to 5 Stars",
+                "fr": "Score Global – 0 à 5 Étoiles"
+              },
+              "visual": {
+                "en": "Your combined security score as a star rating (0-5). Based on weighted averages of all security domains using the EDAMAME threat model. A score of 4+ stars indicates strong security posture; below 3 stars requires attention.",
+                "fr": "Votre score de sécurité combiné en notation étoilée (0-5). Basé sur les moyennes pondérées de tous les domaines de sécurité."
+              },
+              "description": {
+                "en": "Track this overall score weekly to measure durable improvement in posture.",
+                "fr": "Suivez ce score global chaque semaine pour mesurer une amelioration durable de la posture."
+              }
+            },
+            {
+              "name": "network_score",
+              "title": {
+                "en": "Network Security Score",
+                "fr": "Score de Sécurité Réseau"
+              },
+              "visual": {
+                "en": "Evaluates firewall configuration, response to ping, open ports exposure, VPN usage, and network-level attack surface. Includes checks for Wi-Fi security and network isolation.",
+                "fr": "Évalue la configuration du pare-feu, la réponse au ping, l'exposition des ports ouverts, l'utilisation VPN et la surface d'attaque réseau."
+              },
+              "description": {
+                "en": "Use this domain score to prioritize firewall, exposure, and segmentation fixes.",
+                "fr": "Utilisez ce score de domaine pour prioriser les corrections de pare-feu, d'exposition et de segmentation."
+              }
+            },
+            {
+              "name": "system_integrity_score",
+              "title": {
+                "en": "System Integrity Score",
+                "fr": "Score d'Intégrité Système"
+              },
+              "visual": {
+                "en": "Assesses OS hardening (SIP, Secure Boot), disk encryption (FileVault, BitLocker), security software status (XProtect, Windows Defender), automatic updates, and critical system configuration. Platform-specific checks for macOS, Windows, and Linux.",
+                "fr": "Évalue le durcissement de l'OS, le chiffrement disque, l'état des logiciels de sécurité, les mises à jour automatiques et la configuration système critique."
+              },
+              "description": {
+                "en": "Raise this score by enabling core OS protections and staying current on updates.",
+                "fr": "Ameliorez ce score en activant les protections OS essentielles et en restant a jour sur les mises a jour."
+              }
+            },
+            {
+              "name": "system_services_score",
+              "title": {
+                "en": "System Services Score",
+                "fr": "Score des Services Système"
+              },
+              "visual": {
+                "en": "Analyzes privileged and background services running on your system. Checks for unnecessary services, proper service isolation, and potential security implications of running processes.",
+                "fr": "Analyse les services privilégiés et d'arrière-plan s'exécutant sur votre système."
+              },
+              "description": {
+                "en": "Lower attack surface by disabling unnecessary privileged and background services.",
+                "fr": "Reduisez la surface d'attaque en desactivant les services privilegies et d'arriere-plan non necessaires."
+              }
+            },
+            {
+              "name": "applications_score",
+              "title": {
+                "en": "Applications Security Score",
+                "fr": "Score de Sécurité des Applications"
+              },
+              "visual": {
+                "en": "Verifies application patch status, code signing, sandbox restrictions, and browser security settings. Checks for known vulnerable software versions and recommends updates.",
+                "fr": "Vérifie l'état de mise à jour des applications, la signature de code, les restrictions sandbox et les paramètres de sécurité du navigateur."
+              },
+              "description": {
+                "en": "Improve this score through patch discipline and removal of risky software.",
+                "fr": "Ameliorez ce score via une discipline de patch et la suppression des logiciels risques."
+              }
+            },
+            {
+              "name": "credentials_score",
+              "title": {
+                "en": "Credentials Security Score",
+                "fr": "Score de Sécurité des Identifiants"
+              },
+              "visual": {
+                "en": "Evaluates password manager usage, MFA/2FA configuration, credential storage security, and breach exposure status. Integrates with identity breach monitoring to detect compromised credentials.",
+                "fr": "Évalue l'utilisation d'un gestionnaire de mots de passe, la configuration MFA/2FA, la sécurité du stockage des identifiants et le statut d'exposition aux fuites."
+              },
+              "description": {
+                "en": "Improve credential resilience with unique passwords, MFA, and breach follow-up.",
+                "fr": "Ameliorez la resilience des identifiants avec des mots de passe uniques, le MFA et le suivi des violations."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "posture",
+      "title": {
+        "en": "Threats",
+        "fr": "Menaces"
+      },
+      "visual": {
+        "en": "The Threats tab provides security threat management with four sub-views. Overview shows an interactive red-toned treemap of active security issues grouped by category - click any threat for remediation details and one-click fix. Handled displays a green treemap of resolved threats with rollback options. Compliance maps each threat to frameworks (CIS Benchmark Level 1, ISO 27001/2, SOC 2, Personal Posture) with pass/fail status. Remediations shows a timeline of all fix/rollback actions with status and timestamps.",
+        "fr": "L'onglet Menaces fournit la gestion des menaces avec quatre sous-vues : Vue d'ensemble (treemap des problemes actifs), Gerees (menaces resolues), Conformite (mapping aux cadres) et Remediations (historique des actions)."
+      },
+      "description": {
+        "en": "Use Threats to remediate hardening gaps on your workstation. Fix critical findings first, confirm compliance impact, and use history for rollback and audit traceability.",
+        "fr": "Utilisez Menaces pour corriger les ecarts de durcissement sur votre poste. Corrigez d'abord les constats critiques, verifiez l'impact conformite, puis utilisez l'historique pour le rollback et la tracabilite d'audit."
+      },
+      "has_dual_screenshots": true,
+      "sub_features": [
+        {
+          "name": "posture_overview",
+          "title": {
+            "en": "Overview - Active Security Issues",
+            "fr": "Vue d'ensemble - Problemes de Securite Actifs"
+          },
+          "visual": {
+            "en": "The Overview tab displays an interactive treemap visualization where each rectangle represents an active threat. Rectangles are sized proportionally to threat severity and grouped by category (System integrity, System services, Applications, Credentials, Network). Critical and high-severity threats appear in red/coral, while medium threats show in orange. Each rectangle displays the threat name (e.g., 'Remote login enabled', 'Disk encryption disabled', 'No antivirus enabled'). Small yellow stars indicate new threats. At the bottom, two action buttons appear: 'Go back to my score!' returns to the radar chart, and 'Automatically manage X threat(s)' triggers batch remediation. Click any threat rectangle to open a detail pane on the right showing the threat description, severity badge, remediation command preview, and a 'Push to execute' button to fix the issue with one click.",
+            "fr": "L'onglet Menaces affiche une visualisation treemap interactive ou chaque rectangle represente une menace active. Les rectangles sont dimensionnes selon la gravite et regroupes par categorie. Cliquez sur une menace pour voir les details et le bouton de remediation."
+          },
+          "description": {
+            "en": "Use this view to triage active hardening issues. Open threat details, apply safe one-click fixes, and reassess severity distribution after changes.",
+            "fr": "Utilisez cette vue pour trier les problemes actifs de durcissement. Ouvrez les details de menace, appliquez les correctifs surs en un clic, puis reevaluez la distribution des severites apres modifications."
+          },
+          "has_dual_screenshots": true,
+          "items": [
+            {
+              "name": "threat_details",
+              "title": {
+                "en": "Threat Details – Technical Information",
+                "fr": "Détails de la Menace – Informations Techniques"
+              },
+              "visual": {
+                "en": "Detailed view of each threat including: technical description, security checks performed, required privileges for detection, compliance framework mappings (CIS, SOC2, ISO27001, PCI-DSS, HIPAA), and platform-specific implementation details.",
+                "fr": "Vue détaillée de chaque menace incluant : description technique, vérifications de sécurité effectuées, privilèges requis pour la détection."
+              },
+              "description": {
+                "en": "Read technical details before remediation to confirm scope, impact, and prerequisites.",
+                "fr": "Lisez les details techniques avant remediation pour confirmer le perimetre, l'impact et les pre-requis."
+              }
+            },
+            {
+              "name": "remediation_button",
+              "title": {
+                "en": "One-Click Remediation",
+                "fr": "Remédiation en Un Clic"
+              },
+              "visual": {
+                "en": "Many threats offer automated remediation—click 'Remediate' to apply the fix automatically. EDAMAME executes platform-specific commands to resolve the issue (e.g., enabling firewall, configuring encryption). All automated fixes can be rolled back.",
+                "fr": "De nombreuses menaces offrent une remédiation automatisée—cliquez sur 'Remédier' pour appliquer le correctif automatiquement."
+              },
+              "description": {
+                "en": "Use one-click remediation for safe reversible fixes. Validate outcome immediately after execution.",
+                "fr": "Utilisez la remediation en un clic pour des corrections sures et reversibles. Validez le resultat immediatement apres execution."
+              }
+            },
+            {
+              "name": "auto_remediate_button",
+              "title": {
+                "en": "Batch Remediation – Fix Multiple Threats",
+                "fr": "Remédiation Groupée – Corriger Plusieurs Menaces"
+              },
+              "visual": {
+                "en": "Automatically remediate all safe, automatable threats at once. EDAMAME identifies which threats can be safely fixed without risking system stability and applies all fixes in sequence.",
+                "fr": "Remédiez automatiquement toutes les menaces sûres et automatisables en une fois."
+              },
+              "description": {
+                "en": "Use batch remediation to fix multiple safe issues quickly. Review planned scope before launch.",
+                "fr": "Utilisez la remediation groupee pour corriger rapidement plusieurs problemes surs. Revoyez le perimetre planifie avant lancement."
+              }
+            }
+          ]
+        },
+        {
+          "name": "posture_inactive",
+          "title": {
+            "en": "Handled – Resolved Threats",
+            "fr": "Traite – Menaces Resolues"
+          },
+          "visual": {
+            "en": "The Handled tab displays a green-tinted treemap of all resolved or inactive threats, with a header message: 'Handled threats and how to roll them back (proceed with caution)'. Rectangles are sized similarly to the Threats view but use green shades to indicate safe/resolved status. Categories are still grouped (System integrity, Applications, Network, Credentials, System services). Threat names like 'Root user enabled', 'Chrome browser not up to date', 'Wake On LAN enabled', and 'Local firewall disabled' show issues that have been addressed. Click any rectangle to view details about when it was resolved and access the rollback option if you need to undo the fix. The 'Go back to my score!' button at the bottom returns you to the Score view.",
+            "fr": "L'onglet Traite affiche une treemap verte des menaces resolues avec un message d'en-tete. Les menaces resolues peuvent etre annulees via l'option rollback si necessaire."
+          },
+          "description": {
+            "en": "Use this view to review resolved items and rollback options. Roll back only when business impact requires it, then document compensating controls.",
+            "fr": "Utilisez cette vue pour revoir les elements resolus et les options de rollback. N'effectuez un rollback que si l'impact metier l'exige, puis documentez les controles compensatoires."
+          },
+          "has_dual_screenshots": true,
+          "items": [
+            {
+              "name": "rollback_button",
+              "title": {
+                "en": "Rollback – Undo Remediation",
+                "fr": "Rollback – Annuler la Remédiation"
+              },
+              "visual": {
+                "en": "Restore the previous state before a remediation was applied. Useful if a security fix impacts productivity or causes compatibility issues. Not all remediations support rollback—the button is only shown when rollback is available.",
+                "fr": "Restaurez l'état précédent avant qu'une remédiation ne soit appliquée."
+              },
+              "description": {
+                "en": "Use rollback only when a fix causes unacceptable business impact, then apply an alternative control.",
+                "fr": "Utilisez le rollback uniquement lorsqu'un correctif cree un impact metier inacceptable, puis appliquez un controle alternatif."
+              }
+            }
+          ]
+        },
+        {
+          "name": "posture_compliance",
+          "title": {
+            "en": "Compliance – Framework Alignment",
+            "fr": "Conformite – Alignement sur les Cadres"
+          },
+          "visual": {
+            "en": "The Compliance tab displays a table view of all threats mapped to compliance frameworks. At the top, clickable filter buttons let you focus on specific frameworks: 'CIS Benchmark Level 1' (green), 'Personal Posture' (blue), 'ISO 27001/2' (purple), and 'SOC 2' (cyan). The table has three columns: Threat (listing issues like 'EDAMAME helper inactive', 'Remote events enabled', 'Disk encryption disabled'), Tags (showing which frameworks each threat relates to), and Status (green circle for pass, pink circle for fail). Click column headers to sort. This view helps compliance officers quickly identify which security gaps impact specific regulatory requirements and prioritize remediation accordingly.",
+            "fr": "L'onglet Conformite affiche un tableau des menaces mappees aux cadres de conformite. Des boutons de filtre en haut permettent de se concentrer sur des cadres specifiques. Chaque menace montre ses tags de conformite et son statut passe/echoue."
+          },
+          "description": {
+            "en": "Use this table to align remediation work with audit priorities. Filter by framework and clear failed controls for your target standards.",
+            "fr": "Utilisez ce tableau pour aligner la remediation sur les priorites d'audit. Filtrez par referentiel et corrigez les controles en echec pour vos standards cibles."
+          },
+          "has_dual_screenshots": true,
+          "items": [
+            {
+              "name": "threat_tag_prefixes",
+              "title": {
+                "en": "Compliance Tags – Framework Filters",
+                "fr": "Tags de Conformité – Filtres de Cadres"
+              },
+              "visual": {
+                "en": "Filter the threat list by compliance framework tags (CIS, SOC2, ISO27001, PCI-DSS, HIPAA, PRIVACY). See at a glance which controls pass or fail for your specific compliance requirements.",
+                "fr": "Filtrez la liste des menaces par tags de cadre de conformité (CIS, SOC2, ISO27001, PCI-DSS, HIPAA)."
+              },
+              "description": {
+                "en": "Filter by framework tags to focus on audit-relevant controls first.",
+                "fr": "Filtrez par tags de referentiel pour vous concentrer d'abord sur les controles pertinents pour l'audit."
+              }
+            }
+          ]
+        },
+        {
+          "name": "posture_history",
+          "title": {
+            "en": "Remediations – Action History Timeline",
+            "fr": "Remediations – Historique des Actions"
+          },
+          "visual": {
+            "en": "The Remediations tab displays a chronological timeline of all remediation and rollback actions. At the top, filter buttons let you show only 'Remediation' or 'Rollback' actions, plus a search field to find specific threats by name. Each entry shows: a status icon (green checkmark for Passed, orange exclamation for Failed), the threat name, action type badge ('Remediation' in green or 'Rollback' in blue), and timestamp. For successful remediations, a green 'Rollback' button appears on the right to undo the change if needed. Failed remediations show a 'Remediation' button to retry. The list scrolls to show your complete remediation history, making it easy to audit what changes were made and when.",
+            "fr": "L'onglet Remediations affiche une chronologie de toutes les actions de remediation et rollback. Chaque entree montre le statut, le nom de la menace, le type d'action et l'horodatage. Les remediations reussies ont un bouton Rollback."
+          },
+          "description": {
+            "en": "Use remediation history as a security change log. Confirm what was fixed, retry failed actions, and track rollback evidence.",
+            "fr": "Utilisez l'historique de remediation comme journal de changement securite. Verifiez ce qui a ete corrige, relancez les actions en echec et suivez les preuves de rollback."
+          }
+        }
+      ]
+    },
+    {
+      "name": "identity",
+      "title": {
+        "en": "Identity",
+        "fr": "Identite"
+      },
+      "visual": {
+        "en": "The Identity tab monitors your email addresses for data breaches via HaveIBeenPwned.com. The left panel shows your monitored emails with an '+ Add Email' button and breach counts (e.g., '6 breach(es)' with 'Pwned' badge). The right panel lists detected breaches sorted by date or criticality, with Active/Dismissed filters. Each breach card shows the service name and logo (Canva, Facebook, MyFitnessPal, Adobe, Dropbox), breach date, and colorful badges for exposed data types (Email addresses, Passwords, Names, IP addresses, Geographic locations, Phone numbers). Click any breach to open a detail pane with the full breach narrative, affected account count, data classes, and 'Mark as handled'/'AI report' buttons. An 'Info' button opens additional context. This helps you identify which credentials need immediate rotation.",
+        "fr": "L'onglet Identite surveille vos adresses email pour les violations de donnees via HaveIBeenPwned.com. Le panneau gauche montre vos emails surveilles. Le panneau droit liste les violations avec des badges pour les types de donnees exposees."
+      },
+      "description": {
+        "en": "Use Identity to monitor breach exposure for your email accounts. Add all relevant addresses, follow remediation steps quickly, and mark incidents handled only after verification.",
+        "fr": "Utilisez Identite pour surveiller l'exposition aux violations de vos comptes email. Ajoutez toutes les adresses pertinentes, suivez rapidement les etapes de remediation et marquez les incidents comme traites uniquement apres verification."
+      },
+      "has_dual_screenshots": true,
+      "sub_features": [
+        {
+          "name": "identity_main",
+          "title": {
+            "en": "Breach Monitoring – Compromised Credentials",
+            "fr": "Surveillance des Violations – Identifiants Compromis"
+          },
+          "visual": {
+            "en": "The Identity tab opens with a split-panel layout. On the left, 'Compromised emails?' shows your monitored email addresses with an '+ Add Email' button at the top. Each email displays as a card showing the address, a 'Pwned' badge if compromised, and the breach count (e.g., '6 breach(es)'). A trash icon allows removal. On the right, 'Below are the breaches your email address has been found in' shows breach cards sorted by Date or Criticality with Active/Dismissed filters. Each breach card displays: the service logo and name (Canva, Facebook, MyFitnessPal, Adobe, Dropbox), the breach date, and colored badges for exposed data types (Email addresses in green, Passwords in red, Names in blue, IP addresses in purple, Geographic locations in teal). Click any breach to open a detail pane with the full narrative, total affected accounts, data classes, and 'Mark as handled'/'Close' buttons.",
+            "fr": "L'onglet Identite s'ouvre avec un panneau divise. A gauche, les emails surveilles avec compteurs de violations. A droite, les violations detectees avec des badges colores pour les types de donnees exposees. Cliquez sur une violation pour voir les details."
+          },
+          "description": {
+            "en": "Use this workspace to manage breach response end to end. Keep your watch list current, prioritize active breaches, and complete remediation before dismissal.",
+            "fr": "Utilisez cet espace pour gerer la reponse aux violations de bout en bout. Gardez la liste de surveillance a jour, priorisez les violations actives et terminez la remediation avant classement."
+          },
+          "has_dual_screenshots": true,
+          "items": [
+            {
+              "name": "email_list",
+              "title": {
+                "en": "Monitored Emails – Watch List",
+                "fr": "Emails Surveillés – Liste de Surveillance"
+              },
+              "visual": {
+                "en": "Sortable list of all email addresses under surveillance with breach counters and status badges. Add unlimited professional and personal email addresses. Each email shows total breach count and whether action is needed.",
+                "fr": "Liste triable de toutes les adresses email sous surveillance avec compteurs de violations et badges de statut."
+              },
+              "description": {
+                "en": "Maintain all active addresses here to maximize breach coverage across personal and work identities.",
+                "fr": "Maintenez ici toutes les adresses actives pour maximiser la couverture des violations sur les identites personnelles et professionnelles."
+              }
+            },
+            {
+              "name": "breach_list",
+              "title": {
+                "en": "Breach List – Detailed Incidents",
+                "fr": "Liste des Violations – Incidents Détaillés"
+              },
+              "visual": {
+                "en": "Expandable cards for each detected breach showing: service name, breach date, disclosure date, number of affected accounts globally, exposed data classes, and severity assessment. Click for full details including breach narrative and remediation checklist.",
+                "fr": "Cartes extensibles pour chaque violation détectée montrant : nom du service, date de la violation, date de divulgation, données exposées et évaluation de la gravité."
+              },
+              "description": {
+                "en": "Prioritize breaches with credential/token exposure before profile-only leaks.",
+                "fr": "Priorisez les violations avec exposition d'identifiants/tokens avant les fuites de profil uniquement."
+              }
+            },
+            {
+              "name": "breach_remediation",
+              "title": {
+                "en": "Remediation Guide – AI-Powered Steps",
+                "fr": "Guide de Remédiation – Étapes par IA"
+              },
+              "visual": {
+                "en": "AI-generated remediation steps for each breach: reset passwords on affected service and anywhere you reused it, enable MFA/2FA, revoke active sessions, check for unauthorized access, watch for phishing attempts. Context-aware recommendations based on exposed data types.",
+                "fr": "Étapes de remédiation générées par IA pour chaque violation : réinitialiser les mots de passe, activer MFA/2FA, révoquer les sessions."
+              },
+              "description": {
+                "en": "Follow remediation in order: reset credentials, revoke sessions, enable MFA, and monitor abuse.",
+                "fr": "Suivez la remediation dans l'ordre: reinitialisez les identifiants, revoquez les sessions, activez le MFA et surveillez les abus."
+              }
+            },
+            {
+              "name": "dismiss_breach_button",
+              "title": {
+                "en": "Dismiss – Mark as Handled",
+                "fr": "Ignorer – Marquer comme Traité"
+              },
+              "visual": {
+                "en": "Mark a breach as acknowledged and handled. The breach remains in history but stops contributing to alert counts and security score impact. Undismiss anytime if you need to revisit the breach.",
+                "fr": "Marquez une violation comme reconnue et traitée. La violation reste dans l'historique mais arrête de contribuer aux alertes."
+              },
+              "description": {
+                "en": "Mark as handled only after all corrective steps are complete and verified.",
+                "fr": "Marquez comme traite uniquement apres verification complete de toutes les actions correctives."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "lan",
+      "title": {
+        "en": "Network",
+        "fr": "Reseau"
+      },
+      "visual": {
+        "en": "The Network tab provides Nmap-style LAN discovery with five sub-views. Radar displays an interactive circular map with devices positioned by proximity, color-coded by criticality (red for high-risk, green for safe). Table shows a sortable spreadsheet with IP, hostname, MAC, vendor, and criticality columns. Detailed presents rich device cards with icons, names, and status indicators. Networks logs your Wi-Fi connection history with network details. Events tracks device activity timeline (new devices, reactivations, inactivations). Each device card reveals open ports, CVE vulnerabilities, vendor info, and 'AI report' for LLM analysis. Toggle 'Auto scan' for continuous discovery, or click 'Scan' for manual refresh. The legend shows counts by criticality level and device type (computers, phones, cameras, routers, IoT). 'Forget' clears the network history.",
+        "fr": "L'onglet Reseau fournit une decouverte LAN style Nmap avec cinq sous-vues : Radar, Table, Detaille, Reseaux et Evenements. Les appareils sont codes par couleur selon leur criticite. Les cartes revelent les ports ouverts, les CVE et les infos vendeur."
+      },
+      "description": {
+        "en": "Use Network to discover devices and detect risky exposure on local environments. Scan regularly, investigate high-critical hosts and unusual ports, and validate findings before dismissal.",
+        "fr": "Utilisez Reseau pour decouvrir les appareils et detecter les expositions a risque sur vos environnements locaux. Scannez regulierement, enquetez sur les hotes critiques et les ports inhabituels, puis validez les alertes avant de les ignorer."
+      },
+      "has_dual_screenshots": true,
+      "sub_features": [
+        {
+          "name": "lan_radar",
+          "title": {
+            "en": "Radar – Interactive Device Map",
+            "fr": "Radar – Carte Interactive des Appareils"
+          },
+          "visual": {
+            "en": "The Radar tab displays an interactive circular visualization with devices positioned around concentric rings based on network proximity. At the top, a search bar lets you filter by 'Name, IP, ports...', and an 'Auto scan' toggle enables continuous discovery. Network interface details are shown (Wi-Fi IP, Gateway, BSSID, last scan time). Devices appear as colored icons: red/orange for high-criticality devices, green for low-criticality. Device types are visually distinguished with icons (computer monitors, phones, cameras, routers, IoT devices). Device names appear as labels (e.g., 'iphone-amy', 'router-media', 'camera-office', 'raspberrypi'). On the left, a legend shows counts by category: Devices, New devices, Reactivated devices, Unusual ports, High/Medium/Low criticality, and device types (Computers, Phones, Cameras, Stealth, Dismissed, Deleted). Click 'Scan' button in the corner to trigger a manual network scan, or 'Forget' to clear the network history.",
+            "fr": "L'onglet Radar affiche une visualisation circulaire interactive avec les appareils positionnes autour d'anneaux concentriques. Les appareils sont colores selon leur criticite et identifies par des icones de type. Une legende montre les compteurs par categorie."
+          },
+          "description": {
+            "en": "Use Radar for fast situational awareness of your LAN perimeter. Trigger scans, inspect new or critical devices, then pivot to detail views.",
+            "fr": "Utilisez Radar pour une vision rapide du perimetre LAN. Lancez des scans, inspectez les appareils nouveaux ou critiques, puis basculez vers les vues detaillees."
+          },
+          "has_dual_screenshots": true
+        },
+        {
+          "name": "lan_table",
+          "title": {
+            "en": "Table – Sortable Device List",
+            "fr": "Table – Liste Triable des Appareils"
+          },
+          "visual": {
+            "en": "The Table tab displays a sortable spreadsheet view of all discovered devices. Columns include: IP (e.g., 192.168.11.212), Identifier (device hostname like 'ps5', 'modem', 'camera-garage'), MAC (hardware address), Vendor (manufacturer like 'microsoft', 'dell', 'foscam', 'hikvision'), Criticality (High/Medium/Low), and Active (Yes/No). Click column headers to sort. A search bar at the top filters across all fields. Click any row to open a detail pane showing: Last seen timestamp, First seen date, IPv4 address, Hostname, editable Custom name field, Criticality level, Device type with icon, Vendor, Operating system info, and a list of open ports with IANA service names and CVE references. Action buttons at the bottom: 'I verified all ports' (green) dismisses all port alerts, 'Delete' removes the device, and 'Close' hides the pane. An 'AI report' button generates an LLM analysis of device security.",
+            "fr": "L'onglet Table affiche une vue tableur triable de tous les appareils decouverts. Les colonnes incluent IP, Identifiant, MAC, Vendeur, Criticite et Actif. Cliquez sur une ligne pour voir les details avec les ports ouverts et les boutons d'action."
+          },
+          "description": {
+            "en": "Use Table when you need precise filtering and sorting across many hosts. Validate identity, exposure, and open ports before trusting a device.",
+            "fr": "Utilisez Table quand vous avez besoin d'un filtrage et tri precis sur de nombreux hotes. Validez l'identite, l'exposition et les ports ouverts avant de faire confiance a un appareil."
+          },
+          "has_dual_screenshots": true
+        },
+        {
+          "name": "lan_detailed",
+          "title": {
+            "en": "Detailed – Device Card View",
+            "fr": "Detaille – Vue Cartes d'Appareils"
+          },
+          "visual": {
+            "en": "The Detailed tab displays each discovered device as an expanded card with rich information at a glance. At the top, filter statistics show device counts by status (Devices, New, Reactivated, Unusual ports, Inactive) and criticality (High in red, Medium in orange, Low in green), plus device type counts (Computers, Phones, Cameras, Stealth, Dismissed, Deleted). Each card shows: device name in bold (e.g., 'pc-gaming', 'printer-kitchen', 'ps4', 'modem'), an icon representing the device type (red for high-criticality, orange for medium, green for low), IP address, MAC address, and Vendor name. Status indicators on the right show new/active status with colored dots. Cards are scrollable and can be clicked to open the full detail pane. The layout provides quick visual scanning of your entire network inventory.",
+            "fr": "L'onglet Detaille affiche chaque appareil decouvert comme une carte etendue avec des informations riches. Les statistiques de filtre en haut montrent les compteurs par statut et criticite. Chaque carte montre le nom, l'icone de type, l'IP, le MAC et le vendeur."
+          },
+          "description": {
+            "en": "Use Detailed cards for rapid visual triage. Open suspicious cards to confirm vendor, activity, and criticality before action.",
+            "fr": "Utilisez les cartes Detaille pour un tri visuel rapide. Ouvrez les cartes suspectes pour confirmer vendeur, activite et criticite avant action."
+          },
+          "has_dual_screenshots": true
+        },
+        {
+          "name": "lan_networks",
+          "title": {
+            "en": "Networks – Connection History",
+            "fr": "Reseaux – Historique des Connexions"
+          },
+          "visual": {
+            "en": "The Networks tab displays a history of all Wi-Fi and wired networks you've connected to. Each network entry shows as a card with: a Wi-Fi icon, the network details in the format 'Wi-Fi: [IP/subnet], Gateway: [gateway IP], BSSID: [access point MAC]', a 'Wi-Fi' badge indicating connection type, and the last scan timestamp on the right. This view helps you track which networks you've accessed, compare device discoveries across locations (home, office, coffee shop), and identify if you've connected to any potentially suspicious networks. Click a network entry to view the devices discovered on that network during your last visit.",
+            "fr": "L'onglet Reseaux affiche un historique de tous les reseaux Wi-Fi et cables auxquels vous vous etes connecte. Chaque entree montre les details du reseau, le type de connexion et l'horodatage du dernier scan."
+          },
+          "description": {
+            "en": "Use this history to compare posture by network location. Investigate unexpected networks and changes in known network fingerprints.",
+            "fr": "Utilisez cet historique pour comparer la posture selon l'emplacement reseau. Enquetez sur les reseaux inattendus et les changements d'empreinte des reseaux connus."
+          }
+        },
+        {
+          "name": "lan_events",
+          "title": {
+            "en": "Events – Device Activity Timeline",
+            "fr": "Evenements – Chronologie d'Activite des Appareils"
+          },
+          "visual": {
+            "en": "The Events tab displays a chronological timeline of device activity across all networks. At the top, filter buttons let you focus on event types: 'New' (green), 'Reactivated' (blue), and 'Inactivated' (orange). A search field filters by 'Name, IP, ports...'. Each event card shows: the device icon with type-specific color, device name in bold (e.g., 'ps4', 'nas-home', 'ps5', 'iot-gateway2', 'router-security'), the network it was seen on (e.g., 'Wi-Fi: 192.168.67.32/24'), status badges indicating the event type, and an 'Active' badge if currently online. The timestamp appears on the right. A trash icon on each card allows you to delete the device record from history. This view is essential for monitoring network changes - detecting new unauthorized devices, tracking when devices come and go, and maintaining visibility into your network's evolution over time.",
+            "fr": "L'onglet Evenements affiche une chronologie des activites des appareils sur tous les reseaux. Des boutons de filtre permettent de se concentrer sur les types d'evenements (Nouveau, Reactive, Inactive). Chaque carte montre le nom de l'appareil, le reseau, les badges de statut et l'horodatage."
+          },
+          "description": {
+            "en": "Use this timeline to monitor device churn. Track new, reactivated, and inactive devices to detect unauthorized changes quickly.",
+            "fr": "Utilisez cette chronologie pour surveiller la rotation des appareils. Suivez les appareils nouveaux, reactives et inactifs afin de detecter rapidement les changements non autorises."
+          },
+          "has_dual_screenshots": true
+        },
+        {
+          "name": "lan_features",
+          "title": {
+            "en": "Discovery Features – How Scanning Works",
+            "fr": "Fonctionnalités de Découverte – Comment le Scan Fonctionne"
+          },
+          "visual": {
+            "en": "EDAMAME uses multiple discovery techniques: ICMP ping and broadcast ping for host discovery, ARP/NDP for MAC address resolution, TCP/UDP port scanning for service detection, mDNS for smart device discovery, and HTTP banner analysis for version detection. Scans are rate-limited and safe for production networks.",
+            "fr": "EDAMAME utilise plusieurs techniques de découverte : ping ICMP, résolution ARP/NDP, scan de ports TCP/UDP, découverte mDNS, et analyse de bannières HTTP."
+          },
+          "description": {
+            "en": "Use this section to understand discovery and enrichment mechanisms. It helps you interpret findings and decide when to trust or rescan.",
+            "fr": "Utilisez cette section pour comprendre les mecanismes de decouverte et d'enrichissement. Elle vous aide a interpreter les resultats et a decider quand faire confiance ou rescanner."
+          },
+          "items": [
+            {
+              "name": "lan_community_sharing",
+              "title": {
+                "en": "Community Sharing – P2P Device Metadata",
+                "fr": "Partage Communautaire – Métadonnées P2P"
+              },
+              "visual": {
+                "en": "Share device information securely with other EDAMAME users on your network via encrypted P2P mesh (libp2p). Desktop devices with admin privileges help mobile devices discover MAC addresses and additional network details they can't obtain directly. All shared data is signed and verified.",
+                "fr": "Partagez les informations d'appareils de manière sécurisée avec d'autres utilisateurs EDAMAME sur votre réseau via mesh P2P chiffré."
+              },
+              "description": {
+                "en": "Use community sharing on trusted networks to enrich metadata for devices with limited visibility.",
+                "fr": "Utilisez le partage communautaire sur des reseaux de confiance pour enrichir les metadonnees des appareils a visibilite limitee."
+              }
+            },
+            {
+              "name": "lan_cve_analysis",
+              "title": {
+                "en": "CVE Analysis – Vulnerability Detection",
+                "fr": "Analyse CVE – Détection de Vulnérabilités"
+              },
+              "visual": {
+                "en": "Automatically checks discovered services against MITRE CVE database. Identifies known vulnerabilities for open ports and service versions. Provides severity ratings and remediation guidance for each CVE.",
+                "fr": "Vérifie automatiquement les services découverts contre la base de données CVE MITRE. Identifie les vulnérabilités connues."
+              },
+              "description": {
+                "en": "Use CVE analysis to prioritize patching and segmentation for exposed services.",
+                "fr": "Utilisez l'analyse CVE pour prioriser le patching et la segmentation des services exposes."
+              }
+            },
+            {
+              "name": "lan_device_profiling",
+              "title": {
+                "en": "Device Profiling – Automatic Classification",
+                "fr": "Profilage d'Appareils – Classification Automatique"
+              },
+              "visual": {
+                "en": "Automatically identifies device types (computer, router, printer, camera, IoT, smart TV, etc.) using network ports, service signatures, manufacturer OUI database, and behavior patterns. Customizable device names for easier identification.",
+                "fr": "Identifie automatiquement les types d'appareils en utilisant les ports réseau, signatures de service, base de données OUI et motifs de comportement."
+              },
+              "description": {
+                "en": "Use automatic profiling to classify assets and improve long-term inventory hygiene.",
+                "fr": "Utilisez le profilage automatique pour classer les actifs et ameliorer l'hygiene d'inventaire a long terme."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "secured",
+      "title": {
+        "en": "Trust",
+        "fr": "Confiance"
+      },
+      "visual": {
+        "en": "The Trust tab enables zero-trust enterprise integration with three sub-views. Connect lets you join your organization's EDAMAME domain using your user@domain identity and one-time PIN - once connected, your security posture is continuously reported to enable policy-based access control. Certify generates cryptographically signed compliance reports that third parties (employers, partners, auditors) can verify via EDAMAME Hub without accessing your device. Policies displays your compliance status against organizational policies (e.g., 'github_private_repo_security_policy', 'google_workspace_security_policy'), showing Passed/Failed status and which resource providers (GitHub, GitLab, Google Context Aware Access, Azure Conditional Access) are gated by each policy. When policies fail, access to protected resources is blocked until you remediate the required threats.",
+        "fr": "L'onglet Confiance permet l'integration zero-trust d'entreprise avec trois sous-vues : Connect pour rejoindre un domaine, Certify pour generer des rapports de conformite signes, et Policies pour voir le statut de conformite."
+      },
+      "description": {
+        "en": "Use Trust to connect your device to organizational zero-trust controls. Join with your domain identity, track policy status, and share signed compliance evidence when requested.",
+        "fr": "Utilisez Confiance pour connecter votre appareil aux controles zero-trust de votre organisation. Connectez-vous avec votre identite de domaine, suivez le statut des politiques et partagez des preuves de conformite signees lorsque demande."
+      },
+      "has_dual_screenshots": true,
+      "sub_features": [
+        {
+          "name": "secured_connect",
+          "title": {
+            "en": "Connect – Domain Connection",
+            "fr": "Connexion – Connexion au Domaine"
+          },
+          "visual": {
+            "en": "The Connect tab provides enterprise domain connection. When connected, it displays your identity (e.g., 'john@acme.com') in an input field at the top, followed by 'Connected through: [user@domain]' status text and a pink 'Disconnect' button to end the session. Below, informational text explains that 'If configured by the domain administrators, your compliance to their policies will be displayed in this tab shortly after successful connection to the domain.' A link to 'EDAMAME Hub' opens the web dashboard for enterprise management. When disconnected, the view shows input fields for user identity and a one-time PIN to initiate connection. This zero-trust integration lets organizations enforce security policies without full MDM enrollment - your device continuously reports its security posture to gain access to protected resources like GitHub, Google Workspace, or corporate VPNs.",
+            "fr": "L'onglet Connect fournit la connexion au domaine d'entreprise. Une fois connecte, il affiche votre identite et un bouton Deconnecter. Un lien vers EDAMAME Hub ouvre le tableau de bord de gestion d'entreprise."
+          },
+          "description": {
+            "en": "Use this view to connect or disconnect from your organization domain securely. Confirm identity binding and sync health for accurate policy enforcement.",
+            "fr": "Utilisez cette vue pour vous connecter ou vous deconnecter en securite du domaine de votre organisation. Verifiez le rattachement d'identite et la sante de synchro pour une application correcte des politiques."
+          },
+          "items": [
+            {
+              "name": "connection_status",
+              "title": {
+                "en": "Connection Status – Live Indicator",
+                "fr": "Statut de Connexion – Indicateur en Direct"
+              },
+              "visual": {
+                "en": "Shows whether your device is currently connected to a domain, the authenticated user identity, and the last successful communication with EDAMAME Hub. Connection errors are displayed with troubleshooting guidance.",
+                "fr": "Indique si votre appareil est actuellement connecté à un domaine, l'identité utilisateur authentifié et la dernière communication réussie."
+              },
+              "description": {
+                "en": "Check this status first when policy data appears stale. Verify identity binding and sync timestamp.",
+                "fr": "Verifiez ce statut en premier lorsque les donnees de politique semblent obsoletes. Validez le rattachement d'identite et l'horodatage de synchro."
+              }
+            },
+            {
+              "name": "request_pin_button",
+              "title": {
+                "en": "Request PIN – Onboarding",
+                "fr": "Demander PIN – Onboarding"
+              },
+              "visual": {
+                "en": "Request a new one-time PIN from your organization's EDAMAME administrator. The PIN is sent to your email and validates your identity when connecting your device to the domain.",
+                "fr": "Demandez un nouveau PIN à usage unique à l'administrateur EDAMAME de votre organisation."
+              },
+              "description": {
+                "en": "Request a fresh PIN for onboarding, reconnection, or expiry scenarios.",
+                "fr": "Demandez un PIN neuf pour les scenarios d'onboarding, de reconnexion ou d'expiration."
+              }
+            }
+          ]
+        },
+        {
+          "name": "secured_certification",
+          "title": {
+            "en": "Certify – Shareable Security Proof",
+            "fr": "Certifier – Preuve de Securite Partageable"
+          },
+          "visual": {
+            "en": "The Certify tab allows you to generate and share cryptographically signed proof of your security posture. At the top, an input field accepts a report signature (with validation text 'Please enter a valid signature of 32 bytes in base64 format'). Below, an email field lets you specify where the compliance report should be sent. The 'Get report from signature' button (disabled until valid signature) triggers report generation. At the bottom, explanatory text states: 'We allow you to certify your security score so that your computer can be recognized as secure. Only your overall score (number of stars), IP addresses, MAC addresses, operating system name and version, the list of threats and their status (active/inactive/unknown) and the history of remediations and rollbacks you performed will be reported.' This enables contractors, remote workers, or partners to prove their security compliance without sharing sensitive data.",
+            "fr": "L'onglet Certifier permet de generer et partager une preuve signee cryptographiquement de votre posture de securite. Entrez une signature et une adresse email pour envoyer le rapport de conformite."
+          },
+          "description": {
+            "en": "Use this view to generate portable compliance proof for partners and auditors. Create signatures and reports at the time of request.",
+            "fr": "Utilisez cette vue pour generer des preuves de conformite portables pour partenaires et auditeurs. Creez signatures et rapports au moment de la demande."
+          },
+          "items": [
+            {
+              "name": "get_signature_button",
+              "title": {
+                "en": "Get Score Signature – Cryptographic Proof",
+                "fr": "Obtenir la Signature du Score – Preuve Cryptographique"
+              },
+              "visual": {
+                "en": "Generate a cryptographically signed hash of your current Security Posture Score. The signature can be verified by third parties via EDAMAME Hub to prove your score at a specific point in time.",
+                "fr": "Générez un hash cryptographiquement signé de votre Score de Posture de Sécurité actuel."
+              },
+              "description": {
+                "en": "Generate a new signature right before sharing compliance proof to third parties.",
+                "fr": "Generez une nouvelle signature juste avant de partager une preuve de conformite a des tiers."
+              }
+            },
+            {
+              "name": "request_report_button",
+              "title": {
+                "en": "Request Report – Compliance Evidence",
+                "fr": "Demander Rapport – Preuves de Conformité"
+              },
+              "visual": {
+                "en": "Trigger EDAMAME Hub to generate a detailed compliance report (SOC 2, ISO 27001 format) and send it to a specified email address. Reports include security score, compliance check status, and verification links.",
+                "fr": "Déclenchez EDAMAME Hub pour générer un rapport de conformité détaillé et l'envoyer à une adresse email spécifiée."
+              },
+              "description": {
+                "en": "Request a signed report when an auditor or partner needs verifiable evidence.",
+                "fr": "Demandez un rapport signe lorsqu'un auditeur ou partenaire a besoin d'une preuve verifiable."
+              }
+            }
+          ]
+        },
+        {
+          "name": "secured_policy",
+          "title": {
+            "en": "Policies – Compliance Status",
+            "fr": "Politiques – Etat de Conformite"
+          },
+          "visual": {
+            "en": "The Policies tab displays 'Policies status for [domain]' as a header, followed by a list of all organizational policies. Each policy card shows: the policy name (e.g., 'github_private_repo_security_policy', 'gitlab_private_repo_security_policy', 'google_workspace_security_policy', 'office365_security_policy'), a 'Passed' (green checkmark) or 'Failed' (red warning triangle) status indicator, a threat count if applicable (e.g., '1 threat'), and the protected resource provider on the right (GitHub, GitLab, Google Context Aware Access, Azure Conditional Access). Click any policy to see detailed requirements and which specific threats are causing failures. When a policy shows 'Failed', your access to that resource may be blocked until you remediate the required threats. This view gives you immediate visibility into your compliance posture across all enterprise resources.",
+            "fr": "L'onglet Politiques affiche le statut de toutes les politiques organisationnelles. Chaque carte de politique montre le nom, le statut Passe/Echoue, le nombre de menaces et le fournisseur de ressources protege (GitHub, GitLab, Google, Azure)."
+          },
+          "description": {
+            "en": "Use this board to monitor enterprise policy compliance and access readiness. Investigate failed rules and remediate linked blockers first.",
+            "fr": "Utilisez ce tableau pour suivre la conformite aux politiques entreprise et la disponibilite d'acces. Analysez les regles en echec et corrigez d'abord les bloqueurs associes."
+          },
+          "has_dual_screenshots": true,
+          "items": [
+            {
+              "name": "policy_list",
+              "title": {
+                "en": "Policy List – Requirements Table",
+                "fr": "Liste des Politiques – Tableau des Exigences"
+              },
+              "visual": {
+                "en": "Table showing each policy with its name, description, requirements (minimum score, required checks, compliance tags), and current pass/fail status. Click any policy to see detailed compliance evidence and remediation guidance.",
+                "fr": "Tableau montrant chaque politique avec son nom, description, exigences et statut actuel réussi/échoué."
+              },
+              "description": {
+                "en": "Use this list as your compliance backlog and access-unblock plan.",
+                "fr": "Utilisez cette liste comme backlog de conformite et plan de deblocage des acces."
+              }
+            },
+            {
+              "name": "policy_providers",
+              "title": {
+                "en": "Resource Providers – Protected Access",
+                "fr": "Fournisseurs de Ressources – Accès Protégé"
+              },
+              "visual": {
+                "en": "Shows which resources each policy protects: GitHub Enterprise, Google Workspace, Azure AD, VPNs (Tailscale, NetBird), firewalls (Fortinet), and custom integrations. Non-compliant policies result in blocked access to these resources.",
+                "fr": "Affiche quelles ressources chaque politique protège : GitHub Enterprise, Google Workspace, Azure AD, VPNs, pare-feu."
+              },
+              "description": {
+                "en": "Map failed policies to affected providers and prioritize fixes by business impact.",
+                "fr": "Associez les politiques en echec aux fournisseurs impactes et priorisez les corrections selon l'impact metier."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "capture",
+      "title": {
+        "en": "Traffic",
+        "fr": "Trafic"
+      },
+      "visual": {
+        "en": "The Traffic tab (desktop-only, requires EDAMAME Helper) provides real-time network monitoring with four sub-views. The Sunburst displays an animated circular visualization of connections organized by country, organization, and domain. Sessions shows a sortable table with destination, protocol, throughput, and duration for each connection. Processes groups traffic by application (Safari, Mail, Terminal, etc.) with session counts and bandwidth. Anomaly history lists sessions flagged by the Extended Isolation Forest ML algorithm as Suspicious or Abnormal (e.g., tor connections to darkweb, netcat to fake-paypal, python to trojan-dropper). Filter toggles let you focus on TCP/UDP, Normal/Suspicious/Abnormal traffic. Click any session to see full details including ASN, country, process path, and PID. The Start button initiates packet capture.",
+        "fr": "L'onglet Trafic (bureau uniquement, necessite EDAMAME Helper) fournit une surveillance reseau en temps reel avec quatre sous-vues : Sunburst, Sessions, Processus et Historique des anomalies. Le ML detecte les sessions suspectes et anormales."
+      },
+      "description": {
+        "en": "Use Traffic for real-time network visibility and anomaly investigation on desktop. Start capture during analysis windows, inspect suspicious sessions deeply, and dismiss only validated benign activity.",
+        "fr": "Utilisez Trafic pour une visibilite reseau en temps reel et l'investigation des anomalies sur desktop. Demarrez la capture pendant les fenetres d'analyse, inspectez en profondeur les sessions suspectes et ignorez uniquement une activite benigne validee."
+      },
+      "has_dual_screenshots": true,
+      "sub_features": [
+        {
+          "name": "capture_sunburst",
+          "title": {
+            "en": "Sunburst – Live Traffic Visualization",
+            "fr": "Sunburst – Visualisation du Trafic en Direct"
+          },
+          "visual": {
+            "en": "The Sunburst tab displays a mesmerizing animated circular diagram showing your network traffic in real-time. The visualization uses concentric rings: the inner rings represent country codes (FR, US, DE), middle rings show organizations (Microsoft Corporation, Netflix Inc., Facebook Inc., LinkedIn Corp., Apple Inc., Amazon.com Inc.), and outer rings display domains (youtube.com, microsoft.com, facebook.com, apple.com, medium.com, zoom.us) and protocols (ssh, ftp, smtp, imap). Colors gradient from center outward in warm tones. At the top, toggle switches filter: 'Activated', 'Added', 'Inbound', 'UDP', 'TCP'. Status buttons filter by 'Normal' (green), 'Suspicious' (yellow), 'Abnormal' (red). Traffic stats show Inbound/Outbound/Total MB and session count. A 'Sessions/Process' toggle switches the organization method. The 'Depth' control (adjustable with +/-) changes ring count. The 'Start' button initiates packet capture. This desktop-only feature requires the EDAMAME Helper daemon.",
+            "fr": "L'onglet Sunburst affiche un diagramme circulaire anime montrant votre trafic reseau en temps reel. Les anneaux concentriques representent les pays, organisations et domaines. Des filtres permettent de controler ce qui est affiche."
+          },
+          "description": {
+            "en": "Use Sunburst for live macro traffic awareness. Start capture, filter by protocol/status, and drill into suspicious clusters.",
+            "fr": "Utilisez Sunburst pour une vision macro en direct du trafic. Demarrez la capture, filtrez par protocole/statut, puis explorez les grappes suspectes."
+          },
+          "has_dual_screenshots": true,
+          "items": [
+            {
+              "name": "capture_control_button",
+              "title": {
+                "en": "Start/Stop Capture",
+                "fr": "Démarrer/Arrêter la Capture"
+              },
+              "visual": {
+                "en": "Toggle packet capture on/off. Requires EDAMAME Helper daemon for elevated privileges (automatic on macOS/Linux, optional on Windows). On Windows, also requires Npcap installation for traffic capture capability.",
+                "fr": "Activez/désactivez la capture de paquets. Nécessite le démon EDAMAME Helper pour les privilèges élevés."
+              },
+              "description": {
+                "en": "Start/stop capture intentionally during investigation windows and confirm prerequisites first.",
+                "fr": "Demarrez/arretez la capture de facon intentionnelle pendant les fenetres d'investigation et confirmez d'abord les pre-requis."
+              }
+            },
+            {
+              "name": "anomaly_detection",
+              "title": {
+                "en": "ML Anomaly Detection – Extended Isolation Forest",
+                "fr": "Détection d'Anomalies ML – Extended Isolation Forest"
+              },
+              "visual": {
+                "en": "Machine learning-based anomaly detection using Extended Isolation Forest algorithm. Analyzes 12 dimensions: process hash, duration, bytes, packets, interarrival timing, traffic ratio, packet size, regularity, rate, missed bytes, segments, and destination port. Flags suspicious (99.5th percentile) and anomalous (99.75th percentile) sessions.",
+                "fr": "Détection d'anomalies par apprentissage automatique utilisant l'algorithme Extended Isolation Forest."
+              },
+              "description": {
+                "en": "Treat anomaly scores as triage signals, then validate context before taking action.",
+                "fr": "Traitez les scores d'anomalie comme des signaux de triage, puis validez le contexte avant d'agir."
+              }
+            },
+            {
+              "name": "whitelist_name",
+              "title": {
+                "en": "Whitelist Profiles – Expected Traffic",
+                "fr": "Profils de Liste Blanche – Trafic Attendu"
+              },
+              "visual": {
+                "en": "Configure whitelist profiles defining expected network traffic. Sessions not matching whitelist rules are flagged as exceptions. Use built-in profiles or create custom whitelists for CI/CD security gates. Whitelist conformance can be checked programmatically via EDAMAME Posture CLI.",
+                "fr": "Configurez des profils de liste blanche définissant le trafic réseau attendu. Les sessions ne correspondant pas sont signalées."
+              },
+              "description": {
+                "en": "Use whitelist profiles to encode expected traffic and reduce false positives safely.",
+                "fr": "Utilisez les profils de liste blanche pour encoder le trafic attendu et reduire les faux positifs en securite."
+              }
+            }
+          ]
+        },
+        {
+          "name": "capture_sessions",
+          "title": {
+            "en": "Sessions – Connection Details Table",
+            "fr": "Sessions – Table des Details de Connexion"
+          },
+          "visual": {
+            "en": "The Sessions tab displays a sortable table of all network connections. Columns include: Destination (domain name like api.facebook.com, api.youtube.com, cdn.youtube.com), Protocol (TCP/UDP), Port/Service (smtp, ssh, ftp, imap with port numbers), Throughput in/out (data rates like 404.5B/s), Last capture (timestamp), and Duration (seconds). Click column headers to sort. Click any row to open a detail pane showing the full session context: a green checkmark with 'Normal'/'Suspicious'/'Abnormal' status, the process-to-destination flow (e.g., 'Mail -> api.facebook.com:587'), Port/Service details, Source and Destination IPs, ASN Owner (organization name), ASN Country, Domain, Top Level Domain, Process name and PID, executable Path, User, and CPU usage. The same filter toggles from the Sunburst view appear at the top. This provides deep packet inspection visibility for security investigations.",
+            "fr": "L'onglet Sessions affiche un tableau triable de toutes les connexions reseau. Cliquez sur une ligne pour voir les details complets incluant le processus, l'ASN, le pays et les statistiques de connexion."
+          },
+          "description": {
+            "en": "Use Sessions for forensic-level review of individual connections. Inspect details deeply before deciding to dismiss or escalate.",
+            "fr": "Utilisez Sessions pour une revue forensic des connexions individuelles. Inspectez les details en profondeur avant de decider d'ignorer ou d'escalader."
+          },
+          "has_dual_screenshots": true,
+          "items": [
+            {
+              "name": "session_details_card",
+              "title": {
+                "en": "Session Details – Deep Inspection",
+                "fr": "Détails de Session – Inspection Approfondie"
+              },
+              "visual": {
+                "en": "Detailed card showing full session information: DNS lookup results, TLS certificate details, ASN organization and country, geolocation, and process attribution (PID, process name, path, command line). Available on Linux via eBPF or netstat fallback.",
+                "fr": "Carte détaillée montrant les informations complètes de session : résultats DNS, détails du certificat TLS, ASN, géolocalisation et attribution de processus."
+              },
+              "description": {
+                "en": "Use deep session details to confirm who connected, to what, and why before decisions.",
+                "fr": "Utilisez les details de session approfondis pour confirmer qui se connecte, vers quoi et pourquoi avant decision."
+              }
+            },
+            {
+              "name": "dismiss_session_button",
+              "title": {
+                "en": "Dismiss – Mark Session as Safe",
+                "fr": "Ignorer – Marquer la Session comme Sûre"
+              },
+              "visual": {
+                "en": "Mark a flagged session as safe. Choose to dismiss by specific session, by port, or by process to create persistent dismissal rules. Dismissed sessions stop contributing to alerts. Undismiss anytime to restore monitoring.",
+                "fr": "Marquez une session signalée comme sûre. Choisissez de l'ignorer par session spécifique, par port ou par processus."
+              },
+              "description": {
+                "en": "Dismiss only sessions positively verified as legitimate, and prefer narrow dismissal scope.",
+                "fr": "Ignorez uniquement les sessions verifiees comme legitimes et privilegiez un perimetre d'ignorance etroit."
+              }
+            }
+          ]
+        },
+        {
+          "name": "capture_processes",
+          "title": {
+            "en": "Processes – Per-Application Traffic",
+            "fr": "Processus – Trafic par Application"
+          },
+          "visual": {
+            "en": "The Processes tab displays network activity organized by application. A sortable table shows: Process (expandable with > arrow, showing app names like Safari, Mail, Notes, Terminal, Messages, Finder), User (the account running the process), # sessions (connection count), Throughput In (data rate received, e.g., 4.2KB/s, 770.9B/s), and Throughput Out (data rate sent, e.g., 1.8KB/s, 284.3B/s). Click the > arrow next to any process to expand and see its individual network sessions. This hierarchical view makes it easy to identify which applications are consuming bandwidth, detect unexpected network activity from apps that shouldn't be connecting to the internet, and monitor process-level traffic patterns for security analysis.",
+            "fr": "L'onglet Processus affiche l'activite reseau organisee par application. Un tableau triable montre le nom du processus, l'utilisateur, le nombre de sessions et le debit entrant/sortant. Developpez un processus pour voir ses sessions individuelles."
+          },
+          "description": {
+            "en": "Use this view to baseline network behavior by application. Investigate processes with unusual volume or unexpected destinations.",
+            "fr": "Utilisez cette vue pour etablir une base de comportement reseau par application. Analysez les processus avec volume inhabituel ou destinations inattendues."
+          }
+        },
+        {
+          "name": "capture_history",
+          "title": {
+            "en": "Anomaly history – Flagged Sessions",
+            "fr": "Historique des Anomalies – Sessions Signalees"
+          },
+          "visual": {
+            "en": "The Anomaly history tab displays a timeline of sessions flagged by the ML anomaly detection engine. At the top, filter buttons show 'Abnormal' (red, most severe) and 'Suspicious' (yellow, moderate), plus a search field for 'process, ASN, domain...'. A Status filter toggles between 'Active' and 'Dismissed' sessions. Each entry shows: a warning icon (triangle for Abnormal, shield for Suspicious), the process-to-destination flow in bold (e.g., 'tor -> evil-c2.darkweb.onion:443', 'iodine -> google-public-dns-a.google.com:53', 'netcat -> fake-paypal.net:8443', 'python3 -> trojan-dropper.evil.org:22'), protocol and port (TCP:443, UDP:53), status badges ('Abnormal' in red or 'Suspicious' in yellow), optional tags (like 'tor_exit_node'), and timestamp. This view surfaces potentially malicious activity detected by the Extended Isolation Forest algorithm for immediate investigation.",
+            "fr": "L'onglet Historique des anomalies affiche une chronologie des sessions signalees par le moteur de detection ML. Chaque entree montre le flux processus-destination, le protocole, les badges de statut et l'horodatage."
+          },
+          "description": {
+            "en": "Use anomaly history as your investigation queue. Work recent abnormal events first and dismiss only with supporting evidence.",
+            "fr": "Utilisez l'historique des anomalies comme file d'investigation. Traitez d'abord les evenements anormaux recents et ignorez uniquement avec des preuves."
+          },
+          "has_dual_screenshots": true
+        }
+      ]
+    },
+    {
+      "name": "config",
+      "title": {
+        "en": "Config",
+        "fr": "Config"
+      },
+      "visual": {
+        "en": "The Config tab provides system information and settings with four sub-views. Info displays Device ID, IP addresses (IPv4/IPv6), version, threat model date, and an elevation requirements table showing which privileges each threat needs for detection, remediation, and rollback. Notifications lets you toggle alerts per category (Score, Traffic, Network, Advisor, Policy, AI, Identity) and shows a scrollable notification history with timestamps and deep-links. Traffic (desktop-only) shows packet capture statistics, ML analyzer status with training metrics, detection thresholds, and session analysis counts. Debug provides a real-time log viewer with INFO/ERROR/WARN filters, search, and copy functionality for troubleshooting. The elevation table helps you understand which features require the EDAMAME Helper daemon.",
+        "fr": "L'onglet Config fournit les informations systeme et parametres avec quatre sous-vues : Info (details de l'appareil et table d'elevation), Notifications (bascules par categorie et historique), Traffic (statistiques de capture), et Debug (visualiseur de logs)."
+      },
+      "description": {
+        "en": "Use Config to verify runtime status, permissions, alerts, and diagnostics. Check helper/elevation readiness, tune notification noise, and consult debug tools when troubleshooting.",
+        "fr": "Utilisez Config pour verifier l'etat d'execution, les permissions, les alertes et les diagnostics. Controlez la disponibilite helper/elevation, ajustez le bruit des notifications et consultez les outils de debug en cas de probleme."
+      },
+      "has_dual_screenshots": true,
+      "sub_features": [
+        {
+          "name": "config_info",
+          "title": {
+            "en": "Info – App & System Status",
+            "fr": "Info – Statut de l'Application et du Systeme"
+          },
+          "visual": {
+            "en": "The Info tab displays comprehensive system information. At the top, a description of EDAMAME Security's purpose, followed by: Device ID (unique identifier), IP addresses (IPv4 and IPv6), Version (e.g., '1.0.1 (Standalone)'), and Threat model version with date. Below, an explanation of the 5 elevation levels on macOS (user, global preferences, admin, system, full disk access). The main content is an elevation requirements table with columns: Threat (name of each security check), Capture (privilege needed to detect - 'user' or 'globalpreferences'), Remediation (privilege to fix - 'user', 'system', 'fulldisk'), Rollback (privilege to undo - 'user', 'system', 'fulldisk'), and Status (green/pink circle showing if currently achievable). This table helps you understand which threats require the EDAMAME Helper daemon or elevated permissions to remediate.",
+            "fr": "L'onglet Info affiche des informations systeme completes incluant l'ID de l'appareil, les adresses IP, la version et un tableau des exigences d'elevation montrant les privileges necessaires pour detecter, remedier et annuler chaque menace."
+          },
+          "description": {
+            "en": "Use Info to confirm environment readiness before deeper troubleshooting. Check version/build metadata and privilege requirements.",
+            "fr": "Utilisez Info pour confirmer la disponibilite de l'environnement avant un diagnostic approfondi. Verifiez les metadonnees version/build et les exigences de privilege."
+          },
+          "has_dual_screenshots": true,
+          "items": [
+            {
+              "name": "elevation_table",
+              "title": {
+                "en": "Elevation Requirements – Privilege Levels",
+                "fr": "Exigences d'Élévation – Niveaux de Privilèges"
+              },
+              "visual": {
+                "en": "Sortable table showing each threat with its implementation, remediation, and rollback elevation requirements (user, admin, system). Color-coded by current privilege availability—shows which threats can be detected and remediated with your current permissions.",
+                "fr": "Tableau triable montrant chaque menace avec ses exigences d'élévation pour l'implémentation, la remédiation et le rollback."
+              },
+              "description": {
+                "en": "Use this table to understand unavailable checks/fixes and grant only minimum required privileges.",
+                "fr": "Utilisez ce tableau pour comprendre les controles/corrections indisponibles et n'accordez que les privileges minimaux requis."
+              }
+            },
+            {
+              "name": "agent_state",
+              "title": {
+                "en": "Agent State – Helper & Permissions",
+                "fr": "État de l'Agent – Helper et Permissions"
+              },
+              "visual": {
+                "en": "Shows EDAMAME Helper daemon status (running/stopped/version), admin privileges availability, full disk access status (macOS), and global preferences elevation. Guides you through enabling required permissions for full functionality.",
+                "fr": "Affiche le statut du démon EDAMAME Helper, la disponibilité des privilèges admin et le statut d'accès disque complet."
+              },
+              "description": {
+                "en": "Check helper and permission state before deeper troubleshooting. Resolve prerequisites in order.",
+                "fr": "Verifiez l'etat du helper et des permissions avant un depannage approfondi. Resolvez les pre-requis dans l'ordre."
+              }
+            }
+          ]
+        },
+        {
+          "name": "config_notifications",
+          "title": {
+            "en": "Notifications – Settings & History",
+            "fr": "Notifications – Parametres et Historique"
+          },
+          "visual": {
+            "en": "The Notifications tab is divided into two sections. 'Notification Settings' at the top shows a grid of toggle switches for each notification category: Score (security score changes), Traffic (anomalous sessions), Network (new LAN devices), General (rate limits), Advisor (todo updates), Policy (compliance changes), AI (agentic actions), and Identity (breach alerts). Toggle any switch to enable/disable notifications for that category - green means enabled. Below, 'Notification History' shows a scrollable timeline with a pink 'Clear' button to delete all entries. Each notification entry displays: a category icon (home for Advisor, star for Score, shield for Policy), the notification title and description (e.g., 'Security Advisor - 33 security issues detected +22 issues', 'Policy Status - Compliant with 3/4 policies', 'Security Score - Your score increased to 3.0'), and timestamp. Click any notification to navigate directly to its related content.",
+            "fr": "L'onglet Notifications est divise en deux sections. Les parametres en haut montrent des interrupteurs pour chaque categorie. L'historique en dessous affiche une chronologie cliquable des notifications passees."
+          },
+          "description": {
+            "en": "Use this section to tune alert signal-to-noise for your workflow. Keep high-value categories enabled and review history regularly.",
+            "fr": "Utilisez cette section pour ajuster le rapport signal/bruit des alertes selon votre flux de travail. Gardez actives les categories a forte valeur et consultez regulierement l'historique."
+          },
+          "items": [
+            {
+              "name": "notification_settings",
+              "title": {
+                "en": "Category Toggles – Per-Type Control",
+                "fr": "Bascules par Catégorie – Contrôle par Type"
+              },
+              "visual": {
+                "en": "Toggle notifications on/off for each category: Score (security score changes), Session (anomalous/blacklisted traffic), LAN Scan (new devices), Advisor (todo updates), Policy (compliance changes), General (rate limits), Agentic (AI actions), Identity (credential breaches).",
+                "fr": "Activez/désactivez les notifications pour chaque catégorie : Score, Session, Scan LAN, Conseiller, Politique, Général, Agentique, Identité."
+              },
+              "description": {
+                "en": "Enable actionable categories and reduce noise-heavy channels to keep alerts useful.",
+                "fr": "Activez les categories actionnables et reduisez les canaux bruyants pour garder des alertes utiles."
+              }
+            },
+            {
+              "name": "notification_history",
+              "title": {
+                "en": "Notification History – Persistent Log",
+                "fr": "Historique des Notifications – Journal Persistant"
+              },
+              "visual": {
+                "en": "Scrollable history of all past notifications with timestamps and category icons. Click any notification to navigate directly to its related content (threat, session, device, breach, action). Persisted across app restarts.",
+                "fr": "Historique défilable de toutes les notifications passées avec horodatages et icônes de catégorie."
+              },
+              "description": {
+                "en": "Use history to reconstruct incidents and reopen related content quickly.",
+                "fr": "Utilisez l'historique pour reconstruire les incidents et rouvrir rapidement le contenu associe."
+              }
+            }
+          ]
+        },
+        {
+          "name": "config_traffic",
+          "title": {
+            "en": "Traffic – Network Statistics (Desktop)",
+            "fr": "Trafic – Statistiques Reseau (Bureau)"
+          },
+          "visual": {
+            "en": "The Traffic tab (desktop-only) displays detailed packet capture and ML analyzer statistics in a two-column layout. Left column 'Packet Statistics' shows Current Interval metrics (Total Processed, TCP, UDP, IPv4, IPv6, New Sessions, Updated Sessions) and Cumulative Totals with the same breakdowns showing lifetime counts (e.g., 14,504,160 total processed). A 'Last Update' timestamp appears at the bottom. Right column 'Analyzer Status' shows operational badges: 'Running' (green), 'Complete' (yellow), 'Trained' (green checkmark). 'Detection Thresholds' displays Suspicious Threshold (0.85), Abnormal Threshold (0.89), and percentile settings. 'Model Statistics' shows Buffer Usage (e.g., 472/800), Unique Samples, Feature Count (12 dimensions), and Downsample Factor. 'Score Distribution' displays min/mean/max values with P50/P90/P95/P99 percentiles. 'Session Analysis' summarizes Total Sessions with Normal (green) and Anomalous (red) counts.",
+            "fr": "L'onglet Trafic (bureau uniquement) affiche des statistiques detaillees de capture de paquets et de l'analyseur ML en deux colonnes. Les statistiques de paquets a gauche, le statut de l'analyseur et les metriques du modele a droite."
+          },
+          "description": {
+            "en": "Use this diagnostics panel to monitor packet pipeline and analyzer health. Recheck thresholds and model stats when detection quality shifts.",
+            "fr": "Utilisez ce panneau de diagnostic pour surveiller la pipeline de paquets et la sante de l'analyseur. Reverifiez les seuils et stats modele lorsque la qualite de detection evolue."
+          }
+        },
+        {
+          "name": "config_debug",
+          "title": {
+            "en": "Debug – Real-Time Logs",
+            "fr": "Debug – Logs en Temps Reel"
+          },
+          "visual": {
+            "en": "The Debug tab provides a real-time log viewer for troubleshooting. At the top, a header shows the core version string (e.g., 'Core version is 1.0.1, built on 2026-01-28 with branch main on macOS 26.2 by flyonnet, memory usage: 0.0 MB'). Below, three filter buttons toggle log levels: 'INFO' (green), 'ERROR' (red), 'WARN' (yellow). A search field lets you filter log messages by text. The main area shows scrolling log output in a dark terminal-style view - though often empty during normal operation. A copy button (clipboard icon) on the right copies selected log content. This view is essential for diagnosing connection issues, API errors, or unexpected behavior when working with EDAMAME support. Log messages appear in real-time as the core engine processes security checks, network captures, and AI operations.",
+            "fr": "L'onglet Debug fournit un visualiseur de logs en temps reel pour le depannage. Des boutons de filtre basculent les niveaux INFO/ERROR/WARN. Un champ de recherche filtre les messages. Le bouton copier permet de partager les logs."
+          },
+          "description": {
+            "en": "Use Debug logs for root-cause analysis with support or engineering. Filter by severity, search by keyword, and export relevant excerpts.",
+            "fr": "Utilisez les logs Debug pour l'analyse de cause racine avec le support ou l'ingenierie. Filtrez par severite, recherchez par mot-cle et exportez les extraits pertinents."
+          }
+        }
+      ]
+    }
+  ],
+  "platforms": {
+    "supported": [
+      {
+        "name": "macOS",
+        "features": [
+          "all"
+        ],
+        "helper": "required",
+        "notes": "Full functionality including traffic capture via EDAMAME Helper"
+      },
+      {
+        "name": "Windows",
+        "features": [
+          "all"
+        ],
+        "helper": "optional",
+        "notes": "Traffic capture requires EDAMAME Helper and Npcap installation"
+      },
+      {
+        "name": "Linux",
+        "features": [
+          "all"
+        ],
+        "helper": "built-in",
+        "notes": "Full functionality including eBPF-based process attribution"
+      },
+      {
+        "name": "iOS",
+        "features": [
+          "advisor",
+          "posture",
+          "identity",
+          "lan",
+          "secured",
+          "config"
+        ],
+        "helper": "none",
+        "notes": "No traffic capture; LAN discovery may have limited MAC address resolution"
+      },
+      {
+        "name": "Android/ChromeOS",
+        "features": [
+          "advisor",
+          "posture",
+          "identity",
+          "lan",
+          "secured",
+          "config"
+        ],
+        "helper": "none",
+        "notes": "No traffic capture; LAN discovery may have limited MAC address resolution"
+      }
+    ]
+  },
+  "compliance_frameworks": [
+    {
+      "name": "CIS",
+      "full_name": "CIS Benchmarks Level 1",
+      "description": "Center for Internet Security best practices"
+    },
+    {
+      "name": "SOC2",
+      "full_name": "SOC 2 Type II",
+      "description": "Service Organization Control 2 compliance"
+    },
+    {
+      "name": "ISO27001",
+      "full_name": "ISO 27001/27002",
+      "description": "Information security management systems"
+    },
+    {
+      "name": "PCI-DSS",
+      "full_name": "PCI Data Security Standard",
+      "description": "Payment card industry compliance"
+    },
+    {
+      "name": "HIPAA",
+      "full_name": "Health Insurance Portability and Accountability Act",
+      "description": "Healthcare data protection"
+    }
+  ],
+  "llm_providers": [
+    {
+      "name": "internal",
+      "display_name": "Cloud LLM (EDAMAME Portal)",
+      "type": "cloud",
+      "authentication": "OAuth 2.0 with PKCE",
+      "rate_limits": "Tier-based (free/pro/enterprise)"
+    },
+    {
+      "name": "claude",
+      "display_name": "Claude (Anthropic)",
+      "type": "cloud",
+      "authentication": "API Key",
+      "rate_limits": "100 requests/hour"
+    },
+    {
+      "name": "openai",
+      "display_name": "OpenAI (GPT)",
+      "type": "cloud",
+      "authentication": "API Key",
+      "rate_limits": "100 requests/hour"
+    },
+    {
+      "name": "ollama",
+      "display_name": "Ollama (Local)",
+      "type": "local",
+      "authentication": "None",
+      "rate_limits": "Unlimited"
+    }
+  ]
+}
