@@ -14,7 +14,7 @@ EDAMAME Security is your all‑in‑one tool to secure, understand, and prove th
 - Holistic security posture report using frontier LLM
 - At‑a‑glance view of outstanding issues
 - Sort issues by priority and category
-- Be notified of new issues in real time
+- Be notified of new issues in real-time
 
 ### AI Assistant (Agentic System)
 - Intelligent automation that analyzes and resolves security issues automatically
@@ -46,7 +46,7 @@ EDAMAME Security is your all‑in‑one tool to secure, understand, and prove th
     - CIS Benchmarks
     - SOC 2 / ISO 27001 compliance requirements
     - Privacy requirements
-- Visualize all elements comprising your system attack surface with their status in real time
+- Visualize all elements comprising your system attack surface with their status in real-time
 - Automatically fix common system security issues without requiring deep security expertise
     - Get a detailed description of each issue
     - Perform one‑click remediations with technical explanations
@@ -138,14 +138,14 @@ Step 1: : Install and Open the app from App Store
 - Download from the [Mac App Store](https://apps.apple.com/app/edamame-security/id1636777324) for an Apple-vetted sandboxed app
 <img width="550" height="434" alt="Screenshot 2025-12-08 at 5 12 20 PM" src="https://github.com/user-attachments/assets/1daae4f4-1aa9-4ecc-91f0-ff842dc3c409" />
 
-Step 2: Install Edamame Helper from Todo action(s)
+Step 2: Install EDAMAME Helper from Todo action(s)
 - Click on this Todo action item for the Helper software…
 <img width="723" height="108" alt="Screenshot 2025-12-08 at 5 13 04 PM" src="https://github.com/user-attachments/assets/cfdc89fd-63bc-489a-b3b4-784b26544efe" /><img width="719" height="425" alt="Screenshot 2025-12-08 at 5 15 46 PM" src="https://github.com/user-attachments/assets/3e5f8825-2401-4f50-ae26-b286e4055ab3" />
 <br/> and click on "Push to install"
 
 or
 
-- Install directly the edamame helper manually [EDAMAME Helper](https://github.com/edamametechnologies/edamame_helper/releases) installation for full system access
+- Install directly the EDAMAME Helper manually [EDAMAME Helper](https://github.com/edamametechnologies/edamame_helper/releases) installation for full system access
 
 #### Direct Download
 - Download the all-in-one installer: [edamame-latest.pkg](https://edamame.s3.eu-west-1.amazonaws.com/macos/edamame-latest.pkg)
@@ -186,7 +186,7 @@ Step 1: Install and Open the app from Microsoft Store
 - Download from the [Microsoft Store](https://www.microsoft.com/store/apps/9N399LMTKQLQ) for a Microsoft-vetted sandboxed app
 <img width="711" height="634" alt="Screenshot 2025-12-08 at 5 17 43 PM" src="https://github.com/user-attachments/assets/dd6ccc1d-5959-46cc-99c8-89b724fff014" />
 <br>
-Step 2: Install Edamame Helper from Todo action(s)
+Step 2: Install EDAMAME Helper from Todo action(s)
 In the advisor Tab of the app click on this Todo action item for the Helper software…
 <img width="717" height="146" alt="Screenshot 2025-12-08 at 5 19 19 PM" src="https://github.com/user-attachments/assets/3db8d298-3cf7-4e7c-b452-18cb6ccedb49" />
 
@@ -196,7 +196,7 @@ In the advisor Tab of the app click on this Todo action item for the Helper soft
 <br><br/>
 This Helper is needed due to the limitations of Apps installed from the Microsoft Store.
 
-If you prefer you can download directly the Edamame Helper Binary
+If you prefer you can download directly the EDAMAME Helper Binary
 [EDAMAME Helper](https://github.com/edamametechnologies/edamame_helper/releases) for system access
 
 After the binary is downloaded run the downloaded install package in “Downloadsˮ.
