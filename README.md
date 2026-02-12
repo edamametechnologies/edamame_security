@@ -96,7 +96,7 @@ EDAMAME Security is your all‑in‑one tool to secure, understand, and prove th
    - Continuously report your security posture without compromising privacy to gain access to protected resources
    - Compatible with identity providers (Google, Microsoft), Git platforms (GitHub, GitLab), VPNs (Tailscale, NetBird), and firewalls (Fortinet)
 
-https://github.com/user-attachments/assets/72fb4115-ac79-4267-b79c-fba2a5dfed9e
+https://github.com/user-attachments/assets/4221b077-d6e3-4b2c-815f-3b3fd01a9ae7
 
 ## Download and Installation
 
