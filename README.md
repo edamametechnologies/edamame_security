@@ -1,4 +1,4 @@
-# EDAMAME Security: Free App
+# EDAMAME Security App
 
 > Part of the **[EDAMAME Agents](https://github.com/edamametechnologies#edamame-agents)** family - AI-powered security assistants for the modern SDLC with shared LLM subscription via [EDAMAME Portal](https://portal.edamame.tech).
 
