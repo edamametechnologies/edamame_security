@@ -140,6 +140,10 @@ start_disconnected_daemon() {
   if command -v sudo >/dev/null 2>&1 && sudo -n true >/dev/null 2>&1; then
     sudo -E pkill -f 'edamame_posture background-process' >/dev/null 2>&1 || true
     sudo -E pkill -f 'edamame_posture background-start-disconnected' >/dev/null 2>&1 || true
+    # Package installs can leave a systemd service running; stop it so we can own lifecycle.
+    if command -v systemctl >/dev/null 2>&1; then
+      sudo systemctl stop edamame_posture.service >/dev/null 2>&1 || true
+    fi
   fi
   sleep 2
   posture background-start-disconnected \

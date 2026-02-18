@@ -42,13 +42,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup EDAMAME Posture (disconnected)
+      - name: Install EDAMAME Posture
         uses: edamametechnologies/edamame_posture_action@v1
-        with:
-          disconnected_mode: true
-          network_scan: true
-          packet_capture: true
-          whitelist: github_ubuntu
 
       - name: Make test scripts executable
         run: |
@@ -84,10 +79,3 @@ jobs:
           if [[ "${STRICT_MODE}" != "true" ]]; then
             echo "Observe mode enabled; evidence collected without strict gating."
           fi
-
-      - name: Stop posture daemon
-        if: always()
-        uses: edamametechnologies/edamame_posture_action@v1
-        with:
-          stop: true
-        continue-on-error: true
