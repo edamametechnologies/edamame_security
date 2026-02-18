@@ -8,6 +8,16 @@ EDAMAME Security is your all‑in‑one tool to secure, understand, and prove th
 
 **Note: This application is currently closed source. This repository is used for issue tracking and community feedback.**
 
+## Reproducible Threat-Evidence Tests (Lima + GitHub CI)
+
+This repository includes an open, reproducible threat-evidence harness that validates runtime detections described in EDAMAME Security content using EDAMAME Posture (disconnected mode), Ubuntu via Lima for local runs, and GitHub Actions for CI.
+
+- CI workflow: [`.github/workflows/test_threat_evidence.yml`](.github/workflows/test_threat_evidence.yml)
+- Scenario catalog: [`tests/threat_evidence_scenarios.json`](tests/threat_evidence_scenarios.json)
+- Local runner (Lima): [`tests/run_threat_evidence_lima.sh`](tests/run_threat_evidence_lima.sh)
+- Harness documentation: [`tests/README.md`](tests/README.md)
+- Threat-to-test mapping: [`docs/THREAT_EVIDENCE_MATRIX.md`](docs/THREAT_EVIDENCE_MATRIX.md)
+
 ## Key Features
 
 ### Security Advisor for System and Network Issues

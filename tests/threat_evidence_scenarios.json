@@ -1,0 +1,140 @@
+{
+  "version": "1.0",
+  "notes": "Threat evidence scenarios mapped to EDAMAME Security blog attack narratives. All scenarios are CI-gating.",
+  "baseline": {
+    "warmup_seconds": 20,
+    "post_attack_wait_seconds": 15,
+    "whitelist_name": "github_ubuntu",
+    "create_whitelist_include_process_default": false
+  },
+  "scenarios": [
+    {
+      "id": "contagious_interview_beaconing",
+      "description": "Simulate staged HTTPS beaconing after trojanized interview project execution.",
+      "signal_planes": [
+        "traffic_l7_process_association"
+      ],
+      "command": "python3 - <<'PY'\nimport requests, time\nurl = 'https://api.ipify.org?format=json'\nfor i in range(6):\n  r = requests.get(url, timeout=20)\n  print(f'beacon_{i} status={r.status_code}')\n  time.sleep(4)\nPY",
+      "learning_expected": {
+        "require_failure": false,
+        "min_nonconforming": 1,
+        "min_anomalous": 0,
+        "min_recorded_sessions": 1
+      },
+      "enforcement_expected": {
+        "require_failure": true,
+        "min_nonconforming": 1,
+        "min_anomalous": 0,
+        "min_recorded_sessions": 1
+      },
+      "ci_ready": true
+    },
+    {
+      "id": "contagious_interview_process_masquerade",
+      "description": "Reach the same destination via distinct process identities to validate process-aware allowlist enforcement.",
+      "signal_planes": [
+        "traffic_l7_process_association"
+      ],
+      "command": "python3 - <<'PY'\nimport requests\nurl = 'https://pypi.org/pypi/requests/json'\nr = requests.get(url, timeout=20)\nprint('status=', r.status_code)\nPY",
+      "learning_expected": {
+        "require_failure": false,
+        "min_nonconforming": 0,
+        "min_anomalous": 0,
+        "min_recorded_sessions": 1
+      },
+      "enforcement_expected": {
+        "require_failure": true,
+        "min_nonconforming": 1,
+        "min_anomalous": 0,
+        "min_recorded_sessions": 1
+      },
+      "ci_ready": true,
+      "requires_include_process": true
+    },
+    {
+      "id": "contagious_interview_remote_control_pattern",
+      "description": "Emulate sustained bidirectional remote-control style network behavior.",
+      "signal_planes": [
+        "traffic_l7_process_association"
+      ],
+      "command": "python3 - <<'PY'\nimport requests, time\nurl = 'https://ifconfig.me/all.json'\nfor i in range(8):\n  r = requests.get(url, timeout=20)\n  print(f'control_like_{i} status={r.status_code} bytes={len(r.text)}')\n  time.sleep(2)\nPY",
+      "learning_expected": {
+        "require_failure": false,
+        "min_nonconforming": 1,
+        "min_anomalous": 0,
+        "min_recorded_sessions": 1
+      },
+      "enforcement_expected": {
+        "require_failure": true,
+        "min_nonconforming": 1,
+        "min_anomalous": 0,
+        "min_recorded_sessions": 1
+      },
+      "ci_ready": true
+    },
+    {
+      "id": "nearest_neighbor_recon_burst",
+      "description": "Generate rapid multi-target probing behavior as a nearest-neighbor recon approximation.",
+      "signal_planes": [
+        "lan_scan_with_cve_correlation",
+        "traffic_l7_process_association"
+      ],
+      "command": "python3 - <<'PY'\nimport requests\ntargets = [\n  'https://example.com',\n  'https://iana.org',\n  'https://httpbin.org/get',\n  'https://ifconfig.me/all.json',\n  'https://api.ipify.org?format=json'\n]\nfor t in targets * 3:\n  try:\n    r = requests.get(t, timeout=8)\n    print('probe', t, r.status_code)\n  except Exception as e:\n    print('probe_error', t, str(e))\nPY",
+      "learning_expected": {
+        "require_failure": false,
+        "min_nonconforming": 1,
+        "min_anomalous": 0,
+        "min_recorded_sessions": 1
+      },
+      "enforcement_expected": {
+        "require_failure": true,
+        "min_nonconforming": 1,
+        "min_anomalous": 0,
+        "min_recorded_sessions": 1
+      },
+      "ci_ready": true
+    },
+    {
+      "id": "nearest_neighbor_cve_surface",
+      "description": "Approximate CVE-correlated evidence by touching known vulnerability intelligence endpoints.",
+      "signal_planes": [
+        "lan_scan_with_cve_correlation"
+      ],
+      "command": "set -euo pipefail\n\nurls=(\n  \"https://httpbin.org/get?cve=CVE-2024-3094\"\n  \"https://example.com/?cve=CVE-2024-3094\"\n  \"https://httpbin.org/get?cve=CVE-2023-12345\"\n)\n\nfor u in \"${urls[@]}\"; do\n  code=\"$(curl -4 --http1.1 -sS -o /dev/null -w '%{http_code}' --max-time 20 \"$u\" || echo 000)\"\n  echo \"cve_lookup $u $code\"\ndone\n",
+      "learning_expected": {
+        "require_failure": false,
+        "min_nonconforming": 1,
+        "min_anomalous": 0,
+        "min_recorded_sessions": 1
+      },
+      "enforcement_expected": {
+        "require_failure": true,
+        "min_nonconforming": 1,
+        "min_anomalous": 0,
+        "min_recorded_sessions": 1
+      },
+      "ci_ready": true
+    },
+    {
+      "id": "identity_exposure_context_gate",
+      "description": "Approximate identity-exposure context using HIBP/public-breach intelligence endpoints.",
+      "signal_planes": [
+        "identity_exposure"
+      ],
+      "command": "set -euo pipefail\n\nurls=(\n  \"https://haveibeenpwned.com\"\n  \"https://monitor.firefox.com\"\n  \"https://haveibeenpwned.com/API/v3\"\n)\n\nfor u in \"${urls[@]}\"; do\n  code=\"$(curl -4 --http1.1 -sS -o /dev/null -w '%{http_code}' --max-time 20 \"$u\" || echo 000)\"\n  echo \"identity_lookup $u $code\"\ndone\n",
+      "learning_expected": {
+        "require_failure": false,
+        "min_nonconforming": 1,
+        "min_anomalous": 0,
+        "min_recorded_sessions": 1
+      },
+      "enforcement_expected": {
+        "require_failure": true,
+        "min_nonconforming": 1,
+        "min_anomalous": 0,
+        "min_recorded_sessions": 1
+      },
+      "ci_ready": true
+    }
+  ]
+}
