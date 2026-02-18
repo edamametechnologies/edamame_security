@@ -13,7 +13,16 @@ OUTPUT_ROOT="$OUTPUT_ROOT_DEFAULT"
 KEEP_DAEMON="false"
 CI_ONLY="false"
 
-EDAMAME_POSTURE_CMD="${EDAMAME_POSTURE_CMD:-edamame_posture}"
+cd "$ROOT_DIR"
+
+EDAMAME_POSTURE_CMD_STR="${EDAMAME_POSTURE_CMD:-edamame_posture}"
+# The Posture GitHub Action sets EDAMAME_POSTURE_CMD to a full command
+# (e.g. "sudo -E edamame_posture"). Parse it so we can invoke it reliably.
+read -r -a EDAMAME_POSTURE_CMD_ARR <<<"$EDAMAME_POSTURE_CMD_STR"
+
+posture() {
+  "${EDAMAME_POSTURE_CMD_ARR[@]}" "$@"
+}
 
 usage() {
   cat <<EOF
@@ -69,7 +78,7 @@ cleanup() {
     return
   fi
   set +e
-  $EDAMAME_POSTURE_CMD stop >/dev/null 2>&1 || true
+  posture stop >/dev/null 2>&1 || true
   set -e
 }
 trap cleanup EXIT
@@ -99,18 +108,17 @@ done
 [[ -f "$SCENARIO_CONFIG" ]] || fail "Config file not found: $SCENARIO_CONFIG"
 
 require_cmd jq
-require_cmd python3
 require_cmd curl
-require_cmd "$EDAMAME_POSTURE_CMD"
+if [[ "${#EDAMAME_POSTURE_CMD_ARR[@]}" -eq 0 ]]; then
+  fail "EDAMAME_POSTURE_CMD resolved to empty"
+fi
 
-if ! python3 - <<'PY'
-import importlib.util, sys
-if importlib.util.find_spec("requests") is None:
-    sys.exit(1)
-PY
-then
-  log "Installing python requests dependency"
-  python3 -m pip install --quiet requests
+require_cmd "${EDAMAME_POSTURE_CMD_ARR[0]}"
+posture_bin="${EDAMAME_POSTURE_CMD_ARR[${#EDAMAME_POSTURE_CMD_ARR[@]}-1]}"
+if [[ "$posture_bin" == "edamame_posture" ]]; then
+  require_cmd edamame_posture
+elif [[ "$posture_bin" == ./* || "$posture_bin" == /* ]]; then
+  [[ -x "$posture_bin" ]] || fail "EDAMAME Posture binary not executable: $posture_bin (EDAMAME_POSTURE_CMD=$EDAMAME_POSTURE_CMD_STR)"
 fi
 
 RUN_ID="$(date -u +%Y%m%dT%H%M%SZ)"
@@ -127,14 +135,14 @@ DEFAULT_WHITELIST="$(jq -r '.baseline.whitelist_name // "github_ubuntu"' "$SCENA
 start_disconnected_daemon() {
   local whitelist_name="$1"
   log "Starting daemon in disconnected mode"
-  $EDAMAME_POSTURE_CMD stop >/dev/null 2>&1 || true
+  posture stop >/dev/null 2>&1 || true
   # Best-effort cleanup for runs that leave a root daemon behind (common in CI/Lima).
   if command -v sudo >/dev/null 2>&1 && sudo -n true >/dev/null 2>&1; then
     sudo -E pkill -f 'edamame_posture background-process' >/dev/null 2>&1 || true
     sudo -E pkill -f 'edamame_posture background-start-disconnected' >/dev/null 2>&1 || true
   fi
   sleep 2
-  $EDAMAME_POSTURE_CMD background-start-disconnected \
+  posture background-start-disconnected \
     --network-scan \
     --packet-capture \
     --whitelist "$whitelist_name"
@@ -158,9 +166,9 @@ create_and_load_whitelist() {
 
   if [[ "$include_process" == "true" ]]; then
     log "Creating process-aware whitelist (--include-process)"
-    $EDAMAME_POSTURE_CMD create-custom-whitelists --include-process > "$wl_file"
+    posture create-custom-whitelists --include-process > "$wl_file"
   else
-    $EDAMAME_POSTURE_CMD create-custom-whitelists > "$wl_file"
+    posture create-custom-whitelists > "$wl_file"
   fi
 
   local endpoint_count
@@ -168,7 +176,7 @@ create_and_load_whitelist() {
   log "Whitelist endpoint count: $endpoint_count"
   [[ "$endpoint_count" -gt 0 ]] || fail "Baseline whitelist is empty for scenario=$scenario"
 
-  $EDAMAME_POSTURE_CMD set-custom-whitelists-from-file "$wl_file"
+  posture set-custom-whitelists-from-file "$wl_file"
 }
 
 run_scenario_payload() {
@@ -206,14 +214,14 @@ collect_and_assert() {
 
   set +e
   if [[ "$MODE" == "enforcement" ]]; then
-    $EDAMAME_POSTURE_CMD get-sessions --fail-on-whitelist --fail-on-anomalous > "$sessions_file" 2>&1
+    posture get-sessions --fail-on-whitelist --fail-on-anomalous > "$sessions_file" 2>&1
   else
-    $EDAMAME_POSTURE_CMD get-sessions > "$sessions_file" 2>&1
+    posture get-sessions > "$sessions_file" 2>&1
   fi
   sessions_exit=$?
   set -e
 
-  $EDAMAME_POSTURE_CMD get-exceptions > "$exceptions_file" 2>&1 || true
+  posture get-exceptions > "$exceptions_file" 2>&1 || true
 
   local nonconforming_count anomalous_count unknown_count recorded_sessions
   nonconforming_count="$(count_matches 'whitelisted:[[:space:]]*nonconforming' "$exceptions_file")"

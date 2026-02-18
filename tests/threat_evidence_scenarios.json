@@ -14,7 +14,7 @@
       "signal_planes": [
         "traffic_l7_process_association"
       ],
-      "command": "python3 - <<'PY'\nimport requests, time\nurl = 'https://api.ipify.org?format=json'\nfor i in range(6):\n  r = requests.get(url, timeout=20)\n  print(f'beacon_{i} status={r.status_code}')\n  time.sleep(4)\nPY",
+      "command": "set -euo pipefail\n\nurl='https://api.ipify.org?format=json'\n\nfor i in {1..6}; do\n  code=\"$(curl -4 --http1.1 -sS -o /dev/null -w '%{http_code}' --max-time 20 \"$url\" || echo 000)\"\n  echo \"beacon_${i} status=$code\"\n  sleep 4\ndone\n",
       "learning_expected": {
         "require_failure": false,
         "min_nonconforming": 1,
@@ -35,7 +35,7 @@
       "signal_planes": [
         "traffic_l7_process_association"
       ],
-      "command": "python3 - <<'PY'\nimport requests\nurl = 'https://pypi.org/pypi/requests/json'\nr = requests.get(url, timeout=20)\nprint('status=', r.status_code)\nPY",
+      "command": "set -euo pipefail\n\nurl='https://pypi.org/pypi/requests/json'\n\ncode=\"$(curl -4 --http1.1 -sS -o /dev/null -w '%{http_code}' --max-time 20 \"$url\" || echo 000)\"\necho \"baseline_curl status=$code\"\n\nmasq=\"/tmp/masq_curl_$$\"\ncp \"$(command -v curl)\" \"$masq\"\nchmod +x \"$masq\"\n\ncode2=\"$(\"$masq\" -4 --http1.1 -sS -o /dev/null -w '%{http_code}' --max-time 20 \"$url\" || echo 000)\"\necho \"masquerade_curl status=$code2\"\n",
       "learning_expected": {
         "require_failure": false,
         "min_nonconforming": 0,
@@ -57,7 +57,7 @@
       "signal_planes": [
         "traffic_l7_process_association"
       ],
-      "command": "python3 - <<'PY'\nimport requests, time\nurl = 'https://ifconfig.me/all.json'\nfor i in range(8):\n  r = requests.get(url, timeout=20)\n  print(f'control_like_{i} status={r.status_code} bytes={len(r.text)}')\n  time.sleep(2)\nPY",
+      "command": "set -euo pipefail\n\nurl='https://httpbin.org/bytes/2048'\n\nfor i in {1..8}; do\n  out=\"$(curl -4 --http1.1 -sS -o /dev/null -w 'status=%{http_code} bytes=%{size_download}' --max-time 20 \"$url\" || echo 'status=000 bytes=0')\"\n  echo \"control_like_${i} $out\"\n  sleep 2\ndone\n",
       "learning_expected": {
         "require_failure": false,
         "min_nonconforming": 1,
@@ -79,7 +79,7 @@
         "lan_scan_with_cve_correlation",
         "traffic_l7_process_association"
       ],
-      "command": "python3 - <<'PY'\nimport requests\ntargets = [\n  'https://example.com',\n  'https://iana.org',\n  'https://httpbin.org/get',\n  'https://ifconfig.me/all.json',\n  'https://api.ipify.org?format=json'\n]\nfor t in targets * 3:\n  try:\n    r = requests.get(t, timeout=8)\n    print('probe', t, r.status_code)\n  except Exception as e:\n    print('probe_error', t, str(e))\nPY",
+      "command": "set -euo pipefail\n\ntargets=(\n  \"https://example.com\"\n  \"https://iana.org\"\n  \"https://httpbin.org/get\"\n  \"https://api.ipify.org?format=json\"\n  \"https://httpbin.org/uuid\"\n)\n\nfor round in 1 2 3; do\n  for t in \"${targets[@]}\"; do\n    code=\"$(curl -4 --http1.1 -sS -o /dev/null -w '%{http_code}' --max-time 8 \"$t\" || echo 000)\"\n    echo \"probe round=$round url=$t status=$code\"\n  done\ndone\n",
       "learning_expected": {
         "require_failure": false,
         "min_nonconforming": 1,
