@@ -45,9 +45,12 @@ This repository includes an open, reproducible threat-evidence harness that vali
 - **Model Context Protocol (MCP) integration**:
   - Secure localhost-only server (port 3000) with Streamable HTTP transport (exposed on desktop builds; mobile hides the control)
   - PSK authentication for external AI tools
-  - 9 security automation tools (advisor, score, agentic)
+  - 19 tools across 5 categories: advisor, observation (sessions with L7 process attribution, LAN devices, breaches, score), identity management (add/remove/list monitored emails), LAN configuration, and agentic automation
+  - Sessions include deep L7 enrichment: process lineage, parent chain, open files (sensitive file tracking), temp-origin detection, resource usage
+  - Dynamic identity management: add/remove emails for HIBP breach monitoring at runtime
   - Connect Claude Desktop, MCP Inspector, or build custom workflows
   - Test interactively with MCP Inspector: `npx @modelcontextprotocol/inspector --server-url http://127.0.0.1:3000/mcp --transport http`
+  - See [EDAMAME Core API MCP Reference](https://github.com/edamametechnologies/edamame_core_api/blob/main/MCP.md) for complete tool documentation
 - Interactive features: email reports, custom security questions once you open the latest report dialog
 - See [AGENTIC.md](AGENTIC.md) for detailed user guide and MCP testing instructions
 
@@ -82,7 +85,7 @@ This repository includes an open, reproducible threat-evidence harness that vali
 - Searchable history of network events and seen networks
 
 ### Traffic Monitoring (inspired by Wireshark)
-- Capture traffic sessions with domain and process context
+- Capture traffic sessions with deep L7 process attribution: process name, path, parent chain, command line, open files, temp‑origin detection, resource usage
 - At‑a‑glance, real‑time traffic view using sunburst visualization
 - Flexible table view of traffic sessions
 - Flag blacklisted traffic
@@ -94,6 +97,7 @@ This repository includes an open, reproducible threat-evidence harness that vali
 
 ### Digital Identity Management
 - Monitor and manage your online identity exposure
+- Dynamically add and remove monitored email addresses (also available via MCP for AI agent integration)
 - Integrated with [HaveIBeenPwned.com](https://haveibeenpwned.com)
 - Anonymized, RAG‑based AI analysis of data breaches
 - Flag breaches as safe when properly handled
