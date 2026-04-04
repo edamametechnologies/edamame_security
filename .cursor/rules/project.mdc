@@ -1,0 +1,66 @@
+---
+description: "edamame_security repo conventions -- screenshot history hygiene and push workflow"
+globs:
+alwaysApply: true
+---
+
+# EDAMAME Security - Public Issue Tracker & Documentation
+
+> **Master Repository:** `edamame_app` - See `../edamame_app/.cursor/rules/workspace.mdc` for workspace-wide rules.
+
+## Project Context
+This repository is the public-facing issue tracker, documentation hub, and
+screenshot gallery for EDAMAME Security. The app itself is closed source;
+this repo holds:
+- `README.md`, `AGENTIC.md`, `PLUGINS.md` -- user-facing documentation
+- `features.json` -- feature metadata for the wiki generator
+- `macos/`, `windows/`, `linux/`, `ios/`, `android/` -- platform screenshots
+- `.github/workflows/feature-wiki.yml` -- CI that regenerates the GitHub wiki
+
+## Screenshot History Hygiene (MUST follow on every push)
+
+Automated screenshot commits (`chore: Update screenshots from edamame_app`)
+accumulate rapidly and bloat the repo. Before pushing to the remote, squash
+old screenshot commits so that **at most 4** of the most recent screenshot
+commits survive as individual commits. Older screenshot history is collapsed
+into the baseline.
+
+### Procedure
+
+1. Count screenshot commits: `git log --oneline | grep -c "chore: Update screenshots"`
+2. If the count exceeds 4:
+   a. Identify the 5th-oldest screenshot commit (the first one to squash into the baseline).
+   b. Soft-reset to the parent of that commit, preserving the working tree.
+   c. Re-commit the squashed range as a single commit:
+      `Historical screenshots update` (or amend into the existing baseline commit).
+   d. Cherry-pick or rebase the remaining recent commits (the 4 kept screenshot
+      commits plus any non-screenshot commits on top).
+   e. Force-push: `git push --force origin main`
+   f. Delete stale remote tags, re-tag the new HEAD, push tags.
+3. If the count is 4 or fewer, push normally.
+
+**Why force-push is safe here:** This repo has no external contributors or
+branch protection. The only automated committer is the screenshot CI workflow.
+
+### Quick one-liner check before push
+```bash
+SC=$(git log --oneline | grep -c "chore: Update screenshots"); echo "$SC screenshot commits"; [ "$SC" -gt 4 ] && echo "SQUASH NEEDED before push"
+```
+
+## Tags
+
+Tags follow `vMAJOR.MINOR.PATCH` and are set by the release workflow in
+`edamame_app`. After a history rewrite (squash), delete old tags and re-tag
+HEAD:
+
+```bash
+git tag -l | xargs git tag -d
+git push origin --delete $(git ls-remote --tags origin | awk '{print $2}' | sed 's|refs/tags/||')
+git tag vX.Y.Z
+git push origin vX.Y.Z
+```
+
+## Documentation
+- [AGENTIC.md](AGENTIC.md) -- AI Assistant user guide, MCP testing
+- [PLUGINS.md](PLUGINS.md) -- Agent plugin architecture (Cursor, Claude Code, Claude Desktop, OpenClaw)
+- [Feature Wiki](https://github.com/edamametechnologies/edamame_security/wiki) -- Auto-generated from `features.json`
