@@ -1,0 +1,64 @@
+name: Update Features Wiki
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-wiki:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup EDAMAME Posture
+        uses: edamametechnologies/edamame_posture_action@v1
+        with:
+          edamame_user: ${{ vars.EDAMAME_POSTURE_USER }}
+          edamame_domain: ${{ vars.EDAMAME_POSTURE_DOMAIN }}
+          edamame_pin: ${{ secrets.EDAMAME_POSTURE_PIN }}
+          edamame_id: ${{ github.run_id }}
+          checkout: true
+          wait_for_api: true
+          wait_for_https: true
+          
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: pip install mdutils
+
+      - name: Generate wiki markdown files
+        run: |
+          python src/build_feature_wiki.py \
+            --screenshots-dir macos \
+            --output-dir wiki
+
+      - name: Clone wiki
+        run: |
+          mkdir -p /tmp/wiki/
+          git clone https://${{ secrets.DEV_GITHUB_TOKEN }}@github.com/edamametechnologies/edamame_security.wiki.git /tmp/wiki
+        
+      - name: Copy generated markdown files and images
+        run: |
+          cp wiki/*.md /tmp/wiki/
+          mkdir -p /tmp/wiki/images
+          cp -r wiki/images/* /tmp/wiki/images/
+
+      - name: Push to wiki
+        run: |
+          cd /tmp/wiki
+          git config --global user.email "dev@edamame.tech"
+          git config --global user.name "EDAMAME Dev"
+          git add .
+          # Try to commit. If it fails (non-zero exit code), it means no changes.
+          # If it succeeds (zero exit code), then push.
+          if git commit -m "docs: Updated wiki files"; then
+            echo "Changes committed, pushing to wiki..."
+            git push
+          else
+            echo "No changes to commit to wiki."
+            # Exit with 0 to indicate success (no push needed/attempted)
+            exit 0
+          fi
