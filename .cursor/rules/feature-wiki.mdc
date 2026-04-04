@@ -1,0 +1,76 @@
+---
+description: "Feature documentation, screenshots, and wiki generation for EDAMAME Security"
+globs: features.json,src/build_feature_wiki.py,.github/workflows/feature-wiki.yml
+alwaysApply: false
+---
+
+# Feature Wiki Pipeline — EDAMAME Security
+
+> Documentation and screenshot pipeline for the EDAMAME Security desktop app (macOS, Windows, Linux, iOS, Android).
+
+## Overview
+
+This repo uses a **features.json → screenshots → wiki** pipeline:
+
+1. **features.json** — Defines features, sub-features, platform-specific paths, i18n (en/fr), and descriptions
+2. **Screenshots** — Captured manually per platform (macos/, windows/, linux/, ios/, android/)
+3. **build_feature_wiki.py** — Generates Markdown wiki pages with embedded screenshots
+4. **feature-wiki.yml** — CI workflow runs on push to main, updates GitHub wiki
+
+## features.json Structure
+
+```json
+{
+  "screenshot_metadata": {
+    "dual_screenshot_suffix": "_selected",
+    "multi_pane_breakpoint": 1400,
+    "display_selected_only": true,
+    "patterns": {
+      "default": "{prefix}_{subfeature_name}.png",
+      "multipane": "{prefix}_{subfeature_name}_selected.png"
+    },
+    "sub_feature_mappings": {
+      "advisor_main": { "prefix": "01", "multipane": true },
+      "posture_inactive": { "prefix": "02", "multipane": true }
+    }
+  },
+  "features": [...]
+}
+```
+
+- **name** — Slug used for screenshot matching (lowercase, underscores)
+- **sub_feature_mappings** — Maps sub-feature name → prefix; `multipane: true` for dual-pane layouts
+- **dual_screenshot_suffix** — `_selected` suffix for focused pane screenshot (desktop only)
+- **display_selected_only** — When true, wiki shows only the `_selected` version for multipane features
+
+## Screenshot Naming
+
+- **Default:** `{prefix}_{subfeature_name}.png` (e.g. `01_advisor_main.png`)
+- **Multipane:** `{prefix}_{subfeature_name}_selected.png` (e.g. `01_advisor_main_selected.png`)
+- **Platform dirs:** macos/, windows/, linux/, ios/, android/
+- CI uses `--screenshots-dir macos` (primary platform for wiki)
+
+## Commands
+
+```bash
+# Generate wiki locally (from macos screenshots)
+python src/build_feature_wiki.py --screenshots-dir macos --output-dir wiki
+```
+
+Screenshots are captured manually per platform; no Playwright script.
+
+## CI Workflow
+
+- **Trigger:** Push to `main` or `workflow_dispatch`
+- **EDAMAME Posture:** Uses `edamametechnologies/edamame_posture_action@v1` (checkout, wait_for_api, wait_for_https)
+- **Screenshots:** Read from `macos/` in repo
+- **Wiki:** Pushed to `edamametechnologies/edamame_security.wiki`
+
+## Adding a New Feature
+
+1. Add feature to `features.json` with `name`, `title`, `description`, `sub_features`
+2. Add `sub_feature_mappings` entry for each sub-feature (include `multipane: true` if dual-pane)
+3. Capture screenshots manually per platform, place in platform dirs
+4. Use `{prefix}_{name}.png` or `{prefix}_{name}_selected.png` for multipane
+5. Optionally fill `visual` with detailed UI descriptions
+6. Commit screenshots and push — CI updates wiki
