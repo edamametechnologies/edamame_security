@@ -70,17 +70,7 @@
         "desktop_only": true,
         "multipane": true
       },
-      "ai_agent": {
-        "prefix": "00",
-        "desktop_only": true,
-        "multipane": true
-      },
-      "ai_mcp_server": {
-        "prefix": "00",
-        "desktop_only": true,
-        "multipane": false
-      },
-      "ai_vulnerabilities": {
+      "ai_action_history": {
         "prefix": "00",
         "desktop_only": true,
         "multipane": true
@@ -89,6 +79,11 @@
         "prefix": "00",
         "desktop_only": true,
         "multipane": true
+      },
+      "ai_mcp_server": {
+        "prefix": "00",
+        "desktop_only": true,
+        "multipane": false
       },
       "ai_divergence": {
         "prefix": "00",
@@ -116,6 +111,11 @@
         "multipane": false
       },
       "capture_history": {
+        "prefix": "06",
+        "desktop_only": true,
+        "multipane": true
+      },
+      "capture_file_events": {
         "prefix": "06",
         "desktop_only": true,
         "multipane": true
@@ -162,8 +162,8 @@
         "fr": "L'onglet IA expose les surfaces agentiques d'EDAMAME via sept sous-onglets. Agent de securite est la page d'accueil avec une carte visuelle interactive des actions IA, des boutons Watchdog/Assistant, un selecteur de cadence, des filtres et la connexion OAuth au portail EDAMAME. Historique de l'agent se concentre sur la piste d'audit des actions avec filtres par statut et type, suivi lu/non-lu, operations groupees (Tout confirmer, Tout annuler, Tout marquer comme lu, Effacer) et revue detaillee multi-volets. Vulnerabilites fournit la surface de surveillance independante du modele pour les vulnerabilites et expositions avec sa propre carte d'apercu. Historique des vulnerabilites affiche les rapports du detecteur safety-floor dans une chronologie dediee. Divergence ajoute la surface de supervision temps reel pour la correlation avec modele comportemental avec sa propre carte d'apercu. Historique de divergence separe les injections et les verdicts dans une chronologie dediee. Parametres IA regroupent la connexion portail, le BYOLLM, les selecteurs de cadence de rafraichissement pour les moteurs de divergence, de vulnerabilite et de l'agent, la diffusion Slack/Telegram des notifications et les controles du serveur MCP."
       },
       "description": {
-        "en": "Use this tab to automate security triage and remediation with AI. Start in Security Agent to choose Watchdog or Assistant mode and visualize priorities, continue in Agent History for audit and review with read-status tracking, use Vulnerabilities to monitor model-independent exposures, use Divergence to compare declared intent against live telemetry, review timelines in their respective History tabs, and manage portal sign-in, engine cadence, delivery channels, custom LLMs, and MCP access from AI Settings.",
-        "fr": "Utilisez cet onglet pour automatiser le triage et la remediation de securite avec l'IA. Commencez dans Agent de securite pour choisir le mode Watchdog ou Assistant et visualiser les priorites, poursuivez dans Historique de l'agent pour l'audit et la revue avec suivi de statut de lecture, utilisez Vulnerabilites pour surveiller les expositions independamment du modele, utilisez Divergence pour comparer l'intention declaree a la telemetrie observee, consultez les chronologies dans leurs onglets Historique respectifs, et gerez la connexion portail, la cadence des moteurs, les canaux de diffusion, les LLM personnalises et l'acces MCP depuis Parametres IA."
+        "en": "Use this tab to automate security triage and remediation with AI. Start in Security Agent to choose Watchdog or Assistant mode and visualize priorities alongside vulnerability findings, continue in Action History for audit and review with read-status tracking, review safety-floor vulnerability reports in Vuln. History, use Divergence to compare declared intent against live telemetry, review divergence timelines in Diverge. History, and manage portal sign-in, engine cadence, delivery channels, custom LLMs, and MCP access from AI Settings.",
+        "fr": "Utilisez cet onglet pour automatiser le triage et la remediation de securite avec l'IA. Commencez dans Agent de securite pour choisir le mode Watchdog ou Assistant et visualiser les priorites avec les resultats de vulnerabilite, poursuivez dans Historique des actions pour l'audit et la revue, consultez les rapports de vulnerabilites safety-floor dans Hist. vuln., utilisez Divergence pour comparer l'intention declaree a la telemetrie observee, consultez les chronologies de divergence dans Hist. diverge., et gerez la connexion portail, la cadence des moteurs, les canaux de diffusion, les LLM personnalises et l'acces MCP depuis Parametres IA."
       },
       "has_dual_screenshots": true,
       "sub_features": [
@@ -231,18 +231,18 @@
           ]
         },
         {
-          "name": "ai_agent",
+          "name": "ai_action_history",
           "title": {
-            "en": "Agent History – AI Action Audit Trail",
-            "fr": "Historique de l'agent – Piste d'audit IA"
+            "en": "Action History – AI Action Audit Trail",
+            "fr": "Historique des actions – Piste d'audit IA"
           },
           "visual": {
-            "en": "The Agent History tab focuses on the audit trail only. The surface is dedicated to action-history filters, counts, bulk operations, read-status tracking, and list/detail review. Top-row bulk buttons include Confirm all, Undo all, Mark all as read, and Clear. Filter actions by agentic status (Resolved in green, Pending confirmation in yellow, Escalated for review in orange, Failed in red, Obsolete in gray) or by type (Threats, Network, Traffic, Identity breaches). A separate read-status filter (All / Unread with counts) lets operators focus on unseen items. Each action card shows process or target context with device/process icons, destination, relative timestamp, AI reasoning excerpt, type and status badges, and read/unread envelope icons. Click any action to open a detail pane with session information, priority, token usage, View details, Mark device as safe, Mark as read, and Close buttons.",
+            "en": "The Action History tab focuses on the audit trail only. The surface is dedicated to action-history filters, counts, bulk operations, read-status tracking, and list/detail review. Top-row bulk buttons include Confirm all, Undo all, Mark all as read, and Clear. Filter actions by agentic status (Resolved in green, Pending confirmation in yellow, Escalated for review in orange, Failed in red, Obsolete in gray) or by type (Threats, Network, Traffic, Identity breaches). A separate read-status filter (All / Unread with counts) lets operators focus on unseen items. Each action card shows process or target context with device/process icons, destination, relative timestamp, AI reasoning excerpt, type and status badges, and read/unread envelope icons. Click any action to open a detail pane with session information, priority, token usage, View details, Mark device as safe, Mark as read, and Close buttons.",
             "fr": "L'onglet Historique de l'agent se concentre uniquement sur la piste d'audit. La surface est dediee aux filtres d'historique, aux compteurs, aux operations groupees, au suivi de statut de lecture et a la revue liste/detail. Les boutons groupes incluent Tout confirmer, Tout annuler, Tout marquer comme lu et Effacer. Filtrez les actions par statut agentique ou par type, et utilisez le filtre de lecture (Tous / Non-lus) pour cibler les elements non vus. Ouvrez chaque action pour voir le contexte, l'horodatage, le raisonnement IA, l'usage de tokens et les boutons d'action."
           },
           "description": {
-            "en": "Use Agent History as your audit trail of AI decisions. Filter by status, type, or read state, inspect reasoning, and confirm or undo actions from the detail pane. Use Mark all as read to triage large batches.",
-            "fr": "Utilisez Historique de l'agent comme piste d'audit des decisions IA. Filtrez par statut, type ou etat de lecture, inspectez le raisonnement et confirmez ou annulez les actions depuis le panneau detail. Utilisez Tout marquer comme lu pour traiter les lots importants."
+            "en": "Use Action History as your audit trail of AI decisions. Filter by status, type, or read state, inspect reasoning, and confirm or undo actions from the detail pane. Use Mark all as read to triage large batches.",
+            "fr": "Utilisez Historique des actions comme piste d'audit des decisions IA. Filtrez par statut, type ou etat de lecture, inspectez le raisonnement et confirmez ou annulez les actions depuis le panneau detail. Utilisez Tout marquer comme lu pour traiter les lots importants."
           },
           "has_dual_screenshots": true,
           "items": [
@@ -274,68 +274,6 @@
               "description": {
                 "en": "Track token usage to control cost and detect spikes. Tune schedule or provider when consumption drifts.",
                 "fr": "Suivez l'usage des tokens pour controler les couts et detecter les pics. Ajustez la planification ou le fournisseur en cas de derive."
-              }
-            }
-          ]
-        },
-        {
-          "name": "ai_vulnerabilities",
-          "title": {
-            "en": "Vulnerabilities – Model-Independent Exposure Monitoring",
-            "fr": "Vulnerabilites – Surveillance Independante des Expositions"
-          },
-          "visual": {
-            "en": "The Vulnerabilities tab is the model-independent safety-floor monitoring surface. A Vulnerabilities monitor hero card at the top shows detector status (Running / Paused) with a Pause/Resume detector button, a Critical vulnerabilities & exposures alert badge when findings exist, and a single color-coded tile summarizing the latest finding count and timestamp. Below the hero card, a Vulnerabilities & exposures summary tile shows the LLM-confirmed verdict (Escalate / Clean), active finding count, highest severity, final verdict, last run time, and refresh interval. A Final adjudication section displays the LLM reasoning narrative describing why the verdict was reached, including suppressed checks. An Effective findings section lists individual active findings with severity badges (Critical in red, High in orange), process names, sensitive file counts, timestamps, occurrence counts, and Active / Dismissed toggle filters. Each finding card shows a concise description of the detected behavior. The Pause detector button freezes the engine without losing state, and Resume restarts it.",
-            "fr": "L'onglet Vulnerabilites est la surface de surveillance safety-floor independante du modele. Une carte hero Vulnerabilities monitor en haut affiche le statut du detecteur (En cours / En pause) avec un bouton Pause/Reprendre, un badge d'alerte Critical vulnerabilities & exposures lorsque des constats existent, et une tuile resumant le nombre de constats et l'horodatage. En dessous, une tuile Vulnerabilities & exposures affiche le verdict confirme par LLM (Escalade / Propre), le nombre de constats actifs, la severite maximale, le verdict final, l'heure de la derniere execution et l'intervalle de rafraichissement. Une section Final adjudication affiche le raisonnement LLM. La section Effective findings liste les constats individuels avec badges de severite, noms de processus, fichiers sensibles et filtres Active / Dismiss."
-          },
-          "description": {
-            "en": "Use Vulnerabilities to monitor model-independent exposures and safety-floor findings. The detector runs on its own cadence and raises high-signal findings even when there is no behavioral model. Review the LLM adjudication narrative, then triage individual findings by severity.",
-            "fr": "Utilisez Vulnerabilites pour surveiller les expositions independantes du modele et les constats safety-floor. Le detecteur fonctionne a sa propre cadence et remonte des constats a fort signal meme sans modele comportemental. Examinez le raisonnement LLM, puis triez les constats individuels par severite."
-          },
-          "items": [
-            {
-              "name": "vulnerability_monitor_hero",
-              "title": {
-                "en": "Vulnerability Monitor – Detector Status and Summary",
-                "fr": "Moniteur de Vulnerabilites – Statut du Detecteur et Resume"
-              },
-              "visual": {
-                "en": "Hero card showing detector status (Running with green dot / Paused), a Critical vulnerabilities & exposures red badge when findings exist, a single tile with finding count and timestamp, and Pause/Resume detector button. The tile below summarizes the latest detector report.",
-                "fr": "Carte hero affichant le statut du detecteur (En cours / En pause), un badge rouge Critical vulnerabilities & exposures, une tuile avec compteur et horodatage, et un bouton Pause/Reprendre."
-              },
-              "description": {
-                "en": "Check detector status and finding count at a glance. Pause the detector when you need to freeze the state for investigation.",
-                "fr": "Verifiez le statut du detecteur et le nombre de constats en un coup d'oeil. Mettez en pause le detecteur pour geler l'etat pendant l'investigation."
-              }
-            },
-            {
-              "name": "vulnerability_adjudication",
-              "title": {
-                "en": "Final Adjudication – LLM Reasoning Narrative",
-                "fr": "Adjudication Finale – Raisonnement LLM"
-              },
-              "visual": {
-                "en": "Displays the LLM-confirmed verdict (Escalate / Clean), confidence level, active finding count, highest severity, final verdict, last run timestamp, and refresh interval. The adjudication narrative explains why the verdict was reached, including which checks were suppressed and why.",
-                "fr": "Affiche le verdict confirme par LLM (Escalade / Propre), le niveau de confiance, le nombre de constats actifs, la severite maximale, le verdict final, l'horodatage et l'intervalle. Le raisonnement explique pourquoi le verdict a ete atteint et quels controles ont ete supprimes."
-              },
-              "description": {
-                "en": "Read the adjudication narrative to understand the overall risk picture before drilling into individual findings.",
-                "fr": "Lisez le raisonnement d'adjudication pour comprendre le tableau de risque global avant d'examiner les constats individuels."
-              }
-            },
-            {
-              "name": "vulnerability_findings",
-              "title": {
-                "en": "Effective Findings – Individual Vulnerability Details",
-                "fr": "Constats Effectifs – Details Individuels des Vulnerabilites"
-              },
-              "visual": {
-                "en": "Lists individual active findings with severity badges (Critical in red, High in orange), process names, sensitive file counts, timestamps, and occurrence counts (e.g. 2x). Active / Dismissed toggle filters at the top. Each finding card shows a concise description of the detected behavior.",
-                "fr": "Liste les constats actifs individuels avec badges de severite (Critique en rouge, Haute en orange), noms de processus, compteurs de fichiers sensibles, horodatages et nombre d'occurrences. Filtres Active / Dismiss en haut. Chaque carte affiche une description concise du comportement detecte."
-              },
-              "description": {
-                "en": "Triage findings from highest severity down. Dismiss expected findings to reduce noise in future runs.",
-                "fr": "Triez les constats par severite decroissante. Dismissez les constats attendus pour reduire le bruit dans les prochaines executions."
               }
             }
           ]
@@ -395,12 +333,12 @@
             "fr": "Divergence agent – Intention Comportementale vs Realite de Securite"
           },
           "visual": {
-            "en": "The Divergence tab is the coordinated live monitoring surface for the behavioral-model divergence loop. An MCP status badge at the top shows whether the MCP server is running or stopped. A Divergence monitor hero card summarizes the current state through two color-coded panels: Intent (Merged / Not available, with agent and prediction counts) and Live verdict (Clean / Divergence / Stale / No model, with timestamp). A Divergence detected alert badge appears when the verdict is not clean. A Pause/Resume engine button controls the correlation engine. Below the hero card, the Agent intent snapshot shows the merged model with prediction counts, tool counts, expected and unexpected traffic, model hash, contributing agents with per-source detail (e.g. cursor / workstation-main, openclaw / extrapolator), and View details / Clear intent actions. The Contributing agents section lists each active source with per-agent prediction counts, time windows, and individual slice hashes. On wide screens, selections open in a side pane for full evidence review including predicted sessions, human alerts, LLM reasoning, and evidence bundles. The historical timelines live in the dedicated Divergence History subtab. Model-independent vulnerability monitoring lives in the separate Vulnerabilities subtab.",
-            "fr": "L'onglet Divergence est la surface de supervision temps reel pour la boucle de divergence du modele comportemental. Un badge de statut MCP en haut indique si le serveur MCP est actif ou arrete. Une carte hero Divergence monitor resume l'etat via deux panneaux : Intent (fusionne / indisponible) et Live verdict (Clean / Divergence / Stale / No model). Un badge d'alerte Divergence detected apparait quand le verdict n'est pas propre. Un bouton Pause/Reprendre controle le moteur de correlation. En dessous, la carte Agent intent snapshot affiche le modele fusionne avec les compteurs, les agents contributeurs (ex. cursor / workstation-main, openclaw / extrapolator) et les actions View details / Clear intent. La section Contributing agents liste chaque source active avec les compteurs par agent, les fenetres temporelles et les hash individuels. Les chronologies historiques vivent dans le sous-onglet Historique de divergence. La surveillance des vulnerabilites independantes du modele vit dans le sous-onglet Vulnerabilites."
+            "en": "The Divergence tab is the coordinated live monitoring surface for the behavioral-model divergence loop. An MCP status badge at the top shows whether the MCP server is running or stopped. A Divergence monitor hero card summarizes the current state through two color-coded panels: Intent (Merged / Not available, with agent and prediction counts) and Live verdict (Clean / Divergence / Stale / No model, with timestamp). A Divergence detected alert badge appears when the verdict is not clean. A Pause/Resume engine button controls the correlation engine. Below the hero card, the Agent intent snapshot shows the merged model with prediction counts, tool counts, expected and unexpected traffic, model hash, contributing agents with per-source detail (e.g. cursor / workstation-main, openclaw / extrapolator), and View details / Clear intent actions. The Contributing agents section lists each active source with per-agent prediction counts, time windows, and individual slice hashes. On wide screens, selections open in a side pane for full evidence review including predicted sessions, human alerts, LLM reasoning, and evidence bundles. The historical timelines live in the dedicated Divergence History subtab. Model-independent vulnerability findings also appear in the Security Agent radar. Vulnerability report history lives in the Vuln. History subtab.",
+            "fr": "L'onglet Divergence est la surface de supervision temps reel pour la boucle de divergence du modele comportemental. Un badge de statut MCP en haut indique si le serveur MCP est actif ou arrete. Une carte hero Divergence monitor resume l'etat via deux panneaux : Intent (fusionne / indisponible) et Live verdict (Clean / Divergence / Stale / No model). Un badge d'alerte Divergence detected apparait quand le verdict n'est pas propre. Un bouton Pause/Reprendre controle le moteur de correlation. En dessous, la carte Agent intent snapshot affiche le modele fusionne avec les compteurs, les agents contributeurs (ex. cursor / workstation-main, openclaw / extrapolator) et les actions View details / Clear intent. La section Contributing agents liste chaque source active avec les compteurs par agent, les fenetres temporelles et les hash individuels. Les chronologies historiques vivent dans le sous-onglet Historique de divergence. Les constats de vulnerabilites independants du modele apparaissent dans le radar Agent de securite. L'historique des rapports vit dans le sous-onglet Hist. vuln."
           },
           "description": {
-            "en": "Use Divergence to compare declared agent intent against live system telemetry. The divergence surface focuses on intent mismatch -- when observed behavior does not match the behavioral model. Check the MCP status badge to confirm external agents can inject intent. Model-independent vulnerability monitoring lives in the separate Vulnerabilities subtab.",
-            "fr": "Utilisez Divergence pour comparer l'intention declaree des agents a la telemetrie systeme. La surface de divergence se concentre sur les ecarts d'intention -- lorsque le comportement observe ne correspond pas au modele comportemental. Verifiez le badge MCP pour confirmer que les agents externes peuvent injecter leur intention. La surveillance des vulnerabilites independantes du modele vit dans le sous-onglet Vulnerabilites."
+            "en": "Use Divergence to compare declared agent intent against live system telemetry. The divergence surface focuses on intent mismatch -- when observed behavior does not match the behavioral model. Check the MCP status badge to confirm external agents can inject intent. Model-independent vulnerability findings also appear in the Security Agent radar.",
+            "fr": "Utilisez Divergence pour comparer l'intention declaree des agents a la telemetrie systeme. La surface de divergence se concentre sur les ecarts d'intention -- lorsque le comportement observe ne correspond pas au modele comportemental. Verifiez le badge MCP pour confirmer que les agents externes peuvent injecter leur intention. Les constats de vulnerabilites independants du modele apparaissent aussi dans le radar Agent de securite."
           },
           "items": [
             {
@@ -1649,6 +1587,21 @@
             "fr": "Utilisez l'historique des anomalies comme file d'investigation. Traitez d'abord les evenements anormaux recents et ignorez uniquement avec des preuves."
           },
           "has_dual_screenshots": true
+        },
+        {
+          "name": "capture_file_events",
+          "title": {
+            "en": "File Events – File Integrity Monitoring",
+            "fr": "Evenements Fichiers – Surveillance d'Integrite"
+          },
+          "visual": {
+            "en": "The File Events tab displays a real-time feed of filesystem changes detected by the FIM (File Integrity Monitoring) engine. A status bar shows monitoring state, event count, and last event timestamp. Filter controls include a search field for paths/processes/labels and a 'Sensitive' toggle to show only events affecting security-critical files. Each row shows: an event type icon (create/modify/delete/rename) with color coding, file name and full path, event type label, a shield icon for sensitive files, and timestamp. Selecting an event opens a detail card showing full path, event type, timestamp, file size, BLAKE3 hash, process attribution, sensitive classification, and labels.",
+            "fr": "L'onglet Evenements fichiers affiche un flux en temps reel des modifications du systeme de fichiers detectees par le moteur FIM. Chaque entree montre le type d'evenement, le fichier, le processus attributaire et la classification de sensibilite."
+          },
+          "description": {
+            "en": "Use File Events to detect unauthorized file modifications, credential harvesting, and supply chain tampering. Filter for sensitive events to focus on security-critical changes.",
+            "fr": "Utilisez les evenements fichiers pour detecter les modifications non autorisees, la collecte de credentials et la falsification de la chaine d'approvisionnement."
+          }
         }
       ]
     },
