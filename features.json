@@ -121,6 +121,11 @@
         "mobile_prefix": "06",
         "multipane": true
       },
+      "config_privacy": {
+        "prefix": "07",
+        "mobile_prefix": "06",
+        "multipane": false
+      },
       "config_notifications": {
         "prefix": "07",
         "mobile_prefix": "06",
@@ -1617,8 +1622,8 @@
         "fr": "Config"
       },
       "visual": {
-        "en": "The Config tab provides system information and settings with four sub-views. Info displays Device ID, IP addresses (IPv4/IPv6), version, threat model date, and an elevation requirements table showing which privileges each threat needs for detection, remediation, and rollback. Notifications lets you toggle alerts per category (Score, System, Network, Advisor, Policy, AI, Identity) and shows a scrollable notification history with timestamps and deep-links. System (desktop-only) shows packet capture statistics, ML analyzer status with training metrics, detection thresholds, and session analysis counts. Debug provides a real-time log viewer with INFO/ERROR/WARN filters, search, and copy functionality for troubleshooting. The elevation table helps you understand which features require the EDAMAME Helper daemon.",
-        "fr": "L'onglet Config fournit les informations systeme et parametres avec quatre sous-vues : Info (details de l'appareil et table d'elevation), Notifications (bascules par categorie et historique), Systeme (statistiques de capture), et Debug (visualiseur de logs)."
+        "en": "The Config tab provides system information and settings with up to five sub-views. Info displays Device ID, IP addresses (IPv4/IPv6), version, threat model date, and an elevation requirements table showing which privileges each threat needs for detection, remediation, and rollback. Privacy gives you two user-controlled opt-out toggles (anonymous usage analytics and crash reports) plus an honest catalog of what each subsystem ships off-device (Hub score reporting, breach lookups, agentic LLM/MCP calls, Mixpanel pings, Sentry crashes, Slack/Telegram deliveries). Notifications lets you toggle alerts per category (Score, System, Network, Advisor, Policy, AI, Identity) and shows a scrollable notification history with timestamps and deep-links. System (desktop-only) shows packet capture statistics, ML analyzer status with training metrics, detection thresholds, and session analysis counts. Debug provides a real-time log viewer with INFO/ERROR/WARN filters, search, and copy functionality for troubleshooting. The elevation table helps you understand which features require the EDAMAME Helper daemon.",
+        "fr": "L'onglet Config fournit les informations systeme et parametres avec jusqu'a cinq sous-vues : Info (details de l'appareil et table d'elevation), Confidentialite (bascules d'analytique et de rapports de plantage et catalogue de ce qui est envoye hors de l'appareil), Notifications (bascules par categorie et historique), Systeme (statistiques de capture) et Debug (visualiseur de logs)."
       },
       "description": {
         "en": "Use Config to verify runtime status, permissions, alerts, and diagnostics. Check helper/elevation readiness, tune notification noise, and consult debug tools when troubleshooting.",
@@ -1673,6 +1678,21 @@
               }
             }
           ]
+        },
+        {
+          "name": "config_privacy",
+          "title": {
+            "en": "Privacy – Your Data, Your Control",
+            "fr": "Confidentialite – Vos donnees, votre controle"
+          },
+          "visual": {
+            "en": "The Privacy subtab has three sections. At the top, two user-controlled opt-out toggles: 'Anonymous usage analytics' (off disables Mixpanel telemetry such as feature usage and install/upgrade counters) and 'Crash reports' (off disables Sentry crash reports; the toggle is honored on the next app launch). Below, a 'Data categories' list of 13 cards covering everything else that may leave the device: Hub score reporting, breach lookups (HaveIBeenPwned), agentic LLM, MCP server, internal LLM via Portal, Mixpanel anonymous analytics, Sentry crash reports, Slack delivery, Telegram delivery, Telegram interactive controls, local notifications, OAuth sign-in, and helper IPC. Each card explains what is sent, where it goes, who controls it (toggle here, Trust tab connection, AI tab settings, OS settings), and includes a quick-jump button that deep-links to the page that owns the actual switch. The bottom shows links to the public Privacy Policy, Terms of Service, and a mailto link to the data request mailbox for export or deletion requests.",
+            "fr": "Le sous-onglet Confidentialite contient trois sections. En haut, deux bascules d'opt-out controlees par l'utilisateur : 'Analytique d'usage anonyme' (desactivee, coupe la telemetrie Mixpanel) et 'Rapports de plantage' (desactivee, coupe Sentry, prise en compte au prochain demarrage). En dessous, une liste de 13 cartes pour les categories qui peuvent quitter l'appareil : remontee du score vers le Hub, recherches de fuites (HaveIBeenPwned), LLM agentique, serveur MCP, LLM interne via Portal, analytique Mixpanel, rapports Sentry, diffusion Slack, diffusion Telegram, controles interactifs Telegram, notifications locales, connexion OAuth et IPC helper. Chaque carte explique ce qui est envoye, ou cela va, qui controle ce flux et propose un raccourci direct vers la page qui possede le commutateur. En bas, des liens vers la politique de confidentialite, les conditions d'utilisation et une adresse de contact pour les demandes d'export ou de suppression."
+          },
+          "description": {
+            "en": "Use Privacy to opt out of anonymous analytics or crash reports and to read an honest catalog of what each subsystem ships off-device. Other knobs (Hub connection, agentic provider, Slack/Telegram delivery, OS notifications) are linked from this view so you can find them in one place.",
+            "fr": "Utilisez Confidentialite pour vous desinscrire des analytiques anonymes ou des rapports de plantage et pour lire un catalogue honnete de ce que chaque sous-systeme envoie hors de l'appareil. Les autres commutateurs (Hub, fournisseur agentique, diffusion Slack/Telegram, notifications OS) sont accessibles depuis cette vue."
+          }
         },
         {
           "name": "config_notifications",
