@@ -1,7 +1,7 @@
 # Agent Plugins
 
 EDAMAME Security provides runtime behavioral monitoring for AI agents through
-four integration packages. Each package bridges an agent's reasoning plane
+five integration packages. Each package bridges an agent's reasoning plane
 (transcripts, tool calls, session history) to EDAMAME's system-plane observer,
 enabling two-plane divergence detection.
 
@@ -13,6 +13,7 @@ enabling two-plane divergence detection.
 | EDAMAME for Claude Code | [edamame_claude_code](https://github.com/edamametechnologies/edamame_claude_code) | Claude Code CLI | Public |
 | EDAMAME for Claude Desktop | [edamame_claude_desktop](https://github.com/edamametechnologies/edamame_claude_desktop) | Claude Desktop app (Code-in-Desktop + Cowork) | Public |
 | EDAMAME for OpenClaw | [edamame_openclaw](https://github.com/edamametechnologies/edamame_openclaw) | OpenClaw agents | Public |
+| EDAMAME for Codex CLI | [edamame_codex](https://github.com/edamametechnologies/edamame_codex) | OpenAI Codex CLI | Public |
 
 Supporting repositories:
 
@@ -60,17 +61,35 @@ truth for scores, verdicts, behavioral models, and session data.
 
 ## Producer Modes
 
-Two additive reasoning-plane producer contracts exist:
+Three additive reasoning-plane producer contracts exist:
 
-| Mode | API | LLM Cost | Used By |
-|------|-----|----------|---------|
-| **Raw session ingest** | `upsert_behavioral_model_from_raw_sessions` | EDAMAME-side LLM | Cursor, Claude Code, Claude Desktop, OpenClaw (compiled) |
+| Mode | API | LLM Cost | Driven By |
+|------|-----|----------|-----------|
+| **Raw session ingest (plugin-driven)** | `upsert_behavioral_model_from_raw_sessions` | EDAMAME-side LLM | Cursor, Claude Code, Claude Desktop, OpenClaw (compiled) plugins |
 | **Direct model upsert** | `upsert_behavioral_model` | Agent-side LLM | OpenClaw (llm mode) |
+| **External transcript observer (EDAMAME-driven)** | `upsert_behavioral_model_from_raw_sessions` (called from inside EDAMAME) | EDAMAME-side LLM | EDAMAME core periodic tick (`run_transcript_observer_tick`) |
 
 Raw session ingest is preferred for production: the plugin sends transcript
 text and metadata, and EDAMAME's configured LLM provider generates the
 behavioral predictions internally. This eliminates per-cycle LLM cost on
 the agent side.
+
+The **external transcript observer** is an EDAMAME-side path that reads
+every **discovered** agent's transcript directory directly and feeds the
+same ingest pipeline. "Discovered" means the agent's transcript root is
+accessible on disk (e.g. `~/.cursor/projects/`, `~/.claude/projects/`,
+`~/.codex/sessions/`); plugin install is **not** required. Divergence
+detection works end-to-end for any agent the user already has on their
+machine, even before they ever click "Install plugin" in the AI /
+Config tab. When the EDAMAME plugin **is** installed in an agent's MCP
+config, the plugin's own Node-side bridge also pushes behavioral models
+in-process and the observer hash-skips when payloads match -- so the
+two paths are purely additive. Operators can pause, resume, or run-now
+the observer per agent (discovered or not) in the EDAMAME app's AI /
+Config tab. When the observer is paused while the agent is discovered
+on disk, EDAMAME flags a new internal threat (`unsecured_<agent>`, one
+per agent type, including `unsecured_codex`) on the next score cycle --
+the threat keys on discovery, not plugin install.
 
 ## Package Layout
 

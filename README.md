@@ -1,6 +1,6 @@
-# EDAMAME Security App
+# EDAMAME Security
 
-> Part of the **[EDAMAME Agents](https://github.com/edamametechnologies#edamame-agents)** family - AI-powered security assistants for the modern SDLC with shared LLM subscription via [EDAMAME Portal](https://portal.edamame.tech).
+> **EDAMAME** is the developer-first, agent-first runtime security layer for the SDLC. **EDAMAME Security** protects workstations and local coding sessions, **EDAMAME Posture** secures CI/CD runners, build hosts, and self-hosted agent hosts, **EDAMAME Hub** gives teams fleet visibility and proof, and **EDAMAME Portal** handles account access and managed LLM subscription.
 
 ## Overview
 
@@ -162,66 +162,88 @@ or
 
 ### Windows
 
-#### Chocolatey Installation (Recommended)
-The easiest way to install on Windows:
+#### All-in-One Installer (Recommended)
+
+The single signed installer bundles both components in one download: the
+**EDAMAME Security** app (UI) and the **EDAMAME Helper** system service (privileged
+security operations such as Security Score analysis and remediations). One
+double-click, one elevation prompt, both pieces installed.
+
+1. Download: [edamame-latest-setup.exe](https://edamame.s3.eu-west-1.amazonaws.com/windows/edamame-latest-setup.exe)
+2. Run the installer and click **Install**.
+3. (Optional) Install [Npcap](https://npcap.com/#download) to enable traffic capture.
+
+After install, **Add/Remove Programs** lists two entries:
+- **EDAMAME Security** -- the bundle itself; uninstall here to remove both components.
+- **EDAMAME Helper** -- the system service. Listed separately so users migrating
+  from the previous two-package install (and Microsoft Store users who add the
+  helper) keep a familiar Programs and Features layout.
+
+When a new version is available, the in-app updater points at this same
+bundle, so upgrading is a one-click operation.
+
+Past releases (per-version, signed) live on the
+[edamame_security GitHub Releases page](https://github.com/edamametechnologies/edamame_security/releases),
+named `edamame-windows-<version>-setup.exe`.
+
+#### Chocolatey
 
 ```powershell
-# Install EDAMAME Security
+# Install EDAMAME Security app
 choco install edamame
 
-# Install EDAMAME Helper (required for full system access)
+# Install EDAMAME Helper (system service)
 choco install edamame-helper
 
 # Install Npcap (required for traffic capture)
 choco install npcap
 ```
 
-To update to the latest versions:
+To update:
 ```powershell
 choco upgrade edamame
 choco upgrade edamame-helper
 choco upgrade npcap
 ```
 
-**Note**: All three packages are recommended for full functionality:
-- **EDAMAME**: Main application with UI
-- **edamame-helper**: Enables privileged security operations
-- **npcap**: Enables network traffic capture and monitoring
+The Chocolatey `edamame` package installs the MSIX-only version of the app,
+so the helper must be installed separately via `edamame-helper`. If you'd
+rather get both in one shot, use the **All-in-One Installer** above.
 
-#### Microsoft Store installation
+#### Microsoft Store
 
-Step 1: Install and Open the app from Microsoft Store
+Step 1: Install and open the app from the Microsoft Store.
 
-- Download from the [Microsoft Store](https://www.microsoft.com/store/apps/9N399LMTKQLQ) for a Microsoft-vetted sandboxed app
-<img width="711" height="634" alt="Screenshot 2025-12-08 at 5 17 43 PM" src="https://github.com/user-attachments/assets/dd6ccc1d-5959-46cc-99c8-89b724fff014" />
+- Download from the [Microsoft Store](https://www.microsoft.com/store/apps/9N399LMTKQLQ) for a Microsoft-vetted sandboxed app.
+<img width="711" height="634" alt="Screenshot Microsoft Store install" src="https://github.com/user-attachments/assets/dd6ccc1d-5959-46cc-99c8-89b724fff014" />
 <br>
-Step 2: Install EDAMAME Helper from Todo action(s)
-In the advisor Tab of the app click on this Todo action item for the Helper software…
-<img width="717" height="146" alt="Screenshot 2025-12-08 at 5 19 19 PM" src="https://github.com/user-attachments/assets/3db8d298-3cf7-4e7c-b452-18cb6ccedb49" />
 
-…and click on “Push to installˮ.
-<br><br/>
-<img width="724" height="431" alt="Screenshot 2025-12-08 at 5 20 06 PM" src="https://github.com/user-attachments/assets/c2b23276-1ff4-44d0-b1a6-1ed836e4cc04" />
-<br><br/>
-This Helper is needed due to the limitations of Apps installed from the Microsoft Store.
+Step 2: Install EDAMAME Helper.
 
-If you prefer you can download directly the EDAMAME Helper Binary
-[EDAMAME Helper](https://github.com/edamametechnologies/edamame_helper/releases) for system access
+Microsoft Store apps run in a sandbox, so the Store cannot ship the helper
+alongside the app. The easiest path is to let the app prompt you: in the
+**Advisor** tab, click the Todo action item for the Helper software and click
+"Push to install".
+<img width="717" height="146" alt="Screenshot helper Todo action" src="https://github.com/user-attachments/assets/3db8d298-3cf7-4e7c-b452-18cb6ccedb49" />
+<img width="724" height="431" alt="Screenshot Push to install" src="https://github.com/user-attachments/assets/c2b23276-1ff4-44d0-b1a6-1ed836e4cc04" />
 
-After the binary is downloaded run the downloaded install package in “Downloadsˮ.
+If you prefer to install the helper manually, download the standalone signed MSI:
+[edamame_helper-latest-x86_64.msi](https://edamame.s3.eu-west-1.amazonaws.com/windows/edamame_helper-latest-x86_64.msi).
+This is the same MSI shipped inside the All-in-One Installer, so it upgrades
+cleanly later if you switch to the bundle. Run it from your Downloads folder
+and accept the elevation prompt.
 
-Click on “More infoˮ then “Run anywayˮ to allow the install.
+Step 3 (optional): Install [Npcap](https://npcap.com/#download) to enable traffic capture.
 
-<img width="614" height="575" alt="Screenshot 2025-12-08 at 5 22 40 PM" src="https://github.com/user-attachments/assets/aeb0d067-463e-4a67-84cc-7232cf0ae153" />
+#### Direct Download -- Components Only (advanced)
 
-Step 4 (Optional): Install ncap
-Install npcap to enable traffic capture
-[Npcap](https://npcap.com/#download) for traffic capture
+If you cannot run the all-in-one `.exe` (corporate policy, fleet management
+tooling that drives MSI/MSIX directly, etc.), install the two pieces
+separately from S3 -- same files the bundle ships:
 
-#### Direct Download
-1. Download the installer: [edamame-latest.msix](https://edamame.s3.eu-west-1.amazonaws.com/windows/edamame-latest.msix)
-2. Install the [EDAMAME Helper](https://github.com/edamametechnologies/edamame_helper/releases)
-3. Install [Npcap](https://npcap.com/#download) to enable traffic capture
+1. App (MSIX): [edamame-latest.msix](https://edamame.s3.eu-west-1.amazonaws.com/windows/edamame-latest.msix)
+2. Helper (MSI): [edamame_helper-latest-x86_64.msi](https://edamame.s3.eu-west-1.amazonaws.com/windows/edamame_helper-latest-x86_64.msi)
+3. Optional: [Npcap](https://npcap.com/#download) for traffic capture.
 
 ### Linux
 
