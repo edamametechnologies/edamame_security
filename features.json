@@ -131,6 +131,11 @@
         "mobile_prefix": "06",
         "multipane": false
       },
+      "config_statistics": {
+        "prefix": "07",
+        "desktop_only": true,
+        "multipane": false
+      },
       "config_system": {
         "prefix": "07",
         "desktop_only": true,
@@ -1742,18 +1747,18 @@
           ]
         },
         {
-          "name": "config_system",
+          "name": "config_statistics",
           "title": {
-            "en": "System – Monitoring Statistics (Desktop)",
-            "fr": "Systeme – Statistiques de Supervision (Bureau)"
+            "en": "Statistics – Network, Files & Agentic Telemetry (Desktop)",
+            "fr": "Statistiques – Telemetrie Reseau, Fichiers et Agentique (Bureau)"
           },
           "visual": {
-            "en": "The System tab (desktop-only) displays detailed packet capture and ML analyzer statistics in a two-column layout. Left column 'Packet Statistics' shows Current Interval metrics (Total Processed, TCP, UDP, IPv4, IPv6, New Sessions, Updated Sessions) and Cumulative Totals with the same breakdowns showing lifetime counts (e.g., 14,504,160 total processed). A 'Last Update' timestamp appears at the bottom. Right column 'Analyzer Status' shows operational badges: 'Running' (green), 'Complete' (yellow), 'Trained' (green checkmark). 'Detection Thresholds' displays Suspicious Threshold (0.85), Abnormal Threshold (0.89), and percentile settings. 'Model Statistics' shows Buffer Usage (e.g., 472/800), Unique Samples, Feature Count (12 dimensions), and Downsample Factor. 'Score Distribution' displays min/mean/max values with P50/P90/P95/P99 percentiles. 'Session Analysis' summarizes Total Sessions with Normal (green) and Anomalous (red) counts.",
-            "fr": "L'onglet Systeme (bureau uniquement) affiche des statistiques detaillees de capture de paquets et de l'analyseur ML en deux colonnes. Les statistiques de paquets a gauche, le statut de l'analyseur et les metriques du modele a droite."
+            "en": "The Statistics tab (desktop-only, formerly 'System') consolidates monitoring telemetry across the network, files, and agentic subsystems in a multi-column layout. The top section shows packet pipeline metrics (Current Interval + Cumulative Totals: TCP/UDP/IPv4/IPv6 counts and session deltas) on the left and ML analyzer status on the right (Running/Complete/Trained badges, Detection Thresholds, Model Statistics with buffer usage and feature count, Score Distribution with percentiles, and Session Analysis with Normal/Anomalous counts). A bottom security-telemetry section adds six new read-only mirrors: Vulnerability Detector (running, interval, last run, active findings), Divergence Engine (running, interval, last run, model age, last verdict, contributor count), File Integrity Monitoring (monitoring state, watch path count, event count, last event time), LLM Token Consumption (per-loop in/out counters for agentic/vulnerability/divergence buckets with since-timestamp), Shadow CRS rollout snapshot (critical/high/low severity distribution over the last 24h from action history), and Agentic Memory (raw memory stats payload).",
+            "fr": "L'onglet Statistiques (bureau uniquement, anciennement 'Systeme') consolide la telemetrie de supervision pour les sous-systemes reseau, fichiers et agentique en plusieurs colonnes. Le haut affiche les statistiques de paquets et le statut de l'analyseur ML. Le bas ajoute six panneaux en lecture seule : detecteur de vulnerabilites, moteur de divergence, integrite des fichiers, consommation de jetons LLM par boucle, distribution Shadow CRS sur 24h et statistiques memoire agentique."
           },
           "description": {
-            "en": "Use this diagnostics panel to monitor packet pipeline and analyzer health. Recheck thresholds and model stats when detection quality shifts.",
-            "fr": "Utilisez ce panneau de diagnostic pour surveiller la pipeline de paquets et la sante de l'analyseur. Reverifiez les seuils et stats modele lorsque la qualite de detection evolue."
+            "en": "Use this diagnostics panel to monitor the entire telemetry surface — packet pipeline, ML analyzer, vulnerability detector, divergence engine, file integrity monitor, agentic memory, and per-loop LLM token spend. Recheck thresholds and model stats when detection quality shifts.",
+            "fr": "Utilisez ce panneau de diagnostic pour surveiller toute la surface de telemetrie — pipeline de paquets, analyseur ML, detecteur de vulnerabilites, moteur de divergence, surveillance d'integrite, memoire agentique et consommation de jetons LLM par boucle. Reverifiez les seuils et statistiques de modele lorsque la qualite de detection evolue."
           }
         },
         {
