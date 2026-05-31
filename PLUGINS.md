@@ -93,7 +93,9 @@ the threat keys on discovery, not plugin install.
 
 ## Package Layout
 
-All four plugins share a common directory structure:
+The four workstation plugins (Cursor, Claude Code, Claude Desktop, Codex)
+share a common directory structure, while OpenClaw uses `extensions/edamame/`
+and `skill/`:
 
 ```
 bridge/                  Local stdio MCP bridge + forwarding
@@ -102,10 +104,8 @@ service/                 Extrapolator, verdict reader, posture facade, health
 setup/                   Install scripts, config templates, health check
   install.sh             Portable local install (bash)
   install.ps1            Portable local install (PowerShell, Windows)
-demo/                    CVE/divergence trigger scripts for E2E testing
-scripts/                 E2E intent injection test
 docs/                    Architecture, setup, operator guidance
-tests/                   Unit tests
+tests/                   Unit tests and E2E intent injection (e2e_inject_intent.sh)
 ```
 
 Agent-specific additions:
@@ -132,6 +132,7 @@ edamame-posture install-agent-plugin cursor
 edamame-posture install-agent-plugin claude_code
 edamame-posture install-agent-plugin claude_desktop
 edamame-posture install-agent-plugin openclaw
+edamame-posture install-agent-plugin codex
 ```
 
 For Cursor, Claude Code, and Claude Desktop, the provisioning engine
@@ -242,6 +243,7 @@ edamame-posture uninstall-agent-plugin cursor
 edamame-posture uninstall-agent-plugin claude_code
 edamame-posture uninstall-agent-plugin claude_desktop
 edamame-posture uninstall-agent-plugin openclaw
+edamame-posture uninstall-agent-plugin codex
 ```
 
 ## Scope Filters
@@ -322,16 +324,16 @@ Two test suites validate each plugin:
 
 | Suite | What it tests | Script |
 |-------|--------------|--------|
-| **Intent E2E** | Reasoning-plane pipeline: inject synthetic transcripts, verify behavioral predictions | `scripts/e2e_inject_intent.sh` or `tests/e2e_inject_intent.sh` in each repo |
-| **CVE / Divergence E2E** | System-plane detection: trigger attack simulations, verify EDAMAME detects them | `demo/trigger_*.py` in each repo |
+| **Intent E2E** | Reasoning-plane pipeline: inject synthetic transcripts, verify behavioral predictions | `tests/e2e_inject_intent.sh` in each repo |
+| **CVE / Divergence E2E** | System-plane detection: trigger attack simulations, verify EDAMAME detects them | `agent_security/tests/e2e/triggers/` (run with `--agent-type <plugin>`) |
 
 Run intent tests:
 
 ```bash
-cd edamame_cursor          && bash scripts/e2e_inject_intent.sh
-cd edamame_claude_code     && bash scripts/e2e_inject_intent.sh
+cd edamame_cursor          && bash tests/e2e_inject_intent.sh
+cd edamame_claude_code     && bash tests/e2e_inject_intent.sh
 cd edamame_claude_desktop  && bash tests/e2e_inject_intent.sh
-cd edamame_openclaw        && bash scripts/e2e_inject_intent.sh
+cd edamame_openclaw        && bash tests/e2e_inject_intent.sh
 ```
 
 ## Related
