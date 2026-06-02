@@ -43,6 +43,8 @@ EDAMAME Security is your all‑in‑one tool to secure, understand, and prove th
     - [EDAMAME for Claude Code](https://github.com/edamametechnologies/edamame_claude_code) -- Claude Code plugin (Claude Code Marketplace)
     - [EDAMAME for Claude Desktop](https://github.com/edamametechnologies/edamame_claude_desktop) -- Claude Desktop plugin (Code-in-Desktop and Cowork modes)
     - [EDAMAME for OpenClaw](https://github.com/edamametechnologies/edamame_openclaw) -- OpenClaw agent plugin
+    - [EDAMAME for Codex CLI](https://github.com/edamametechnologies/edamame_codex) -- OpenAI Codex CLI plugin
+    - [EDAMAME for Hermes](https://github.com/edamametechnologies/edamame_hermes) -- Nous Research Hermes Agent plugin
   - Connect MCP Inspector or build custom workflows
   - Test interactively with MCP Inspector: `npx @modelcontextprotocol/inspector --server-url http://127.0.0.1:3000/mcp --transport http`
   - See [EDAMAME Core API MCP Reference](https://github.com/edamametechnologies/edamame_core_api/blob/main/MCP.md) for complete tool documentation
@@ -323,7 +325,7 @@ To download EDAMAME Security, see [edamame.tech](https://www.edamame.tech).
 | Document | Content |
 |----------|---------|
 | [AGENTIC.md](AGENTIC.md) | AI Assistant user guide -- workflows, MCP testing, LLM providers |
-| [PLUGINS.md](PLUGINS.md) | Agent plugin architecture -- Cursor, Claude Code, Claude Desktop, OpenClaw repos, install paths, pairing, scope filters, E2E testing |
+| [PLUGINS.md](PLUGINS.md) | Agent plugin architecture -- Cursor, Claude Code, Claude Desktop, OpenClaw, Codex, Hermes repos, install paths, pairing, scope filters, E2E testing |
 | [Feature Wiki](https://github.com/edamametechnologies/edamame_security/wiki) | Full feature descriptions with screenshots |
 | [EDAMAME Core API](https://github.com/edamametechnologies/edamame_core_api) | Public API and MCP tool reference |
 | [EDAMAME Posture CLI](https://github.com/edamametechnologies/edamame_posture) | CLI for security posture, CI/CD policy enforcement, and plugin provisioning |
