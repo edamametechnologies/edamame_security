@@ -1,7 +1,7 @@
 # Agent Plugins
 
 EDAMAME Security provides runtime behavioral monitoring for AI agents through
-five integration packages. Each package bridges an agent's reasoning plane
+six integration packages. Each package bridges an agent's reasoning plane
 (transcripts, tool calls, session history) to EDAMAME's system-plane observer,
 enabling two-plane divergence detection.
 
@@ -14,6 +14,7 @@ enabling two-plane divergence detection.
 | EDAMAME for Claude Desktop | [edamame_claude_desktop](https://github.com/edamametechnologies/edamame_claude_desktop) | Claude Desktop app (Code-in-Desktop + Cowork) | Public |
 | EDAMAME for OpenClaw | [edamame_openclaw](https://github.com/edamametechnologies/edamame_openclaw) | OpenClaw agents | Public |
 | EDAMAME for Codex CLI | [edamame_codex](https://github.com/edamametechnologies/edamame_codex) | OpenAI Codex CLI | Public |
+| EDAMAME for Hermes | [edamame_hermes](https://github.com/edamametechnologies/edamame_hermes) | Nous Research Hermes Agent | Public |
 
 Supporting repositories:
 
@@ -78,7 +79,7 @@ The **external transcript observer** is an EDAMAME-side path that reads
 every **discovered** agent's transcript directory directly and feeds the
 same ingest pipeline. "Discovered" means the agent's transcript root is
 accessible on disk (e.g. `~/.cursor/projects/`, `~/.claude/projects/`,
-`~/.codex/sessions/`); plugin install is **not** required. Divergence
+`~/.codex/sessions/`, `~/.hermes/`); plugin install is **not** required. Divergence
 detection works end-to-end for any agent the user already has on their
 machine, even before they ever click "Install plugin" in the AI /
 Config tab. When the EDAMAME plugin **is** installed in an agent's MCP
@@ -93,9 +94,9 @@ the threat keys on discovery, not plugin install.
 
 ## Package Layout
 
-The four workstation plugins (Cursor, Claude Code, Claude Desktop, Codex)
-share a common directory structure, while OpenClaw uses `extensions/edamame/`
-and `skill/`:
+The five workstation plugins (Cursor, Claude Code, Claude Desktop, Codex,
+Hermes) share a common directory structure, while OpenClaw uses
+`extensions/edamame/` and `skill/`:
 
 ```
 bridge/                  Local stdio MCP bridge + forwarding
@@ -133,6 +134,7 @@ edamame-posture install-agent-plugin claude_code
 edamame-posture install-agent-plugin claude_desktop
 edamame-posture install-agent-plugin openclaw
 edamame-posture install-agent-plugin codex
+edamame-posture install-agent-plugin hermes
 ```
 
 For Cursor, Claude Code, and Claude Desktop, the provisioning engine
@@ -244,6 +246,7 @@ edamame-posture uninstall-agent-plugin claude_code
 edamame-posture uninstall-agent-plugin claude_desktop
 edamame-posture uninstall-agent-plugin openclaw
 edamame-posture uninstall-agent-plugin codex
+edamame-posture uninstall-agent-plugin hermes
 ```
 
 ## Scope Filters
