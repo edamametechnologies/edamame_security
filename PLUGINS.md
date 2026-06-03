@@ -92,6 +92,43 @@ on disk, EDAMAME flags a new internal threat (`unsecured_<agent>`, one
 per agent type, including `unsecured_codex`) on the next score cycle --
 the threat keys on discovery, not plugin install.
 
+## Observer vs plugin: the value boundary
+
+The observer and the plugins are **not** peers. Keeping the directional
+split explicit prevents two opposite mistakes: treating a plugin as the
+security control, or dismissing a plugin as redundant.
+
+| | EDAMAME host-side observer | Agent plugin (reasoning plane) |
+|---|---|---|
+| Role | **Security control of record** | **Cooperative enhancement** |
+| Trust model | Observer-independent: it runs in the system plane, so a compromised agent cannot pause, blind, or silence it | Cooperative: the agent voluntarily declares intent; a plugin can only *add* signal, never *weaken* a verdict |
+| Needs | The agent's transcripts readable on the host (agent **discovered** on disk) | The agent itself running the plugin's MCP bridge |
+| Provides the guarantee? | **Yes** -- divergence detection works with zero plugin installed | **No** -- it adds coverage and convenience |
+
+Why a plugin still earns its place, neither point being the guarantee
+itself:
+
+- **Off-host coverage.** When an agent runs where the host observer cannot
+  read its transcripts -- a remote box, SSH session, container, CI runner,
+  VM, or a different user account -- the in-process MCP bridge is the
+  *only* path that delivers the behavioral model to EDAMAME. OpenClaw is
+  the extreme case: it normally runs off-host (Lima/remote), so its plugin
+  is usually the **primary** ingest path while the observer covers only the
+  rarer host-resident deployment.
+- **Cooperative onboarding and UX.** MCP-native discovery, pairing, the
+  in-agent read-only posture/verdict surface, health checks, intent
+  export, and security-awareness rules/skills -- the turnkey ramp that gets
+  a workstation monitored and lets the developer see verdicts from inside
+  the agent.
+
+In every mode the EDAMAME host stays the **verdict authority**: dismissing
+findings, clearing divergence state, and any verdict-mutating capability
+are operator-only on the EDAMAME side (the MCP observer-independence
+policy). Plugins observe and onboard; they never adjudicate. This is also
+why the `unsecured_<agent>` internal threat keys on **discovery**, not
+plugin install -- the security expectation is "this agent is being
+observed", and the observer, not the plugin, is what satisfies it.
+
 ## Package Layout
 
 The five workstation plugins (Cursor, Claude Code, Claude Desktop, Codex,
