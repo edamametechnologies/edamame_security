@@ -326,9 +326,100 @@ To download EDAMAME Security, see [edamame.tech](https://www.edamame.tech).
 |----------|---------|
 | [AGENTIC.md](AGENTIC.md) | AI Assistant user guide -- workflows, MCP testing, LLM providers |
 | [PLUGINS.md](PLUGINS.md) | Agent plugin architecture -- Cursor, Claude Code, Claude Desktop, OpenClaw, Codex, Hermes repos, install paths, pairing, scope filters, E2E testing |
+| [Troubleshooting](#troubleshooting) | Feedback button behavior and where to find app/helper logs on macOS, Windows, and Linux |
 | [Feature Wiki](https://github.com/edamametechnologies/edamame_security/wiki) | Full feature descriptions with screenshots |
 | [EDAMAME Core API](https://github.com/edamametechnologies/edamame_core_api) | Public API and MCP tool reference |
 | [EDAMAME Posture CLI](https://github.com/edamametechnologies/edamame_posture) | CLI for security posture, CI/CD policy enforcement, and plugin provisioning |
+
+## Troubleshooting
+
+### Reporting a problem with the Feedback button
+
+The quickest way to send a problem report with diagnostics attached is
+the **Feedback** button ("Send feedback or report an issue") in the
+**Advisor** tab. It opens a consent dialog where you enter a short
+description (required) and your email (required) after reviewing the
+feedback privacy notice.
+
+On submit, EDAMAME bundles the following into the report sent to its
+backend:
+
+- Your description and email address.
+- App version, operating system and version, and EDAMAME Helper state.
+- The active threat model name, date, and signature, plus your current
+  Security Score.
+- A recent slice of the **app log** (up to the last 100 lines).
+- A recent slice of the **EDAMAME Helper log** (up to the last 100
+  lines) -- included only on macOS/Windows/Linux when the helper is
+  installed and enabled. On iOS and Android the helper log is empty
+  because there is no helper on those platforms.
+
+This is the recommended way to share logs: on macOS and on mobile the
+app log is kept only in memory and is never written to a file you can
+open yourself, so the Feedback button is the only way to retrieve it.
+What the report contains and how it is used is described in the privacy
+notice shown inside the dialog.
+
+### Finding the logs manually
+
+To inspect logs locally -- for example to attach them to a GitHub issue
+-- use the locations below. EDAMAME has two logging components:
+
+- **App** -- the EDAMAME Security user interface.
+- **EDAMAME Helper** -- the privileged background service/daemon that
+  runs system checks, packet capture, and remediations. On Linux this
+  functionality is built into the `edamame_posture` daemon.
+
+Where logs are written to files, the files are named
+`<component>_<pid>.YYYY-MM-DD` (note: **no `.log` extension**) and rotate
+daily. If a component crashes, a `<component>_panic_<timestamp>.txt` file
+is written alongside the logs.
+
+#### macOS
+
+| Component | Where to look |
+| --- | --- |
+| EDAMAME Helper | `/var/log/edamame/edamame_helper_<pid>.YYYY-MM-DD` (owned by `root` -- read with `sudo`) |
+| App | Not written to a file. Use the in-app **Feedback** button to capture and send the app log. |
+
+```bash
+# Tail the most recent helper log
+sudo tail -100 "$(sudo ls -t /var/log/edamame/edamame_helper_* | head -1)"
+```
+
+#### Windows
+
+| Component | Where to look |
+| --- | --- |
+| App | `%APPDATA%\com.edamametech\EDAMAME Security\` (expands to `C:\Users\<you>\AppData\Roaming\com.edamametech\EDAMAME Security\`) |
+| EDAMAME Helper | Next to the helper executable -- default `C:\Program Files\edamame_helper\bin\` |
+
+```powershell
+# App logs (the edamame_<pid>.YYYY-MM-DD files; the .json files are app state)
+Get-ChildItem "$env:APPDATA\com.edamametech\EDAMAME Security" | Sort-Object LastWriteTime
+
+# Helper logs
+Get-ChildItem "C:\Program Files\edamame_helper\bin\edamame_helper_*"
+```
+
+#### Linux
+
+On Linux the privileged component is the `edamame_posture` daemon (the
+GUI is a thin client that talks to it). Where its logs go depends on how
+it was started:
+
+| How it runs | Where to look |
+| --- | --- |
+| systemd service (default for the `.deb` package and the GUI app) | `sudo journalctl -u edamame_posture` |
+| `edamame_posture background-start` | `/var/log/edamame/edamame_posture_<pid>.YYYY-MM-DD` |
+
+```bash
+# systemd service logs (most installs)
+sudo journalctl -u edamame_posture --since "1 hour ago" --no-pager
+
+# background-start daemon logs
+sudo tail -100 "$(sudo ls -t /var/log/edamame/edamame_posture_* | head -1)"
+```
 
 ## Support and Issues
 
@@ -340,3 +431,4 @@ If you encounter any issues or have feature requests, please:
    - Steps to reproduce the issue
    - Expected vs actual behavior
    - Any error messages or screenshots
+   - Relevant logs (use the in-app Feedback button, or see [Troubleshooting](#troubleshooting) for where to find them manually)
