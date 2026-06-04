@@ -370,48 +370,74 @@ To inspect logs locally -- for example to attach them to a GitHub issue
   runs system checks, packet capture, and remediations. On Linux this
   functionality is built into the `edamame_posture` daemon.
 
-Where logs are written to files, the files are named
-`<component>_<pid>.YYYY-MM-DD` (note: **no `.log` extension**) and rotate
-daily. If a component crashes, a `<component>_panic_<timestamp>.txt` file
-is written alongside the logs.
+**Rolling log files** are named `<basename>_<pid>.YYYY-MM-DD` (note: **no
+`.log` extension**), rotate daily, and keep the last 7 days. The
+`<basename>` is `edamame_helper`, `edamame_posture`, `edamame` (the app),
+or `edamame_cli`.
+
+**Crash / panic files.** Whenever a component panics it also writes a
+one-shot `<type>_panic_<unix-timestamp>.txt` file containing the panic
+message, source location, full backtrace, and environment info. The
+`<type>` prefix is the short component name and is **not** the same as the
+rolling-log basename: look for `helper_panic_*.txt`, `posture_panic_*.txt`,
+`app_panic_*.txt`, or `cli_panic_*.txt`. Three things to know:
+
+- Panic files are written **even for components that keep no rolling log
+  file** (for example the macOS/Linux app), so they are often the only
+  on-disk evidence of a GUI crash.
+- A panic file can land in a **different directory than the rolling logs**:
+  the Helper and Posture daemons on macOS/Linux write panic files into
+  `/var/log/edamame/`; in **every other case** (the app on any OS, and the
+  Helper on Windows) the panic file is written **next to that component's
+  executable**.
+- Several panic files with timestamps a few seconds apart mean the
+  component crash-looped and was restarted repeatedly by the OS service
+  manager. Attach the most recent one to a GitHub issue, or send it with
+  the Feedback button.
 
 #### macOS
 
-| Component | Where to look |
-| --- | --- |
-| EDAMAME Helper | `/var/log/edamame/edamame_helper_<pid>.YYYY-MM-DD` (owned by `root` -- read with `sudo`) |
-| App | Not written to a file. Use the in-app **Feedback** button to capture and send the app log. |
+| Component | Rolling logs | Crash / panic file |
+| --- | --- | --- |
+| EDAMAME Helper | `/var/log/edamame/edamame_helper_<pid>.YYYY-MM-DD` (owned by `root` -- read with `sudo`) | `/var/log/edamame/helper_panic_<timestamp>.txt` (also `root`) |
+| App | Not written to a file -- use the in-app **Feedback** button (it also captures the in-memory app log) | `app_panic_<timestamp>.txt` next to the app binary inside `EDAMAME Security.app/Contents/MacOS/`; may be absent if the sandboxed bundle is not writable, in which case rely on Feedback |
 
 ```bash
 # Tail the most recent helper log
 sudo tail -100 "$(sudo ls -t /var/log/edamame/edamame_helper_* | head -1)"
+
+# List any crash / panic artifacts (helper or posture)
+sudo ls -lt /var/log/edamame/*_panic_*.txt 2>/dev/null
 ```
 
 #### Windows
 
-| Component | Where to look |
-| --- | --- |
-| App | `%APPDATA%\com.edamametech\EDAMAME Security\` (expands to `C:\Users\<you>\AppData\Roaming\com.edamametech\EDAMAME Security\`) |
-| EDAMAME Helper | Next to the helper executable -- default `C:\Program Files\edamame_helper\bin\` |
+| Component | Rolling logs | Crash / panic file |
+| --- | --- | --- |
+| App | `%APPDATA%\com.edamametech\EDAMAME Security\` (expands to `C:\Users\<you>\AppData\Roaming\com.edamametech\EDAMAME Security\`) | `app_panic_<timestamp>.txt` next to the app executable (the install directory), **not** in `%APPDATA%` |
+| EDAMAME Helper | Next to the helper executable -- default `C:\Program Files\edamame_helper\bin\` | `helper_panic_<timestamp>.txt` in that same `bin\` folder |
 
 ```powershell
 # App logs (the edamame_<pid>.YYYY-MM-DD files; the .json files are app state)
 Get-ChildItem "$env:APPDATA\com.edamametech\EDAMAME Security" | Sort-Object LastWriteTime
 
-# Helper logs
+# Helper logs and any crash / panic artifacts
 Get-ChildItem "C:\Program Files\edamame_helper\bin\edamame_helper_*"
+Get-ChildItem "C:\Program Files\edamame_helper\bin\*_panic_*.txt"
 ```
 
 #### Linux
 
 On Linux the privileged component is the `edamame_posture` daemon (the
-GUI is a thin client that talks to it). Where its logs go depends on how
-it was started:
+GUI is a thin client that talks to it). Where its rolling logs go depends
+on how it was started, but the **daemon's panic files always go to
+`/var/log/edamame/`** (`posture_panic_<timestamp>.txt`, or
+`helper_panic_<timestamp>.txt` if the separate helper daemon is in use):
 
-| How it runs | Where to look |
-| --- | --- |
-| systemd service (default for the `.deb` package and the GUI app) | `sudo journalctl -u edamame_posture` |
-| `edamame_posture background-start` | `/var/log/edamame/edamame_posture_<pid>.YYYY-MM-DD` |
+| How it runs | Rolling logs | Crash / panic file |
+| --- | --- | --- |
+| systemd service (default for the `.deb` package and the GUI app) | `sudo journalctl -u edamame_posture` | `/var/log/edamame/posture_panic_<timestamp>.txt` |
+| `edamame_posture background-start` | `/var/log/edamame/edamame_posture_<pid>.YYYY-MM-DD` | `/var/log/edamame/posture_panic_<timestamp>.txt` |
 
 ```bash
 # systemd service logs (most installs)
@@ -419,6 +445,9 @@ sudo journalctl -u edamame_posture --since "1 hour ago" --no-pager
 
 # background-start daemon logs
 sudo tail -100 "$(sudo ls -t /var/log/edamame/edamame_posture_* | head -1)"
+
+# List any crash / panic artifacts
+sudo ls -lt /var/log/edamame/*_panic_*.txt 2>/dev/null
 ```
 
 ## Support and Issues
