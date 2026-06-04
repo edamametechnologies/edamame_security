@@ -326,7 +326,7 @@ To download EDAMAME Security, see [edamame.tech](https://www.edamame.tech).
 |----------|---------|
 | [AGENTIC.md](AGENTIC.md) | AI Assistant user guide -- workflows, MCP testing, LLM providers |
 | [PLUGINS.md](PLUGINS.md) | Agent plugin architecture -- Cursor, Claude Code, Claude Desktop, OpenClaw, Codex, Hermes repos, install paths, pairing, scope filters, E2E testing |
-| [Troubleshooting](#troubleshooting) | Feedback button behavior and where to find app/helper logs on macOS, Windows, and Linux |
+| [Troubleshooting](#troubleshooting) | Feedback button behavior, where to find app/helper logs and crash files on macOS, Windows, and Linux, and a one-command log collector to email support |
 | [Feature Wiki](https://github.com/edamametechnologies/edamame_security/wiki) | Full feature descriptions with screenshots |
 | [EDAMAME Core API](https://github.com/edamametechnologies/edamame_core_api) | Public API and MCP tool reference |
 | [EDAMAME Posture CLI](https://github.com/edamametechnologies/edamame_posture) | CLI for security posture, CI/CD policy enforcement, and plugin provisioning |
@@ -448,6 +448,38 @@ sudo tail -100 "$(sudo ls -t /var/log/edamame/edamame_posture_* | head -1)"
 
 # List any crash / panic artifacts
 sudo ls -lt /var/log/edamame/*_panic_*.txt 2>/dev/null
+```
+
+### Collecting logs for support (one command)
+
+To send diagnostics to **support@edamame.tech**, paste the one-liner for
+your platform into a terminal. Each command gathers the most recent helper
+and app logs plus any crash / panic files into a single timestamped
+`edamame-logs-*.zip` (rolling logs are size-capped so the archive stays
+small enough to email), then prints the path. Attach that zip to an email
+to support@edamame.tech.
+
+> On macOS the app's own log is kept in memory and is never written to a
+> file, so the zip captures the helper log only; use the in-app **Feedback**
+> button to include the app log. On Windows and Linux the app/daemon logs
+> are on disk and are captured by the command.
+
+**macOS** (Terminal -- prompts once for your admin password to read the helper log):
+
+```bash
+D=$(mktemp -d); H=$(sudo find /var/log/edamame -maxdepth 1 -name 'edamame_helper_*' -exec ls -t {} + 2>/dev/null | head -1); [ -n "$H" ] && sudo tail -c 20000000 "$H" > "$D/$(basename "$H")"; sudo find /var/log/edamame -maxdepth 1 -name '*_panic_*.txt' -exec cp {} "$D/" \; 2>/dev/null; sudo chown -R "$(id -un)" "$D" 2>/dev/null; Z="$HOME/Desktop/edamame-logs-$(date +%Y%m%d-%H%M%S).zip"; (cd "$D" && zip -qr "$Z" .) && echo "Created $Z -- email it to support@edamame.tech"; rm -rf "$D"
+```
+
+**Windows** (PowerShell):
+
+```powershell
+$d=Join-Path $env:TEMP 'edamame-logs'; Remove-Item $d -Recurse -Force -ErrorAction SilentlyContinue; New-Item $d -ItemType Directory -Force | Out-Null; $app=Join-Path $env:APPDATA 'com.edamametech\EDAMAME Security'; $hb='C:\Program Files\edamame_helper\bin'; Get-ChildItem "$hb\edamame_helper_*","$app\edamame_*" -ErrorAction SilentlyContinue | Where-Object { $_.Name -match '\.\d{4}-\d{2}-\d{2}$' } | Sort-Object LastWriteTime | Select-Object -Last 5 | Copy-Item -Destination $d -ErrorAction SilentlyContinue; Get-ChildItem "$hb\*_panic_*.txt","$app\*_panic_*.txt" -ErrorAction SilentlyContinue | Copy-Item -Destination $d -ErrorAction SilentlyContinue; $z=Join-Path $env:USERPROFILE "Desktop\edamame-logs-$(Get-Date -Format yyyyMMdd-HHmmss).zip"; Compress-Archive "$d\*" $z -Force; "Created $z -- email it to support@edamame.tech"
+```
+
+**Linux** (Terminal -- captures the `edamame_posture` daemon log, which serves both the app and helper roles):
+
+```bash
+D=$(mktemp -d); sudo journalctl -u edamame_posture --since "1 day ago" --no-pager 2>/dev/null | tail -c 20000000 > "$D/edamame_posture_journal.log"; L=$(sudo find /var/log/edamame -maxdepth 1 \( -name 'edamame_posture_*' -o -name 'edamame_helper_*' \) -exec ls -t {} + 2>/dev/null | head -1); [ -n "$L" ] && sudo tail -c 20000000 "$L" > "$D/$(basename "$L")"; sudo find /var/log/edamame -maxdepth 1 -name '*_panic_*.txt' -exec cp {} "$D/" \; 2>/dev/null; sudo chown -R "$(id -un)" "$D" 2>/dev/null; Z="$HOME/edamame-logs-$(date +%Y%m%d-%H%M%S).zip"; (cd "$D" && zip -qr "$Z" .) && echo "Created $Z -- email it to support@edamame.tech"; rm -rf "$D"
 ```
 
 ## Support and Issues
