@@ -80,10 +80,15 @@
         "desktop_only": true,
         "multipane": false
       },
-      "ai_agents": {
+      "agents": {
         "prefix": "00",
         "desktop_only": true,
-        "multipane": true
+        "multipane": false
+      },
+      "ai_owasp": {
+        "prefix": "00",
+        "desktop_only": true,
+        "multipane": false
       },
       "ai_alignment": {
         "prefix": "00",
@@ -163,18 +168,158 @@
   },
   "features": [
     {
+      "name": "agents",
+      "title": {
+        "en": "Agents",
+        "fr": "Agents"
+      },
+      "visual": {
+        "en": "The Agents tab is the strictly LLM-free agent-visibility surface, a desktop-only top-level tab positioned directly below Advisor. It is anchored by the Agent Inventory, which lists every supported agent type (Cursor, Claude Code, Claude Desktop, OpenClaw, Codex, Hermes) and marks each row as discovered, observing, or paused based on whether its transcript store is present on disk and whether the host-side observer is active. A validate-at-top banner summarizes anything needing operator attention, and each row carries a compact dot-plus-label status with an approve/acknowledge action; a discovered-but-paused agent surfaces an 'unsecured' banner mirroring the matching internal threat (enable/disable and run-now controls live in AI / Config). Below the inventory the visibility panels render structurally with no language-model in the loop: MCP Servers (discovered endpoints with owning agent, config path, transport, command or URL, a per-server risk classification, and a List / Graph capability-graph toggle), Agent SBOM (a CycloneDX projection of the agent supply chain with an approved-baseline diff), Recursive Delegation (delegation depth, cycles, goal-hash repetition, and privilege escalation), Critical Subprocess Usage (agents spawning sensitive subprocesses such as shells, package managers, and network tools, detected without any LLM), Host Blast Radius and Exposure (agent sandboxes filtered to discovered agents, sorted by danger, with HostPrivilege evidence detail and confinement remediation for unconfined agents), and a structural Flight Recorder that records raw, LLM-free session lifecycle events with tool-error drill-down.",
+        "fr": "L'onglet Agents est la surface de visibilite des agents strictement sans LLM, un onglet de premier niveau reserve au bureau, positionne directement sous Advisor. Il est ancre par l'Inventaire des agents, qui liste chaque type d'agent pris en charge (Cursor, Claude Code, Claude Desktop, OpenClaw, Codex, Hermes) et marque chaque ligne comme decouverte, en observation ou en pause selon que sa banque de transcripts est presente sur le disque et que l'observateur cote hote est actif. Une banniere de validation en haut resume ce qui requiert l'attention de l'operateur, et chaque ligne porte un statut compact point-plus-etiquette avec une action approuver/accuser reception ; un agent decouvert mais en pause affiche une banniere 'non securise' refletant la menace interne correspondante (les controles activer/desactiver et execution immediate vivent dans IA / Config). Sous l'inventaire, les panneaux de visibilite s'affichent structurellement sans modele de langage dans la boucle : Serveurs MCP (points de terminaison decouverts avec agent proprietaire, chemin de configuration, transport, commande ou URL, une classification de risque par serveur et un interrupteur Liste / Graphe du graphe de capacites), SBOM d'agent (une projection CycloneDX de la chaine d'approvisionnement avec un diff de base approuvee), Delegation recursive (profondeur de delegation, cycles, repetition de hash d'objectif et escalade de privileges), Usage de sous-processus critiques (agents lancant des sous-processus sensibles tels que shells, gestionnaires de paquets et outils reseau, detectes sans LLM), Rayon d'impact hote et Exposition (bacs a sable d'agents filtres aux agents decouverts, tries par danger, avec detail de preuve HostPrivilege et remediation de confinement pour les agents non confines), et un Flight Recorder structurel qui enregistre des evenements bruts de cycle de vie de session sans LLM avec exploration des erreurs d'outils."
+      },
+      "description": {
+        "en": "Use Agents to see which AI agents exist on this machine, which are actively observed, and what each is exposed to -- entirely without any LLM. Start at the validate banner, confirm the inventory shows every on-disk agent as observed, and approve or acknowledge per row. Inventory MCP endpoints and toggle the capability graph to spot over-provisioned reach, diff the agent supply chain against an approved baseline, catch recursive-delegation abuse and critical subprocess usage, review host blast radius sorted by danger with confinement remediation for unconfined agents, and drill into tool errors in the structural Flight Recorder. Enable/disable and run-now observer controls live in AI / Config; this tab keeps only the LLM-free approve/acknowledge surface. Security state is owned by EDAMAME, never by the agent.",
+        "fr": "Utilisez Agents pour voir quels agents IA existent sur cette machine, lesquels sont activement observes et a quoi chacun est expose -- entierement sans LLM. Commencez par la banniere de validation, confirmez que l'inventaire montre chaque agent present sur disque comme observe, et approuvez ou accusez reception par ligne. Inventoriez les points de terminaison MCP et basculez le graphe de capacites pour reperer une portee sur-provisionnee, comparez la chaine d'approvisionnement a une base approuvee, detectez les abus de delegation recursive et l'usage de sous-processus critiques, examinez le rayon d'impact hote trie par danger avec remediation de confinement pour les agents non confines, et explorez les erreurs d'outils dans le Flight Recorder structurel. Les controles activer/desactiver et execution immediate de l'observateur vivent dans IA / Config ; cet onglet ne conserve que la surface approuver/accuser reception sans LLM. L'etat de securite appartient a EDAMAME, jamais a l'agent."
+      },
+      "has_dual_screenshots": false,
+      "sub_features": [
+        {
+          "name": "agents",
+          "title": {
+            "en": "Agent Visibility – Inventory, MCP, SBOM, and Exposure",
+            "fr": "Visibilite des agents – Inventaire, MCP, SBOM et exposition"
+          },
+          "visual": {
+            "en": "A single scrolling, LLM-free page anchored by the Agent Inventory and followed by the structural visibility panels (MCP Servers with capability-graph toggle, Agent SBOM, Recursive Delegation, Critical Subprocess Usage, Host Blast Radius / Exposure, and the structural Flight Recorder). A validate-at-top banner summarizes attention items and each inventory row carries a compact dot-plus-label status with an approve/acknowledge action.",
+            "fr": "Une page unique a defilement, sans LLM, ancree par l'Inventaire des agents et suivie des panneaux de visibilite structurels (Serveurs MCP avec interrupteur de graphe de capacites, SBOM d'agent, Delegation recursive, Usage de sous-processus critiques, Rayon d'impact hote / Exposition et le Flight Recorder structurel). Une banniere de validation en haut resume les elements a traiter et chaque ligne de l'inventaire porte un statut compact point-plus-etiquette avec une action approuver/accuser reception."
+          },
+          "description": {
+            "en": "Use this page to confirm coverage and triage exposure entirely without an LLM. Start at the validate banner, approve or acknowledge per agent, then work down the structural panels.",
+            "fr": "Utilisez cette page pour confirmer la couverture et trier l'exposition entierement sans LLM. Commencez par la banniere de validation, approuvez ou accusez reception par agent, puis parcourez les panneaux structurels."
+          },
+          "items": [
+            {
+              "name": "agent_inventory",
+              "title": {
+                "en": "Agent Inventory – Discovered Agents and Approve / Acknowledge",
+                "fr": "Inventaire des agents – Agents decouverts et approuver / accuser reception"
+              },
+              "visual": {
+                "en": "A row per supported agent type with a discovered / observing / paused status as a compact dot-plus-label, plus an approve/acknowledge action. A validate-at-top banner summarizes attention items, and discovered-but-paused agents show an 'unsecured' banner. Enable/disable and run-now controls for the observer live in AI / Config; this surface is strictly LLM-free.",
+                "fr": "Une ligne par type d'agent pris en charge avec un statut decouvert / en observation / en pause sous forme de point-plus-etiquette compact, plus une action approuver/accuser reception. Une banniere de validation en haut resume les elements a traiter, et les agents decouverts mais en pause affichent une banniere 'non securise'. Les controles activer/desactiver et execution immediate de l'observateur vivent dans IA / Config ; cette surface est strictement sans LLM."
+              },
+              "description": {
+                "en": "Use the inventory to confirm coverage at a glance: any agent present on disk should be observed. Approve or acknowledge per row; resume a paused observer from AI / Config to clear its 'unsecured' state.",
+                "fr": "Utilisez l'inventaire pour confirmer la couverture d'un coup d'oeil : tout agent present sur le disque devrait etre observe. Approuvez ou accusez reception par ligne ; reprenez un observateur en pause depuis IA / Config pour effacer son etat 'non securise'."
+              }
+            },
+            {
+              "name": "mcp_servers",
+              "title": {
+                "en": "MCP Servers – Discovery, Risk, and Capability Graph",
+                "fr": "Serveurs MCP – Decouverte, risque et graphe de capacites"
+              },
+              "visual": {
+                "en": "Lists MCP endpoints discovered across agent configurations with the owning agent, config path, transport, command or URL, a per-server risk classification, and a tag legend. A List / Graph toggle swaps the list for an embedded capability graph of latent versus effective tool and resource edges. Findings reuse the shared dismissal-rule UI.",
+                "fr": "Liste les points de terminaison MCP decouverts dans les configurations d'agents avec l'agent proprietaire, le chemin de configuration, le transport, la commande ou l'URL, une classification de risque par serveur et une legende de tags. Un interrupteur Liste / Graphe remplace la liste par un graphe de capacites integre des aretes latentes versus effectives. Les constats reutilisent l'interface partagee de regles de rejet."
+              },
+              "description": {
+                "en": "Use MCP Servers to inventory every MCP endpoint an agent can reach, triage the risky ones, and flip to the graph to spot over-provisioned reach.",
+                "fr": "Utilisez Serveurs MCP pour inventorier chaque point de terminaison MCP qu'un agent peut atteindre, trier les plus risques et basculer vers le graphe pour reperer une portee sur-provisionnee."
+              }
+            },
+            {
+              "name": "agent_sbom",
+              "title": {
+                "en": "Agent SBOM – Supply Chain Projection and Diff",
+                "fr": "SBOM d'agent – Projection de la chaine d'approvisionnement et diff"
+              },
+              "visual": {
+                "en": "A CycloneDX projection of the agent supply chain (plugins, skills, MCP servers, models) with an approved-baseline diff highlighting added, removed, and changed components.",
+                "fr": "Une projection CycloneDX de la chaine d'approvisionnement de l'agent (plugins, competences, serveurs MCP, modeles) avec un diff de base approuvee mettant en evidence les composants ajoutes, supprimes et modifies."
+              },
+              "description": {
+                "en": "Use the Agent SBOM to approve a known-good component set and get alerted when the live composition drifts from it.",
+                "fr": "Utilisez le SBOM d'agent pour approuver un ensemble de composants fiable et etre alerte quand la composition reelle s'en ecarte."
+              }
+            },
+            {
+              "name": "recursive_delegation",
+              "title": {
+                "en": "Recursive Delegation – Depth, Cycles, and Privilege",
+                "fr": "Delegation recursive – Profondeur, cycles et privileges"
+              },
+              "visual": {
+                "en": "Surfaces recursive agent delegation with delegation depth, detected cycles, repeated goal hashes, and privilege escalation across the delegation chain; a runaway chain trips the matching internal threat. Detection is structural and LLM-free.",
+                "fr": "Expose la delegation recursive d'agents avec la profondeur de delegation, les cycles detectes, les hash d'objectif repetes et l'escalade de privileges le long de la chaine ; une chaine emballee declenche la menace interne correspondante. La detection est structurelle et sans LLM."
+              },
+              "description": {
+                "en": "Use Recursive Delegation to catch agents that spawn agents in unbounded loops or escalate privilege across the chain.",
+                "fr": "Utilisez Delegation recursive pour detecter les agents qui engendrent des agents en boucles non bornees ou escaladent les privileges le long de la chaine."
+              }
+            },
+            {
+              "name": "critical_subprocess_usage",
+              "title": {
+                "en": "Critical Subprocess Usage – Sensitive Spawns (LLM-Free)",
+                "fr": "Usage de sous-processus critiques – Lancements sensibles (sans LLM)"
+              },
+              "visual": {
+                "en": "Lists agents observed spawning sensitive subprocesses (shells, package managers, network and credential tools) directly from structural process telemetry, with the spawning agent, the subprocess, and a risk indicator. No language-model is involved in the detection.",
+                "fr": "Liste les agents observes lancant des sous-processus sensibles (shells, gestionnaires de paquets, outils reseau et d'identifiants) directement a partir de la telemetrie de processus structurelle, avec l'agent lanceur, le sous-processus et un indicateur de risque. Aucun modele de langage n'intervient dans la detection."
+              },
+              "description": {
+                "en": "Use Critical Subprocess Usage to catch an agent reaching for a shell or package manager when its task never called for one.",
+                "fr": "Utilisez Usage de sous-processus critiques pour detecter un agent qui invoque un shell ou un gestionnaire de paquets alors que sa tache ne le justifiait pas."
+              }
+            },
+            {
+              "name": "host_blast_radius",
+              "title": {
+                "en": "Host Blast Radius and Exposure – Sandboxes Sorted by Danger",
+                "fr": "Rayon d'impact hote et exposition – Bacs a sable tries par danger"
+              },
+              "visual": {
+                "en": "Summarizes each discovered agent's host blast radius and exposure: agent sandboxes filtered to discovered agents, sorted by danger, with HostPrivilege evidence detail, clear agents-vs-problems labels, and confinement remediation guidance for unconfined agents. An agent that runs unsandboxed while the host grants passwordless sudo and/or the agent is observed spawning critical subprocesses (ssh, netcat, docker, raw shells) raises the 'AI agent with high host blast radius' posture threat, so the exposure is tracked in the threat list and the advisor, not just on this panel. EDAMAME also checks whether the discovered agents run inside a recognized governance harness (agent control plane such as AgentField or Rippletide): when agents are present but no harness footprint is detected for the user, the 'AI agents run without a governance harness' posture threat fires, surfacing the AI-SDLC plan/design-phase gap (no policy enforcement, identity, per-task budget, tool allow-list, or audit trail) and clearing as soon as a harness is installed.",
+                "fr": "Resume le rayon d'impact hote et l'exposition de chaque agent decouvert : bacs a sable d'agents filtres aux agents decouverts, tries par danger, avec detail de preuve HostPrivilege, etiquettes claires agents-vs-problemes et conseils de remediation de confinement pour les agents non confines. Un agent qui s'execute sans bac a sable alors que l'hote accorde un sudo sans mot de passe et/ou qui est observe en train de lancer des sous-processus critiques (ssh, netcat, docker, shells bruts) declenche la menace de posture 'Agent IA avec un rayon d'impact eleve sur l'hote', afin que l'exposition soit suivie dans la liste des menaces et dans l'advisor, et pas seulement sur ce panneau. EDAMAME verifie egalement si les agents decouverts s'executent dans un harnais de gouvernance reconnu (plan de controle d'agents tel qu'AgentField ou Rippletide) : lorsque des agents sont presents mais qu'aucune empreinte de harnais n'est detectee pour l'utilisateur, la menace de posture 'Des agents IA s'executent sans harnais de gouvernance' se declenche, revelant la faille des phases plan/conception de l'AI-SDLC (aucune application de politique, identite, budget par tache, liste d'autorisation d'outils ni piste d'audit) et se resorbant des qu'un harnais est installe."
+              },
+              "description": {
+                "en": "Use Host Blast Radius to see which agents can reach the most of the host and to confine the unconfined ones first. An unsandboxed agent that also has passwordless sudo or touches critical subprocesses raises a dedicated posture threat so the risk is tracked alongside the system threats. The same panel context covers the AI-SDLC governance gap: if agents are present with no detected harness (AgentField, Rippletide, ...), adopt and install one for the user that launches the agents so policy, identity, budgets, tool allow-lists, and audit trails wrap every agent action and the 'AI agents run without a governance harness' threat clears.",
+                "fr": "Utilisez Rayon d'impact hote pour voir quels agents peuvent atteindre le plus de l'hote et confiner d'abord ceux qui ne le sont pas. Un agent sans bac a sable qui possede aussi un sudo sans mot de passe ou qui touche des sous-processus critiques declenche une menace de posture dediee, afin que le risque soit suivi avec les menaces systeme. Le meme contexte couvre la faille de gouvernance de l'AI-SDLC : si des agents sont presents sans harnais detecte (AgentField, Rippletide, ...), adoptez-en un et installez-le pour l'utilisateur qui lance les agents afin que politique, identite, budgets, listes d'autorisation d'outils et pistes d'audit encadrent chaque action d'agent et que la menace 'Des agents IA s'executent sans harnais de gouvernance' se resorbe."
+              }
+            },
+            {
+              "name": "flight_recorder",
+              "title": {
+                "en": "Flight Recorder – Structural Session Lifecycle (LLM-Free)",
+                "fr": "Flight Recorder – Cycle de vie structurel des sessions (sans LLM)"
+              },
+              "visual": {
+                "en": "A structural, LLM-free run provenance view recording raw session lifecycle events (start, tool calls, tool errors, end) with a tool-error drill-down. It shows what happened mechanically, with no model reasoning or narrative.",
+                "fr": "Une vue de provenance d'execution structurelle et sans LLM qui enregistre les evenements bruts du cycle de vie des sessions (debut, appels d'outils, erreurs d'outils, fin) avec une exploration des erreurs d'outils. Elle montre ce qui s'est passe mecaniquement, sans raisonnement ni narration de modele."
+              },
+              "description": {
+                "en": "Use the Flight Recorder to reconstruct exactly what a session did and drill into any tool error -- structurally, without depending on an LLM.",
+                "fr": "Utilisez le Flight Recorder pour reconstruire exactement ce qu'une session a fait et explorer toute erreur d'outil -- structurellement, sans dependre d'un LLM."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "agentic",
       "title": {
         "en": "AI",
         "fr": "IA"
       },
       "visual": {
-        "en": "The AI tab exposes EDAMAME's agentic surfaces through five subtabs. Security is the easy-onboarding landing page featuring an interactive visual priority map of AI actions and vulnerability findings positioned by priority on concentric rings, with sweep animation, Watchdog/Assistant activation buttons, a loop interval selector, type/status filters, and OAuth sign-in to EDAMAME Portal. History shows individual vulnerability findings alongside AI actions on one timeline, using the same card format for both entry kinds, with filters for type (Actions versus Vulnerabilities), status, read state, and dismissed state, read/unread tracking, bulk operations (Confirm all, Undo all, Mark all as read, Clear), and multi-pane detail review—no aggregated report timelines. Agents is the agent-visibility surface, anchored by the Agent Inventory that lists every supported agent type (Cursor, Claude Code, Claude Desktop, OpenClaw, Codex, Hermes) as discovered, observing, or paused with a per-agent pause/resume toggle and run-now control for the host-side transcript observer (a discovered-but-paused agent shows an 'unsecured' banner); below the inventory the visibility panels roll out incrementally—MCP Servers (discovered endpoints and per-server risk), Agent SBOM (a CycloneDX projection of the agent supply chain with an approved-baseline diff), Capability Graph (latent versus effective tool and resource edges), and Recursive Delegation (delegation depth, cycles, goal-hash repetition, and privilege escalation). Alignment is the merged Divergence monitor surface with an Easy / Advanced pill toggle (3D flip animation) at the top. The Easy view reframes divergence as a source-centric map: each agent/plugin owns a sector of the circle, processes sit in the middle band of that sector, outer leaf clusters represent network, files, tools, system changes, and LAN touches, and forecast leaves paint as a quiet scaffold owned by a source/process branch—aligned activity lights those leaves up, forbidden activity strikes a red blocked leaf, outside activity escapes just beyond the branch, and silent forecast leaves remain hollow; a Rewind toggle keeps the same quadrant graph on screen and adds a bottom timeline scrubber for historical detector snapshots. The Advanced view is the coordinated live monitoring surface for the behavioral-model divergence loop: an MCP status banner, a Divergence monitor hero card (Intent panel and Live verdict panel), a Pause/Resume engine button, an Agent intent snapshot with merged prediction and tool counts, contributing agents with per-source detail, and expandable Injection History and Verdict History sections. Settings (desktop-only) combines EDAMAME Portal sign-in, BYOLLM configuration, refresh frequency selectors for divergence, vulnerability, and agent engines, Slack/Telegram notification delivery, and MCP server controls for external AI integrations.",
-        "fr": "L'onglet IA expose les surfaces agentiques d'EDAMAME via cinq sous-onglets. Securite est la page d'accueil avec une carte visuelle interactive des actions IA et des resultats de vulnerabilite, des boutons Watchdog/Assistant, un selecteur de cadence, des filtres et la connexion OAuth au portail EDAMAME. Historique presente les constats de vulnerabilite individuels aux cotes des actions IA sur une chronologie unique, avec le meme format de cartes, des filtres par type (Actions ou Vulnerabilites), statut, etat lu/non-lu, etat desactive, operations groupees et revue multi-volets. Agents est la surface de visibilite des agents, ancree par l'Inventaire des agents qui liste chaque type d'agent pris en charge (Cursor, Claude Code, Claude Desktop, OpenClaw, Codex, Hermes) comme decouvert, en observation ou en pause, avec un interrupteur pause/reprise par agent et une commande d'execution immediate pour l'observateur de transcripts cote hote (un agent decouvert mais en pause affiche une banniere 'non securise') ; sous l'inventaire, les panneaux de visibilite se deploient progressivement : Serveurs MCP (points de terminaison decouverts et risque par serveur), SBOM d'agent (une projection CycloneDX de la chaine d'approvisionnement avec un diff de base approuvee), Graphe de capacites (aretes latentes versus effectives) et Delegation recursive (profondeur de delegation, cycles, repetition de hash d'objectif et escalade de privileges). Alignment regroupe la surface Divergence monitor avec un interrupteur Simple / Avance (animation de retournement 3D) en haut. La vue Simple reformule la divergence comme une carte centree sur les sources : chaque agent/plugin possede son propre secteur, les processus occupent la bande intermediaire, et les grappes externes representent le reseau, les fichiers, les outils, les changements systeme et les touches LAN ; les feuilles de prevision se peignent comme un echafaudage discret appartenant a une branche source/processus, l'activite alignee les allume, l'activite interdite frappe une feuille rouge bloquee, l'activite hors prevision s'echappe juste au-dela de la branche, et les feuilles silencieuses restent creuses ; un interrupteur Rembobiner conserve le meme graphe en quadrants et ajoute une timeline en bas pour les instantanes historiques. La vue Avance est la surface de supervision temps reel pour la boucle de divergence du modele comportemental : bandeau MCP, carte hero Divergence monitor (panneau Intent et panneau Live verdict), bouton Pause/Reprendre, carte Agent intent snapshot avec compteurs de predictions et d'outils fusionnes, agents contributeurs avec detail par source, ainsi que des sections depliables Historique des injections et Historique des verdicts. Parametres (desktop) regroupent la connexion portail, le BYOLLM, les selecteurs de cadence pour les moteurs de divergence, de vulnerabilite et de l'agent, la diffusion Slack/Telegram des notifications et les controles du serveur MCP."
+        "en": "The AI tab exposes EDAMAME's agentic surfaces through five subtabs. Security is the easy-onboarding landing page featuring an interactive visual priority map of AI actions and vulnerability findings positioned by priority on concentric rings, with sweep animation, Watchdog/Assistant activation buttons, a loop interval selector, type/status filters, and OAuth sign-in to EDAMAME Portal. History shows individual vulnerability findings alongside AI actions on one timeline, using the same card format for both entry kinds, with filters for type (Actions versus Vulnerabilities), status, read state, and dismissed state, read/unread tracking, bulk operations (Confirm all, Undo all, Mark all as read, Clear), and multi-pane detail review—no aggregated report timelines. OWASP is the GenAI Top 10 scorecard: a deterministic, LLM-free crosswalk that maps live agent risks—MCP exposure, capability sprawl, recursive delegation, host blast radius, and critical subprocess usage—onto the OWASP GenAI Top 10 categories, grading each category as covered, at-risk, or not-applicable so operators can read agent posture against an industry-standard taxonomy. Alignment is the merged Divergence monitor surface with an Easy / Advanced pill toggle (3D flip animation) at the top. The Easy view reframes divergence as a source-centric map: each agent/plugin owns a sector of the circle, processes sit in the middle band of that sector, outer leaf clusters represent network, files, tools, system changes, and LAN touches, and forecast leaves paint as a quiet scaffold owned by a source/process branch—aligned activity lights those leaves up, forbidden activity strikes a red blocked leaf, outside activity escapes just beyond the branch, and silent forecast leaves remain hollow; a Rewind toggle keeps the same quadrant graph on screen and adds a bottom timeline scrubber for historical detector snapshots. The Advanced view is the coordinated live monitoring surface for the behavioral-model divergence loop: an MCP status banner, a Divergence monitor hero card (Intent panel and Live verdict panel), a Pause/Resume engine button, an Agent intent snapshot with merged prediction and tool counts, contributing agents with per-source detail, and expandable Injection History and Verdict History sections. Settings (desktop-only) combines EDAMAME Portal sign-in, BYOLLM configuration, refresh frequency selectors for divergence, vulnerability, and agent engines, Slack/Telegram notification delivery, and MCP server controls for external AI integrations.",
+        "fr": "L'onglet IA expose les surfaces agentiques d'EDAMAME via cinq sous-onglets. Securite est la page d'accueil avec une carte visuelle interactive des actions IA et des resultats de vulnerabilite, des boutons Watchdog/Assistant, un selecteur de cadence, des filtres et la connexion OAuth au portail EDAMAME. Historique presente les constats de vulnerabilite individuels aux cotes des actions IA sur une chronologie unique, avec le meme format de cartes, des filtres par type (Actions ou Vulnerabilites), statut, etat lu/non-lu, etat desactive, operations groupees et revue multi-volets. OWASP est le tableau de bord GenAI Top 10 : un crosswalk deterministe et sans LLM qui projette les risques d'agents en direct—exposition MCP, proliferation de capacites, delegation recursive, rayon d'impact hote et usage de sous-processus critiques—sur les categories OWASP GenAI Top 10, en notant chaque categorie comme couverte, a risque ou non applicable afin que les operateurs lisent la posture des agents selon une taxonomie standard de l'industrie. Alignment regroupe la surface Divergence monitor avec un interrupteur Simple / Avance (animation de retournement 3D) en haut. La vue Simple reformule la divergence comme une carte centree sur les sources : chaque agent/plugin possede son propre secteur, les processus occupent la bande intermediaire, et les grappes externes representent le reseau, les fichiers, les outils, les changements systeme et les touches LAN ; les feuilles de prevision se peignent comme un echafaudage discret appartenant a une branche source/processus, l'activite alignee les allume, l'activite interdite frappe une feuille rouge bloquee, l'activite hors prevision s'echappe juste au-dela de la branche, et les feuilles silencieuses restent creuses ; un interrupteur Rembobiner conserve le meme graphe en quadrants et ajoute une timeline en bas pour les instantanes historiques. La vue Avance est la surface de supervision temps reel pour la boucle de divergence du modele comportemental : bandeau MCP, carte hero Divergence monitor (panneau Intent et panneau Live verdict), bouton Pause/Reprendre, carte Agent intent snapshot avec compteurs de predictions et d'outils fusionnes, agents contributeurs avec detail par source, ainsi que des sections depliables Historique des injections et Historique des verdicts. Parametres (desktop) regroupent la connexion portail, le BYOLLM, les selecteurs de cadence pour les moteurs de divergence, de vulnerabilite et de l'agent, la diffusion Slack/Telegram des notifications et les controles du serveur MCP."
       },
       "description": {
-        "en": "Use this tab to automate security triage and remediation with AI. Start in Security to choose Watchdog or Assistant mode and visualize priorities alongside vulnerability findings, continue in History for unified action and per-finding vulnerability review with read-status tracking, open Agents to inventory which AI agents exist on this machine and which are observed (pausing or resuming the host-side transcript observer per agent) and to inspect MCP endpoints, the agent SBOM, the capability graph, and recursive-delegation abuse, open Alignment to see the Divergence monitor in either Easy view (source-centric quadrant map with timeline rewind) or Advanced view (behavioral-model hero card, verdict panel, and history sections) via the Easy / Advanced pill toggle with flip animation, and manage portal sign-in, engine cadence, delivery channels, custom LLMs, and MCP access from Settings. The security guarantee comes from EDAMAME's host-side transcript observer, which monitors any agent the moment it is discovered on disk, with no plugin installed, and that a compromised agent cannot pause or silence; the per-agent plugins are cooperative add-ons that extend coverage off-host (remote, SSH, container, CI, VM) and streamline onboarding, but never adjudicate verdicts.",
-        "fr": "Utilisez cet onglet pour automatiser le triage et la remediation de securite avec l'IA. Commencez dans Securite pour choisir le mode Watchdog ou Assistant et visualiser les priorites avec les resultats de vulnerabilite, poursuivez dans Historique pour l'audit unifie des actions et la revue par constat des vulnerabilites, ouvrez Agents pour inventorier quels agents IA existent sur cette machine et lesquels sont observes (en mettant en pause ou en reprenant l'observateur de transcripts cote hote par agent) et pour inspecter les points de terminaison MCP, le SBOM d'agent, le graphe de capacites et les abus de delegation recursive, ouvrez Alignment pour consulter le Divergence monitor en vue Simple (carte en quadrants centree sur les sources avec timeline de rembobinage) ou en vue Avance (carte hero du modele comportemental, panneau de verdict et sections d'historique) via l'interrupteur Simple / Avance avec animation de retournement, et gerez la connexion portail, la cadence des moteurs, les canaux de diffusion, les LLM personnalises et l'acces MCP depuis Parametres. La garantie de securite provient de l'observateur de transcripts cote hote d'EDAMAME, qui surveille tout agent des qu'il est decouvert sur le disque, sans plugin installe, et qu'un agent compromis ne peut ni suspendre ni faire taire ; les plugins par agent sont des modules cooperatifs qui etendent la couverture hors-hote (distant, SSH, conteneur, CI, VM) et simplifient l'integration, mais n'arbitrent jamais les verdicts."
+        "en": "Use this tab to automate security triage and remediation with AI. Start in Security to choose Watchdog or Assistant mode and visualize priorities alongside vulnerability findings, continue in History for unified action and per-finding vulnerability review with read-status tracking, open OWASP to read the GenAI Top 10 scorecard mapping live agent risks onto each OWASP category as covered, at-risk, or not-applicable, open Alignment to see the Divergence monitor in either Easy view (source-centric quadrant map with timeline rewind) or Advanced view (behavioral-model hero card, verdict panel, and history sections) via the Easy / Advanced pill toggle with flip animation, and manage portal sign-in, engine cadence, delivery channels, custom LLMs, and MCP access from Settings. The security guarantee comes from EDAMAME's host-side transcript observer, which monitors any agent the moment it is discovered on disk, with no plugin installed, and that a compromised agent cannot pause or silence; the per-agent plugins are cooperative add-ons that extend coverage off-host (remote, SSH, container, CI, VM) and streamline onboarding, but never adjudicate verdicts.",
+        "fr": "Utilisez cet onglet pour automatiser le triage et la remediation de securite avec l'IA. Commencez dans Securite pour choisir le mode Watchdog ou Assistant et visualiser les priorites avec les resultats de vulnerabilite, poursuivez dans Historique pour l'audit unifie des actions et la revue par constat des vulnerabilites, ouvrez OWASP pour lire le tableau de bord GenAI Top 10 qui projette les risques d'agents en direct sur chaque categorie OWASP comme couverte, a risque ou non applicable, ouvrez Alignment pour consulter le Divergence monitor en vue Simple (carte en quadrants centree sur les sources avec timeline de rembobinage) ou en vue Avance (carte hero du modele comportemental, panneau de verdict et sections d'historique) via l'interrupteur Simple / Avance avec animation de retournement, et gerez la connexion portail, la cadence des moteurs, les canaux de diffusion, les LLM personnalises et l'acces MCP depuis Parametres. La garantie de securite provient de l'observateur de transcripts cote hote d'EDAMAME, qui surveille tout agent des qu'il est decouvert sur le disque, sans plugin installe, et qu'un agent compromis ne peut ni suspendre ni faire taire ; les plugins par agent sont des modules cooperatifs qui etendent la couverture hors-hote (distant, SSH, conteneur, CI, VM) et simplifient l'integration, mais n'arbitrent jamais les verdicts."
       },
       "has_dual_screenshots": true,
       "sub_features": [
@@ -320,93 +465,48 @@
           ]
         },
         {
-          "name": "ai_agents",
+          "name": "ai_owasp",
           "title": {
-            "en": "Agents – Agent Visibility and Inventory",
-            "fr": "Agents – Visibilite et inventaire des agents"
+            "en": "OWASP – GenAI Top 10 Scorecard",
+            "fr": "OWASP – Tableau de bord GenAI Top 10"
           },
           "visual": {
-            "en": "The Agents subtab is the agent-visibility surface, anchored by the Agent Inventory. The inventory lists every supported agent type (Cursor, Claude Code, Claude Desktop, OpenClaw, Codex, Hermes), marking each row as discovered, observing, or paused based on whether its transcript store is present on disk and whether the host-side observer is active. Each row exposes a pause/resume toggle and a run-now control for the transcript observer; a discovered-but-paused agent surfaces an 'unsecured' banner that mirrors the matching internal threat. Below the inventory, the visibility panels roll out incrementally: MCP Servers (discovered MCP endpoints and per-server risk), Agent SBOM (a CycloneDX projection of the agent supply chain with an approved-baseline diff), Capability Graph (latent versus effective tool and resource edges), and Recursive Delegation (delegation depth, cycles, goal-hash repetition, and privilege escalation). Reserved roadmap sections for Goal Drift, Agent-to-Agent Communication, and Memory Inspection appear as 'coming soon' placeholders until their detectors ship.",
-            "fr": "Le sous-onglet Agents est la surface de visibilite des agents, ancree par l'Inventaire des agents. L'inventaire liste chaque type d'agent pris en charge (Cursor, Claude Code, Claude Desktop, OpenClaw, Codex, Hermes), marquant chaque ligne comme decouverte, en observation ou en pause selon que sa banque de transcripts est presente sur le disque et que l'observateur cote hote est actif. Chaque ligne expose un interrupteur pause/reprise et une commande d'execution immediate pour l'observateur de transcripts ; un agent decouvert mais en pause affiche une banniere 'non securise' qui reflete la menace interne correspondante. Sous l'inventaire, les panneaux de visibilite se deploient progressivement : Serveurs MCP (points de terminaison MCP decouverts et risque par serveur), SBOM d'agent (une projection CycloneDX de la chaine d'approvisionnement avec un diff de base approuvee), Graphe de capacites (aretes latentes versus effectives) et Delegation recursive (profondeur de delegation, cycles, repetition de hash d'objectif et escalade de privileges). Les sections reservees pour la Derive d'objectif, la Communication entre agents et l'Inspection memoire apparaissent comme des espaces reserves 'bientot disponible' jusqu'a la livraison de leurs detecteurs."
+            "en": "The OWASP subtab is a deterministic, LLM-free scorecard that crosswalks EDAMAME's live agent-visibility signals onto the OWASP GenAI Top 10 risk categories. Each category card shows a status grade (covered, at-risk, or not-applicable) computed from structural telemetry only -- MCP endpoint exposure, capability sprawl from the capability graph, recursive-delegation depth and cycles, host blast radius, and critical subprocess usage -- with no language-model adjudication in the loop. An agentic and an LLM section group the categories so operators can separate agent-runtime risks from model-interaction risks. Tapping any category card expands an inline drill-down that lists each contributing finding -- a severity chip (with an alert icon when the finding is alertable), the finding title, and the owning EDAMAME domain -- and ends with a 'View OWASP reference' link that opens the canonical OWASP GenAI category page in the browser.",
+            "fr": "Le sous-onglet OWASP est un tableau de bord deterministe et sans LLM qui projette les signaux de visibilite d'agents en direct d'EDAMAME sur les categories de risque OWASP GenAI Top 10. Chaque carte de categorie affiche une note de statut (couverte, a risque ou non applicable) calculee uniquement a partir de la telemetrie structurelle -- exposition des points de terminaison MCP, proliferation de capacites issue du graphe de capacites, profondeur et cycles de delegation recursive, rayon d'impact hote et usage de sous-processus critiques -- sans arbitrage par modele de langage. Une section agentique et une section LLM regroupent les categories afin que les operateurs separent les risques d'execution d'agents des risques d'interaction avec le modele. Toucher une carte de categorie deplie un detail en ligne qui liste chaque constat contributeur -- une pastille de severite (avec une icone d'alerte lorsque le constat est alertable), le titre du constat et le domaine EDAMAME proprietaire -- et se termine par un lien 'Voir la reference OWASP' qui ouvre la page de categorie OWASP GenAI canonique dans le navigateur."
           },
           "description": {
-            "en": "Use Agents to see which AI agents exist on this machine, which are actively observed, and what each is exposed to. The Agent Inventory is the relocated, upgraded home of the transcript observer: pause or resume observation per agent and trigger an immediate observation tick. As the visibility panels light up, use them to inventory MCP endpoints and their risk, diff the agent supply chain against an approved baseline, read the capability graph, and catch recursive-delegation abuse. Security state is owned by EDAMAME, never by the agent.",
-            "fr": "Utilisez Agents pour voir quels agents IA existent sur cette machine, lesquels sont activement observes et a quoi chacun est expose. L'Inventaire des agents est le foyer relocalise et ameliore de l'observateur de transcripts : mettez en pause ou reprenez l'observation par agent et declenchez un cycle d'observation immediat. A mesure que les panneaux de visibilite s'activent, utilisez-les pour inventorier les points de terminaison MCP et leur risque, comparer la chaine d'approvisionnement a une base approuvee, lire le graphe de capacites et detecter les abus de delegation recursive. L'etat de securite appartient a EDAMAME, jamais a l'agent."
+            "en": "Use OWASP to read agent posture against an industry-standard taxonomy at a glance. The scorecard is fully deterministic, so a grade reflects observed structural facts (MCP exposure, capability sprawl, recursive delegation, blast radius, critical subprocess usage), not a model opinion. Start with the at-risk categories, expand a card to read the contributing findings with their severity and alertable status, follow the OWASP reference link for the authoritative category definition, and pivot to the Agents tab for the underlying detail.",
+            "fr": "Utilisez OWASP pour lire d'un coup d'oeil la posture des agents selon une taxonomie standard de l'industrie. Le tableau de bord est entierement deterministe : une note reflete des faits structurels observes (exposition MCP, proliferation de capacites, delegation recursive, rayon d'impact, usage de sous-processus critiques), pas une opinion de modele. Commencez par les categories a risque, depliez une carte pour lire les constats contributeurs avec leur severite et leur statut alertable, suivez le lien de reference OWASP pour la definition canonique de la categorie, puis basculez vers l'onglet Agents pour le detail sous-jacent."
           },
           "items": [
             {
-              "name": "agent_inventory",
+              "name": "owasp_scorecard",
               "title": {
-                "en": "Agent Inventory – Discovered Agents and Observer Control",
-                "fr": "Inventaire des agents – Agents decouverts et controle de l'observateur"
+                "en": "Scorecard Grid – Deterministic Category Grades",
+                "fr": "Grille de notes – Notes de categories deterministes"
               },
               "visual": {
-                "en": "A row per supported agent type with a discovered / observing / paused status badge, a pause/resume toggle, and a run-now button for the transcript observer. Discovered-but-paused agents show an 'unsecured' banner. The list refreshes automatically when the observer status changes.",
-                "fr": "Une ligne par type d'agent pris en charge avec un badge de statut decouvert / en observation / en pause, un interrupteur pause/reprise et un bouton d'execution immediate pour l'observateur de transcripts. Les agents decouverts mais en pause affichent une banniere 'non securise'. La liste se rafraichit automatiquement quand le statut de l'observateur change."
+                "en": "A grid of OWASP GenAI Top 10 category cards, each graded covered, at-risk, or not-applicable from structural telemetry only. Agentic-runtime and LLM-interaction categories are grouped into two sections.",
+                "fr": "Une grille de cartes de categories OWASP GenAI Top 10, chacune notee couverte, a risque ou non applicable a partir de la seule telemetrie structurelle. Les categories d'execution agentique et d'interaction LLM sont regroupees en deux sections."
               },
               "description": {
-                "en": "Use the inventory to confirm coverage at a glance: any agent present on disk should be observed. Resume any paused observer to clear its 'unsecured' state.",
-                "fr": "Utilisez l'inventaire pour confirmer la couverture d'un coup d'oeil : tout agent present sur le disque devrait etre observe. Reprenez tout observateur en pause pour effacer son etat 'non securise'."
+                "en": "Scan the grid for at-risk categories first; the grade is computed deterministically with no LLM in the loop.",
+                "fr": "Parcourez la grille pour reperer d'abord les categories a risque ; la note est calculee de maniere deterministe sans LLM dans la boucle."
               }
             },
             {
-              "name": "mcp_servers",
+              "name": "owasp_category_detail",
               "title": {
-                "en": "MCP Servers – Discovery and Risk",
-                "fr": "Serveurs MCP – Decouverte et risque"
+                "en": "Category Detail – Contributing Findings and OWASP Reference",
+                "fr": "Detail de categorie – Constats contributeurs et reference OWASP"
               },
               "visual": {
-                "en": "Lists MCP endpoints discovered across agent configurations with per-server transport, command or URL, and a risk classification. Findings reuse the shared dismissal-rule UI.",
-                "fr": "Liste les points de terminaison MCP decouverts dans les configurations d'agents avec le transport, la commande ou l'URL et une classification de risque par serveur. Les constats reutilisent l'interface partagee de regles de rejet."
+                "en": "Tapping a category card expands an inline drill-down. It lists each contributing finding as a line with a severity chip (an alert icon marks alertable findings), the finding title, and the owning EDAMAME domain (e.g. mcp, recursion, drift, dataflow, attack-pattern), then offers a 'View OWASP reference' link that opens the canonical OWASP GenAI Top 10 category page externally. Categories with no live findings show a brief no-findings note with the reference link still available.",
+                "fr": "Toucher une carte de categorie deplie un detail en ligne. Il liste chaque constat contributeur sur une ligne avec une pastille de severite (une icone d'alerte marque les constats alertables), le titre du constat et le domaine EDAMAME proprietaire (par ex. mcp, recursion, drift, dataflow, attack-pattern), puis propose un lien 'Voir la reference OWASP' qui ouvre la page de categorie OWASP GenAI Top 10 canonique en externe. Les categories sans constat en direct affichent une breve note d'absence de constat avec le lien de reference toujours disponible."
               },
               "description": {
-                "en": "Use MCP Servers to inventory every MCP endpoint an agent can reach and triage the risky ones.",
-                "fr": "Utilisez Serveurs MCP pour inventorier chaque point de terminaison MCP qu'un agent peut atteindre et trier les plus risques."
-              }
-            },
-            {
-              "name": "agent_sbom",
-              "title": {
-                "en": "Agent SBOM – Supply Chain Projection and Diff",
-                "fr": "SBOM d'agent – Projection de la chaine d'approvisionnement et diff"
-              },
-              "visual": {
-                "en": "A CycloneDX projection of the agent supply chain (plugins, skills, MCP servers, models) with an approved-baseline diff highlighting added, removed, and changed components.",
-                "fr": "Une projection CycloneDX de la chaine d'approvisionnement de l'agent (plugins, competences, serveurs MCP, modeles) avec un diff de base approuvee mettant en evidence les composants ajoutes, supprimes et modifies."
-              },
-              "description": {
-                "en": "Use the Agent SBOM to approve a known-good component set and get alerted when the live composition drifts from it.",
-                "fr": "Utilisez le SBOM d'agent pour approuver un ensemble de composants fiable et etre alerte quand la composition reelle s'en ecarte."
-              }
-            },
-            {
-              "name": "capability_graph",
-              "title": {
-                "en": "Capability Graph – Latent vs Effective Edges",
-                "fr": "Graphe de capacites – Aretes latentes vs effectives"
-              },
-              "visual": {
-                "en": "A graph of agent-to-tool and agent-to-resource edges, distinguishing latent capability (what the agent could do) from effective capability (what it has actually done).",
-                "fr": "Un graphe des aretes agent-vers-outil et agent-vers-ressource, distinguant la capacite latente (ce que l'agent pourrait faire) de la capacite effective (ce qu'il a reellement fait)."
-              },
-              "description": {
-                "en": "Use the Capability Graph to spot over-provisioned agents whose latent reach far exceeds what they actually use.",
-                "fr": "Utilisez le Graphe de capacites pour reperer les agents sur-provisionnes dont la portee latente depasse largement leur usage reel."
-              }
-            },
-            {
-              "name": "recursive_delegation",
-              "title": {
-                "en": "Recursive Delegation – Depth, Cycles, and Privilege",
-                "fr": "Delegation recursive – Profondeur, cycles et privileges"
-              },
-              "visual": {
-                "en": "Surfaces recursive agent delegation with delegation depth, detected cycles, repeated goal hashes, and privilege escalation across the delegation chain; a runaway chain trips the matching internal threat.",
-                "fr": "Expose la delegation recursive d'agents avec la profondeur de delegation, les cycles detectes, les hash d'objectif repetes et l'escalade de privileges le long de la chaine ; une chaine emballee declenche la menace interne correspondante."
-              },
-              "description": {
-                "en": "Use Recursive Delegation to catch agents that spawn agents in unbounded loops or escalate privilege across the chain.",
-                "fr": "Utilisez Delegation recursive pour detecter les agents qui engendrent des agents en boucles non bornees ou escaladent les privileges le long de la chaine."
+                "en": "Open a card to see exactly which findings drove the grade -- their severity and whether they are alertable -- follow the reference link to the authoritative OWASP category definition, and pivot to the named Agents-tab panel for the underlying detail.",
+                "fr": "Ouvrez une carte pour voir exactement quels constats ont determine la note -- leur severite et s'ils sont alertables -- suivez le lien de reference vers la definition canonique de la categorie OWASP, puis basculez vers le panneau nomme de l'onglet Agents pour le detail sous-jacent."
               }
             }
           ]
