@@ -182,20 +182,16 @@ https://github.com/user-attachments/assets/4221b077-d6e3-4b2c-815f-3b3fd01a9ae7
 The easiest way to install on macOS:
 
 ```bash
-# Add the EDAMAME tap
-brew tap edamametechnologies/tap
-
-# Install EDAMAME Security
-brew install --cask edamame
-
-# Install EDAMAME Helper (required for full system access)
-brew install --cask edamame-helper
+# Install EDAMAME Security + Helper (required for full system access)
+# Fully-qualified names self-trust the EDAMAME tap (Homebrew 6.0.0 Tap Trust)
+brew install --cask edamametechnologies/tap/edamame
+brew install --cask edamametechnologies/tap/edamame-helper
 ```
 
 To update to the latest versions:
 ```bash
-brew upgrade --cask edamame
-brew upgrade --cask edamame-helper
+brew upgrade --cask edamametechnologies/tap/edamame
+brew upgrade --cask edamametechnologies/tap/edamame-helper
 ```
 
 **Note**: Both packages are required for full functionality. The main app provides the UI, while the helper enables privileged security operations.
