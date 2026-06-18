@@ -1,7 +1,8 @@
 {
   "screenshot_metadata": {
-    "_comment": "Screenshot filename mappings for sub_features. Desktop platforms (macos, windows, linux) support multipane with _selected suffix. When display_selected_only is true for a multipane feature, only show the _selected version.",
+    "_comment": "Screenshot filename mappings for sub_features. Desktop platforms (macos, windows, linux) support multipane with _selected suffix. When display_selected_only is true for a multipane feature, only show the _selected version. Sub-features with has_scroll_screenshots:true are long scrolling pages captured as an ordered <prefix>_<name>_scrollN.png sequence (in addition to the top-of-page <prefix>_<name>.png) and rendered as a vertical gallery in the wiki.",
     "dual_screenshot_suffix": "_selected",
+    "scroll_screenshot_suffix": "_scroll",
     "multi_pane_breakpoint": 1400,
     "display_selected_only": true,
     "patterns": {
@@ -78,17 +79,25 @@
       "ai_mcp_server": {
         "prefix": "00",
         "desktop_only": true,
-        "multipane": false
+        "multipane": false,
+        "has_scroll_screenshots": true
       },
       "agents": {
         "prefix": "00",
         "desktop_only": true,
         "multipane": false
       },
+      "agents_advanced": {
+        "prefix": "00",
+        "desktop_only": true,
+        "multipane": false,
+        "has_scroll_screenshots": true
+      },
       "ai_owasp": {
         "prefix": "00",
         "desktop_only": true,
-        "multipane": false
+        "multipane": false,
+        "has_scroll_screenshots": true
       },
       "ai_alignment": {
         "prefix": "00",
@@ -134,7 +143,8 @@
       "config_privacy": {
         "prefix": "07",
         "mobile_prefix": "06",
-        "multipane": false
+        "multipane": false,
+        "has_scroll_screenshots": true
       },
       "config_notifications": {
         "prefix": "07",
@@ -144,7 +154,8 @@
       "config_statistics": {
         "prefix": "07",
         "desktop_only": true,
-        "multipane": false
+        "multipane": false,
+        "has_scroll_screenshots": true
       },
       "config_system": {
         "prefix": "07",
@@ -304,6 +315,22 @@
               }
             }
           ]
+        },
+        {
+          "name": "agents_advanced",
+          "title": {
+            "en": "Agent Visibility – Advanced View (Full Structural Page)",
+            "fr": "Visibilite des agents – Vue avancee (page structurelle complete)"
+          },
+          "visual": {
+            "en": "The Advanced view of the Agents tab is a single long, scrolling, LLM-free page that lays out every structural visibility panel end to end: the Agent Inventory, MCP Servers with the List / Graph capability toggle, Agent SBOM with approved-baseline diff, Recursive Delegation (depth, cycles, goal-hash repetition, privilege escalation), Critical Subprocess Usage, Host Blast Radius and Exposure sorted by danger, and the structural Flight Recorder. Because the page is taller than one screen, the wiki captures it as an ordered vertical scroll sequence so every section is visible.",
+            "fr": "La vue avancee de l'onglet Agents est une longue page unique a defilement, sans LLM, qui dispose bout a bout chaque panneau de visibilite structurel : l'Inventaire des agents, les Serveurs MCP avec l'interrupteur Liste / Graphe, le SBOM d'agent avec diff de base approuvee, la Delegation recursive (profondeur, cycles, repetition de hash d'objectif, escalade de privileges), l'Usage de sous-processus critiques, le Rayon d'impact hote et l'Exposition tries par danger, et le Flight Recorder structurel. Comme la page depasse un ecran, le wiki la capture en une sequence de defilement verticale ordonnee afin que chaque section soit visible."
+          },
+          "description": {
+            "en": "Switch the Agents tab to Advanced to review the full structural surface in one continuous page. Scroll from the inventory at the top down through MCP, SBOM, recursive delegation, critical subprocess usage, host blast radius, and the flight recorder. The wiki renders this view as a multi-part scroll gallery.",
+            "fr": "Basculez l'onglet Agents en mode Avance pour examiner toute la surface structurelle sur une page continue. Faites defiler depuis l'inventaire en haut jusqu'aux serveurs MCP, au SBOM, a la delegation recursive, a l'usage de sous-processus critiques, au rayon d'impact hote et au flight recorder. Le wiki affiche cette vue sous forme de galerie de defilement en plusieurs parties."
+          },
+          "has_scroll_screenshots": true
         }
       ]
     },
@@ -478,6 +505,7 @@
             "en": "Use OWASP to read agent posture against an industry-standard taxonomy at a glance. The scorecard is fully deterministic, so a grade reflects observed structural facts (MCP exposure, capability sprawl, recursive delegation, blast radius, critical subprocess usage), not a model opinion. Start with the at-risk categories, expand a card to read the contributing findings with their severity and alertable status, follow the OWASP reference link for the authoritative category definition, and pivot to the Agents tab for the underlying detail.",
             "fr": "Utilisez OWASP pour lire d'un coup d'oeil la posture des agents selon une taxonomie standard de l'industrie. Le tableau de bord est entierement deterministe : une note reflete des faits structurels observes (exposition MCP, proliferation de capacites, delegation recursive, rayon d'impact, usage de sous-processus critiques), pas une opinion de modele. Commencez par les categories a risque, depliez une carte pour lire les constats contributeurs avec leur severite et leur statut alertable, suivez le lien de reference OWASP pour la definition canonique de la categorie, puis basculez vers l'onglet Agents pour le detail sous-jacent."
           },
+          "has_scroll_screenshots": true,
           "items": [
             {
               "name": "owasp_scorecard",
@@ -662,6 +690,7 @@
             "en": "Use Settings as the single admin surface for portal sign-in, custom providers, engine cadence tuning, outbound team delivery, and MCP access. Keep MCP disabled unless external tools need it.",
             "fr": "Utilisez Parametres comme surface d'administration unique pour la connexion portail, les fournisseurs personnalises, le reglage de cadence des moteurs, la diffusion externe vers l'equipe et l'acces MCP. Laissez MCP desactive sauf si des outils externes en ont besoin."
           },
+          "has_scroll_screenshots": true,
           "items": [
             {
               "name": "cloud_llm",
@@ -1894,7 +1923,8 @@
           "description": {
             "en": "Use Privacy to opt out of anonymous analytics or crash reports and to read an honest catalog of what each subsystem ships off-device. Other knobs (Hub connection, agentic provider, Slack/Telegram delivery, OS notifications) are linked from this view so you can find them in one place.",
             "fr": "Utilisez Confidentialite pour vous desinscrire des analytiques anonymes ou des rapports de plantage et pour lire un catalogue honnete de ce que chaque sous-systeme envoie hors de l'appareil. Les autres commutateurs (Hub, fournisseur agentique, diffusion Slack/Telegram, notifications OS) sont accessibles depuis cette vue."
-          }
+          },
+          "has_scroll_screenshots": true
         },
         {
           "name": "config_notifications",
@@ -1956,7 +1986,8 @@
           "description": {
             "en": "Use this diagnostics panel to monitor the entire telemetry surface — packet pipeline, ML analyzer, vulnerability detector, divergence engine, file integrity monitor, agentic memory, and per-loop LLM token spend. Recheck thresholds and model stats when detection quality shifts.",
             "fr": "Utilisez ce panneau de diagnostic pour surveiller toute la surface de telemetrie — pipeline de paquets, analyseur ML, detecteur de vulnerabilites, moteur de divergence, surveillance d'integrite, memoire agentique et consommation de jetons LLM par boucle. Reverifiez les seuils et statistiques de modele lorsque la qualite de detection evolue."
-          }
+          },
+          "has_scroll_screenshots": true
         },
         {
           "name": "config_debug",

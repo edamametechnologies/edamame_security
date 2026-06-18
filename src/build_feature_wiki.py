@@ -32,6 +32,7 @@ WIKI_BASE_URL = "https://github.com/edamametechnologies/edamame_security/wiki"
 
 PREFIX_RE = re.compile(r"^\d+_+")  # matches numeric prefix like '01_'
 SELECTED_SUFFIX = "_selected"  # suffix for multi-pane selection screenshots
+SCROLL_RE = re.compile(r"_scroll(\d+)$")  # matches '_scroll1', '_scroll2', ...
 
 
 def load_features() -> Dict:
@@ -84,6 +85,45 @@ def find_dual_screenshots(base_dir: Path, needle: str) -> tuple[Optional[Path], 
     regular = find_screenshot(base_dir, needle)
     selected = find_screenshot(base_dir, f"{needle}{SELECTED_SUFFIX}")
     return (regular, selected)
+
+
+def resolve_scroll_base(entry: Dict) -> Optional[str]:
+    """Return the golden-file base used for a long page's scroll sequence.
+
+    A sub-feature (or feature) opts into scroll capture either with
+    ``"has_scroll_screenshots": true`` (uses its own ``name`` as the base) or
+    with ``"scroll_screenshots": "<base>"`` to point at a differently-named
+    golden (e.g. an Easy view's sub-feature whose long surface is the Advanced
+    golden). Returns None when the entry does not opt in.
+    """
+    explicit = entry.get("scroll_screenshots")
+    if isinstance(explicit, str) and explicit.strip():
+        return explicit.strip()
+    if entry.get("has_scroll_screenshots"):
+        return entry.get("name")
+    return None
+
+
+def find_scroll_screenshots(base_dir: Path, needle: str) -> List[Path]:
+    """Return the ordered ``<needle>_scrollN.png`` sequence for a long page.
+
+    Numeric prefixes (e.g. '00_') are ignored during matching, mirroring
+    :func:`find_screenshot`. Frames are returned sorted by their scroll index so
+    the wiki renders them top-to-bottom in capture order. The top-of-page
+    ``<needle>.png`` is intentionally NOT included here (the caller renders it as
+    the lead image); this returns only the ``_scrollN`` continuation frames.
+    """
+    needle = needle.lower()
+    matches: List[tuple[int, Path]] = []
+    for p in base_dir.rglob("*.png"):
+        stem = PREFIX_RE.sub("", p.stem.lower())
+        m = SCROLL_RE.search(stem)
+        if not m:
+            continue
+        if stem[: m.start()] == needle:
+            matches.append((int(m.group(1)), p))
+    matches.sort(key=lambda t: t[0])
+    return [p for _, p in matches]
 
 
 def add_feature_badge(md: MdUtils, feature_name: str):
@@ -141,6 +181,75 @@ def add_dual_screenshots(md: MdUtils, regular_path: Path, selected_path: Path, t
     md.new_line()
 
 
+def add_scroll_gallery(md: MdUtils, scroll_paths: List[Path], title: str, lead_included: bool = True, caption: str = None):
+    """Render the ``_scrollN`` continuation frames of a long page as a gallery.
+
+    ``scroll_paths`` are the ordered continuation frames (the top-of-page lead
+    image is rendered separately by the caller when ``lead_included`` is True).
+    Each frame is stacked vertically and centered with a ``Part N of M`` label so
+    the reader can follow the page top-to-bottom. The lead image counts as part 1
+    when ``lead_included`` is True, so the first continuation frame is part 2.
+    """
+    if not scroll_paths:
+        return
+    if not caption:
+        caption = title
+
+    offset = 1 if lead_included else 0
+    total = len(scroll_paths) + offset
+
+    md.new_line()
+    md.new_line("---")
+    md.new_line()
+    md.new_line('<div align="center">')
+    md.new_line()
+    md.new_line(f"**{caption} — full page (scroll to see every section)**")
+    md.new_line()
+    for idx, p in enumerate(scroll_paths, start=offset + 1):
+        md.new_line(f"*Part {idx} of {total}*")
+        md.new_line()
+        md.new_line(f"![{title} - part {idx}]({wiki_image_url(p.name)})")
+        md.new_line()
+    md.new_line("</div>")
+    md.new_line()
+    md.new_line("---")
+    md.new_line()
+
+
+def stage_scroll_gallery(
+    md: MdUtils,
+    screenshots_dir: Path,
+    images_dir: Path,
+    used_images: Set[Path],
+    entry: Dict,
+    title: str,
+    lead_included: bool = True,
+):
+    """Resolve, copy, and render a long page's scroll sequence if it opts in.
+
+    Returns the number of continuation frames rendered (0 when the entry does
+    not opt in or no ``_scrollN`` files exist on disk yet -- in which case the
+    caller's single lead screenshot already covers the page).
+    """
+    scroll_base = resolve_scroll_base(entry)
+    if not scroll_base:
+        return 0
+    scroll_paths = find_scroll_screenshots(screenshots_dir, scroll_base)
+    if not scroll_paths:
+        return 0
+
+    staged: List[Path] = []
+    for sp in scroll_paths:
+        dest = images_dir / sp.name
+        if dest not in used_images:
+            copy2(sp, dest)
+            used_images.add(dest)
+        staged.append(dest)
+
+    add_scroll_gallery(md, staged, title, lead_included=lead_included)
+    return len(staged)
+
+
 def write_feature_page(feature: Dict, screenshots_dir: Path, output_dir: Path, images_dir: Path, used_images: Set[Path]):
     slug = sanitize_filename(feature["name"])
     title_en = feature["title"]["en"]
@@ -186,6 +295,12 @@ def write_feature_page(feature: Dict, screenshots_dir: Path, output_dir: Path, i
         else:
             add_screenshot_with_caption(md, dest, title_en, f"Main interface for {title_en}")
 
+        # Feature-level long page (rare): append the scroll gallery if opted in.
+        stage_scroll_gallery(
+            md, screenshots_dir, images_dir, used_images, feature, title_en,
+            lead_included=True,
+        )
+
     # Sub-features with better formatting
     sub_features = feature.get("sub_features", [])
     if sub_features:
@@ -225,6 +340,20 @@ def write_feature_page(feature: Dict, screenshots_dir: Path, output_dir: Path, i
                     add_dual_screenshots(md, dest_sub, dest_sub_selected, sub_title, f"Screenshot of {sub_title}")
                 else:
                     add_screenshot_with_caption(md, dest_sub, sub_title, f"Screenshot of {sub_title}")
+
+                # Long scrolling page: append the ordered `_scrollN` gallery after
+                # the top-of-page lead image so every section is visible.
+                stage_scroll_gallery(
+                    md, screenshots_dir, images_dir, used_images, sub, sub_title,
+                    lead_included=True,
+                )
+            else:
+                # No lead screenshot found, but the page may still be a captured
+                # scroll sequence (`_scrollN` only). Render the gallery standalone.
+                stage_scroll_gallery(
+                    md, screenshots_dir, images_dir, used_images, sub, sub_title,
+                    lead_included=False,
+                )
 
             # Items as a well-formatted list
             items: List[Dict] = sub.get("items", [])
