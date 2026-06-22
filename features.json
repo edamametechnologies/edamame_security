@@ -511,6 +511,7 @@
           "items": [
             {
               "name": "owasp_scorecard",
+              "scroll": 1,
               "title": {
                 "en": "Scorecard Grid – Deterministic Category Grades",
                 "fr": "Grille de notes – Notes de categories deterministes"
@@ -526,6 +527,7 @@
             },
             {
               "name": "owasp_category_detail",
+              "scroll": 3,
               "title": {
                 "en": "Category Detail – Contributing Findings and OWASP Reference",
                 "fr": "Detail de categorie – Constats contributeurs et reference OWASP"
@@ -711,6 +713,7 @@
           "items": [
             {
               "name": "cloud_llm",
+              "scroll": 1,
               "title": {
                 "en": "Cloud LLM – EDAMAME Portal AI Service",
                 "fr": "Cloud LLM – Service IA EDAMAME Portal"
@@ -726,6 +729,7 @@
             },
             {
               "name": "own_llm",
+              "scroll": 1,
               "title": {
                 "en": "Use Your Own LLM – BYOLLM",
                 "fr": "Utilisez votre propre LLM – BYOLLM"
@@ -741,6 +745,7 @@
             },
             {
               "name": "refresh_frequency",
+              "scroll": 1,
               "title": {
                 "en": "Refresh Frequency – Engine Cadence Control",
                 "fr": "Cadence de rafraichissement – Controle des moteurs"
@@ -756,6 +761,7 @@
             },
             {
               "name": "slack_integration",
+              "scroll": 2,
               "title": {
                 "en": "Slack Delivery – Team Notifications",
                 "fr": "Diffusion Slack – Notifications d'equipe"
@@ -771,6 +777,7 @@
             },
             {
               "name": "telegram_integration",
+              "scroll": 2,
               "title": {
                 "en": "Telegram Delivery – Interactive Predefined Replies",
                 "fr": "Diffusion Telegram – Reponses interactives predefinies"
@@ -786,6 +793,7 @@
             },
             {
               "name": "server_controls",
+              "scroll": 4,
               "title": {
                 "en": "Server Controls – Start/Stop MCP",
                 "fr": "Controles Serveur – Demarrer/Arreter MCP"
@@ -801,6 +809,7 @@
             },
             {
               "name": "mcp_authentication",
+              "scroll": 4,
               "title": {
                 "en": "MCP Authentication – Pairing and PSK",
                 "fr": "Authentification MCP – Appairage et PSK"
@@ -816,6 +825,7 @@
             },
             {
               "name": "integration_instructions",
+              "scroll": 5,
               "title": {
                 "en": "Integration Guide – Cursor, OpenClaw, Claude Desktop",
                 "fr": "Guide d'Integration – Cursor, OpenClaw, Claude Desktop"
@@ -831,6 +841,7 @@
             },
             {
               "name": "available_tools",
+              "scroll": 4,
               "title": {
                 "en": "Available Tools – 19 Security APIs",
                 "fr": "Outils Disponibles – 19 APIs de Securite"
@@ -846,6 +857,7 @@
             },
             {
               "name": "capture_detail",
+              "scroll": 3,
               "title": {
                 "en": "Capture Detail – Agent Context Privacy Tiers",
                 "fr": "Detail de capture – Niveaux de confidentialite du contexte d'agent"
@@ -861,6 +873,7 @@
             },
             {
               "name": "dismissal_rules",
+              "scroll": 3,
               "title": {
                 "en": "Dismissal Rules – Recurrence-Aware Suppressions",
                 "fr": "Regles de rejet – Suppressions sensibles a la recurrence"
@@ -876,6 +889,7 @@
             },
             {
               "name": "agent_plugins",
+              "scroll": 5,
               "title": {
                 "en": "Agent Plugins – Install and Per-Agent Observer Control",
                 "fr": "Plugins d'agents – Installation et controle d'observateur par agent"
