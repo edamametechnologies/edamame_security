@@ -202,114 +202,7 @@
           "description": {
             "en": "Use the Easy view to govern every AI agent on this host at a glance: read the radial map to see which agents reach the host and how far, start at the validate banner, then use 'Secure my fleet' to resume paused observers and acknowledge newly seen agents in a single action. Flip to Advanced for the full structural breakdown of every panel. The concepts the rings encode are detailed below. Security state is owned by EDAMAME, never by the agent.",
             "fr": "Utilisez la vue Simple pour gouverner chaque agent IA sur cet hote d'un coup d'oeil : lisez la carte radiale pour voir quels agents atteignent l'hote et jusqu'ou, commencez par la banniere de validation, puis utilisez 'Securiser ma flotte' pour reprendre les observateurs en pause et accuser reception des agents nouvellement vus en une seule action. Basculez en Avance pour le detail structurel complet de chaque panneau. Les concepts encodes par les anneaux sont detailles ci-dessous. L'etat de securite appartient a EDAMAME, jamais a l'agent."
-          },
-          "items": [
-            {
-              "name": "agent_inventory",
-              "title": {
-                "en": "Agent Inventory – Discovered Agents and Approve / Acknowledge",
-                "fr": "Inventaire des agents – Agents decouverts et approuver / accuser reception"
-              },
-              "visual": {
-                "en": "A row per supported agent type with a discovered / observing / paused status as a compact dot-plus-label, plus an approve/acknowledge action. A validate-at-top banner summarizes attention items, and discovered-but-paused agents show an 'unsecured' banner. Enable/disable and run-now controls for the observer live in AI / Config; this surface is strictly LLM-free.",
-                "fr": "Une ligne par type d'agent pris en charge avec un statut decouvert / en observation / en pause sous forme de point-plus-etiquette compact, plus une action approuver/accuser reception. Une banniere de validation en haut resume les elements a traiter, et les agents decouverts mais en pause affichent une banniere 'non securise'. Les controles activer/desactiver et execution immediate de l'observateur vivent dans IA / Config ; cette surface est strictement sans LLM."
-              },
-              "description": {
-                "en": "Use the inventory to confirm coverage at a glance: any agent present on disk should be observed. Approve or acknowledge per row; resume a paused observer from AI / Config to clear its 'unsecured' state.",
-                "fr": "Utilisez l'inventaire pour confirmer la couverture d'un coup d'oeil : tout agent present sur le disque devrait etre observe. Approuvez ou accusez reception par ligne ; reprenez un observateur en pause depuis IA / Config pour effacer son etat 'non securise'."
-              }
-            },
-            {
-              "name": "mcp_servers",
-              "title": {
-                "en": "MCP Servers – Discovery, Risk, and Capability Graph",
-                "fr": "Serveurs MCP – Decouverte, risque et graphe de capacites"
-              },
-              "visual": {
-                "en": "Lists MCP endpoints discovered across agent configurations with the owning agent, config path, transport, command or URL, a per-server risk classification, and a tag legend. A List / Graph toggle swaps the list for an embedded capability graph of latent versus effective tool and resource edges. Findings reuse the shared dismissal-rule UI.",
-                "fr": "Liste les points de terminaison MCP decouverts dans les configurations d'agents avec l'agent proprietaire, le chemin de configuration, le transport, la commande ou l'URL, une classification de risque par serveur et une legende de tags. Un interrupteur Liste / Graphe remplace la liste par un graphe de capacites integre des aretes latentes versus effectives. Les constats reutilisent l'interface partagee de regles de rejet."
-              },
-              "description": {
-                "en": "Use MCP Servers to inventory every MCP endpoint an agent can reach, triage the risky ones, and flip to the graph to spot over-provisioned reach.",
-                "fr": "Utilisez Serveurs MCP pour inventorier chaque point de terminaison MCP qu'un agent peut atteindre, trier les plus risques et basculer vers le graphe pour reperer une portee sur-provisionnee."
-              }
-            },
-            {
-              "name": "agent_sbom",
-              "title": {
-                "en": "Agent SBOM – Supply Chain Projection and Diff",
-                "fr": "SBOM d'agent – Projection de la chaine d'approvisionnement et diff"
-              },
-              "visual": {
-                "en": "A CycloneDX projection of the agent supply chain (plugins, skills, MCP servers, models) with an approved-baseline diff highlighting added, removed, and changed components.",
-                "fr": "Une projection CycloneDX de la chaine d'approvisionnement de l'agent (plugins, competences, serveurs MCP, modeles) avec un diff de base approuvee mettant en evidence les composants ajoutes, supprimes et modifies."
-              },
-              "description": {
-                "en": "Use the Agent SBOM to approve a known-good component set and get alerted when the live composition drifts from it.",
-                "fr": "Utilisez le SBOM d'agent pour approuver un ensemble de composants fiable et etre alerte quand la composition reelle s'en ecarte."
-              }
-            },
-            {
-              "name": "recursive_delegation",
-              "title": {
-                "en": "Recursive Delegation – Depth, Cycles, and Privilege",
-                "fr": "Delegation recursive – Profondeur, cycles et privileges"
-              },
-              "visual": {
-                "en": "Surfaces recursive agent delegation with delegation depth, detected cycles, repeated goal hashes, and privilege escalation across the delegation chain; a runaway chain trips the matching internal threat. Detection is structural and LLM-free.",
-                "fr": "Expose la delegation recursive d'agents avec la profondeur de delegation, les cycles detectes, les hash d'objectif repetes et l'escalade de privileges le long de la chaine ; une chaine emballee declenche la menace interne correspondante. La detection est structurelle et sans LLM."
-              },
-              "description": {
-                "en": "Use Recursive Delegation to catch agents that spawn agents in unbounded loops or escalate privilege across the chain.",
-                "fr": "Utilisez Delegation recursive pour detecter les agents qui engendrent des agents en boucles non bornees ou escaladent les privileges le long de la chaine."
-              }
-            },
-            {
-              "name": "critical_subprocess_usage",
-              "title": {
-                "en": "Critical Subprocess Usage – Sensitive Spawns (LLM-Free)",
-                "fr": "Usage de sous-processus critiques – Lancements sensibles (sans LLM)"
-              },
-              "visual": {
-                "en": "Lists agents observed spawning sensitive subprocesses (shells, package managers, network and credential tools) directly from structural process telemetry, with the spawning agent, the subprocess, and a risk indicator. No language-model is involved in the detection.",
-                "fr": "Liste les agents observes lancant des sous-processus sensibles (shells, gestionnaires de paquets, outils reseau et d'identifiants) directement a partir de la telemetrie de processus structurelle, avec l'agent lanceur, le sous-processus et un indicateur de risque. Aucun modele de langage n'intervient dans la detection."
-              },
-              "description": {
-                "en": "Use Critical Subprocess Usage to catch an agent reaching for a shell or package manager when its task never called for one.",
-                "fr": "Utilisez Usage de sous-processus critiques pour detecter un agent qui invoque un shell ou un gestionnaire de paquets alors que sa tache ne le justifiait pas."
-              }
-            },
-            {
-              "name": "host_blast_radius",
-              "title": {
-                "en": "Host Blast Radius and Exposure – Sandboxes Sorted by Danger",
-                "fr": "Rayon d'impact hote et exposition – Bacs a sable tries par danger"
-              },
-              "visual": {
-                "en": "Summarizes each discovered agent's host blast radius and exposure: agent sandboxes filtered to discovered agents, sorted by danger, with HostPrivilege evidence detail, clear agents-vs-problems labels, and confinement remediation guidance for unconfined agents. An agent that runs unsandboxed while the host grants passwordless sudo and/or the agent is observed spawning critical subprocesses (ssh, netcat, docker, raw shells) raises the 'AI agent with high host blast radius' posture threat, so the exposure is tracked in the threat list and the advisor, not just on this panel. EDAMAME also checks whether the discovered agents run inside a recognized governance harness (agent control plane such as AgentField or Rippletide): when agents are present but no harness footprint is detected for the user, the 'AI agents run without a governance harness' posture threat fires, surfacing the AI-SDLC plan/design-phase gap (no policy enforcement, identity, per-task budget, tool allow-list, or audit trail) and clearing as soon as a harness is installed.",
-                "fr": "Resume le rayon d'impact hote et l'exposition de chaque agent decouvert : bacs a sable d'agents filtres aux agents decouverts, tries par danger, avec detail de preuve HostPrivilege, etiquettes claires agents-vs-problemes et conseils de remediation de confinement pour les agents non confines. Un agent qui s'execute sans bac a sable alors que l'hote accorde un sudo sans mot de passe et/ou qui est observe en train de lancer des sous-processus critiques (ssh, netcat, docker, shells bruts) declenche la menace de posture 'Agent IA avec un rayon d'impact eleve sur l'hote', afin que l'exposition soit suivie dans la liste des menaces et dans l'advisor, et pas seulement sur ce panneau. EDAMAME verifie egalement si les agents decouverts s'executent dans un harnais de gouvernance reconnu (plan de controle d'agents tel qu'AgentField ou Rippletide) : lorsque des agents sont presents mais qu'aucune empreinte de harnais n'est detectee pour l'utilisateur, la menace de posture 'Des agents IA s'executent sans harnais de gouvernance' se declenche, revelant la faille des phases plan/conception de l'AI-SDLC (aucune application de politique, identite, budget par tache, liste d'autorisation d'outils ni piste d'audit) et se resorbant des qu'un harnais est installe."
-              },
-              "description": {
-                "en": "Use Host Blast Radius to see which agents can reach the most of the host and to confine the unconfined ones first. An unsandboxed agent that also has passwordless sudo or touches critical subprocesses raises a dedicated posture threat so the risk is tracked alongside the system threats. The same panel context covers the AI-SDLC governance gap: if agents are present with no detected harness (AgentField, Rippletide, ...), adopt and install one for the user that launches the agents so policy, identity, budgets, tool allow-lists, and audit trails wrap every agent action and the 'AI agents run without a governance harness' threat clears.",
-                "fr": "Utilisez Rayon d'impact hote pour voir quels agents peuvent atteindre le plus de l'hote et confiner d'abord ceux qui ne le sont pas. Un agent sans bac a sable qui possede aussi un sudo sans mot de passe ou qui touche des sous-processus critiques declenche une menace de posture dediee, afin que le risque soit suivi avec les menaces systeme. Le meme contexte couvre la faille de gouvernance de l'AI-SDLC : si des agents sont presents sans harnais detecte (AgentField, Rippletide, ...), adoptez-en un et installez-le pour l'utilisateur qui lance les agents afin que politique, identite, budgets, listes d'autorisation d'outils et pistes d'audit encadrent chaque action d'agent et que la menace 'Des agents IA s'executent sans harnais de gouvernance' se resorbe."
-              }
-            },
-            {
-              "name": "flight_recorder",
-              "title": {
-                "en": "Flight Recorder – Structural Session Lifecycle (LLM-Free)",
-                "fr": "Flight Recorder – Cycle de vie structurel des sessions (sans LLM)"
-              },
-              "visual": {
-                "en": "A structural, LLM-free run provenance view recording raw session lifecycle events (start, tool calls, tool errors, end) with a tool-error drill-down. It shows what happened mechanically, with no model reasoning or narrative.",
-                "fr": "Une vue de provenance d'execution structurelle et sans LLM qui enregistre les evenements bruts du cycle de vie des sessions (debut, appels d'outils, erreurs d'outils, fin) avec une exploration des erreurs d'outils. Elle montre ce qui s'est passe mecaniquement, sans raisonnement ni narration de modele."
-              },
-              "description": {
-                "en": "Use the Flight Recorder to reconstruct exactly what a session did and drill into any tool error -- structurally, without depending on an LLM.",
-                "fr": "Utilisez le Flight Recorder pour reconstruire exactement ce qu'une session a fait et explorer toute erreur d'outil -- structurellement, sans dependre d'un LLM."
-              }
-            }
-          ]
+          }
         },
         {
           "name": "agents_advanced",
@@ -325,7 +218,121 @@
             "en": "Switch the Agents tab to Advanced to review the full structural surface in one continuous page. Scroll from the inventory at the top down through MCP, SBOM, recursive delegation, critical subprocess usage, host blast radius, and the flight recorder. The wiki renders this view as a multi-part scroll gallery.",
             "fr": "Basculez l'onglet Agents en mode Avance pour examiner toute la surface structurelle sur une page continue. Faites defiler depuis l'inventaire en haut jusqu'aux serveurs MCP, au SBOM, a la delegation recursive, a l'usage de sous-processus critiques, au rayon d'impact hote et au flight recorder. Le wiki affiche cette vue sous forme de galerie de defilement en plusieurs parties."
           },
-          "has_scroll_screenshots": true
+          "has_scroll_screenshots": true,
+          "items": [
+            {
+              "name": "host_blast_radius",
+              "scroll": 2,
+              "title": {
+                "en": "Host Blast Radius and Exposure – Sandboxes Sorted by Danger",
+                "fr": "Rayon d'impact hote et exposition – Bacs a sable tries par danger"
+              },
+              "visual": {
+                "en": "Summarizes each discovered agent's host blast radius and exposure: agent sandboxes filtered to discovered agents, sorted by danger, with HostPrivilege evidence detail, clear agents-vs-problems labels, and confinement remediation guidance for unconfined agents. An agent that runs unsandboxed while the host grants passwordless sudo and/or the agent is observed spawning critical subprocesses (ssh, netcat, docker, raw shells) raises the 'AI agent with high host blast radius' posture threat, so the exposure is tracked in the threat list and the advisor, not just on this panel. EDAMAME also checks whether the discovered agents run inside a recognized governance harness (agent control plane such as AgentField or Rippletide): when agents are present but no harness footprint is detected for the user, the 'AI agents run without a governance harness' posture threat fires, surfacing the AI-SDLC plan/design-phase gap (no policy enforcement, identity, per-task budget, tool allow-list, or audit trail) and clearing as soon as a harness is installed.",
+                "fr": "Resume le rayon d'impact hote et l'exposition de chaque agent decouvert : bacs a sable d'agents filtres aux agents decouverts, tries par danger, avec detail de preuve HostPrivilege, etiquettes claires agents-vs-problemes et conseils de remediation de confinement pour les agents non confines. Un agent qui s'execute sans bac a sable alors que l'hote accorde un sudo sans mot de passe et/ou qui est observe en train de lancer des sous-processus critiques (ssh, netcat, docker, shells bruts) declenche la menace de posture 'Agent IA avec un rayon d'impact eleve sur l'hote', afin que l'exposition soit suivie dans la liste des menaces et dans l'advisor, et pas seulement sur ce panneau. EDAMAME verifie egalement si les agents decouverts s'executent dans un harnais de gouvernance reconnu (plan de controle d'agents tel qu'AgentField ou Rippletide) : lorsque des agents sont presents mais qu'aucune empreinte de harnais n'est detectee pour l'utilisateur, la menace de posture 'Des agents IA s'executent sans harnais de gouvernance' se declenche, revelant la faille des phases plan/conception de l'AI-SDLC (aucune application de politique, identite, budget par tache, liste d'autorisation d'outils ni piste d'audit) et se resorbant des qu'un harnais est installe."
+              },
+              "description": {
+                "en": "Use Host Blast Radius to see which agents can reach the most of the host and to confine the unconfined ones first. An unsandboxed agent that also has passwordless sudo or touches critical subprocesses raises a dedicated posture threat so the risk is tracked alongside the system threats. The same panel context covers the AI-SDLC governance gap: if agents are present with no detected harness (AgentField, Rippletide, ...), adopt and install one for the user that launches the agents so policy, identity, budgets, tool allow-lists, and audit trails wrap every agent action and the 'AI agents run without a governance harness' threat clears.",
+                "fr": "Utilisez Rayon d'impact hote pour voir quels agents peuvent atteindre le plus de l'hote et confiner d'abord ceux qui ne le sont pas. Un agent sans bac a sable qui possede aussi un sudo sans mot de passe ou qui touche des sous-processus critiques declenche une menace de posture dediee, afin que le risque soit suivi avec les menaces systeme. Le meme contexte couvre la faille de gouvernance de l'AI-SDLC : si des agents sont presents sans harnais detecte (AgentField, Rippletide, ...), adoptez-en un et installez-le pour l'utilisateur qui lance les agents afin que politique, identite, budgets, listes d'autorisation d'outils et pistes d'audit encadrent chaque action d'agent et que la menace 'Des agents IA s'executent sans harnais de gouvernance' se resorbe."
+              }
+            },
+            {
+              "name": "agent_inventory",
+              "scroll": 3,
+              "title": {
+                "en": "Agent Inventory – Discovered Agents and Approve / Acknowledge",
+                "fr": "Inventaire des agents – Agents decouverts et approuver / accuser reception"
+              },
+              "visual": {
+                "en": "A row per supported agent type with a discovered / observing / paused status as a compact dot-plus-label, plus an approve/acknowledge action. A validate-at-top banner summarizes attention items, and discovered-but-paused agents show an 'unsecured' banner. Enable/disable and run-now controls for the observer live in AI / Config; this surface is strictly LLM-free.",
+                "fr": "Une ligne par type d'agent pris en charge avec un statut decouvert / en observation / en pause sous forme de point-plus-etiquette compact, plus une action approuver/accuser reception. Une banniere de validation en haut resume les elements a traiter, et les agents decouverts mais en pause affichent une banniere 'non securise'. Les controles activer/desactiver et execution immediate de l'observateur vivent dans IA / Config ; cette surface est strictement sans LLM."
+              },
+              "description": {
+                "en": "Use the inventory to confirm coverage at a glance: any agent present on disk should be observed. Approve or acknowledge per row; resume a paused observer from AI / Config to clear its 'unsecured' state.",
+                "fr": "Utilisez l'inventaire pour confirmer la couverture d'un coup d'oeil : tout agent present sur le disque devrait etre observe. Approuvez ou accusez reception par ligne ; reprenez un observateur en pause depuis IA / Config pour effacer son etat 'non securise'."
+              }
+            },
+            {
+              "name": "mcp_servers",
+              "scroll": 4,
+              "title": {
+                "en": "MCP Servers – Discovery, Risk, and Capability Graph",
+                "fr": "Serveurs MCP – Decouverte, risque et graphe de capacites"
+              },
+              "visual": {
+                "en": "Lists MCP endpoints discovered across agent configurations with the owning agent, config path, transport, command or URL, a per-server risk classification, and a tag legend. A List / Graph toggle swaps the list for an embedded capability graph of latent versus effective tool and resource edges. Findings reuse the shared dismissal-rule UI.",
+                "fr": "Liste les points de terminaison MCP decouverts dans les configurations d'agents avec l'agent proprietaire, le chemin de configuration, le transport, la commande ou l'URL, une classification de risque par serveur et une legende de tags. Un interrupteur Liste / Graphe remplace la liste par un graphe de capacites integre des aretes latentes versus effectives. Les constats reutilisent l'interface partagee de regles de rejet."
+              },
+              "description": {
+                "en": "Use MCP Servers to inventory every MCP endpoint an agent can reach, triage the risky ones, and flip to the graph to spot over-provisioned reach.",
+                "fr": "Utilisez Serveurs MCP pour inventorier chaque point de terminaison MCP qu'un agent peut atteindre, trier les plus risques et basculer vers le graphe pour reperer une portee sur-provisionnee."
+              }
+            },
+            {
+              "name": "agent_sbom",
+              "scroll": 5,
+              "title": {
+                "en": "Agent SBOM – Supply Chain Projection and Diff",
+                "fr": "SBOM d'agent – Projection de la chaine d'approvisionnement et diff"
+              },
+              "visual": {
+                "en": "A CycloneDX projection of the agent supply chain (plugins, skills, MCP servers, models) with an approved-baseline diff highlighting added, removed, and changed components.",
+                "fr": "Une projection CycloneDX de la chaine d'approvisionnement de l'agent (plugins, competences, serveurs MCP, modeles) avec un diff de base approuvee mettant en evidence les composants ajoutes, supprimes et modifies."
+              },
+              "description": {
+                "en": "Use the Agent SBOM to approve a known-good component set and get alerted when the live composition drifts from it.",
+                "fr": "Utilisez le SBOM d'agent pour approuver un ensemble de composants fiable et etre alerte quand la composition reelle s'en ecarte."
+              }
+            },
+            {
+              "name": "critical_subprocess_usage",
+              "scroll": 6,
+              "title": {
+                "en": "Critical Subprocess Usage – Sensitive Spawns (LLM-Free)",
+                "fr": "Usage de sous-processus critiques – Lancements sensibles (sans LLM)"
+              },
+              "visual": {
+                "en": "Lists agents observed spawning sensitive subprocesses (shells, package managers, network and credential tools) directly from structural process telemetry, with the spawning agent, the subprocess, and a risk indicator. No language-model is involved in the detection.",
+                "fr": "Liste les agents observes lancant des sous-processus sensibles (shells, gestionnaires de paquets, outils reseau et d'identifiants) directement a partir de la telemetrie de processus structurelle, avec l'agent lanceur, le sous-processus et un indicateur de risque. Aucun modele de langage n'intervient dans la detection."
+              },
+              "description": {
+                "en": "Use Critical Subprocess Usage to catch an agent reaching for a shell or package manager when its task never called for one.",
+                "fr": "Utilisez Usage de sous-processus critiques pour detecter un agent qui invoque un shell ou un gestionnaire de paquets alors que sa tache ne le justifiait pas."
+              }
+            },
+            {
+              "name": "recursive_delegation",
+              "scroll": 7,
+              "title": {
+                "en": "Recursive Delegation – Depth, Cycles, and Privilege",
+                "fr": "Delegation recursive – Profondeur, cycles et privileges"
+              },
+              "visual": {
+                "en": "Surfaces recursive agent delegation with delegation depth, detected cycles, repeated goal hashes, and privilege escalation across the delegation chain; a runaway chain trips the matching internal threat. Detection is structural and LLM-free.",
+                "fr": "Expose la delegation recursive d'agents avec la profondeur de delegation, les cycles detectes, les hash d'objectif repetes et l'escalade de privileges le long de la chaine ; une chaine emballee declenche la menace interne correspondante. La detection est structurelle et sans LLM."
+              },
+              "description": {
+                "en": "Use Recursive Delegation to catch agents that spawn agents in unbounded loops or escalate privilege across the chain.",
+                "fr": "Utilisez Delegation recursive pour detecter les agents qui engendrent des agents en boucles non bornees ou escaladent les privileges le long de la chaine."
+              }
+            },
+            {
+              "name": "flight_recorder",
+              "scroll": 8,
+              "title": {
+                "en": "Flight Recorder – Structural Session Lifecycle (LLM-Free)",
+                "fr": "Flight Recorder – Cycle de vie structurel des sessions (sans LLM)"
+              },
+              "visual": {
+                "en": "A structural, LLM-free run provenance view recording raw session lifecycle events (start, tool calls, tool errors, end) with a tool-error drill-down. It shows what happened mechanically, with no model reasoning or narrative.",
+                "fr": "Une vue de provenance d'execution structurelle et sans LLM qui enregistre les evenements bruts du cycle de vie des sessions (debut, appels d'outils, erreurs d'outils, fin) avec une exploration des erreurs d'outils. Elle montre ce qui s'est passe mecaniquement, sans raisonnement ni narration de modele."
+              },
+              "description": {
+                "en": "Use the Flight Recorder to reconstruct exactly what a session did and drill into any tool error -- structurally, without depending on an LLM.",
+                "fr": "Utilisez le Flight Recorder pour reconstruire exactement ce qu'une session a fait et explorer toute erreur d'outil -- structurellement, sans dependre d'un LLM."
+              }
+            }
+          ]
         }
       ]
     },

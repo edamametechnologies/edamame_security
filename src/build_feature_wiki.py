@@ -250,6 +250,107 @@ def stage_scroll_gallery(
     return len(staged)
 
 
+def subfeature_uses_interleave(entry: Dict) -> bool:
+    """True when a sub-feature opts into the interleaved walkthrough layout.
+
+    The layout triggers when the entry exposes a scroll sequence base AND at
+    least one item carries an integer ``scroll`` part index. Sub-features
+    without per-item ``scroll`` mappings keep the legacy layout (lead image +
+    standalone gallery, then a flat ``UI Elements & Data`` list) untouched.
+    """
+    if not resolve_scroll_base(entry):
+        return False
+    return any(isinstance(it.get("scroll"), int) for it in entry.get("items", []))
+
+
+def render_walkthrough_items(md: MdUtils, items: List[Dict]):
+    """Render UI-element entries as titled prose blocks beneath a scroll frame."""
+    for item in items:
+        md.new_line(f"**{item['title']['en']}**")
+        md.new_line()
+        md.new_line(item["description"]["en"])
+        md.new_line()
+
+
+def stage_interleaved_walkthrough(
+    md: MdUtils,
+    screenshots_dir: Path,
+    images_dir: Path,
+    used_images: Set[Path],
+    entry: Dict,
+    title: str,
+    lead_included: bool = True,
+) -> bool:
+    """Render a long page as a guided walkthrough that weaves each scroll frame
+    together with the UI-element entries mapped to it.
+
+    Each item's ``scroll`` value is the ``Part N of M`` index it illustrates: 1
+    is the top-of-page lead image (rendered by the caller when
+    ``lead_included``), 2 is the first ``_scrollN`` continuation frame, and so
+    on. Items pinned to part 1 render right after the caller's lead image; every
+    continuation frame renders in page order, immediately followed by the
+    entries mapped to it. Items with no (or out-of-range) ``scroll`` value
+    render as a trailing list so nothing is dropped. Returns True so the caller
+    skips the legacy flat item list.
+    """
+    scroll_base = resolve_scroll_base(entry)
+    scroll_paths = find_scroll_screenshots(screenshots_dir, scroll_base) if scroll_base else []
+
+    staged: List[Path] = []
+    for sp in scroll_paths:
+        dest = images_dir / sp.name
+        if dest not in used_images:
+            copy2(sp, dest)
+            used_images.add(dest)
+        staged.append(dest)
+
+    offset = 1 if lead_included else 0
+    total = len(staged) + offset
+
+    items: List[Dict] = entry.get("items", [])
+    by_part: Dict[int, List[Dict]] = {}
+    unmapped: List[Dict] = []
+    for item in items:
+        part = item.get("scroll")
+        if isinstance(part, int) and 1 <= part <= total:
+            by_part.setdefault(part, []).append(item)
+        else:
+            unmapped.append(item)
+
+    md.new_header(level=4, title="📝 UI Elements & Data")
+    md.new_line()
+
+    # Entries pinned to the lead image (part 1), already rendered by the caller.
+    if lead_included and by_part.get(1):
+        render_walkthrough_items(md, by_part[1])
+
+    for idx, p in enumerate(staged, start=offset + 1):
+        md.new_line()
+        md.new_line("---")
+        md.new_line()
+        md.new_line('<div align="center">')
+        md.new_line()
+        md.new_line(f"*Part {idx} of {total}*")
+        md.new_line()
+        md.new_line(f"![{title} - part {idx}]({wiki_image_url(p.name)})")
+        md.new_line()
+        md.new_line("</div>")
+        md.new_line()
+        if by_part.get(idx):
+            render_walkthrough_items(md, by_part[idx])
+
+    if unmapped:
+        md.new_line()
+        md.new_line("---")
+        md.new_line()
+        render_walkthrough_items(md, unmapped)
+
+    md.new_line()
+    md.new_line("---")
+    md.new_line()
+    return True
+
+
 def write_feature_page(feature: Dict, screenshots_dir: Path, output_dir: Path, images_dir: Path, used_images: Set[Path]):
     slug = sanitize_filename(feature["name"])
     title_en = feature["title"]["en"]
@@ -310,6 +411,7 @@ def write_feature_page(feature: Dict, screenshots_dir: Path, output_dir: Path, i
         for i, sub in enumerate(sub_features, 1):
             sub_title = sub["title"]["en"]
             sub_has_dual = sub.get("has_dual_screenshots", has_dual)  # Inherit from parent if not set
+            interleave = subfeature_uses_interleave(sub)
             
             # Add sub-feature header with numbering and icon
             md.new_header(level=3, title=f"{i}. 🔧 {sub_title}")
@@ -341,23 +443,37 @@ def write_feature_page(feature: Dict, screenshots_dir: Path, output_dir: Path, i
                 else:
                     add_screenshot_with_caption(md, dest_sub, sub_title, f"Screenshot of {sub_title}")
 
-                # Long scrolling page: append the ordered `_scrollN` gallery after
-                # the top-of-page lead image so every section is visible.
-                stage_scroll_gallery(
-                    md, screenshots_dir, images_dir, used_images, sub, sub_title,
-                    lead_included=True,
-                )
+                # Long scrolling page: either weave each `_scrollN` frame together
+                # with the UI-element entries mapped to it (interleaved
+                # walkthrough), or append the ordered gallery after the lead image.
+                if interleave:
+                    stage_interleaved_walkthrough(
+                        md, screenshots_dir, images_dir, used_images, sub, sub_title,
+                        lead_included=True,
+                    )
+                else:
+                    stage_scroll_gallery(
+                        md, screenshots_dir, images_dir, used_images, sub, sub_title,
+                        lead_included=True,
+                    )
             else:
                 # No lead screenshot found, but the page may still be a captured
-                # scroll sequence (`_scrollN` only). Render the gallery standalone.
-                stage_scroll_gallery(
-                    md, screenshots_dir, images_dir, used_images, sub, sub_title,
-                    lead_included=False,
-                )
+                # scroll sequence (`_scrollN` only).
+                if interleave:
+                    stage_interleaved_walkthrough(
+                        md, screenshots_dir, images_dir, used_images, sub, sub_title,
+                        lead_included=False,
+                    )
+                else:
+                    stage_scroll_gallery(
+                        md, screenshots_dir, images_dir, used_images, sub, sub_title,
+                        lead_included=False,
+                    )
 
-            # Items as a well-formatted list
+            # Items as a well-formatted list. Interleaved walkthroughs already
+            # render each entry next to its mapped scroll frame above.
             items: List[Dict] = sub.get("items", [])
-            if items:
+            if items and not interleave:
                 md.new_header(level=4, title="📝 UI Elements & Data")
                 md.new_line()
                 
