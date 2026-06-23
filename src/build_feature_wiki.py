@@ -276,6 +276,47 @@ def render_walkthrough_items(md: MdUtils, items: List[Dict]):
         md.new_line()
 
 
+def emit_centered_image(md: MdUtils, url: str, alt: str, caption: Optional[str] = None):
+    """Emit a centered screenshot block (optionally captioned)."""
+    md.new_line('<div align="center">')
+    md.new_line()
+    md.new_line(f"![{alt}]({url})")
+    if caption:
+        md.new_line()
+        md.new_line(f"*{caption}*")
+    md.new_line()
+    md.new_line("</div>")
+    md.new_line()
+
+
+def render_walkthrough_frame(
+    md: MdUtils,
+    image_url: Optional[str],
+    alt: str,
+    frame_items: List[Dict],
+    caption: Optional[str] = None,
+):
+    """Render one walkthrough frame with its mapped panel(s).
+
+    The panel header is emitted *above* the screenshot so the table-of-contents
+    anchor (the level-4 panel heading) lands on the panel and its image sits
+    immediately below it, rather than scrolling the image off the top. For a
+    frame that maps several panels, only the first one carries the (shared)
+    image; the rest follow as header + prose. A frame with no mapped panel
+    renders the image alone (optionally captioned).
+    """
+    if frame_items:
+        first, *rest = frame_items
+        md.new_header(level=4, title=first["title"]["en"])
+        if image_url:
+            emit_centered_image(md, image_url, alt)
+        md.new_line(first["description"]["en"])
+        md.new_line()
+        render_walkthrough_items(md, rest)
+    elif image_url:
+        emit_centered_image(md, image_url, alt, caption=caption)
+
+
 def stage_interleaved_walkthrough(
     md: MdUtils,
     screenshots_dir: Path,
@@ -283,19 +324,21 @@ def stage_interleaved_walkthrough(
     used_images: Set[Path],
     entry: Dict,
     title: str,
-    lead_included: bool = True,
+    lead_dest: Optional[Path] = None,
 ) -> bool:
     """Render a long page as a guided walkthrough that weaves each scroll frame
     together with the UI-element entries mapped to it.
 
     Each item's ``scroll`` value is the ``Part N of M`` index it illustrates: 1
-    is the top-of-page lead image (rendered by the caller when
-    ``lead_included``), 2 is the first ``_scrollN`` continuation frame, and so
-    on. Items pinned to part 1 render right after the caller's lead image; every
-    continuation frame renders in page order, immediately followed by the
-    entries mapped to it. Items with no (or out-of-range) ``scroll`` value
-    render as a trailing list so nothing is dropped. Returns True so the caller
-    skips the legacy flat item list.
+    is the top-of-page lead image (``lead_dest``, rendered here as part 1 when
+    provided), 2 is the first ``_scrollN`` continuation frame, and so on. Unlike
+    a plain gallery, this function owns the lead image so that every frame is
+    rendered the same way: the mapped panel's level-4 header comes *first*, then
+    the screenshot, then the prose. That ordering makes the page table of
+    contents jump to the panel heading with its screenshot directly beneath it
+    (instead of landing on prose with the image scrolled off above). Items with
+    no (or out-of-range) ``scroll`` value render as a trailing list so nothing
+    is dropped. Returns True so the caller skips the legacy flat item list.
     """
     scroll_base = resolve_scroll_base(entry)
     scroll_paths = find_scroll_screenshots(screenshots_dir, scroll_base) if scroll_base else []
@@ -308,6 +351,7 @@ def stage_interleaved_walkthrough(
             used_images.add(dest)
         staged.append(dest)
 
+    lead_included = lead_dest is not None
     offset = 1 if lead_included else 0
     total = len(staged) + offset
 
@@ -321,24 +365,32 @@ def stage_interleaved_walkthrough(
         else:
             unmapped.append(item)
 
-    # Entries pinned to the lead image (part 1), already rendered by the caller.
-    if lead_included and by_part.get(1):
-        render_walkthrough_items(md, by_part[1])
+    # Part 1 is the lead image. Render it here (header-first) so a part-1 panel
+    # anchors on its heading with the lead image right below it, identical to the
+    # continuation frames. When part 1 has no mapped panel, the lead image keeps
+    # its caption so it still reads as the page overview.
+    if lead_included:
+        md.new_line()
+        md.new_line("---")
+        md.new_line()
+        render_walkthrough_frame(
+            md,
+            wiki_image_url(lead_dest.name),
+            title,
+            by_part.get(1, []),
+            caption=f"Screenshot of {title}",
+        )
 
     for idx, p in enumerate(staged, start=offset + 1):
         md.new_line()
         md.new_line("---")
         md.new_line()
-        md.new_line('<div align="center">')
-        md.new_line()
-        md.new_line(f"![{title} - part {idx}]({wiki_image_url(p.name)})")
-        md.new_line()
-        md.new_line("</div>")
-        md.new_line()
-        # The panel header(s) for this frame name what it shows, so a generic
-        # "Part N of M" caption is redundant and intentionally omitted.
-        if by_part.get(idx):
-            render_walkthrough_items(md, by_part[idx])
+        render_walkthrough_frame(
+            md,
+            wiki_image_url(p.name),
+            f"{title} - part {idx}",
+            by_part.get(idx, []),
+        )
 
     if unmapped:
         md.new_line()
@@ -439,20 +491,24 @@ def write_feature_page(feature: Dict, screenshots_dir: Path, output_dir: Path, i
                         copy2(sub_shot_selected, dest_sub_selected)
                         used_images.add(dest_sub_selected)
                 
-                if dest_sub_selected:
-                    add_dual_screenshots(md, dest_sub, dest_sub_selected, sub_title, f"Screenshot of {sub_title}")
-                else:
-                    add_screenshot_with_caption(md, dest_sub, sub_title, f"Screenshot of {sub_title}")
-
                 # Long scrolling page: either weave each `_scrollN` frame together
                 # with the UI-element entries mapped to it (interleaved
-                # walkthrough), or append the ordered gallery after the lead image.
+                # walkthrough), or render the lead image then append the ordered
+                # gallery. The interleaved path renders the lead image itself (as
+                # part 1, header-first) so the table of contents lands on a panel
+                # heading with its screenshot directly below; we therefore do NOT
+                # pre-render the lead here in that case. (Interleaved sub-features
+                # never use dual list/detail screenshots.)
                 if interleave:
                     stage_interleaved_walkthrough(
                         md, screenshots_dir, images_dir, used_images, sub, sub_title,
-                        lead_included=True,
+                        lead_dest=dest_sub,
                     )
                 else:
+                    if dest_sub_selected:
+                        add_dual_screenshots(md, dest_sub, dest_sub_selected, sub_title, f"Screenshot of {sub_title}")
+                    else:
+                        add_screenshot_with_caption(md, dest_sub, sub_title, f"Screenshot of {sub_title}")
                     stage_scroll_gallery(
                         md, screenshots_dir, images_dir, used_images, sub, sub_title,
                         lead_included=True,
@@ -463,7 +519,7 @@ def write_feature_page(feature: Dict, screenshots_dir: Path, output_dir: Path, i
                 if interleave:
                     stage_interleaved_walkthrough(
                         md, screenshots_dir, images_dir, used_images, sub, sub_title,
-                        lead_included=False,
+                        lead_dest=None,
                     )
                 else:
                     stage_scroll_gallery(
