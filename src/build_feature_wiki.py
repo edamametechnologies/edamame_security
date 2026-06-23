@@ -264,10 +264,14 @@ def subfeature_uses_interleave(entry: Dict) -> bool:
 
 
 def render_walkthrough_items(md: MdUtils, items: List[Dict]):
-    """Render UI-element entries as titled prose blocks beneath a scroll frame."""
+    """Render UI-element entries as titled sections beneath a scroll frame.
+
+    Each entry's title is emitted as a level-4 header so it is collected into
+    the page table of contents (``new_header`` registers the heading with
+    MdUtils' TOC), making every panel individually navigable.
+    """
     for item in items:
-        md.new_line(f"**{item['title']['en']}**")
-        md.new_line()
+        md.new_header(level=4, title=item["title"]["en"])
         md.new_line(item["description"]["en"])
         md.new_line()
 
@@ -317,9 +321,6 @@ def stage_interleaved_walkthrough(
         else:
             unmapped.append(item)
 
-    md.new_header(level=4, title="📝 UI Elements & Data")
-    md.new_line()
-
     # Entries pinned to the lead image (part 1), already rendered by the caller.
     if lead_included and by_part.get(1):
         render_walkthrough_items(md, by_part[1])
@@ -330,12 +331,12 @@ def stage_interleaved_walkthrough(
         md.new_line()
         md.new_line('<div align="center">')
         md.new_line()
-        md.new_line(f"*Part {idx} of {total}*")
-        md.new_line()
         md.new_line(f"![{title} - part {idx}]({wiki_image_url(p.name)})")
         md.new_line()
         md.new_line("</div>")
         md.new_line()
+        # The panel header(s) for this frame name what it shows, so a generic
+        # "Part N of M" caption is redundant and intentionally omitted.
         if by_part.get(idx):
             render_walkthrough_items(md, by_part[idx])
 
@@ -470,18 +471,14 @@ def write_feature_page(feature: Dict, screenshots_dir: Path, output_dir: Path, i
                         lead_included=False,
                     )
 
-            # Items as a well-formatted list. Interleaved walkthroughs already
-            # render each entry next to its mapped scroll frame above.
+            # Items as titled sections. Interleaved walkthroughs already
+            # render each entry next to its mapped scroll frame above. Here
+            # (non-interleaved sub-features) each panel is a level-4 header so
+            # it is collected into the page table of contents, matching the
+            # interleaved walkthrough layout.
             items: List[Dict] = sub.get("items", [])
             if items and not interleave:
-                md.new_header(level=4, title="📝 UI Elements & Data")
-                md.new_line()
-                
-                # Create a more structured list
-                for item in items:
-                    md.new_line(f"- **{item['title']['en']}**")
-                    md.new_line(f"  - {item['description']['en']}")
-                    md.new_line()
+                render_walkthrough_items(md, items)
 
             # Add a styled separator between sub-features
             if i < len(sub_features):
@@ -489,9 +486,11 @@ def write_feature_page(feature: Dict, screenshots_dir: Path, output_dir: Path, i
                 md.new_line("---")
                 md.new_line()
 
-    # Add table of contents at the end to avoid conflicts
+    # Add table of contents at the end to avoid conflicts. Depth 4 so each
+    # individual UI panel (level-4 header) is listed and navigable, not just
+    # the sub-feature sections (level 3).
     md.new_header(level=2, title="📋 Contents")
-    md.new_table_of_contents(table_title="", depth=3)
+    md.new_table_of_contents(table_title="", depth=4)
     md.new_line()
 
     # Add footer with navigation
