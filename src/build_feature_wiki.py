@@ -465,7 +465,19 @@ def write_feature_page(feature: Dict, screenshots_dir: Path, output_dir: Path, i
             sub_title = sub["title"]["en"]
             sub_has_dual = sub.get("has_dual_screenshots", has_dual)  # Inherit from parent if not set
             interleave = subfeature_uses_interleave(sub)
-            
+
+            # Emit a stable HTML anchor keyed on the sub-feature `name` so
+            # external deep links (e.g. the in-app support dock's Wiki button,
+            # which maps app tab/subtab -> `feature-<slug>#<sub_name>`) can
+            # target this exact section. GitHub's auto-generated heading anchors
+            # are derived from the visible emoji + numbered title text and are
+            # therefore unstable across renames/reorders; this explicit anchor
+            # is not. GitHub prefixes rendered ids with `user-content-` but its
+            # client-side scroll handler still resolves the bare `#<sub_name>`
+            # fragment, so the in-app link lands on the right section.
+            md.new_line(f'<a id="{sub["name"]}"></a>')
+            md.new_line()
+
             # Add sub-feature header with numbering and icon
             md.new_header(level=3, title=f"{i}. 🔧 {sub_title}")
             md.new_line()
