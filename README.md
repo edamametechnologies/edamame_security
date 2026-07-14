@@ -23,7 +23,7 @@ suppression on top of that deterministic core.
 | Network scanning (LAN) | Host / port / service discovery, CVE lookup, device classification and criticality | RAG-based explanation of device vulnerabilities |
 | Traffic monitoring | Capture, L7 process attribution, ML anomaly detection, blacklist matching | RAG-based explanation of suspicious sessions |
 | Digital identity | HaveIBeenPwned breach lookup and alerts | RAG-based explanation of breaches |
-| **Agent visibility** | Agent inventory, MCP discovery, SBOM & drift, capability graph, host blast radius, governance-harness coverage, OWASP GenAI scorecard, deterministic divergence & attack-pattern detection | Behavioral-intent extrapolation from transcripts; verdict / finding adjudication and explanation |
+| **Agent visibility** | Agent inventory, MCP discovery, component inventory, capability graph, host blast radius, governance-harness coverage, OWASP GenAI scorecard, deterministic divergence & attack-pattern detection | Behavioral-intent extrapolation from transcripts; verdict / finding adjudication and explanation |
 | AI Assistant (agentic automation) | — (this *is* the LLM layer) | Automated todo triage, remediation, escalation |
 | Compliance reports | Signed posture, SOC 2 / ISO 27001 reports, Hub reporting | — |
 
@@ -56,10 +56,10 @@ EDAMAME's own agentic automation (the AI Assistant) described below.
 **Works without an LLM (deterministic):**
 - Agent discovery and inventory — agents are detected from their on-disk transcript directories; **no plugin install is required** to be seen
 - MCP endpoint discovery and deterministic risk findings
-- Agent SBOM (tools, secrets, instruction files, models) with drift detection against an approved baseline
+- Agent component inventory (tools, secrets, instruction files)
 - Capability graph and trust zones; recursion / delegation detection
 - Host blast radius — flags discovered agents that run unsandboxed, with passwordless root, or that drive critical subprocesses
-- Governance-harness coverage — flags discovered agents running with **no recognized agent harness** (e.g. [AgentField](https://agentfield.ai), Rippletide) enforcing policy, identity, budget, tool allow-listing, or audit trail; closes the AI-SDLC "plan" and "design" phase governance gap
+- Governance-harness coverage — flags discovered agents running with **no recognized agent harness** (e.g. [AgentField](https://agentfield.ai), Rippletide) enforcing policy, identity, budget, tool allow-listing, or audit trail; closes the AI agent governance gap
 - "Unsecured agent" posture — flags an agent present on disk whose EDAMAME observer has been paused
 - Two-plane divergence detection (deterministic floor) — compares declared agent intent against live process / file / network telemetry
 - Deterministic attack-pattern detection on agent activity (token exfiltration, credential harvest, sandbox escape, supply-chain, file tampering)
@@ -374,10 +374,13 @@ sudo apt install edamame-cli
 > checks, and security-awareness rules). They observe and onboard; they never
 > adjudicate.
 
-EDAMAME Security provides runtime behavioral monitoring for AI agents through
-six integration packages. Each package bridges an agent's reasoning plane
-(transcripts, tool calls, session history) to EDAMAME's system-plane observer,
-enabling two-plane divergence detection.
+EDAMAME Security provides runtime behavioral monitoring for AI agents through its
+**host-side transcript observer** in the core runtime: it correlates each discovered
+agent's reasoning plane (transcripts, tool calls, session history) against the system
+plane, enabling two-plane divergence detection with **no plugin installed**. The six
+integration packages below are **optional and additive** — they extend that observation
+to off-host agents and add in-agent onboarding, read-only posture/verdict views, and
+(going forward) pre-execution tool-call enforcement.
 
 ### Repositories
 
