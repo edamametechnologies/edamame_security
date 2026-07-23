@@ -532,42 +532,34 @@ Agent-specific additions:
 | Claude Desktop | `skills/`, `agents/`, `commands/` |
 | OpenClaw | `extensions/edamame/` (MCP plugin), `skill/` (OpenClaw skill format) |
 
-### Installation
+### Installation (retired 1.7.0)
 
-Multiple installation paths exist for every plugin, ordered by preference:
+In-app and CLI plugin install/provision was **retired in EDAMAME 1.7.0**.
+Host-side transcript observation starts automatically when an agent's
+transcripts are discovered on disk. Prevention is via **nono** / **srt**
+governance harnesses (see Agents > Exposure > Host Blast Radius).
 
-#### 1. EDAMAME app / posture CLI (recommended)
+Level-2 plugin repos remain archived for reference; manual marketplace or
+`setup/install.sh` installs are outside the EDAMAME product path.
 
-Cross-platform. Downloads the latest release from GitHub as a zipball and
-installs using native Rust file operations. No `git`, `bash`, or `python`
-required.
+Historical install commands (no longer in product):
 
 ```bash
+# RETIRED -- do not use for new deployments
 edamame-posture install-agent-plugin cursor
-edamame-posture install-agent-plugin claude_code
-edamame-posture install-agent-plugin claude_desktop
-edamame-posture install-agent-plugin openclaw
-edamame-posture install-agent-plugin codex
-edamame-posture install-agent-plugin hermes
 ```
 
-For Cursor, Claude Code, and Claude Desktop, the provisioning engine
-automatically registers the `edamame` MCP server entry in the IDE's global
-configuration file (`~/.cursor/mcp.json` for Cursor, `~/.claude.json` for
-Claude Code and Claude Desktop, plus the Claude Desktop Electron app config).
-Existing servers in those files are preserved. No manual MCP registration
-step is needed.
+For operator-driven agent security, use the EDAMAME Security app (Agents tab,
+AI / Config observer toggles) or `edamame_posture` daemon with host-side
+observation enabled.
 
-The EDAMAME Security app exposes the same functionality in AI Settings with
-one-click install, status display, and intent injection test buttons.
-
-#### 2. Marketplace
+#### Marketplace (archived packages only)
 
 | Plugin | Command |
 |--------|---------|
 | Cursor | Search "EDAMAME Security" in Cursor Marketplace |
 | Claude Code | `/plugin marketplace add edamametechnologies/edamame_claude_code` |
-| Claude Desktop | Install via EDAMAME app or `edamame-posture install-agent-plugin claude_desktop` |
+| Claude Desktop | Archived package; EDAMAME app plugin install retired 1.7.0 |
 | OpenClaw | `openclaw plugins enable edamame` (after manual copy) |
 
 #### 3. Manual install from source
@@ -646,22 +638,10 @@ All four plugins resolve credentials in the same order:
 2. Plugin-specific `state/edamame-mcp.psk` file
 3. `~/.edamame_psk` (legacy shared PSK, OpenClaw only)
 
-### Uninstall
+### Uninstall (retired 1.7.0)
 
-Uninstalling removes all plugin files, config, state, and pairing
-credentials. For Cursor, Claude Code, and Claude Desktop, the `edamame` MCP
-server entry is also removed from the IDE's global configuration file
-(`~/.cursor/mcp.json`, `~/.claude.json`, or the Claude Desktop Electron app
-config), leaving other servers intact.
-
-```bash
-edamame-posture uninstall-agent-plugin cursor
-edamame-posture uninstall-agent-plugin claude_code
-edamame-posture uninstall-agent-plugin claude_desktop
-edamame-posture uninstall-agent-plugin openclaw
-edamame-posture uninstall-agent-plugin codex
-edamame-posture uninstall-agent-plugin hermes
-```
+Product uninstall RPC/CLI was removed. Remove legacy plugin directories manually
+if needed; see archived plugin repo docs.
 
 ### Scope Filters
 
@@ -684,46 +664,11 @@ OpenClaw uses `scope_any_lineage_paths` (matches at any process lineage
 level) because the gateway can appear as parent or grandparent depending on
 tool-chain depth.
 
-### Provisioning Internals
+### Provisioning Internals (retired 1.7.0)
 
-The Rust provisioning code in
-[edamame_foundation](https://github.com/edamametechnologies/edamame_foundation)
-(`src/agent_plugin.rs`) is the canonical implementation used by the EDAMAME
-app and `edamame_posture` CLI. It handles:
-
-- Downloading the latest zipball from GitHub
-- Extracting and copying files to the correct install paths
-- Creating config, state, and rendered directories
-- Rendering config templates with workspace-specific values
-- Automatically injecting the `edamame` MCP server entry into the IDE's global config (`~/.cursor/mcp.json` for Cursor, `~/.claude.json` for Claude Code and Claude Desktop, plus the Claude Desktop Electron app config), preserving existing servers
-- Setting file permissions (executable bits for `.mjs` and `.sh` files)
-- Chowning installed files to the real user when running as root (helper daemon)
-
-On uninstall, the `edamame` entry is removed from the global MCP config
-before deleting the plugin directory tree. Both injection and removal are
-non-fatal: failures are logged as warnings but do not prevent the
-install/uninstall from succeeding.
-
-#### Consistency invariant
-
-The Rust `install_*()` / `uninstall_*()` functions in `agent_plugin.rs` and
-the `setup/install.sh` scripts in each plugin repo MUST produce identical
-directory structures and file layouts. When modifying one, verify the other.
-
-Key checkpoints:
-- Same directories created
-- Same files copied
-- Same state subdirectory structure
-- Same MCP server entry injected into the IDE global config
-- Uninstall removes the same tree and the global MCP entry
-
-#### Root ownership fix
-
-When the helper daemon installs plugins as root (via `sudo`), all created
-files would be root-owned, preventing user-level scripts (pairing, runtime)
-from writing to them. The Rust provisioning code includes a `chown` step
-that re-assigns ownership to the real user by stat-ing the home directory
-to obtain the correct uid/gid.
+Rust provisioning in `edamame_foundation` (`agent_plugin.rs`) remains for
+legacy on-disk layouts but is no longer invoked from the app, posture CLI, or
+RPC. Host-side observation uses `edamame_foundation::agent_transcripts` only.
 
 ### Behavioral Model Contract
 
