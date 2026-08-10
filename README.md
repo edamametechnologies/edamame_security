@@ -687,7 +687,7 @@ Two test suites validate each plugin:
 | Suite | What it tests | Script |
 |-------|--------------|--------|
 | **Intent E2E** | Reasoning-plane pipeline: inject synthetic transcripts, verify behavioral predictions | `tests/e2e_inject_intent.sh` in each repo |
-| **CVE / Divergence E2E** | System-plane detection: trigger attack simulations, verify EDAMAME detects them | `agent_security/tests/e2e/triggers/` (run with `--agent-type <plugin>`) |
+| **CVE / Divergence E2E** | System-plane detection: trigger attack simulations, verify EDAMAME detects them | `edamame_posture/tests/security/triggers/` (run with `--agent-type <plugin>`) |
 
 Run intent tests:
 
