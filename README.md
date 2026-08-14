@@ -457,17 +457,23 @@ the internalization: it reads every **discovered** agent's transcript
 directory directly and feeds the same ingest pipeline. "Discovered" means the
 agent's transcript root is accessible on disk (e.g. `~/.cursor/projects/`,
 `~/.claude/projects/`, `~/.codex/sessions/`, `~/.hermes/`); plugin install is
-**not** required. Divergence detection works end-to-end for any agent the user
+**not** required. That is distinct from **installed on the host**: the agent
+product itself has a config or instruction footprint (for example
+`~/.claude.json`) even if it has never written a transcript. The Agent
+Inventory lists that as *Installed, not yet observed* until sessions appear;
+*observed* means EDAMAME is ingesting transcripts (or receiving a plugin
+push). Divergence detection works end-to-end for any agent the user
 already has on their machine, even before they ever click "Install plugin" in
 the AI / Config tab. When the EDAMAME plugin **is** installed in an agent's MCP
 config, the plugin's own Node-side bridge also pushes behavioral models
 in-process and the observer hash-skips when payloads match — so the two paths
 are purely additive. Operators can pause, resume, or run-now the observer per
-agent (discovered or not) in the EDAMAME app's AI / Config tab. When the
+agent (installed or discovered) in the EDAMAME app's AI / Config tab. When the
 observer is paused while the agent is discovered on disk, EDAMAME flags an
 internal threat (`unsecured_<agent>`, one per agent type, including
-`unsecured_codex`) on the next score cycle — the threat keys on discovery, not
-plugin install.
+`unsecured_codex`) on the next score cycle — the threat keys on discovery
+(transcripts), not on product install and not on plugin install. An
+installed-but-never-run agent is not unsecured.
 
 ### Observer vs plugin: the value boundary
 
