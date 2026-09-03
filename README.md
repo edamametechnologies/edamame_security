@@ -62,7 +62,7 @@ EDAMAME's own agentic automation (the AI Assistant) described below.
 - Governance-harness coverage — flags discovered agents running with **no recognized agent harness** (e.g. [AgentField](https://agentfield.ai), Rippletide) enforcing policy, identity, budget, tool allow-listing, or audit trail; closes the AI agent governance gap
 - "Unsecured agent" posture — flags an agent present on disk whose EDAMAME observer has been paused
 - Two-plane divergence detection (deterministic floor) — compares declared agent intent against live process / file / network telemetry
-- Deterministic attack-pattern detection on agent activity (token exfiltration, credential harvest, sandbox escape, supply-chain, file tampering)
+- Deterministic attack-pattern detection on agent activity (token exfiltration, credential harvest, sensitive-material egress, sandbox escape, supply-chain, file tampering), plus agent control-plane checks: enforcement-config weakening (an agent turning its own sandbox or permission rules off) and denylist bypass (a denied command re-spelled to get around the rule)
 - OWASP GenAI / Agentic Top-10 coverage scorecard
 
 **Enhanced with an LLM (optional):**
