@@ -1345,12 +1345,12 @@
             "fr": "Conformite – Alignement sur les Cadres"
           },
           "visual": {
-            "en": "The Compliance tab displays a table view of all threats mapped to compliance frameworks. At the top, clickable filter buttons let you focus on specific frameworks: 'CIS Benchmark Level 1' (green), 'Personal Posture' (blue), 'ISO 27001/2' (purple), and 'SOC 2' (cyan). The table has three columns: Threat (listing issues like 'EDAMAME helper inactive', 'Remote events enabled', 'Disk encryption disabled'), Tags (showing which frameworks each threat relates to), and Status (green circle for pass, pink circle for fail). Click column headers to sort. This view helps compliance officers quickly identify which security gaps impact specific regulatory requirements and prioritize remediation accordingly.",
-            "fr": "L'onglet Conformite affiche un tableau des menaces mappees aux cadres de conformite. Des boutons de filtre en haut permettent de se concentrer sur des cadres specifiques. Chaque menace montre ses tags de conformite et son statut passe/echoue."
+            "en": "The Compliance tab displays a table view of all threats mapped to compliance frameworks. At the top, a row of filter chips lists every framework prefix present in the threat model: the classic ones ('CIS Benchmark Level 1', 'ISO 27001/2', 'SOC 2', 'Personal Posture', PCI-DSS, HIPAA) and, since the AI checks were tagged, the AI ones ('AI Agent Posture', 'OWASP GenAI Agentic Top 10', 'OWASP GenAI LLM Top 10', 'MITRE ATLAS', 'Agentic Trust Controls', 'ISO/IEC 42001:2023'). The table has three columns: Threat (listing issues like 'EDAMAME helper inactive', 'Disk encryption disabled', 'AI agents run without a governance harness', 'Attack patterns detected'), Tags (one label per framework with the number of matching controls, e.g. 'Agentic Trust Controls x14, MITRE ATLAS x2', instead of one repeated line per tag), and Status (green circle for pass, pink circle for fail). Click column headers to sort. This view helps compliance officers quickly identify which security gaps impact specific regulatory requirements -- including the AI governance frameworks -- and prioritize remediation accordingly.",
+            "fr": "L'onglet Conformite affiche un tableau des menaces mappees aux cadres de conformite. En haut, des puces de filtre listent chaque prefixe de cadre present dans le modele de menaces : les classiques (CIS, ISO 27001/2, SOC 2, Posture personnelle, PCI-DSS, HIPAA) et, depuis l'etiquetage des controles IA, les cadres IA ('AI Agent Posture', 'OWASP GenAI Agentic Top 10', 'OWASP GenAI LLM Top 10', 'MITRE ATLAS', 'Agentic Trust Controls', 'ISO/IEC 42001:2023'). Chaque menace montre ses tags de conformite regroupes par cadre avec le nombre de controles correspondants, et son statut passe/echoue."
           },
           "description": {
-            "en": "Use this table to align remediation work with audit priorities. Filter by framework and clear failed controls for your target standards.",
-            "fr": "Utilisez ce tableau pour aligner la remediation sur les priorites d'audit. Filtrez par referentiel et corrigez les controles en echec pour vos standards cibles."
+            "en": "Use this table to align remediation work with audit priorities. Filter by framework -- classic or AI (OWASP GenAI, MITRE ATLAS, Agentic Trust Controls, ISO/IEC 42001) -- and clear failed controls for your target standards.",
+            "fr": "Utilisez ce tableau pour aligner la remediation sur les priorites d'audit. Filtrez par referentiel -- classique ou IA (OWASP GenAI, MITRE ATLAS, Agentic Trust Controls, ISO/IEC 42001) -- et corrigez les controles en echec pour vos standards cibles."
           },
           "has_dual_screenshots": true,
           "items": [
@@ -1361,12 +1361,27 @@
                 "fr": "Tags de Conformité – Filtres de Cadres"
               },
               "visual": {
-                "en": "Filter the threat list by compliance framework tags (CIS, SOC2, ISO27001, PCI-DSS, HIPAA, PRIVACY). See at a glance which controls pass or fail for your specific compliance requirements.",
-                "fr": "Filtrez la liste des menaces par tags de cadre de conformité (CIS, SOC2, ISO27001, PCI-DSS, HIPAA)."
+                "en": "Filter the threat list by compliance framework tags: CIS, SOC2, ISO27001, PCI-DSS, HIPAA, PRIVACY, and the AI governance frameworks every AI check now carries (AI Agent Posture, OWASP GenAI Agentic and LLM Top 10, MITRE ATLAS, Agentic Trust Controls, ISO/IEC 42001, ISO 27001). See at a glance which controls pass or fail for your specific compliance requirements.",
+                "fr": "Filtrez la liste des menaces par tags de cadre de conformite (CIS, SOC2, ISO27001, PCI-DSS, HIPAA) et par les cadres de gouvernance IA portes par chaque controle IA (AI Agent Posture, OWASP GenAI Agentic et LLM Top 10, MITRE ATLAS, Agentic Trust Controls, ISO/IEC 42001, ISO 27001)."
               },
               "description": {
                 "en": "Filter by framework tags to focus on audit-relevant controls first.",
                 "fr": "Filtrez par tags de referentiel pour vous concentrer d'abord sur les controles pertinents pour l'audit."
+              }
+            },
+            {
+              "name": "ai_framework_tags",
+              "title": {
+                "en": "AI Governance Tags – OWASP GenAI, MITRE ATLAS, Trust Controls, ISO/IEC 42001",
+                "fr": "Tags de gouvernance IA – OWASP GenAI, MITRE ATLAS, Trust Controls, ISO/IEC 42001"
+              },
+              "visual": {
+                "en": "The thirteen AI posture checks (attack patterns detected, intent divergence, escalated agent actions, agents without a governance harness, agents with a host blast radius, harness divergence, MCP risk, and one 'unsecured' check per observed agent) carry framework tags derived from a single crosswalk: OWASP GenAI Agentic Top 10 (ASI01-ASI10), OWASP GenAI LLM Top 10, MITRE ATLAS techniques, the Agentic Trust Controls catalog and its ISO/IEC 42001:2023 and ISO 27001:2022 clauses. The same references travel with each check's AI detail bundle to the Hub.",
+                "fr": "Les treize controles de posture IA (motifs d'attaque, divergence d'intention, actions escaladees, agents sans harnais, agents a rayon d'action hote, divergence de harnais, risque MCP, et un controle 'non securise' par agent observe) portent des tags de cadre derives d'une seule table de correspondance : OWASP GenAI Agentic Top 10, OWASP GenAI LLM Top 10, techniques MITRE ATLAS, catalogue Agentic Trust Controls et ses clauses ISO/IEC 42001:2023 et ISO 27001:2022. Les memes references accompagnent le detail IA de chaque controle jusqu'au Hub."
+              },
+              "description": {
+                "en": "Use the AI framework filters to answer an auditor's question in the framework's own vocabulary: pick OWASP GenAI or MITRE ATLAS to see which AI checks map to it and whether they pass. The deterministic AI Compliance scorecards in the AI tab remain the place to read a grade per category; this table is the per-check, per-framework view.",
+                "fr": "Utilisez les filtres de cadres IA pour repondre a un auditeur dans le vocabulaire du cadre : choisissez OWASP GenAI ou MITRE ATLAS pour voir quels controles IA s'y rapportent et s'ils passent. Les tableaux de bord de conformite IA de l'onglet IA restent le lieu de lecture d'une note par categorie ; ce tableau est la vue par controle et par cadre."
               }
             }
           ]
@@ -2236,6 +2251,36 @@
       "name": "HIPAA",
       "full_name": "Health Insurance Portability and Accountability Act",
       "description": "Healthcare data protection"
+    },
+    {
+      "name": "AI-Agent-Posture",
+      "full_name": "AI Agent Posture",
+      "description": "EDAMAME AI posture checks: attack patterns, intent divergence, escalations, governance harness, blast radius, MCP risk, observed agents"
+    },
+    {
+      "name": "OWASP-GenAI-Agentic",
+      "full_name": "OWASP GenAI Agentic Top 10 (ASI01-ASI10)",
+      "description": "Agentic application security risks, tagged on every AI posture check"
+    },
+    {
+      "name": "OWASP-GenAI-LLM",
+      "full_name": "OWASP GenAI LLM Top 10",
+      "description": "LLM application security risks, tagged on the AI posture checks they apply to"
+    },
+    {
+      "name": "MITRE-ATLAS",
+      "full_name": "MITRE ATLAS",
+      "description": "Adversarial threat landscape for AI systems; technique ids tagged on the AI posture checks"
+    },
+    {
+      "name": "Agentic-Trust-Controls",
+      "full_name": "Agentic Trust Controls (trustcontrols.ai)",
+      "description": "Agentic trust-controls catalog cross-mapped to ISO/IEC 42001 and ISO 27001"
+    },
+    {
+      "name": "ISO42001",
+      "full_name": "ISO/IEC 42001:2023",
+      "description": "AI management systems; clauses tagged on the AI posture checks via the Trust Controls crosswalk"
     }
   ],
   "llm_providers": [
