@@ -14,13 +14,13 @@
         "prefix": "01",
         "multipane": true
       },
-      "security_score": {
-        "prefix": "01",
-        "multipane": false
-      },
       "security_history": {
         "prefix": "01",
         "multipane": true
+      },
+      "security_score": {
+        "prefix": "01",
+        "multipane": false
       },
       "agents_enlightenment": {
         "prefix": "02",
@@ -243,6 +243,84 @@
           ]
         },
         {
+          "name": "security_history",
+          "title": {
+            "en": "History – Assistant Actions and Attack-Pattern Findings",
+            "fr": "Historique – Actions de l’assistant et constats de motifs d’attaque"
+          },
+          "visual": {
+            "en": "The History subtab is a single unified timeline of advisor actions and individual vulnerability findings. Filter the list by entry type (Actions versus Vulnerabilities), agentic status (for actions), severity and dismissed state (for findings), plus All / Unread read-state filters. Bulk operations (Confirm all, Undo all, Mark all as read, Clear) apply across the timeline. Each vulnerability row shows a severity badge, detection check name, short description, process context, and dismiss or restore controls; action rows keep process context, destination, timestamp, reasoning, and badges. Tapping any row—action or vulnerability—opens the same detail card (AgenticActionDetailsCard) with a metadata table, full LLM reasoning, and contextual action buttons; there is no separate vulnerability-only history surface, no report cards, and no report-count header.",
+            "fr": "Le sous-onglet Historique est une chronologie unique des actions conseiller et des constats de vulnerabilite individuels. Filtrez par type d'entree (Actions ou Vulnerabilites), par statut agentique (actions), par severite et etat desactive (constats), plus filtres lu/non-lu. Les operations groupees s'appliquent a toute la chronologie. Chaque ligne de vulnerabilite affiche un badge de severite, le nom du controle, une description courte, le contexte processus et des actions desactiver ou restaurer; les lignes d'action conservent contexte, destination, horodatage et raisonnement. Toucher une ligne ouvre la meme fiche detail (AgenticActionDetailsCard) avec tableau de metadonnees, raisonnement LLM complet et boutons d'action—sans surface d'historique vulnerabilites separee, sans cartes de rapport ni compteur de rapports."
+          },
+          "description": {
+            "en": "Use History as the single review surface for the Assistant’s actions and the attack-pattern findings of both detectors. Triage actions by status, type and read state; review findings by severity and dismissed state; manage the dismissal rules of every domain (findings, sessions) from the same page.",
+            "fr": "Utilisez Historique comme surface unique pour les actions de l’assistant et les constats de motifs d’attaque des deux détecteurs. Triez les actions par statut, type et état de lecture ; examinez les constats par sévérité et par état de rejet ; gérez les règles de rejet de chaque domaine (constats, sessions) depuis la même page."
+          },
+          "has_dual_screenshots": true,
+          "items": [
+            {
+              "name": "action_history",
+              "title": {
+                "en": "AI Actions – Complete Audit Trail",
+                "fr": "Actions IA – Piste d'audit complete"
+              },
+              "visual": {
+                "en": "Complete audit trail of all AI actions with status tracking: Resolved (green), Pending confirmation (yellow), Escalated for review (orange), Failed (red), and Obsolete (gray). Filter by agentic status and by type (Threats, Network, System, Identity breaches). A separate read-status filter (All / Unread with badge counts) focuses the view on unseen items. Bulk operations include Confirm all, Undo all, Mark all as read, and Clear. Each card displays process/device icons, destination hostname, relative timestamp, and an envelope icon indicating read state. Audit data in History is retained for 30 days.",
+                "fr": "Piste d'audit complete de toutes les actions IA avec suivi d'etat. Filtrez par statut agentique, par type et par etat de lecture. Les operations groupees incluent Tout confirmer, Tout annuler, Tout marquer comme lu et Effacer. Les donnees Historique sont conservees 30 jours."
+              },
+              "description": {
+                "en": "Use this section as your audit trail of AI decisions. Filter by status, type, or read state and apply confirm, undo, or mark-as-read actions safely.",
+                "fr": "Utilisez cette section comme piste d'audit des decisions IA. Filtrez par statut, type ou etat de lecture et appliquez en securite les actions confirmer, annuler ou marquer comme lu."
+              }
+            },
+            {
+              "name": "token_usage_stats",
+              "title": {
+                "en": "Token Usage – Monitor AI Consumption",
+                "fr": "Utilisation de Tokens – Surveillez la Consommation IA"
+              },
+              "visual": {
+                "en": "Real-time LLM token consumption tracking. View input/output token counts for three time windows: last hour, last 24 hours, and last 30 days. Per-action token usage visible in action details. Helps monitor AI usage and costs across Cloud LLM and BYOLLM providers.",
+                "fr": "Suivi en temps reel de la consommation de tokens LLM. Consultez les compteurs de tokens pour differentes fenetres temporelles."
+              },
+              "description": {
+                "en": "Track token usage to control cost and detect spikes. Tune schedule or provider when consumption drifts.",
+                "fr": "Suivez l'usage des tokens pour controler les couts et detecter les pics. Ajustez la planification ou le fournisseur en cas de derive."
+              }
+            },
+            {
+              "name": "vulnerability_report_list",
+              "title": {
+                "en": "Vulnerability Findings – Unified List Rows",
+                "fr": "Constats de vulnerabilite – Lignes de liste unifiees"
+              },
+              "visual": {
+                "en": "Within the shared History timeline, each vulnerability finding is one scrollable row using the same row layout as AI actions: severity badge, detection check name, concise description, dismiss control, read/unread envelope, and timestamp. Timeline-level filters narrow by type (Actions versus Vulnerabilities), status, read state, and dismissed state—there are no standalone report cards.",
+                "fr": "Dans la chronologie Historique, chaque constat de vulnerabilite est une ligne deroulable au meme gabarit que les actions IA : badge de severite, nom du controle, description courte, action desactiver, enveloppe lu/non-lu et horodatage. Les filtres de chronologie couvrent le type (Actions ou Vulnerabilites), le statut, l'etat de lecture et l'etat desactive—sans cartes de rapport autonomes."
+              },
+              "description": {
+                "en": "Scan findings in the same list rhythm as actions. Use type and dismissed filters to separate active triage from cleared noise.",
+                "fr": "Parcourez les constats avec le meme rythme que les actions. Utilisez les filtres de type et d'etat desactive pour separer le triage actif du bruit ecarte."
+              }
+            },
+            {
+              "name": "vulnerability_report_detail",
+              "title": {
+                "en": "Finding Detail – Shared AgenticActionDetailsCard",
+                "fr": "Detail du constat – AgenticActionDetailsCard partagee"
+              },
+              "visual": {
+                "en": "Selecting any History row opens the shared AgenticActionDetailsCard (overlay or multi-pane). For vulnerability findings it surfaces severity, detection check name, reference or CVE links when present, narrative description, process name and path, parent process, network destination, and attributed open files, followed by the full LLM reasoning block rendered as HTML. The same chrome hosts confirm, undo, dismiss, restore, and related action buttons appropriate to the entry type.",
+                "fr": "Toute ligne Historique ouvre la meme fiche AgenticActionDetailsCard (superposition ou multi-volets). Pour un constat de vulnerabilite : severite, nom du controle, references ou CVE, description, processus et chemin, processus parent, destination reseau et fichiers ouverts attribues, puis le raisonnement LLM complet en HTML. Les memes actions contextuelles (confirmer, annuler, desactiver, restaurer) suivent le type d'entree."
+              },
+              "description": {
+                "en": "Use one detail pattern for every history entry so operators never switch mental models between actions and findings.",
+                "fr": "Un seul modele de fiche pour toute l'historique evite de changer de cadre mental entre actions et constats."
+              }
+            }
+          ]
+        },
+        {
           "name": "security_score",
           "title": {
             "en": "Score – Multi-Dimensional Security Assessment",
@@ -345,84 +423,6 @@
               "description": {
                 "en": "Improve credential resilience with unique passwords, MFA, and breach follow-up.",
                 "fr": "Ameliorez la resilience des identifiants avec des mots de passe uniques, le MFA et le suivi des violations."
-              }
-            }
-          ]
-        },
-        {
-          "name": "security_history",
-          "title": {
-            "en": "History – Assistant Actions and Attack-Pattern Findings",
-            "fr": "Historique – Actions de l’assistant et constats de motifs d’attaque"
-          },
-          "visual": {
-            "en": "The History subtab is a single unified timeline of advisor actions and individual vulnerability findings. Filter the list by entry type (Actions versus Vulnerabilities), agentic status (for actions), severity and dismissed state (for findings), plus All / Unread read-state filters. Bulk operations (Confirm all, Undo all, Mark all as read, Clear) apply across the timeline. Each vulnerability row shows a severity badge, detection check name, short description, process context, and dismiss or restore controls; action rows keep process context, destination, timestamp, reasoning, and badges. Tapping any row—action or vulnerability—opens the same detail card (AgenticActionDetailsCard) with a metadata table, full LLM reasoning, and contextual action buttons; there is no separate vulnerability-only history surface, no report cards, and no report-count header.",
-            "fr": "Le sous-onglet Historique est une chronologie unique des actions conseiller et des constats de vulnerabilite individuels. Filtrez par type d'entree (Actions ou Vulnerabilites), par statut agentique (actions), par severite et etat desactive (constats), plus filtres lu/non-lu. Les operations groupees s'appliquent a toute la chronologie. Chaque ligne de vulnerabilite affiche un badge de severite, le nom du controle, une description courte, le contexte processus et des actions desactiver ou restaurer; les lignes d'action conservent contexte, destination, horodatage et raisonnement. Toucher une ligne ouvre la meme fiche detail (AgenticActionDetailsCard) avec tableau de metadonnees, raisonnement LLM complet et boutons d'action—sans surface d'historique vulnerabilites separee, sans cartes de rapport ni compteur de rapports."
-          },
-          "description": {
-            "en": "Use History as the single review surface for the Assistant’s actions and the attack-pattern findings of both detectors. Triage actions by status, type and read state; review findings by severity and dismissed state; manage the dismissal rules of every domain (findings, sessions) from the same page.",
-            "fr": "Utilisez Historique comme surface unique pour les actions de l’assistant et les constats de motifs d’attaque des deux détecteurs. Triez les actions par statut, type et état de lecture ; examinez les constats par sévérité et par état de rejet ; gérez les règles de rejet de chaque domaine (constats, sessions) depuis la même page."
-          },
-          "has_dual_screenshots": true,
-          "items": [
-            {
-              "name": "action_history",
-              "title": {
-                "en": "AI Actions – Complete Audit Trail",
-                "fr": "Actions IA – Piste d'audit complete"
-              },
-              "visual": {
-                "en": "Complete audit trail of all AI actions with status tracking: Resolved (green), Pending confirmation (yellow), Escalated for review (orange), Failed (red), and Obsolete (gray). Filter by agentic status and by type (Threats, Network, System, Identity breaches). A separate read-status filter (All / Unread with badge counts) focuses the view on unseen items. Bulk operations include Confirm all, Undo all, Mark all as read, and Clear. Each card displays process/device icons, destination hostname, relative timestamp, and an envelope icon indicating read state. Audit data in History is retained for 30 days.",
-                "fr": "Piste d'audit complete de toutes les actions IA avec suivi d'etat. Filtrez par statut agentique, par type et par etat de lecture. Les operations groupees incluent Tout confirmer, Tout annuler, Tout marquer comme lu et Effacer. Les donnees Historique sont conservees 30 jours."
-              },
-              "description": {
-                "en": "Use this section as your audit trail of AI decisions. Filter by status, type, or read state and apply confirm, undo, or mark-as-read actions safely.",
-                "fr": "Utilisez cette section comme piste d'audit des decisions IA. Filtrez par statut, type ou etat de lecture et appliquez en securite les actions confirmer, annuler ou marquer comme lu."
-              }
-            },
-            {
-              "name": "token_usage_stats",
-              "title": {
-                "en": "Token Usage – Monitor AI Consumption",
-                "fr": "Utilisation de Tokens – Surveillez la Consommation IA"
-              },
-              "visual": {
-                "en": "Real-time LLM token consumption tracking. View input/output token counts for three time windows: last hour, last 24 hours, and last 30 days. Per-action token usage visible in action details. Helps monitor AI usage and costs across Cloud LLM and BYOLLM providers.",
-                "fr": "Suivi en temps reel de la consommation de tokens LLM. Consultez les compteurs de tokens pour differentes fenetres temporelles."
-              },
-              "description": {
-                "en": "Track token usage to control cost and detect spikes. Tune schedule or provider when consumption drifts.",
-                "fr": "Suivez l'usage des tokens pour controler les couts et detecter les pics. Ajustez la planification ou le fournisseur en cas de derive."
-              }
-            },
-            {
-              "name": "vulnerability_report_list",
-              "title": {
-                "en": "Vulnerability Findings – Unified List Rows",
-                "fr": "Constats de vulnerabilite – Lignes de liste unifiees"
-              },
-              "visual": {
-                "en": "Within the shared History timeline, each vulnerability finding is one scrollable row using the same row layout as AI actions: severity badge, detection check name, concise description, dismiss control, read/unread envelope, and timestamp. Timeline-level filters narrow by type (Actions versus Vulnerabilities), status, read state, and dismissed state—there are no standalone report cards.",
-                "fr": "Dans la chronologie Historique, chaque constat de vulnerabilite est une ligne deroulable au meme gabarit que les actions IA : badge de severite, nom du controle, description courte, action desactiver, enveloppe lu/non-lu et horodatage. Les filtres de chronologie couvrent le type (Actions ou Vulnerabilites), le statut, l'etat de lecture et l'etat desactive—sans cartes de rapport autonomes."
-              },
-              "description": {
-                "en": "Scan findings in the same list rhythm as actions. Use type and dismissed filters to separate active triage from cleared noise.",
-                "fr": "Parcourez les constats avec le meme rythme que les actions. Utilisez les filtres de type et d'etat desactive pour separer le triage actif du bruit ecarte."
-              }
-            },
-            {
-              "name": "vulnerability_report_detail",
-              "title": {
-                "en": "Finding Detail – Shared AgenticActionDetailsCard",
-                "fr": "Detail du constat – AgenticActionDetailsCard partagee"
-              },
-              "visual": {
-                "en": "Selecting any History row opens the shared AgenticActionDetailsCard (overlay or multi-pane). For vulnerability findings it surfaces severity, detection check name, reference or CVE links when present, narrative description, process name and path, parent process, network destination, and attributed open files, followed by the full LLM reasoning block rendered as HTML. The same chrome hosts confirm, undo, dismiss, restore, and related action buttons appropriate to the entry type.",
-                "fr": "Toute ligne Historique ouvre la meme fiche AgenticActionDetailsCard (superposition ou multi-volets). Pour un constat de vulnerabilite : severite, nom du controle, references ou CVE, description, processus et chemin, processus parent, destination reseau et fichiers ouverts attribues, puis le raisonnement LLM complet en HTML. Les memes actions contextuelles (confirmer, annuler, desactiver, restaurer) suivent le type d'entree."
-              },
-              "description": {
-                "en": "Use one detail pattern for every history entry so operators never switch mental models between actions and findings.",
-                "fr": "Un seul modele de fiche pour toute l'historique evite de changer de cadre mental entre actions et constats."
               }
             }
           ]
