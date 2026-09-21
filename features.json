@@ -174,6 +174,10 @@
         "prefix": "08",
         "multipane": false,
         "has_scroll_screenshots": true
+      },
+      "config_agents": {
+        "prefix": "08",
+        "multipane": false
       }
     }
   },
@@ -1648,8 +1652,8 @@
         "fr": "Config"
       },
       "visual": {
-        "en": "The Config tab provides system information and settings with up to five sub-views. Info displays Device ID, IP addresses (IPv4/IPv6), version, threat model date, and the app + EDAMAME Helper runtime status. Privacy gives you two user-controlled opt-out toggles (anonymous usage analytics and crash reports) plus an honest catalog of what each subsystem ships off-device (Hub score reporting, breach lookups, agentic LLM/MCP calls, Mixpanel pings, Sentry crashes, Slack/Telegram deliveries). Notifications lets you toggle alerts per category (Score, System, Network, Advisor, Policy, AI, Identity) and shows a scrollable notification history with timestamps and deep-links. System (desktop-only) shows packet capture statistics, ML analyzer status with training metrics, detection thresholds, and session analysis counts. Debug provides a real-time log viewer with INFO/ERROR/WARN filters, search, and copy functionality for troubleshooting. (Per-threat privilege requirements now live in the Threats tab's Elevation sub-view.)",
-        "fr": "L'onglet Config fournit les informations systeme et parametres avec jusqu'a cinq sous-vues : Info (details de l'appareil et statut d'execution), Confidentialite (bascules d'analytique et de rapports de plantage et catalogue de ce qui est envoye hors de l'appareil), Notifications (bascules par categorie et historique), Systeme (statistiques de capture) et Debug (visualiseur de logs)."
+        "en": "The Config tab provides system information and settings with up to seven sub-views. Info displays Device ID, IP addresses (IPv4/IPv6), version, threat model date, and the app + EDAMAME Helper runtime status. Privacy gives you two user-controlled opt-out toggles (anonymous usage analytics and crash reports) plus an honest catalog of what each subsystem ships off-device (Hub score reporting, breach lookups, Portal and own-model LLM calls, MCP, Mixpanel pings, Sentry crashes, Slack/Telegram deliveries). Notifications holds one toggle per rail section (Security, Agents, Threats, Identity, Network, System, Trust, General), the Slack / Telegram team delivery settings on desktop, and a scrollable notification history with timestamps and deep-links. AI (desktop) holds the EDAMAME Portal sign-in, the Assistant level, the own-model form, adjudication, cadences and the MCP server. Agents (desktop) holds the transcript observer per agent and the capture-detail tier. Statistics (desktop) shows packet capture statistics, ML analyzer status with training metrics, detection thresholds, session analysis counts and the agentic loops' telemetry. Debug provides a real-time log viewer with INFO/ERROR/WARN filters, search, and copy functionality for troubleshooting. (Per-threat privilege requirements live in the Threats tab's Elevation sub-view.)",
+        "fr": "L'onglet Config fournit les informations système et les paramètres avec jusqu'à sept sous-vues : Info (détails de l'appareil et statut d'exécution), Confidentialité (bascules d'analytique et de rapports de plantage et catalogue de ce qui est envoyé hors de l'appareil), Notifications (une bascule par section, la diffusion Slack / Telegram sur bureau et l'historique), IA (connexion au portail, Assistant, modèle propre, arbitrage, cadences, serveur MCP ; bureau), Agents (observateur de transcripts et détail de capture ; bureau), Statistiques (statistiques de capture et télémétrie des boucles ; bureau) et Debug (visualiseur de logs)."
       },
       "description": {
         "en": "Use Config to verify runtime status, permissions, alerts, and diagnostics. Check helper readiness, tune notification noise, and consult debug tools when troubleshooting.",
@@ -1709,31 +1713,61 @@
         {
           "name": "config_notifications",
           "title": {
-            "en": "Notifications – Settings & History",
-            "fr": "Notifications – Parametres et Historique"
+            "en": "Notifications – Device Toggles, Team Delivery & History",
+            "fr": "Notifications – Bascules de l'appareil, diffusion d'équipe et historique"
           },
           "visual": {
-            "en": "The Notifications tab is divided into two local-app sections. 'Notification Settings' at the top shows a grid of toggle switches for each in-app notification category: Score, System, Network, General, Advisor, Policy, AI, and Identity. Toggle any switch to enable or disable local desktop/mobile notifications for that category. Below, 'Notification History' shows a scrollable timeline with a pink 'Clear' button to delete all entries. Each notification entry displays a category icon, title, description, and timestamp, and clicking it deep-links to the related content. Team chat delivery for Security alerts is configured separately in AI > AI Settings, not in this Config subtab.",
-            "fr": "L'onglet Notifications est divise en deux sections locales a l'application. Les parametres en haut montrent des interrupteurs pour chaque categorie de notification locale, et l'historique en dessous affiche une chronologie cliquable des notifications passees. La diffusion vers Slack ou Telegram des alertes Securite se configure desormais separément dans IA > Parametres IA."
+            "en": "The Notifications tab has three sections. 'Notifications on this device' is a grid of toggles, one per section of the rail: Security, Agents, Threats, Identity, Network, System, Trust and General; each switch enables or disables this device's own notifications for that section. 'Slack and Telegram' (desktop) configures team delivery of the Assistant's action reports and escalations, divergence alerts and attack-pattern findings: a Slack bot token with actions and escalations channels, a Telegram bot token and chat ID with optional interactive replies restricted to an allowlist of user IDs, and a digest switch that bundles low-severity messages into a twice-daily summary while warnings and critical alerts stay immediate. 'Notification History' lists past notifications with a category icon, title, body and timestamp; clicking one opens the related content, and a Clear button empties the list.",
+            "fr": "L'onglet Notifications comporte trois sections. « Notifications sur cet appareil » est une grille de bascules, une par section de la barre latérale : Sécurité, Agents, Menaces, Identité, Réseau, Système, Confiance et Général ; chaque interrupteur active ou désactive les notifications de cet appareil pour cette section. « Slack et Telegram » (bureau) configure la diffusion d'équipe des rapports d'action et escalades de l'Assistant, des alertes de divergence et des constats de motifs d'attaque : un jeton de bot Slack avec canaux d'actions et d'escalades, un jeton de bot Telegram et un identifiant de conversation avec réponses interactives optionnelles limitées à une liste d'identifiants autorisés, et un interrupteur de résumé qui regroupe les messages de faible gravité en une synthèse deux fois par jour, les avertissements et alertes critiques restant immédiats. « Historique des notifications » liste les notifications passées avec icône de catégorie, titre, corps et horodatage ; un clic ouvre le contenu associé et un bouton Effacer vide la liste."
           },
           "description": {
-            "en": "Use this section to tune local alert signal-to-noise for your workflow. Keep high-value in-app categories enabled and review history regularly.",
-            "fr": "Utilisez cette section pour ajuster le rapport signal/bruit des alertes locales selon votre flux de travail. Gardez actives les categories a forte valeur dans l'application et consultez regulierement l'historique."
+            "en": "Use the device toggles to tune signal-to-noise per section, set up Slack or Telegram when a team should see the findings, and use the history to reopen what a notification pointed at.",
+            "fr": "Utilisez les bascules de l'appareil pour ajuster le rapport signal/bruit par section, configurez Slack ou Telegram lorsqu'une équipe doit voir les constats, et servez-vous de l'historique pour rouvrir ce qu'une notification désignait."
           },
           "items": [
             {
               "name": "notification_settings",
               "title": {
-                "en": "Category Toggles – Per-Type Control",
-                "fr": "Bascules par Catégorie – Contrôle par Type"
+                "en": "Notifications on This Device – One Toggle per Section",
+                "fr": "Notifications sur cet appareil – Une bascule par section"
               },
               "visual": {
-                "en": "Toggle local notifications on or off for each category: Score (security score changes), System (anomalous sessions and file events), LAN Scan (new devices), Advisor (todo updates), Policy (compliance changes), General (rate limits), Agentic (AI actions), and Identity (credential breaches). These switches do not configure Slack or Telegram routing.",
-                "fr": "Activez ou désactivez les notifications locales pour chaque catégorie : Score, Systeme, Scan LAN, Conseiller, Politique, Général, Agentique et Identité. Ces bascules ne configurent pas le routage Slack ou Telegram."
+                "en": "Toggle this device's notifications on or off per rail section: Security (attack-pattern findings and the Assistant's action reports), Agents (divergence and new-agent alerts), Threats (score changes), Identity (breaches), Network (new devices), System (anomalous and blacklisted sessions), Trust (policy compliance) and General (updates and limits). These switches do not affect Slack or Telegram delivery.",
+                "fr": "Activez ou désactivez les notifications de cet appareil par section : Sécurité (constats de motifs d'attaque et rapports d'action de l'Assistant), Agents (alertes de divergence et de nouvel agent), Menaces (variations du score), Identité (violations), Réseau (nouveaux appareils), Système (sessions anormales et sur liste noire), Confiance (conformité aux politiques) et Général (mises à jour et limites). Ces bascules n'affectent pas la diffusion Slack ou Telegram."
               },
               "description": {
-                "en": "Enable actionable categories and reduce noise-heavy channels to keep alerts useful.",
-                "fr": "Activez les categories actionnables et reduisez les canaux bruyants pour garder des alertes utiles."
+                "en": "Keep the sections you act on enabled and mute the ones that only add noise on this device.",
+                "fr": "Gardez actives les sections sur lesquelles vous agissez et coupez celles qui n'ajoutent que du bruit sur cet appareil."
+              }
+            },
+            {
+              "name": "slack_integration",
+              "title": {
+                "en": "Slack Delivery – Team Notifications",
+                "fr": "Diffusion Slack – Notifications d'equipe"
+              },
+              "visual": {
+                "en": "Optional Slack delivery for team visibility. Configure a bot token plus separate channels for routine action summaries and priority escalation alerts. Slack delivery is outbound-only and mirrors the same Security actions and detector escalations visible in the app.",
+                "fr": "Diffusion Slack optionnelle pour la visibilite d'equipe. Configurez un jeton de bot ainsi que des canaux distincts pour les resumes d'actions et les alertes d'escalade prioritaires."
+              },
+              "description": {
+                "en": "Send routine summaries and critical escalations to team channels without turning Slack into a control plane.",
+                "fr": "Envoyez les resumes courants et les escalades critiques vers les canaux d'equipe sans faire de Slack un plan de controle."
+              }
+            },
+            {
+              "name": "telegram_integration",
+              "title": {
+                "en": "Telegram Delivery – Interactive Predefined Replies",
+                "fr": "Diffusion Telegram – Reponses interactives predefinies"
+              },
+              "visual": {
+                "en": "Optional Telegram delivery routes action summaries and escalation cards to a bot-controlled chat. Configure the bot token, target chat ID, and an interactive mode that only accepts callbacks from explicitly allowed Telegram user IDs. Interactive cards expose predefined actions without allowing free-form prompt input.",
+                "fr": "La diffusion Telegram optionnelle envoie les resumes d'actions et les cartes d'escalade vers une conversation pilotee par bot. Les cartes interactives n'exposent que des actions predefinies sans saisie libre."
+              },
+              "description": {
+                "en": "Use Telegram when you need quick mobile triage with tightly scoped predefined replies.",
+                "fr": "Utilisez Telegram lorsque vous avez besoin d'un triage mobile rapide avec des reponses predefinies etroitement limitees."
               }
             },
             {
@@ -1754,49 +1788,18 @@
           ]
         },
         {
-          "name": "config_statistics",
-          "title": {
-            "en": "Statistics – Network, Files & Agentic Telemetry (Desktop)",
-            "fr": "Statistiques – Telemetrie Reseau, Fichiers et Agentique (Bureau)"
-          },
-          "visual": {
-            "en": "The Statistics tab (desktop-only, formerly 'System') consolidates monitoring telemetry across the network, files, and agentic subsystems in a multi-column layout. The top section shows packet pipeline metrics (Current Interval + Cumulative Totals: TCP/UDP/IPv4/IPv6 counts and session deltas) on the left and ML analyzer status on the right (Running/Complete/Trained badges, Detection Thresholds, Model Statistics with buffer usage and feature count, Score Distribution with percentiles, and Session Analysis with Normal/Anomalous counts). A bottom security-telemetry section adds six new read-only mirrors: Vulnerability Detector (running, interval, last run, active findings), Divergence Engine (running, interval, last run, model age, last verdict, contributor count), File Integrity Monitoring (monitoring state, watch path count, event count, last event time), LLM Token Consumption (per-loop in/out counters for agentic/vulnerability/divergence buckets with since-timestamp), Shadow CRS rollout snapshot (critical/high/low severity distribution over the last 24h from action history), and Agentic Memory (raw memory stats payload).",
-            "fr": "L'onglet Statistiques (bureau uniquement, anciennement 'Systeme') consolide la telemetrie de supervision pour les sous-systemes reseau, fichiers et agentique en plusieurs colonnes. Le haut affiche les statistiques de paquets et le statut de l'analyseur ML. Le bas ajoute six panneaux en lecture seule : detecteur de vulnerabilites, moteur de divergence, integrite des fichiers, consommation de jetons LLM par boucle, distribution Shadow CRS sur 24h et statistiques memoire agentique."
-          },
-          "description": {
-            "en": "Use this diagnostics panel to monitor the entire telemetry surface — packet pipeline, ML analyzer, vulnerability detector, divergence engine, file integrity monitor, agentic memory, and per-loop LLM token spend. Recheck thresholds and model stats when detection quality shifts.",
-            "fr": "Utilisez ce panneau de diagnostic pour surveiller toute la surface de telemetrie — pipeline de paquets, analyseur ML, detecteur de vulnerabilites, moteur de divergence, surveillance d'integrite, memoire agentique et consommation de jetons LLM par boucle. Reverifiez les seuils et statistiques de modele lorsque la qualite de detection evolue."
-          },
-          "has_scroll_screenshots": true
-        },
-        {
-          "name": "config_debug",
-          "title": {
-            "en": "Debug – Real-Time Logs",
-            "fr": "Debug – Logs en Temps Reel"
-          },
-          "visual": {
-            "en": "The Debug tab provides a real-time log viewer for troubleshooting. At the top, a header shows the core version string (e.g., 'Core version is 1.0.1, built on 2026-01-28 with branch main on macOS 26.2 by flyonnet, memory usage: 0.0 MB'). Below, three filter buttons toggle log levels: 'INFO' (green), 'ERROR' (red), 'WARN' (yellow). A search field lets you filter log messages by text. The main area shows scrolling log output in a dark terminal-style view - though often empty during normal operation. A copy button (clipboard icon) on the right copies selected log content. This view is essential for diagnosing connection issues, API errors, or unexpected behavior when working with EDAMAME support. Log messages appear in real-time as the core engine processes security checks, network captures, and AI operations.",
-            "fr": "L'onglet Debug fournit un visualiseur de logs en temps reel pour le depannage. Des boutons de filtre basculent les niveaux INFO/ERROR/WARN. Un champ de recherche filtre les messages. Le bouton copier permet de partager les logs."
-          },
-          "description": {
-            "en": "Use Debug logs for root-cause analysis with support or engineering. Filter by severity, search by keyword, and export relevant excerpts.",
-            "fr": "Utilisez les logs Debug pour l'analyse de cause racine avec le support ou l'ingenierie. Filtrez par severite, recherchez par mot-cle et exportez les extraits pertinents."
-          }
-        },
-        {
           "name": "config_ai",
           "title": {
-            "en": "AI – Connection, Assistant, Adjudication, Delivery and MCP",
-            "fr": "IA – Connexion, assistant, arbitrage, diffusion et MCP"
+            "en": "AI – Portal Connection, Assistant, Own Model, Adjudication and MCP",
+            "fr": "IA – Connexion au portail, Assistant, modèle propre, arbitrage et MCP"
           },
           "visual": {
-            "en": "The Settings tab stacks the full agentic admin surface on one desktop-only scrolling page: EDAMAME Portal sign-in, Use-your-own-LLM (BYOLLM) configuration, a read-only LLM token consumption strip, engine refresh-frequency selectors, Slack/Telegram notification delivery, Export to EDAMAME Portal, a Capture detail privacy tier selector, recurrence-aware Dismissal rules management, Model Context Protocol (MCP) server controls, and per-agent Transcript Observer controls. Portal controls show EDAMAME Portal LLM status with a Connect button and portal access link. The BYOLLM section offers a Disabled / Claude / OpenAI / Ollama dropdown with API key or base URL entry and test connectivity. LLM token consumption shows per-loop in/out/total counters for the Agentic loop, Attack pattern detector, and Divergence engine with a since-timestamp. Refresh frequency exposes three cadence selectors -- Intent divergence (1 min / 5 min), Security safety loop (1 min / 5 min), and Security (5 min / 1 h / 1 day) -- with the selected interval highlighted in green; the Security engine drives the attack-pattern and file-events loop while Divergence stays a separate manual engine. Notifications configures Slack (bot token, actions channel, escalations channel, enable toggle) and Telegram (bot token, chat ID, interactive replies with an allowed-user-ID allowlist) for outbound delivery of advisor, divergence, and attack-pattern alerts. Export to EDAMAME Portal pushes advisor results and attack-pattern findings to the Portal for centralized reporting. Capture detail is a three-tier radio control (Metadata / Redacted / Full content) governing how much agent context EDAMAME stores. Dismissal rules manages recurrence-aware suppressions across attack-pattern and divergence findings with All / Attack pattern / Divergence filters plus prune-expired, show-audit-log, and reset-all actions. The MCP section includes server status, port, a listen-on-all-interfaces toggle, PSK generation, enable/disable controls, and -- when the server is running -- a paired-client management list (approve, reject, revoke, rotate, delete). Transcript Observer lists every supported agent type (Cursor, Claude Code, Claude Desktop, Codex CLI, Hermes, OpenClaw) with discovered/observing/paused status plus per-agent enable/pause and run-now controls. Level-2 plugin install from Settings was retired in 1.7.0; host-side observation needs no plugin.",
-            "fr": "L'onglet Parametres regroupe toute la surface d'administration agentique sur une page a defilement reservee au bureau : connexion au portail EDAMAME, configuration BYOLLM (utilisez votre propre LLM), une bande en lecture seule de consommation de jetons LLM, selecteurs de cadence des moteurs, diffusion Slack/Telegram des notifications, Export vers le portail EDAMAME, un selecteur de niveau de detail de capture pour la confidentialite, la gestion des regles de rejet sensibles a la recurrence, les controles du serveur Model Context Protocol (MCP) et les controles de l'Observateur de transcripts par agent. Les controles portail affichent le statut EDAMAME Portal LLM avec un bouton Connect. La section BYOLLM offre un menu deroulant Desactive / Claude / OpenAI / Ollama. La consommation de jetons LLM affiche des compteurs entree/sortie/total par boucle pour la boucle agentique, le detecteur de motifs d'attaque et le moteur de divergence. La cadence de rafraichissement expose trois selecteurs -- divergence d'intention (1 min / 5 min), boucle de securite (1 min / 5 min) et Securite (5 min / 1 h / 1 jour) -- l'intervalle selectionne etant en vert. Les notifications configurent Slack et Telegram pour la diffusion sortante des alertes advisor, divergence et motifs d'attaque. Export vers le portail EDAMAME pousse les resultats advisor et les constats de motifs d'attaque vers le portail pour un reporting centralise. Le detail de capture est un controle radio a trois niveaux (Metadonnees / Expurge / Contenu complet) qui regle la quantite de contexte d'agent stockee par EDAMAME. Les regles de rejet gerent des suppressions sensibles a la recurrence avec filtres Tout / Motif d'attaque / Divergence et actions purger les expirees, afficher le journal d'audit et tout reinitialiser. La section MCP inclut le statut, le port, un interrupteur d'ecoute sur toutes les interfaces, la generation de PSK, les controles d'activation et -- quand le serveur tourne -- une liste de gestion des clients appaires (approuver, rejeter, revoquer, faire tourner, supprimer). L'Observateur de transcripts liste chaque type d'agent pris en charge (Cursor, Claude Code, Claude Desktop, Codex CLI, Hermes, OpenClaw) avec statut decouvert/en observation/en pause plus activation/pause et execution immediate par agent. L'installation de plugins Level-2 depuis Parametres a ete retiree en 1.7.0 ; l'observation cote hote n'a besoin d'aucun plugin."
+            "en": "Config > AI stacks the AI controls on one desktop-only scrolling page. The AI connection card shows the current connection and hosts the EDAMAME Portal sign-in (Connect, the portal link, and once signed in the plan badge with its token gauge and Disconnect); the same panel sits in the corner of the Security radar. The Assistant card sets the managed loop over the Security todos to Off, Review (it recommends, you confirm each action) or Auto (it fixes safe issues and escalates the rest); it needs a connected model. Use your own model offers a Disabled / Claude / OpenAI / Ollama selector with API key or base URL and a Test connection button. A read-only token-usage strip shows per-loop input, output and total counters since a reset. Refresh frequency exposes the cadence of the intent-divergence engine, the attack-pattern detector and the Assistant. Adjudication pins, per engine, how findings are reviewed: Auto (follows the AI connection: advisory with a model, deterministic without), LLM (withhold what the model did not answer), Advisory or Deterministic. The MCP section shows the server status, port, a listen-on-all-interfaces toggle, PSK generation and enable / disable controls, and, while the server runs, the paired-client list with approve, reject, revoke, rotate and delete. Team delivery (Slack, Telegram) is on Config > Notifications; the transcript observer and the capture-detail tier are on Config > Agents.",
+            "fr": "Config > IA empile les réglages IA sur une page défilante réservée au bureau. La carte de connexion IA montre la connexion actuelle et héberge la connexion au portail EDAMAME (Connecter, le lien vers le portail et, une fois connecté, le badge de forfait avec sa jauge de jetons et Déconnecter) ; le même panneau se trouve dans le coin du radar Sécurité. La carte Assistant règle la boucle gérée sur les tâches Sécurité sur Désactivé, Revue (il recommande, vous confirmez chaque action) ou Auto (il corrige les problèmes sûrs et escalade le reste) ; elle exige un modèle connecté. Utiliser votre propre modèle propose un sélecteur Désactivé / Claude / OpenAI / Ollama avec clé API ou URL de base et un bouton Tester la connexion. Une bande de consommation de jetons en lecture seule affiche par boucle les compteurs entrée, sortie et total depuis une remise à zéro. La cadence de rafraîchissement expose la fréquence du moteur de divergence d'intention, du détecteur de motifs d'attaque et de l'Assistant. L'arbitrage fixe, par moteur, comment les constats sont revus : Auto (suit la connexion IA : consultatif avec un modèle, déterministe sans), LLM (retient ce que le modèle n'a pas tranché), Consultatif ou Déterministe. La section MCP montre l'état du serveur, le port, une bascule d'écoute sur toutes les interfaces, la génération de PSK et les contrôles d'activation, et, quand le serveur tourne, la liste des clients appairés avec approuver, rejeter, révoquer, renouveler et supprimer. La diffusion d'équipe (Slack, Telegram) est dans Config > Notifications ; l'observateur de transcripts et le niveau de détail de capture sont dans Config > Agents."
           },
           "description": {
-            "en": "Use Config > AI to connect the EDAMAME Portal or your own model (Connect AI), set the Assistant level and cadence, pin how each detector’s findings are adjudicated (automatic by default), configure team delivery (Slack, Telegram) and Portal export, tune the capture-detail privacy tier, and enable MCP for external tools. Keep MCP disabled unless external tools need it.",
-            "fr": "Utilisez Config > IA pour connecter le portail EDAMAME ou votre propre modèle (Connecter l’IA), régler le niveau et la cadence de l’assistant, fixer l’arbitrage des constats de chaque détecteur (automatique par défaut), configurer la diffusion d’équipe (Slack, Telegram) et l’export vers le portail, choisir le niveau de détail de capture, et activer MCP pour les outils externes. Laissez MCP désactivé sauf besoin d’outils externes."
+            "en": "Use Config > AI to sign in to the EDAMAME Portal or connect your own model, choose how much the Assistant does on its own, pin how each engine's findings are adjudicated (automatic by default), tune the cadences, and enable MCP only when external tools need it.",
+            "fr": "Utilisez Config > IA pour vous connecter au portail EDAMAME ou brancher votre propre modèle, choisir ce que l'Assistant fait seul, fixer l'arbitrage des constats de chaque moteur (automatique par défaut), régler les cadences, et n'activer MCP que lorsque des outils externes en ont besoin."
           },
           "has_scroll_screenshots": true,
           "items": [
@@ -1804,16 +1807,32 @@
               "name": "cloud_llm",
               "scroll": 1,
               "title": {
-                "en": "Cloud LLM – EDAMAME Portal AI Service",
-                "fr": "Cloud LLM – Service IA EDAMAME Portal"
+                "en": "EDAMAME Portal – Sign-in and Token Gauge",
+                "fr": "Portail EDAMAME – Connexion et jauge de jetons"
               },
               "visual": {
-                "en": "EDAMAME Portal section at the top with EDAMAME Portal LLM provider label, portal access link icon, and Connect button for OAuth sign-in. Once connected, shows subscription status and disconnect option.",
-                "fr": "Section EDAMAME Portal en haut avec le label EDAMAME Portal LLM, icone d'acces portail et bouton Connect pour la connexion OAuth. Une fois connecte, affiche le statut d'abonnement et l'option de deconnexion."
+                "en": "The AI connection card at the top names the current connection and hosts the EDAMAME Portal panel: the EDAMAME logo, a portal link and a Connect button for the OAuth sign-in. Once signed in it shows the plan badge, the token gauge with the used percentage, the portal link and Disconnect.",
+                "fr": "La carte de connexion IA en haut nomme la connexion actuelle et héberge le panneau du portail EDAMAME : le logo EDAMAME, un lien vers le portail et un bouton Connecter pour la connexion OAuth. Une fois connecté, elle affiche le badge de forfait, la jauge de jetons avec le pourcentage utilisé, le lien vers le portail et Déconnecter."
               },
               "description": {
-                "en": "Use Cloud LLM for managed setup with minimal friction. Verify account limits and monitor usage regularly.",
-                "fr": "Utilisez Cloud LLM pour une configuration geree avec peu de friction. Verifiez les limites du compte et surveillez l'usage regulierement."
+                "en": "The Portal is the managed path: one sign-in, adjudication and the Assistant run on the EDAMAME LLM service. Watch the gauge; at the limit the Assistant pauses until the next period.",
+                "fr": "Le portail est la voie gérée : une seule connexion, l'arbitrage et l'Assistant s'exécutent sur le service LLM d'EDAMAME. Surveillez la jauge ; à la limite, l'Assistant se met en pause jusqu'à la période suivante."
+              }
+            },
+            {
+              "name": "assistant",
+              "scroll": 1,
+              "title": {
+                "en": "Assistant – Off, Review or Auto",
+                "fr": "Assistant – Désactivé, Revue ou Auto"
+              },
+              "visual": {
+                "en": "A three-way control for the managed loop over the Security todos: Off (todos wait for you), Review (the Assistant recommends and you confirm each action) and Auto (it fixes safe issues on its own and escalates the rest). Greyed out until a model is connected; its interval is set in Refresh frequency below.",
+                "fr": "Un contrôle à trois positions pour la boucle gérée sur les tâches Sécurité : Désactivé (les tâches vous attendent), Revue (l'Assistant recommande et vous confirmez chaque action) et Auto (il corrige seul les problèmes sûrs et escalade le reste). Grisé tant qu'aucun modèle n'est connecté ; son intervalle se règle dans la cadence de rafraîchissement ci-dessous."
+              },
+              "description": {
+                "en": "Start with Review to see what the Assistant would do, then move to Auto once its choices match yours.",
+                "fr": "Commencez par Revue pour voir ce que ferait l'Assistant, puis passez en Auto une fois que ses choix correspondent aux vôtres."
               }
             },
             {
@@ -1846,38 +1865,6 @@
               "description": {
                 "en": "Tune engine frequencies to balance responsiveness and resource usage. Use shorter intervals for active investigation, longer intervals for steady-state monitoring.",
                 "fr": "Ajustez les frequences des moteurs pour equilibrer reactivite et utilisation des ressources. Utilisez des intervalles courts pour les investigations actives, longs pour la surveillance en regime permanent."
-              }
-            },
-            {
-              "name": "slack_integration",
-              "scroll": 2,
-              "title": {
-                "en": "Slack Delivery – Team Notifications",
-                "fr": "Diffusion Slack – Notifications d'equipe"
-              },
-              "visual": {
-                "en": "Optional Slack delivery for team visibility. Configure a bot token plus separate channels for routine action summaries and priority escalation alerts. Slack delivery is outbound-only and mirrors the same Security actions and detector escalations visible in the app.",
-                "fr": "Diffusion Slack optionnelle pour la visibilite d'equipe. Configurez un jeton de bot ainsi que des canaux distincts pour les resumes d'actions et les alertes d'escalade prioritaires."
-              },
-              "description": {
-                "en": "Send routine summaries and critical escalations to team channels without turning Slack into a control plane.",
-                "fr": "Envoyez les resumes courants et les escalades critiques vers les canaux d'equipe sans faire de Slack un plan de controle."
-              }
-            },
-            {
-              "name": "telegram_integration",
-              "scroll": 2,
-              "title": {
-                "en": "Telegram Delivery – Interactive Predefined Replies",
-                "fr": "Diffusion Telegram – Reponses interactives predefinies"
-              },
-              "visual": {
-                "en": "Optional Telegram delivery routes action summaries and escalation cards to a bot-controlled chat. Configure the bot token, target chat ID, and an interactive mode that only accepts callbacks from explicitly allowed Telegram user IDs. Interactive cards expose predefined actions without allowing free-form prompt input.",
-                "fr": "La diffusion Telegram optionnelle envoie les resumes d'actions et les cartes d'escalade vers une conversation pilotee par bot. Les cartes interactives n'exposent que des actions predefinies sans saisie libre."
-              },
-              "description": {
-                "en": "Use Telegram when you need quick mobile triage with tightly scoped predefined replies.",
-                "fr": "Utilisez Telegram lorsque vous avez besoin d'un triage mobile rapide avec des reponses predefinies etroitement limitees."
               }
             },
             {
@@ -1943,10 +1930,41 @@
                 "en": "Review available tools to define a safe access scope. Prefer read-only observation tools; keep mutating advisor workflows under explicit governance.",
                 "fr": "Passez en revue les outils disponibles pour definir un perimetre d'acces sur. Preferer les outils d'observation en lecture seule ; gardez les workflows advisor mutants sous une gouvernance explicite."
               }
+            }
+          ]
+        },
+        {
+          "name": "config_agents",
+          "title": {
+            "en": "Agents – Transcript Observer and Capture Detail",
+            "fr": "Agents – Observateur de transcripts et détail de capture"
+          },
+          "visual": {
+            "en": "Config > Agents holds what EDAMAME keeps about the AI agents on this device (desktop only). The Transcript observer section lists every supported agent with its status and session count, a per-agent observer switch and a Run now button; it needs the EDAMAME helper. The Capture detail card is a three-tier choice, Metadata, Redacted or Full content, governing how much agent context is stored. What the observer finds shows in the Agents section of the rail.",
+            "fr": "Config > Agents regroupe ce qu'EDAMAME conserve sur les agents IA de cet appareil (bureau uniquement). La section Observateur de transcripts liste chaque agent pris en charge avec son statut et son nombre de sessions, un interrupteur d'observateur par agent et un bouton Exécuter maintenant ; elle exige le helper EDAMAME. La carte Détail de capture est un choix à trois niveaux, Métadonnées, Expurgé ou Contenu complet, qui règle la quantité de contexte d'agent stockée. Ce que l'observateur trouve s'affiche dans la section Agents de la barre latérale."
+          },
+          "description": {
+            "en": "Keep every installed agent observed and pick the lowest capture tier that still supports your investigations.",
+            "fr": "Gardez chaque agent installé sous observation et choisissez le niveau de capture le plus bas qui soutient encore vos investigations."
+          },
+          "items": [
+            {
+              "name": "transcript_observer",
+              "title": {
+                "en": "Transcript Observer – Per-Agent Controls",
+                "fr": "Observateur de transcripts – Controles par agent"
+              },
+              "visual": {
+                "en": "Lists every supported agent type (Cursor, Claude Code, Claude Desktop, Codex CLI, Hermes, OpenClaw and others) with its detected / observing / paused status and the number of sessions ingested, plus a per-agent observer switch and a Run now button. EDAMAME reads the agents' on-disk transcripts directly on this host through the helper; when the helper is not running the section says so instead of offering the switches.",
+                "fr": "Liste chaque type d'agent pris en charge (Cursor, Claude Code, Claude Desktop, Codex CLI, Hermes, OpenClaw et d'autres) avec son statut détecté / en observation / en pause et le nombre de sessions ingérées, plus un interrupteur d'observateur par agent et un bouton Exécuter maintenant. EDAMAME lit directement sur cet hôte les transcripts des agents via le helper ; quand le helper ne tourne pas, la section l'indique au lieu de proposer les interrupteurs."
+              },
+              "description": {
+                "en": "Keep observers enabled for every installed or observed agent. A paused observer on an agent that already has transcripts raises its unsecured internal threat until you resume it. An installed agent with no transcripts yet is not unsecured -- it is simply not yet observed.",
+                "fr": "Gardez les observateurs actives pour chaque agent installe ou observe. Un observateur en pause sur un agent qui a deja des transcripts declenche sa menace interne non securise jusqu'a reprise. Un agent installe sans transcripts n'est pas non securise -- il n'est simplement pas encore observe."
+              }
             },
             {
               "name": "capture_detail",
-              "scroll": 3,
               "title": {
                 "en": "Capture Detail – Agent Context Privacy Tiers",
                 "fr": "Detail de capture – Niveaux de confidentialite du contexte d'agent"
@@ -1959,40 +1977,39 @@
                 "en": "Pick the lowest tier that still supports your investigations. Use Metadata for maximum privacy, Redacted for balanced day-to-day monitoring, and Full content only for active forensic deep-dives.",
                 "fr": "Choisissez le niveau le plus bas qui soutient encore vos investigations. Utilisez Metadonnees pour une confidentialite maximale, Expurge pour une surveillance quotidienne equilibree et Contenu complet uniquement pour les analyses forensiques actives approfondies."
               }
-            },
-            {
-              "name": "dismissal_rules",
-              "scroll": 3,
-              "title": {
-                "en": "Dismissal Rules – Recurrence-Aware Suppressions",
-                "fr": "Regles de rejet – Suppressions sensibles a la recurrence"
-              },
-              "visual": {
-                "en": "Manages recurrence-aware suppressions across attack-pattern and divergence findings. Filter chips (All, Attack pattern, Divergence) scope the rule list, and actions cover Prune expired, Show audit log, and Reset all rules. Rules are created from a finding via its 'Dismiss with scope...' action rather than added here directly; an empty state explains that flow.",
-                "fr": "Gere des suppressions sensibles a la recurrence pour les constats de motifs d'attaque et de divergence. Des pastilles de filtre (Tout, Motif d'attaque, Divergence) delimitent la liste des regles, et les actions couvrent Purger les expirees, Afficher le journal d'audit et Tout reinitialiser. Les regles sont creees depuis un constat via son action 'Rejeter avec portee...' plutot qu'ajoutees directement ici ; un etat vide explique ce flux."
-              },
-              "description": {
-                "en": "Use dismissal rules to silence a recurring, already-reviewed finding without hiding genuinely new ones. Review the audit log before resetting, and prune expired rules to keep the suppression set honest.",
-                "fr": "Utilisez les regles de rejet pour faire taire un constat recurrent deja examine sans masquer les nouveaux. Consultez le journal d'audit avant toute reinitialisation et purgez les regles expirees pour garder l'ensemble des suppressions honnete."
-              }
-            },
-            {
-              "name": "transcript_observer",
-              "scroll": 3,
-              "title": {
-                "en": "Transcript Observer – Per-Agent Controls",
-                "fr": "Observateur de transcripts – Controles par agent"
-              },
-              "visual": {
-                "en": "Lists every supported agent type with installed / observed / paused / not-detected status and per-agent observer enable/disable plus run-now. Installed means the product is on disk; observed means transcripts are being ingested. Host-side observation requires no Level-2 plugin install (retired 1.7.0).",
-                "fr": "Liste chaque type d'agent pris en charge avec statut installe / observe / en pause / non detecte et activation/desactivation de l'observateur par agent plus execution immediate. Installe signifie que le produit est sur le disque ; observe signifie que des transcripts sont ingeres. L'observation cote hote ne necessite aucune installation de plugin Level-2 (retire en 1.7.0)."
-              },
-              "description": {
-                "en": "Keep observers enabled for every installed or observed agent. A paused observer on an agent that already has transcripts raises its unsecured internal threat until you resume it. An installed agent with no transcripts yet is not unsecured -- it is simply not yet observed.",
-                "fr": "Gardez les observateurs actives pour chaque agent installe ou observe. Un observateur en pause sur un agent qui a deja des transcripts declenche sa menace interne non securise jusqu'a reprise. Un agent installe sans transcripts n'est pas non securise -- il n'est simplement pas encore observe."
-              }
             }
           ]
+        },
+        {
+          "name": "config_statistics",
+          "title": {
+            "en": "Statistics – Network, Files & Agentic Telemetry (Desktop)",
+            "fr": "Statistiques – Telemetrie Reseau, Fichiers et Agentique (Bureau)"
+          },
+          "visual": {
+            "en": "The Statistics tab (desktop-only, formerly 'System') consolidates monitoring telemetry across the network, files, and agentic subsystems in a multi-column layout. The top section shows packet pipeline metrics (Current Interval + Cumulative Totals: TCP/UDP/IPv4/IPv6 counts and session deltas) on the left and ML analyzer status on the right (Running/Complete/Trained badges, Detection Thresholds, Model Statistics with buffer usage and feature count, Score Distribution with percentiles, and Session Analysis with Normal/Anomalous counts). A bottom security-telemetry section adds six new read-only mirrors: Vulnerability Detector (running, interval, last run, active findings), Divergence Engine (running, interval, last run, model age, last verdict, contributor count), File Integrity Monitoring (monitoring state, watch path count, event count, last event time), LLM Token Consumption (per-loop in/out counters for agentic/vulnerability/divergence buckets with since-timestamp), Shadow CRS rollout snapshot (critical/high/low severity distribution over the last 24h from action history), and Agentic Memory (raw memory stats payload).",
+            "fr": "L'onglet Statistiques (bureau uniquement, anciennement 'Systeme') consolide la telemetrie de supervision pour les sous-systemes reseau, fichiers et agentique en plusieurs colonnes. Le haut affiche les statistiques de paquets et le statut de l'analyseur ML. Le bas ajoute six panneaux en lecture seule : detecteur de vulnerabilites, moteur de divergence, integrite des fichiers, consommation de jetons LLM par boucle, distribution Shadow CRS sur 24h et statistiques memoire agentique."
+          },
+          "description": {
+            "en": "Use this diagnostics panel to monitor the entire telemetry surface — packet pipeline, ML analyzer, vulnerability detector, divergence engine, file integrity monitor, agentic memory, and per-loop LLM token spend. Recheck thresholds and model stats when detection quality shifts.",
+            "fr": "Utilisez ce panneau de diagnostic pour surveiller toute la surface de telemetrie — pipeline de paquets, analyseur ML, detecteur de vulnerabilites, moteur de divergence, surveillance d'integrite, memoire agentique et consommation de jetons LLM par boucle. Reverifiez les seuils et statistiques de modele lorsque la qualite de detection evolue."
+          },
+          "has_scroll_screenshots": true
+        },
+        {
+          "name": "config_debug",
+          "title": {
+            "en": "Debug – Real-Time Logs",
+            "fr": "Debug – Logs en Temps Reel"
+          },
+          "visual": {
+            "en": "The Debug tab provides a real-time log viewer for troubleshooting. At the top, a header shows the core version string (e.g., 'Core version is 1.0.1, built on 2026-01-28 with branch main on macOS 26.2 by flyonnet, memory usage: 0.0 MB'). Below, three filter buttons toggle log levels: 'INFO' (green), 'ERROR' (red), 'WARN' (yellow). A search field lets you filter log messages by text. The main area shows scrolling log output in a dark terminal-style view - though often empty during normal operation. A copy button (clipboard icon) on the right copies selected log content. This view is essential for diagnosing connection issues, API errors, or unexpected behavior when working with EDAMAME support. Log messages appear in real-time as the core engine processes security checks, network captures, and AI operations.",
+            "fr": "L'onglet Debug fournit un visualiseur de logs en temps reel pour le depannage. Des boutons de filtre basculent les niveaux INFO/ERROR/WARN. Un champ de recherche filtre les messages. Le bouton copier permet de partager les logs."
+          },
+          "description": {
+            "en": "Use Debug logs for root-cause analysis with support or engineering. Filter by severity, search by keyword, and export relevant excerpts.",
+            "fr": "Utilisez les logs Debug pour l'analyse de cause racine avec le support ou l'ingenierie. Filtrez par severite, recherchez par mot-cle et exportez les extraits pertinents."
+          }
         }
       ]
     }
