@@ -761,7 +761,8 @@ capsule** at the bottom-left of Security > Overview:
   intent divergence detection together, with or without a model. Detection
   then runs deterministically; a model adds its review and the Assistant's
   analysis. On desktop, protection also starts session capture and file
-  monitoring.
+  monitoring, which takes a few seconds: the part shows a spinner and
+  "Turning on…" until it is done, so one tap is enough.
 - **Protected · 14:32:07** means protection is on and shows the time of the
   detectors' last check ("Stalled" when checks stop). Tap it to turn
   everything off; on desktop that also stops session capture and file
@@ -779,7 +780,7 @@ Security > Overview places every open todo (threats, policies, breaches,
 devices, sessions, and the setup of LAN scan, breach and session monitoring)
 on a radar by priority, in the sector of the section it belongs to, with the
 **Next up** queue beside it. While protection is on, the HIGH and CRITICAL
-findings of the two detectors join them. A todo shows the Assistant's verdict
+findings of the two detectors join them in the **Attacks** sector (desktop). A todo shows the Assistant's verdict
 (pending your confirmation, escalated, handled) only while the Assistant can
 act -- protection on and a model connected; otherwise tap it to open its card
 and fix it yourself.
