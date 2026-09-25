@@ -73,28 +73,23 @@ The EDAMAME host always stays the verdict authority: the agent plugins observe
 and onboard, but they never adjudicate. See [Agent Plugins](#agent-plugins) for
 the per-agent integration packages, install paths, and pairing.
 
-### AI Assistant (Agentic System — requires an LLM)
-- EDAMAME's own agentic process: intelligent automation that analyzes and resolves security issues automatically (requires a configured LLM provider)
-- Two operational modes:
-  - **"Do It For Me"** - Fully automatic handling of routine security tasks
-  - **"Analyze & Recommend"** - Review AI decisions before execution
-- Scheduled automation with granular control:
-  - **"Auto run"** toggle - Schedule automatic processing at regular intervals (5min/1h/1day)
-  - **"Auto confirm"** toggle - Control whether scheduled runs execute safe actions immediately or wait for approval
-- Collapsible automation panel with live workflow status updates, Do It For Me / Analyze & Recommend buttons, and an inline cancel action for in-flight jobs.
+### AI Assistant and protection (Agentic System)
+- **One protection switch**: the Assistant, attack pattern detection and intent divergence detection are off until you turn them on, together, from the protection capsule under the Security radar (bottom-left: AI, Protection, Auto-fix). **Connect Portal** signs in to the EDAMAME Portal and turns protection on; **Turn on protection** starts it without a model. On desktop protection also starts session capture and file monitoring, and turning it off stops them.
+- **Detection runs without a model**: both detectors publish deterministic findings; a connected model adds LLM review of the findings and the Assistant's analysis of your todos.
+- **The Assistant** (requires a model) triages the Security todos at one of two levels: **Review** (it recommends, you confirm) or **Auto** (**Auto-fix**: it fixes safe issues on its own and escalates the rest). Every fix can be undone.
+- **Two histories** in Security: **Detections** lists every attack-pattern and divergence finding and never changes with the model connection; **AI History** lists the Assistant's actions, appears only while a model is connected, and is cleared when you disconnect the model, so a reconnection starts fresh.
 - Supports multiple LLM providers:
   - **Cloud LLM (EDAMAME)** - Managed AI service with OAuth authentication via EDAMAME Portal; free and paying tiers (see [portal.edamame.tech](https://portal.edamame.tech)); optional API keys for headless environments
   - **Claude (Anthropic)** - Detailed reasoning and nuanced security decisions (API key required)
   - **OpenAI (GPT)** - Fast responses and general-purpose analysis (API key required)
   - **Ollama (Local)** - Privacy-focused, runs entirely on your machine (no cloud dependency)
-- Complete transparency with filterable action history, Confirm/Undo All controls, detailed reasoning per action, and deep links to related security views.
-- Undo capability for all automated actions
+- Complete transparency: AI History with filters, Confirm pending / Undo all, the reasoning of every action and deep links to the related security views; every automated fix can be undone.
 - **Model Context Protocol (MCP) integration**:
   - Secure localhost-only server (port 3000) with Streamable HTTP transport (exposed on desktop builds; mobile hides the control)
   - Dual-mode authentication: per-client credentials via app-mediated pairing (desktop clients POST to `/mcp/pair`, user approves in app, client gets `edm_mcp_...` credential) or shared PSK for CLI/headless tools and automation
-  - 19 tools across 5 categories: advisor, observation (sessions with L7 process attribution, LAN devices, breaches, score), identity management (add/remove/list monitored emails), LAN configuration, and agentic automation
+  - 52 read-oriented tools: security findings, observation (sessions with L7 process attribution, LAN devices, breaches, score), attack-pattern and divergence findings, dismissal rules (read-only), adding a monitored email, and the Assistant's remediation of threats and policies; dismissals, detection on/off and every other observer-state change stay operator-only
   - Sessions include deep L7 enrichment: process lineage, parent chain, open files (sensitive file tracking), temp-origin detection, resource usage
-  - Dynamic identity management: add/remove emails for HIBP breach monitoring at runtime
+  - Identity monitoring: add emails for HIBP breach monitoring at runtime (removing one is operator-only)
   - First-class agent integrations for runtime behavioral monitoring -- see [Agent Plugins](#agent-plugins) for architecture, install paths, pairing, and E2E testing:
     - [EDAMAME for Cursor](https://github.com/edamametechnologies/edamame_cursor) -- Cursor IDE plugin (Cursor Marketplace)
     - [EDAMAME for Claude Code](https://github.com/edamametechnologies/edamame_claude_code) -- Claude Code plugin (Claude Code Marketplace)
@@ -105,7 +100,6 @@ the per-agent integration packages, install paths, and pairing.
   - Connect MCP Inspector or build custom workflows
   - Test interactively with MCP Inspector: `npx @modelcontextprotocol/inspector --server-url http://127.0.0.1:3000/mcp --transport http`
   - See [EDAMAME Core API MCP Reference](https://github.com/edamametechnologies/edamame_core_api/blob/main/MCP.md) for complete tool documentation
-- Interactive features: email reports, custom security questions once you open the latest report dialog
 - See the [AI Assistant — User Guide](#ai-assistant--user-guide) below for detailed workflows and MCP testing instructions
 
 ### System Security Benchmarks and One-Click Remediations
@@ -276,9 +270,8 @@ Step 1: Install and open the app from the Microsoft Store.
 Step 2: Install EDAMAME Helper.
 
 Microsoft Store apps run in a sandbox, so the Store cannot ship the helper
-alongside the app. The easiest path is to let the app prompt you: in the
-**Advisor** tab, click the Todo action item for the Helper software and click
-"Push to install".
+alongside the app. The easiest path is to let the app prompt you: on the
+**Security** radar, open the Helper software item and click "Push to install".
 <img width="717" height="146" alt="Screenshot helper Todo action" src="https://github.com/user-attachments/assets/3db8d298-3cf7-4e7c-b452-18cb6ccedb49" />
 <img width="724" height="431" alt="Screenshot Push to install" src="https://github.com/user-attachments/assets/c2b23276-1ff4-44d0-b1a6-1ed836e4cc04" />
 
@@ -463,8 +456,8 @@ product itself has a config or instruction footprint (for example
 Inventory lists that as *Installed, not yet observed* until sessions appear;
 *observed* means EDAMAME is ingesting transcripts (or receiving a plugin
 push). Divergence detection works end-to-end for any agent the user
-already has on their machine, even before they ever click "Install plugin" in
-the AI / Config tab. When the EDAMAME plugin **is** installed in an agent's MCP
+already has on their machine, once protection is on, even before they ever
+click "Install plugin" in Config > Agents. When the EDAMAME plugin **is** installed in an agent's MCP
 config, the plugin's own Node-side bridge also pushes behavioral models
 in-process and the observer hash-skips when payloads match — so the two paths
 are purely additive. Operators can pause, resume, or run-now the observer per
@@ -739,7 +732,7 @@ Think of it as your personal security analyst that:
 
 #### What is a "Todo"?
 
-A **todo** is any actionable security recommendation in your advisor tab:
+A **todo** is any actionable security recommendation on the Security radar:
 - **Threats** — Security vulnerabilities that need remediation
 - **Policy Violations** — Configuration issues to fix
 - **Network Sessions** — Suspicious connections to review
@@ -756,161 +749,68 @@ Instead of manually reviewing and acting on each todo, the AI Assistant:
 
 ### Workflows
 
-#### Quick Start: Two Action Modes
+#### Turning protection on
 
-When you click the AI Assistant section in the Advisor tab, you'll see two
-operational modes:
+Protection is off on a fresh install. Turn it on from the **protection
+capsule** at the bottom-left of Security > Overview:
 
-##### 1. "Do It For Me" (Fully Automatic)
+- **Connect Portal** (shown while no model is connected): accept the consent
+  notice, sign in to the EDAMAME Portal in the browser, and protection turns
+  on at once. "Sign in again" appears when a Portal session has expired.
+- **Turn on protection**: starts the Assistant, attack pattern detection and
+  intent divergence detection together, with or without a model. Detection
+  then runs deterministically; a model adds its review and the Assistant's
+  analysis. On desktop, protection also starts session capture and file
+  monitoring.
+- **Protected · 14:32:07** means protection is on and shows the time of the
+  detectors' last check ("Stalled" when checks stop). Tap it to turn
+  everything off; on desktop that also stops session capture and file
+  monitoring.
+- **Auto-fix** switches the Assistant from Review (it recommends, you confirm)
+  to Auto (it fixes safe issues on its own). It is locked until protection is
+  on and a tested model is connected, and asks for confirmation first.
 
-**Use when:** You trust the AI to handle routine security tasks
+To use your own model instead of the Portal (Claude, OpenAI or a local Ollama),
+set it up in **Config > AI**, press **Test**, and turn protection on.
 
-**What happens:**
-- AI analyzes all pending todos
-- **Makes an "auto_resolve" or "escalate" decision for each**
-- **Auto-resolves:** Executes safe actions immediately → status: Auto-Resolved
-- **Escalates:** Flags complex / risky issues for manual review → status: Escalated
-- Shows you a summary of what was done
+#### The Security radar
 
-**Best for:**
-- Daily security maintenance
-- Handling false positives
-- Clearing routine alerts
+Security > Overview places every open todo (threats, policies, breaches,
+devices, sessions, and the setup of LAN scan, breach and session monitoring)
+on a radar by priority, in the sector of the section it belongs to, with the
+**Next up** queue beside it. While protection is on, the HIGH and CRITICAL
+findings of the two detectors join them. A todo shows the Assistant's verdict
+(pending your confirmation, escalated, handled) only while the Assistant can
+act -- protection on and a model connected; otherwise tap it to open its card
+and fix it yourself.
 
-**Example:** AI sees 10 network alerts. It auto-resolves 7 (dismisses false positives), auto-resolves 2 (fixes configuration), and escalates 1 (suspicious connection requires your review).
+#### Detections
 
-##### 2. "Analyze & Recommend" (Review Before Action)
+**Security > Detections** (desktop) lists every attack-pattern and divergence
+finding, low severity included. It does not depend on the model connection: a
+finding the LLM reviewed and one the deterministic engine published sit side
+by side, and connecting or disconnecting a model changes nothing here. Open a
+finding for its evidence and, when a model reviewed it, the LLM's verdict and
+reasoning; **Dismiss** creates a dismissal rule (a single finding, or a
+broader scope, for a time or for good; a CRITICAL finding needs a rule that
+may hide CRITICAL, with a reason), and **Restore** removes it. When you are
+signed in to the Portal, a dismissal can also be reported to EDAMAME as a
+false positive.
 
-**Use when:** You want to review AI decisions before they take effect
+#### AI History
 
-**What happens:**
-- AI analyzes all pending todos **using the same decision logic**
-- **Makes an "auto_resolve" or "escalate" decision for each**
-- **Auto-resolves:** Shows the recommendation but waits for your approval → status: Requires Confirmation
-- **Escalates:** Flags for manual review (same as "Do It For Me") → status: Escalated
-- You manually confirm or reject each action
+**Security > AI History** lists the Assistant's actions: fixes, dismissals,
+escalations, pending suggestions and failures, with the reasoning of each.
+It appears only while a model is connected (the EDAMAME Portal or your own).
+**Confirm pending** runs the actions waiting for your approval and **Undo all**
+reverts the Assistant's fixes; both ask first and say how many actions they
+affect.
 
-**Key Insight:** The AI makes identical decisions in both modes. The only difference is whether "auto_resolve" executes immediately or waits for confirmation.
-
-**Best for:**
-- Learning how the AI thinks
-- Sensitive environments
-- High-security situations
-
-**Example:** AI analyzes the same 10 alerts with the same reasoning, but instead of executing, it shows you "I would dismiss these 9" and waits for your approval on each.
-
-#### Interface Overview
-
-##### Collapsible header & quick context
-- The **Agentic** header (with the Beta badge) lets you collapse or expand the entire experience with one tap.
-- When expanded, every section below stays in sync with the live agentic context.
-
-##### Immediate automation controls
-- The **Do It For Me** and **Analyze & Recommend** buttons are disabled until an AI provider is configured and nothing is currently running.
-- A dedicated **Cancel** button appears while a run is in progress, giving you an immediate escape hatch without waiting for the backend to finish.
-
-##### Scheduled automation toggles
-- The **Auto run** switch supports 5 min / 1 h / 1 day intervals.
-- The adjacent **Auto confirm** switch controls whether scheduled jobs execute safe actions or pause for approval.
-- Both switches stay disabled until your AI provider is fully configured and tested.
-
-##### Backend AI report controls
-- **Request report** kicks off the remediation stream and is automatically disabled while a run is in progress or when prerequisites (LAN, Identity, Capture data) are missing.
-- **Read latest report** appears only after a report is ready and opens the latest advisor remediation dialog.
-- Tooltips surface a configuration hint when setup is incomplete.
-
-##### MCP server controls (desktop only)
-- The MCP control is hidden on Android / iOS because the local MCP server only ships on desktop builds.
-- Clicking the hub icon opens the MCP configuration dialog (pairing, PSK, port) described in the MCP section below.
-
-##### Live workflow status & summaries
-- The status card streams the workflow phases: **Starting**, **Fetching analysis**, **AI analyzing**, **Decision made**, **Executing**, and finally **Completed**.
-- On **Completed**, the widget shows the aggregated counts (auto-resolved, requires confirmation, escalated, failed).
-- The status card doubles as a result banner, reusing the success / failure styling.
-
-#### Automated Processing Controls
-
-The AI Assistant provides two powerful toggles for scheduled automation:
-
-##### "Auto run" Toggle
-Enable scheduled automatic processing of security todos at regular intervals (5 min, 1 hour, or 1 day):
-
-- **When enabled:** AI Assistant automatically runs at your chosen interval
-- **When disabled:** You manually trigger "Do It For Me" or "Analyze & Recommend" when needed
-- **Best for:** Continuous security monitoring and maintenance
-
-##### "Auto confirm" Toggle
-Controls whether scheduled runs automatically execute safe actions or just analyze them:
-
-- **When enabled (Auto mode):** Scheduled runs execute "auto_resolve" decisions immediately
-  - Safe actions are performed without waiting for approval
-  - Escalated items still require manual review
-  - Perfect for hands-off security maintenance
-
-- **When disabled (Manual mode):** Scheduled runs only analyze and record decisions
-  - All "auto_resolve" decisions wait for your confirmation
-  - Nothing is executed automatically
-  - You review and approve actions in the UI when convenient
-  - Escalated items still flagged for manual review
-
-**Example workflow:**
-1. Enable "Auto run" with a 1-hour interval
-2. Enable "Auto confirm"
-3. Result: Every hour, AI processes new security todos and executes safe actions automatically
-4. You only see escalated items that need your expertise
-
-**Safety note:** Both toggles appear only when:
-- An AI provider is configured (Cloud LLM, Claude, OpenAI, or Ollama)
-- The connection is tested and working (OAuth authenticated for Cloud LLM, API key validated for others)
-- This ensures automation only runs when AI is properly set up
-
-#### Action History
-
-Every action the AI takes is logged in the **Action History** section:
-
-##### Status Types
-
-**Auto-Resolved** — AI decided "auto_resolve" and executed it (in "Do It For Me" mode)
-- Example: Dismissed a false-positive port scan automatically
-- Action completed successfully and can be undone
-
-**Requires Confirmation** — AI decided "auto_resolve" but is waiting for approval (in "Analyze & Recommend" mode)
-- Example: AI recommends dismissing a port scan, awaiting your confirmation
-- Click "Confirm" to execute; same reasoning as Auto-Resolved
-
-**Escalated** — AI decided "escalate" (too complex or risky to auto-resolve)
-- Example: Critical security policy change, suspicious network pattern
-- Always requires manual review regardless of mode
-- Includes priority level (low / medium / high / critical)
-
-**Failed** — Action couldn't be completed (LLM error, execution error, timeout)
-- Example: API timeout, network connectivity issue, invalid credentials
-- Click "Retry" to attempt again
-- Check error details for troubleshooting hints
-
-**Obsolete** — Todo was resolved by other means (dismissed manually or fixed)
-- Example: User manually fixed the issue before AI could process it
-- Cannot be executed or undone (no longer relevant)
-
-##### Action History Features
-
-- **View Details** — Opens the related security view for the action (remediation, network, traffic, or identity).
-- **Detailed action cards** — Each entry exposes timestamps, processing duration, token counts, undo info, and priority.
-
-**Filtering:**
-- Filter by status (Auto-resolved, Requires confirmation, Escalated, Failed)
-- Filter by type (Threats, Network, Policies, Breaches)
-
-**Bulk Actions:**
-- **Confirm All** — Approve all pending confirmations at once
-- **Undo All** — Revert all AI actions in one click
-- **Clear History** — Remove old completed actions
-
-**Individual Actions:**
-- **View Details** — See full reasoning and technical details
-- **Confirm** — Execute a recommended action
-- **Undo** — Revert a completed action
-- **Retry** — Attempt a failed action again
+Disconnecting the model (signing out of the Portal, clearing your own model)
+clears AI History: when you connect again, the Assistant starts fresh and
+reviews your open todos again. The fixes it applied stay applied and can
+still be undone from their own screens (a threat's rollback in Threats, the
+dismissal rules, Network, Identity).
 
 #### Decision Flow
 
@@ -927,8 +827,8 @@ AI Makes ONE of TWO Decisions:
     |
     +--> [Safe & Routine] -> "auto_resolve" decision
     |        |
-    |        +--> [Do It For Me mode]        -> Execute Immediately -> Auto-Resolved
-    |        +--> [Analyze & Recommend mode] -> Present for Review   -> Requires Confirmation
+    |        +--> [Auto level]   -> Execute Immediately -> Auto-Resolved
+    |        +--> [Review level] -> Present for Review   -> Requires Confirmation
     |
     +--> [Complex / Risky] -> "escalate" decision -> Human Review Needed (Escalated)
 
@@ -940,11 +840,11 @@ If any step fails (LLM error, execution error, etc.) -> Failed (Retry Available)
 2. **"escalate"** — The action is complex or risky
 
 The difference between **Auto-Resolved** and **Requires Confirmation** is
-**which mode you used**, not what the AI decided:
+**the Assistant's level**, not what the AI decided:
 - Same AI decision ("auto_resolve")
-- Different user mode determines execution:
-  - **"Do It For Me"** → Executes automatically (Auto-Resolved)
-  - **"Analyze & Recommend"** → Waits for your approval (Requires Confirmation)
+- The level determines execution:
+  - **Auto** (Auto-fix on) → Executes automatically (Auto-Resolved)
+  - **Review** → Waits for your approval (Requires Confirmation)
 
 **Auto-Resolve Criteria (AI decides it's safe):**
 - Low risk (e.g., dismissing false positives)
@@ -1036,8 +936,8 @@ Claude Desktop, OpenClaw, Codex, Hermes), see [Agent Plugins](#agent-plugins).
 - **Full control:** you manage the model and its behavior
 
 **Best Practices:**
-- Start with "Analyze & Recommend" mode to learn the AI's behavior
-- Review action history regularly
+- Start at the Review level to learn the AI's behavior
+- Review AI History regularly
 - Use undo if the AI makes a mistake
 - Report issues to improve the system
 
@@ -1048,8 +948,7 @@ Claude Desktop, OpenClaw, Codex, Hermes), see [Agent Plugins](#agent-plugins).
 ##### Option A: Cloud LLM (EDAMAME) — Recommended for Most Users
 
 1. **Open AI Assistant Settings**
-   - Navigate to the AI tab in the app
-   - Expand the AI Assistant section
+   - Go to **Config > AI** in the app
 
 2. **Sign In to Cloud LLM**
    - Click "Sign in to Cloud LLM"
@@ -1074,7 +973,7 @@ Claude Desktop, OpenClaw, Codex, Hermes), see [Agent Plugins](#agent-plugins).
 ##### Option B: Bring Your Own LLM (Claude, OpenAI, Ollama)
 
 1. **Open Settings**
-   - Click the settings icon next to the "Do It For Me" button
+   - Go to **Config > AI** (the capsule's AI part opens it once a model is connected)
 
 2. **Choose Provider**
    - Select Claude, OpenAI, or Ollama
@@ -1245,14 +1144,14 @@ Inspector opens at `http://localhost:5173` and shows:
 ### Tips & Best Practices
 
 #### Learning Phase
-1. Start with **"Analyze & Recommend"** mode
+1. Keep the Assistant at **Review** (Auto-fix off)
 2. Review AI reasoning for each decision
-3. Understand patterns before switching to auto mode
+3. Understand patterns before turning Auto-fix on
 4. Use the "View Details" button to see full context
 
 #### Production Use
-1. Use **"Do It For Me"** for daily maintenance
-2. Review Action History regularly (weekly)
+1. Turn **Auto-fix** on for daily maintenance
+2. Review AI History regularly (weekly)
 3. Investigate escalated items promptly
 
 #### Security Hardening
@@ -1268,12 +1167,15 @@ Inspector opens at `http://localhost:5173` and shows:
 
 ### FAQ
 
-**Q: What's the difference between "Do It For Me" and "Analyze & Recommend"?**
-A: The AI makes the same decisions in both modes. The difference is execution:
-- **Do It For Me:** AI executes safe actions immediately (you see "Auto-Resolved")
-- **Analyze & Recommend:** AI shows you what it would do but waits for your approval (you see "Requires Confirmation")
+**Q: What's the difference between Review and Auto (Auto-fix)?**
+A: The AI makes the same decisions at both levels. The difference is execution:
+- **Auto (Auto-fix on):** the Assistant executes safe actions immediately (you see "Auto-Resolved")
+- **Review:** it shows you what it would do and waits for your approval (you see "Requires Confirmation")
 
-In both modes, risky / complex actions are escalated for manual review. Use "Analyze & Recommend" to learn what the AI considers safe before switching to "Do It For Me."
+At both levels, risky / complex actions are escalated for manual review. Stay at Review to learn what the AI considers safe before turning Auto-fix on.
+
+**Q: What happens to AI History when I disconnect the model?**
+A: It is cleared, and a reconnection starts fresh: the Assistant reviews your open todos again. The fixes it applied stay applied and can still be undone from their own screens. Detections (the detectors' findings) is not affected by the model connection.
 
 **Q: How much does it cost?**
 A: Depends on your provider:
@@ -1294,10 +1196,10 @@ A: All data is sanitized before being sent to any LLM (see `edamame_foundation` 
 - **Ollama:** Everything stays local on your machine — maximum privacy
 
 **Q: Can I customize AI behavior?**
-A: Currently, choose "Analyze & Recommend" mode for full control.
+A: Keep the Assistant at Review for full control; Config > AI also sets how often it runs and how the detectors use the model (adjudication).
 
 **Q: How do I know the AI made the right decision?**
-A: Every action includes full reasoning in the Action History. Click "View Details" to see the AI's thought process.
+A: Every action includes full reasoning in AI History. Click "View Details" to see the AI's thought process.
 
 ### Getting Started Checklist
 
@@ -1305,10 +1207,11 @@ A: Every action includes full reasoning in the Action History. Click "View Detai
   - **GUI App:** Sign in to Cloud LLM (EDAMAME) via OAuth — simple and secure
   - **CLI / Headless:** Create an API key at [portal.edamame.tech](https://portal.edamame.tech)
   - **Alternative:** Set up Claude, OpenAI, or Ollama with your own credentials
-- [ ] Test the connection successfully
-- [ ] Try "Analyze & Recommend" mode first
-- [ ] Review 5-10 AI decisions to understand the reasoning
-- [ ] Switch to "Do It For Me" when comfortable
+- [ ] Test the connection successfully (own model) or sign in (Portal)
+- [ ] Turn protection on from the capsule under the Security radar
+- [ ] Keep the Assistant at Review first
+- [ ] Review 5-10 AI decisions in AI History to understand the reasoning
+- [ ] Turn Auto-fix on when comfortable
 
 ## Repository purpose
 
@@ -1339,8 +1242,8 @@ To download EDAMAME Security, see [edamame.tech](https://www.edamame.tech).
 ### Reporting a problem with the Feedback button
 
 The quickest way to send a problem report with diagnostics attached is
-the **Feedback** button ("Send feedback or report an issue") in the
-**Advisor** tab. It opens a consent dialog where you enter a short
+the **Feedback** button ("Send feedback or report an issue") in the support
+dock. It opens a consent dialog where you enter a short
 description (required) and your email (required) after reviewing the
 feedback privacy notice.
 
