@@ -259,6 +259,12 @@ The Chocolatey `edamame` package installs the MSIX-only version of the app,
 so the helper must be installed separately via `edamame-helper`. If you'd
 rather get both in one shot, use the **All-in-One Installer** above.
 
+The package source (the nuspec and its install and uninstall scripts) is in
+[chocolatey/](chocolatey/): the release workflow checks that it is exactly
+what it packs, except for the version, download URL and checksum it sets for
+each release. Report a problem with the package in
+[issues](https://github.com/edamametechnologies/edamame_security/issues).
+
 #### Microsoft Store
 
 Step 1: Install and open the app from the Microsoft Store.
