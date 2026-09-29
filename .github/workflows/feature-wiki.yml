@@ -18,8 +18,15 @@ jobs:
           edamame_pin: ${{ secrets.EDAMAME_POSTURE_PIN }}
           edamame_id: ${{ github.run_id }}
           checkout: true
+          # The wiki clone and push below authenticate with DEV_GITHUB_TOKEN,
+          # which the org IP allow list refuses until the Hub lists this
+          # runner. This repository is public and answers the default probe
+          # at once, which proves nothing: probe a private repository with
+          # that token (self-hosted-runners rule, "Org IP allow list").
           wait_for_api: true
           wait_for_https: true
+          wait_repository: edamametechnologies/edamame_core
+          token: ${{ secrets.DEV_GITHUB_TOKEN }}
           
       - name: Set up Python
         uses: actions/setup-python@v4
