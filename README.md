@@ -353,6 +353,10 @@ sudo apt install edamame-cli
 - Download from [Google Play Store](https://play.google.com/store/apps/details?id=com.edamametech.edamame)
 - No helper required on Android/ChromeOS
 
+### Fleet Deployment (MDM)
+
+For managed fleets, [auto_provisioning](https://github.com/edamametechnologies/auto_provisioning) has scripts, configuration profiles and guides (Intune, ConfigMgr, Jamf, Kandji, Mosyle, Workspace ONE) that install the EDAMAME Security app and its Helper from the standard release packages, with Hub enrollment and LLM settings preconfigured through managed configuration (EDAMAME >= 2.0.2). The MDM only delivers and configures EDAMAME; EDAMAME itself never takes control of the device.
+
 ## Agent Plugins
 
 > **Most observer features are now internalized into EDAMAME.** The host-side
