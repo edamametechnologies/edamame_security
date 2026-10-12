@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>edamame</id>
+    <version>2.0.3</version>
+    <!-- edamame_app is private: its package source is mirrored in the public
+         edamame_security repository (tools/chocolatey_mirror.sh), and the
+         release refuses to publish while the mirror differs. -->
+    <packageSourceUrl>https://github.com/edamametechnologies/edamame_security/tree/main/chocolatey</packageSourceUrl>
+    <title>EDAMAME Security</title>
+    <authors>EDAMAME Technologies</authors>
+    <projectUrl>https://edamame.tech</projectUrl>
+    <iconUrl>https://cdn.jsdelivr.net/gh/edamametechnologies/edamame_helper@v2.0.2/chromeos/icon128.png</iconUrl>
+    <!-- No projectSourceUrl: the application is closed source (see the
+         edamame_security README). No mailingListUrl: there is no forum or
+         list; the issue tracker below is the channel. -->
+    <docsUrl>https://github.com/edamametechnologies/edamame_security/wiki</docsUrl>
+    <bugTrackerUrl>https://github.com/edamametechnologies/edamame_security/issues</bugTrackerUrl>
+    <tags>edamame security privacy endpoint-security</tags>
+    <summary>Desktop security application with full UI and enhanced capabilities</summary>
+    <description>EDAMAME Security is your all-in-one tool to secure, understand, and prove your dev workstation—from OS to network.</description>
+    <licenseUrl>https://github.com/edamametechnologies/edamame_security/blob/main/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <releaseNotes>https://github.com/edamametechnologies/edamame_security/releases</releaseNotes>
+  </metadata>
+  <files>
+    <file src="tools\**" target="tools" />
+  </files>
+</package>
+
