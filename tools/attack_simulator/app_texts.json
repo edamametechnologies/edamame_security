@@ -1,0 +1,8 @@
+{
+  "name": "EDAMAME Attack Simulator",
+  "tagline": "Watch EDAMAME catch real-world attack techniques on this machine, safely.",
+  "intro": "Each card below safely reproduces the host-visible behaviour of a real attack technique — the kind used against developer laptops, CI runners and AI coding agents. Nothing malicious runs: no real malware, no real credentials leave the machine, and the simulated network traffic goes to public test endpoints. Start a card, then watch EDAMAME react in Security > Detections. When you are done, press Run cleanup.",
+  "requirements": "You need a running EDAMAME to see anything: either the EDAMAME Security app with protection turned on, or the EDAMAME Posture daemon with detection enabled. The simulator only produces the activity; EDAMAME is what detects it.",
+  "where_to_look": "Open EDAMAME Security and go to Security > Detections (desktop). Findings from a running scenario appear there, newest first. Click a finding to see its evidence and, when a model is connected, the AI's explanation.",
+  "admin_note": "Two scenarios need an administrator password (marked “needs admin”). Every other scenario runs as you."
+}
