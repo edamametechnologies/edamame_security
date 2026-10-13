@@ -9,6 +9,7 @@ EDAMAME Security is your all-in-one tool to secure, understand, and prove the se
 **Download:** [macOS, Windows, Linux, iOS, Android](#download-and-installation)
 | **Learn more:** [Feature wiki](https://github.com/edamametechnologies/edamame_security/wiki)
 | [AI Assistant user guide](#ai-assistant--user-guide)
+| [Attack Simulator](#see-edamame-detect-the-attack-simulator)
 | [Troubleshooting](#troubleshooting)
 
 ![EDAMAME Security: the Security radar](macos/screenshots/01_security_overview.png)
@@ -366,6 +367,34 @@ sudo apt install edamame-cli
 ### Fleet Deployment (MDM)
 
 For managed fleets, [auto_provisioning](https://github.com/edamametechnologies/auto_provisioning) has scripts, configuration profiles and guides (Intune, ConfigMgr, Jamf, Kandji, Mosyle, Workspace ONE) that install the EDAMAME Security app and its Helper from the standard release packages, with Hub enrollment and LLM settings preconfigured through managed configuration (EDAMAME >= 2.0.2). The MDM only delivers and configures EDAMAME; EDAMAME itself never takes control of the device.
+
+## See EDAMAME Detect: the Attack Simulator
+
+> **Simulation only: no real attack is carried out.** Every scenario runs on
+> test data: decoy credentials and files, harmless test processes and public
+> test endpoints.
+
+The **EDAMAME Attack Simulator** reproduces the host-visible behaviour of
+real attack techniques on your own machine, and shows EDAMAME catching each
+one. The techniques are those aimed at developer laptops, CI runners and AI
+coding agents. Each scenario names the real-world incident or technique it
+models, says what EDAMAME shows and how soon, and has a short talk track. A
+guided 10-minute demo walks through the highlights.
+
+It needs a running EDAMAME with protection turned on: the EDAMAME Security
+app, or EDAMAME Posture. **Run cleanup** stops every scenario and removes
+the files they created.
+
+| Platform | Download |
+|---|---|
+| macOS (Apple silicon) | [edamame-attack-simulator-macos-arm64-latest.zip](https://edamame.s3.eu-west-1.amazonaws.com/attack-simulator/edamame-attack-simulator-macos-arm64-latest.zip) |
+| Windows (x64) | [edamame-attack-simulator-windows-x64-latest.zip](https://edamame.s3.eu-west-1.amazonaws.com/attack-simulator/edamame-attack-simulator-windows-x64-latest.zip) |
+| Linux (x64) | [edamame-attack-simulator-linux-x64-latest.tar.gz](https://edamame.s3.eu-west-1.amazonaws.com/attack-simulator/edamame-attack-simulator-linux-x64-latest.tar.gz) |
+
+Every version is also attached to this repository's
+[releases](https://github.com/edamametechnologies/edamame_security/releases),
+with SHA-256 checksums. Details:
+[tools/attack_simulator](tools/attack_simulator/README.md).
 
 ## Agent Plugins
 
