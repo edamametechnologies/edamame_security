@@ -327,13 +327,16 @@ function Start-EdamameAppForInteractiveUser {
     try {
         Write-Host "Scheduling EDAMAME app relaunch as $userName via $aumid..."
         $action    = New-ScheduledTaskAction -Execute 'explorer.exe' -Argument "shell:AppsFolder\$aumid"
-        $trigger   = New-ScheduledTaskTrigger -Once -At ((Get-Date).AddSeconds(2))
         $principal = New-ScheduledTaskPrincipal -UserId $userName -LogonType Interactive -RunLevel Limited
-        # Do NOT pass -DeleteExpiredTaskAfter here. With a -Once trigger that has no
-        # EndBoundary, that combination makes Register-ScheduledTask throw
-        # HRESULT 0x80041319 (SCHED_E_TASK_ATTRIBUTE_NOT_FOUND, "EndBoundary missing"),
-        # which we previously swallowed in the catch and the relaunch silently
-        # never fired. The finally block below already unregisters the task.
+        # No trigger: Start-ScheduledTask below runs the task once. A -Once
+        # trigger two seconds out used to start it a second time: the action
+        # hands the activation to the shell and exits at once, so the task was
+        # no longer running when the trigger fired, IgnoreNew had nothing to
+        # drop, and the app started twice. Do NOT pass -DeleteExpiredTaskAfter
+        # either: without an EndBoundary it makes Register-ScheduledTask throw
+        # HRESULT 0x80041319 (SCHED_E_TASK_ATTRIBUTE_NOT_FOUND), which the catch
+        # swallowed while the relaunch silently never fired. The finally block
+        # below unregisters the task.
         $settings  = New-ScheduledTaskSettingsSet `
             -ExecutionTimeLimit ([TimeSpan]::FromMinutes(2)) `
             -AllowStartIfOnBatteries `
@@ -341,7 +344,6 @@ function Start-EdamameAppForInteractiveUser {
         Register-ScheduledTask `
             -TaskName $taskName `
             -Action $action `
-            -Trigger $trigger `
             -Principal $principal `
             -Settings $settings `
             -Force -ErrorAction Stop | Out-Null
@@ -407,9 +409,10 @@ function Register-EdamameForInteractiveUser {
     try {
         Write-Host "Registering $pfn for $userName through a one-shot task..."
         $action    = New-ScheduledTaskAction -Execute 'powershell.exe' -Argument "-NoProfile -NonInteractive -WindowStyle Hidden -Command `"$command`""
-        $trigger   = New-ScheduledTaskTrigger -Once -At ((Get-Date).AddSeconds(2))
         $principal = New-ScheduledTaskPrincipal -UserId $userName -LogonType Interactive -RunLevel Limited
-        # No -DeleteExpiredTaskAfter: see Start-EdamameAppForInteractiveUser.
+        # No trigger and no -DeleteExpiredTaskAfter: see
+        # Start-EdamameAppForInteractiveUser. A run that ended before the
+        # trigger's time let the trigger register and launch a second time.
         $settings  = New-ScheduledTaskSettingsSet `
             -ExecutionTimeLimit ([TimeSpan]::FromMinutes(5)) `
             -AllowStartIfOnBatteries `
@@ -417,7 +420,6 @@ function Register-EdamameForInteractiveUser {
         Register-ScheduledTask `
             -TaskName $taskName `
             -Action $action `
-            -Trigger $trigger `
             -Principal $principal `
             -Settings $settings `
             -Force -ErrorAction Stop | Out-Null

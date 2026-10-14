@@ -3,7 +3,7 @@ $packageName = 'edamame'
 $toolsDir = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
 # The release workflow (edamame_app release_windows_standalone.yml) sets the
 # URL of the release's MSIX and its SHA256 below before `choco pack`.
-$url64 = 'https://github.com/edamametechnologies/edamame_security/releases/download/v2.0.3/edamame-windows-2.0.3.msix'
+$url64 = 'https://github.com/edamametechnologies/edamame_security/releases/download/v2.0.8/edamame-windows-2.0.8.msix'
 $checksum64 = '0000000000000000000000000000000000000000000000000000000000000000'
 
 # install_msix.ps1 is the WiX Burn bundle's MSIX driver
