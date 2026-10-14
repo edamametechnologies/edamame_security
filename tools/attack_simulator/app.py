@@ -69,6 +69,10 @@ BASELINE_WINDOW_S = 25.0
 MIN_SAFE_CLI_VERSION = (2, 0, 5)
 CLI_TIMEOUT_S = 40.0
 
+# Bump when the one-time confirmation's wording changes materially, so users
+# are asked to re-confirm. Persisted per user under the cache dir.
+CONSENT_VERSION = 1
+
 RUN_FOR_CHOICES = (
     ("Script default", None),
     ("1 minute", 60),
@@ -275,10 +279,12 @@ def state_dir_for(agent_type: str, triggers_dir: Path) -> Path:
         return Path(load_trigger_module(triggers_dir, "_common").state_dir_for(agent_type))
     except Exception:
         pass
-    name = f"edamame_{agent_type}_demo"
+    # Fallback only if the triggers' _common cannot be loaded; keep it in step
+    # with _common.state_dir_for (per-owner leaf on POSIX; %TEMP% is already
+    # per-user on Windows).
     if IS_WINDOWS:
-        return Path(os.environ.get("TEMP", "C:\\Temp")) / name
-    return Path(f"/tmp/{name}")
+        return Path(os.environ.get("TEMP", "C:\\Temp")) / f"edamame_{agent_type}_demo"
+    return Path(f"/tmp/edamame_{agent_type}_demo_{os.geteuid()}")
 
 
 def file_prefix_for(agent_type: str) -> str:
@@ -952,6 +958,39 @@ def edamame_cli_version(cli: str) -> Optional[Tuple[int, int, int]]:
     if not match:
         return None
     return int(match.group(1)), int(match.group(2)), int(match.group(3))
+
+
+def probe_environment(triggers_dir: Path) -> Dict[str, Any]:
+    """Best-effort, read-only look at how EDAMAME is deployed here, so the
+    simulator can warn before running demos on a managed / Hub-connected
+    device. Uses only read-only RPCs (get_connection,
+    get_managed_configuration_status). Never raises."""
+    info: Dict[str, Any] = {
+        "available": False, "connected": False, "domain": "",
+        "managed": False, "organization": "",
+    }
+    try:
+        cli_mod = load_trigger_module(triggers_dir, "_edamame_cli")
+    except Exception:
+        return info
+
+    def rpc(method: str) -> Any:
+        try:
+            return cli_mod.cli_rpc(method, timeout=10.0, retries=0)
+        except Exception:
+            return None
+
+    conn = rpc("get_connection")
+    if isinstance(conn, dict):
+        info["available"] = True
+        info["connected"] = bool(conn.get("is_connected"))
+        info["domain"] = str(conn.get("connected_domain") or "")
+    managed = rpc("get_managed_configuration_status")
+    if isinstance(managed, dict):
+        info["available"] = True
+        info["managed"] = bool(managed.get("managed"))
+        info["organization"] = str(managed.get("organization_name") or "")
+    return info
 
 
 @dataclass(frozen=True)
@@ -2234,6 +2273,14 @@ class AttackSimulator(tk.Tk):
         self._dirty = False
         self.cleanup_dialog: Optional[CleanupDialog] = None
 
+        # Consent + a persistent record of which agent types have been run, in
+        # the per-user cache dir so it survives a reboot that clears the temp
+        # state dir. Lets the quit prompt still offer cleanup afterwards.
+        self._consented = False
+        self._consent_dir = _cache_root()
+        self._ran_ledger = self._consent_dir / "ran_agents.json"
+        self._quit_after_cleanup = False
+
         self.watch_available: Optional[bool] = None
         self.watch_reason = "checking for edamame_cli..."
         self.watch_errors: List[str] = []
@@ -2273,6 +2320,7 @@ class AttackSimulator(tk.Tk):
         self.after(EVENT_DRAIN_MS, self._drain_events)
         self.after(TICK_MS, self._tick)
         self.after(300, self._scan_pid_files)
+        self.after(200, self._require_consent)
 
     # -- layout ---------------------------------------------------------
 
@@ -2460,6 +2508,133 @@ class AttackSimulator(tk.Tk):
     def current_state_dir(self) -> Path:
         return state_dir_for(self.agent_type.get(), self.triggers_dir)
 
+    # -- pid identity / demo-remnant tracking ---------------------------
+
+    def _common_module(self) -> Any:
+        try:
+            return load_trigger_module(self.triggers_dir, "_common")
+        except Exception:
+            return None
+
+    def _pid_trustworthy(self, pid: int, pid_file: Path) -> bool:
+        """True unless there is positive evidence the live pid is not the one
+        the trigger recorded (reused after a reboot, or by another process).
+        Defaults to True when the triggers' helper is unavailable."""
+        mod = self._common_module()
+        fn = getattr(mod, "pid_file_is_trustworthy", None)
+        if fn is None:
+            return True
+        try:
+            return bool(fn(pid, pid_file))
+        except Exception:
+            return True
+
+    def _record_agent_ran(self, agent: str) -> None:
+        try:
+            self._consent_dir.mkdir(parents=True, exist_ok=True)
+            seen = set()
+            if self._ran_ledger.is_file():
+                data = json.loads(self._ran_ledger.read_text(encoding="utf-8"))
+                if isinstance(data, list):
+                    seen = {str(x) for x in data}
+            seen.add(agent)
+            self._ran_ledger.write_text(json.dumps(sorted(seen)), encoding="utf-8")
+        except (OSError, ValueError):
+            pass
+
+    def _clear_ran_ledger(self) -> None:
+        try:
+            self._ran_ledger.unlink()
+        except OSError:
+            pass
+
+    def _has_demo_remnants(self) -> bool:
+        """Whether demo files may still be on this machine: either the current
+        state dir exists, or a scenario has been run (the persistent ledger),
+        which still holds after a reboot that wiped the temp state dir."""
+        try:
+            if self.current_state_dir().exists():
+                return True
+        except OSError:
+            pass
+        try:
+            if self._ran_ledger.is_file() and self._ran_ledger.stat().st_size > 2:
+                return True
+        except OSError:
+            pass
+        return False
+
+    # -- one-time consent -----------------------------------------------
+
+    def _consent_accepted(self) -> bool:
+        try:
+            data = json.loads((self._consent_dir / "consent.json").read_text(encoding="utf-8"))
+            return int(data.get("accepted_version", 0)) >= CONSENT_VERSION
+        except (OSError, ValueError, TypeError):
+            return False
+
+    def _save_consent(self) -> None:
+        try:
+            self._consent_dir.mkdir(parents=True, exist_ok=True)
+            (self._consent_dir / "consent.json").write_text(
+                json.dumps({"accepted_version": CONSENT_VERSION}), encoding="utf-8")
+        except OSError:
+            pass
+
+    def _require_consent(self) -> None:
+        """Show the one-time confirmation listing the real-home writes and the
+        outbound destinations, plus a warning when this device is Hub-connected
+        or under a managed policy. Blocks scenario launches until accepted."""
+        if self._consented:
+            return
+        if self._consent_accepted():
+            self._consented = True
+            return
+
+        env = probe_environment(self.triggers_dir)
+        lines = [
+            "The Attack Simulator runs real, attack-shaped behaviour on THIS "
+            "machine so you can watch EDAMAME detect it. Before you start, please "
+            "confirm you understand what it does here:",
+            "",
+            "On this machine it will:",
+            "  • Write throwaway decoy credential and config files into your "
+            "real home folders (for example .ssh, .aws, .gnupg, .kube, .cursor, "
+            ".codex, .claude). One scenario adds a demo entry to .cursor/mcp.json "
+            "after backing up your real file; cleanup restores it.",
+            "  • Send simulated traffic to public test endpoints (for example "
+            "portquiz.net) and well-known sinkhole ranges. One scenario connects to "
+            "addresses listed on public threat-intel blocklists — it sends only "
+            "harmless filler, never a secret.",
+            "  • Ask for an administrator password for two scenarios.",
+            "",
+            "No real secret ever leaves this machine. Press Run cleanup when you are "
+            "done and it removes the demo files (and restores anything it replaced).",
+        ]
+        warn_bits = []
+        if env.get("connected") and env.get("domain"):
+            warn_bits.append(f"connected to the EDAMAME Hub domain '{env['domain']}'")
+        if env.get("managed"):
+            org = env.get("organization") or "your organization"
+            warn_bits.append(f"under a managed policy from {org}")
+        if warn_bits:
+            lines += [
+                "",
+                "IMPORTANT: this device is " + " and ".join(warn_bits) + ". The "
+                "findings you raise here are real and may be visible to your "
+                "administrator. Only continue if you are authorized to run a "
+                "security demo on this device.",
+            ]
+        accepted = messagebox.askokcancel(
+            "Before you start", "\n".join(lines), parent=self, icon="warning")
+        if accepted:
+            self._consented = True
+            self._save_consent()
+            self.log_line(None, "simulator", "confirmation accepted; scenarios enabled", "sys")
+        else:
+            self.log_line(None, "simulator",
+                          "confirmation declined; start a scenario to see it again", "warn")
+
     def _run_for_seconds(self) -> Optional[int]:
         label = self.run_for.get()
         for name, seconds in RUN_FOR_CHOICES:
@@ -2539,6 +2714,10 @@ class AttackSimulator(tk.Tk):
     def start_scenario(self, key: str) -> None:
         if self._busy:
             return
+        if not self._consented:
+            self._require_consent()
+            if not self._consented:
+                return
         scenario = self.scenarios[key]
         if not scenario.available:
             messagebox.showinfo("Not in this build", f"{scenario.title} has no trigger script in this build.", parent=self)
@@ -2563,6 +2742,7 @@ class AttackSimulator(tk.Tk):
         )
         self.runs[key] = run
         self.external.pop(key, None)
+        self._record_agent_ran(run.agent_type)
         plan = f"runs for {fmt_span(duration)}" if duration > 0 else "runs until you stop it"
         self.log_line(key, scenario.title, f"starting ({plan}, agent type {run.agent_type})", "sys")
         threading.Thread(target=self._launch_worker, args=(run,), daemon=True).start()
@@ -2618,7 +2798,12 @@ class AttackSimulator(tk.Tk):
         details = []
         pid = read_pid(pid_file)
         if pid is not None:
-            details.append(kill_pid(pid, pid_file))
+            if self._pid_trustworthy(pid, pid_file):
+                details.append(kill_pid(pid, pid_file))
+            else:
+                _unlink(pid_file)
+                details.append(f"ignored stale pid {pid} (reused or pre-reboot)")
+                pid = None
         if proc is not None and proc.poll() is None and pid != proc.pid:
             details.append(kill_process_group(proc))
         self.events.put(("stopped", key, "; ".join(details) or "it was not running"))
@@ -2665,7 +2850,8 @@ class AttackSimulator(tk.Tk):
         def worker() -> None:
             try:
                 python = runtime_python()
-                cmd = [python, str(self.cleanup_script), "--agent-type", agent, "--state-dir", str(state_dir)]
+                cmd = [python, str(self.cleanup_script), "--agent-type", agent,
+                       "--state-dir", str(state_dir), "--sweep"]
                 self.events.put(("cleanup_line", "$ " + " ".join(_shell_quote(p) for p in cmd), "cmd"))
                 code, timed_out = run_and_stream(
                     cmd, self.triggers_dir,
@@ -2765,10 +2951,31 @@ class AttackSimulator(tk.Tk):
                 for run in live:
                     pid_file = run.scenario.pid_file(run.state_dir)
                     pid = read_pid(pid_file)
-                    if pid is not None:
+                    if pid is not None and self._pid_trustworthy(pid, pid_file):
                         kill_pid(pid, pid_file)
+                    elif pid is not None:
+                        _unlink(pid_file)
                     if run.proc is not None and run.proc.poll() is None and pid != run.proc.pid:
                         kill_process_group(run.proc)
+        # Demo files a scenario created may still be on this machine even with
+        # nothing running (and even after a reboot cleared the temp state dir).
+        # Offer cleanup before quitting rather than leaving them behind silently.
+        if not self._busy and self._has_demo_remnants():
+            choice = messagebox.askyesnocancel(
+                "Remove demo files?",
+                "Some demo files the scenarios created may still be on this "
+                "machine (decoy credentials in your home folders, agent config "
+                "entries).\n\n"
+                "Yes: run cleanup now, then quit.\n"
+                "No: quit and leave them (run cleanup later).",
+                parent=self,
+            )
+            if choice is None:
+                return
+            if choice:
+                self._quit_after_cleanup = True
+                self.run_cleanup()
+                return
         self.destroy()
 
     def report_callback_exception(self, exc: Any, val: Any, tb: Any) -> None:
@@ -2857,8 +3064,16 @@ class AttackSimulator(tk.Tk):
                 self.log_line(None, "cleanup", error, "err")
             else:
                 self.log_line(None, "cleanup", f"finished (exit code {code})", "ok" if code == 0 else "err")
+            if not error and code == 0:
+                # A clean sweep removed the demo files, so the persistent
+                # "scenarios were run" record no longer points at anything.
+                self._clear_ran_ledger()
             self._scan_pid_files(reschedule=False)
             self.mark_dirty()
+            if getattr(self, "_quit_after_cleanup", False):
+                # Cleanup was started from the quit prompt: show its result
+                # briefly, then close.
+                self.after(2000, self.destroy)
 
     def _on_output_line(self, run: TriggerRun, text: str) -> None:
         run.lines += 1
@@ -2994,6 +3209,12 @@ class AttackSimulator(tk.Tk):
                     continue
                 pid_file = scenario.pid_file(state_dir)
                 pid = read_pid(pid_file)
+                if pid is not None and process_alive(pid) and not self._pid_trustworthy(pid, pid_file):
+                    # A pid reused after a reboot (or by an unrelated process):
+                    # do not adopt it as a running scenario, and drop the file.
+                    self.external.pop(scenario.key, None)
+                    _unlink(pid_file)
+                    pid = None
                 if pid is not None and process_alive(pid):
                     if self.external.get(scenario.key) != pid:
                         self.external[scenario.key] = pid

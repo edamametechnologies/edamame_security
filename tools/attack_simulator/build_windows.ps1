@@ -141,8 +141,13 @@ if (-not (Test-Path $LauncherExe)) { throw "Launcher not produced: $LauncherExe"
 & (Join-Path $PyDest 'python.exe') -c 'import tkinter, sys; print("embedded python ok:", sys.version.split()[0], "tk", tkinter.TkVersion)'
 if ($LASTEXITCODE -ne 0) { throw 'Embedded runtime failed its tkinter self-check' }
 
-# --- Authenticode-sign the launcher (CI only) ------------------------------
-if ($env:AZURE_SIGN_KEY_VAULT_URI -and $env:AZURE_SIGN_CLIENT_ID) {
+# --- Authenticode-sign the launcher ----------------------------------------
+# CI (GitHub Actions) MUST produce a signed, verified bundle: an unsigned
+# launcher must never be uploaded or published. A local developer build with
+# no signing secrets is allowed and prints that it is unsigned.
+$IsCI = ($env:GITHUB_ACTIONS -eq 'true') -or ($env:CI -eq 'true')
+$HasSigningSecrets = [bool]$env:AZURE_SIGN_KEY_VAULT_URI -and [bool]$env:AZURE_SIGN_CLIENT_ID
+if ($HasSigningSecrets) {
   Write-Host 'Signing the launcher with AzureSignTool...'
   AzureSignTool sign `
     -kvt $env:AZURE_SIGN_TENANT_ID `
@@ -152,8 +157,16 @@ if ($env:AZURE_SIGN_KEY_VAULT_URI -and $env:AZURE_SIGN_CLIENT_ID) {
     -kvc $env:AZURE_SIGN_CERT_NAME `
     -tr http://timestamp.digicert.com -v "$LauncherExe"
   if ($LASTEXITCODE -ne 0) { throw "AzureSignTool failed ($LASTEXITCODE)" }
+  # Require a valid signature before the bundle is sealed/uploaded.
+  $sig = Get-AuthenticodeSignature -FilePath $LauncherExe
+  if ($sig.Status -ne 'Valid') {
+    throw "Launcher Authenticode signature is not Valid after signing (Status=$($sig.Status): $($sig.StatusMessage)); refusing to seal an unverified bundle."
+  }
+  Write-Host "Launcher signature verified: $($sig.Status)"
+} elseif ($IsCI) {
+  throw 'AZURE_SIGN_* signing secrets are not set; refusing to build an unsigned bundle in CI. Configure the AzureSignTool secrets, or run this script locally for an explicitly-unsigned developer build.'
 } else {
-  Write-Host 'AZURE_SIGN_* not set; launcher left unsigned (local build).'
+  Write-Host 'AZURE_SIGN_* not set and not running in CI; launcher left unsigned (local developer build).'
 }
 
 # --- Zip --------------------------------------------------------------------
