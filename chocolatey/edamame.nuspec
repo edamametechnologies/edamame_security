@@ -3,9 +3,10 @@
   <metadata>
     <id>edamame</id>
     <version>2.0.8</version>
-    <!-- edamame_app is private: its package source is mirrored in the public
-         edamame_security repository (tools/chocolatey_mirror.sh), and the
-         release refuses to publish while the mirror differs. -->
+    <!-- This directory is the package source. The app's release packs it,
+         setting the version, download URL and checksum, and adds
+         tools/install_msix.ps1, the MSIX installer the app's Windows bundle
+         ships too (included in every published package). -->
     <packageSourceUrl>https://github.com/edamametechnologies/edamame_security/tree/main/chocolatey</packageSourceUrl>
     <title>EDAMAME Security</title>
     <authors>EDAMAME Technologies</authors>

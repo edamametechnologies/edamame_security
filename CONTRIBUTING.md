@@ -60,9 +60,11 @@ published here by the app's release workflow. Do not create or move tags by
 hand. Release notes follow the same rules as the README: what changes for
 users, never vulnerabilities or detection internals.
 
-The `chocolatey/` directory is the source of the `edamame` Chocolatey package;
-the release workflow checks that the package it publishes is exactly this
-source, except for the version, download URL and checksum it sets.
+The `chocolatey/` directory is the source of the `edamame` Chocolatey package,
+and its only copy: the app's release workflow packs it as it is here, setting
+the version, download URL and checksum, and adds `tools/install_msix.ps1`, the
+MSIX installer the app's Windows bundle ships too (it is in every published
+package). Change the package here.
 
 ## features.json
 
