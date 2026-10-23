@@ -831,6 +831,9 @@ class Detection:
     checks: int = 0
     last_checked: Optional[float] = None
     baseline: Optional[Set[str]] = None
+    # True when the baseline was read early enough, and without error, to
+    # tell this run's findings from those EDAMAME already held.
+    baseline_reliable: bool = False
     error: str = ""
 
     def overall(self) -> ExpectationStatus:
@@ -861,6 +864,9 @@ class TriggerRun:
     command: List[str] = field(default_factory=list)
     started_at: float = field(default_factory=time.monotonic)
     started_wall: datetime = field(default_factory=datetime.now)
+    # Wall-clock start (epoch seconds), compared with the first detection
+    # time EDAMAME reports for a finding.
+    started_epoch: float = field(default_factory=time.time)
     phase: str = Phase.STARTING
     proc: Optional["subprocess.Popen[str]"] = None
     pid: Optional[int] = None
@@ -1000,12 +1006,33 @@ class WatchTarget:
     expectations: Tuple[Expectation, ...]
 
 
+def run_cli_rpc(cli: str, method: str, args: Optional[str], parse: Callable[[str], Any]) -> Any:
+    """Call ``edamame_cli rpc <method> [args]`` and parse its output.
+
+    ``args`` is the JSON object of named arguments, as ``edamame_cli rpc``
+    takes it. Raises RuntimeError with the CLI's last output line on failure,
+    subprocess.TimeoutExpired after CLI_TIMEOUT_S."""
+    cmd = [cli, "rpc", method]
+    if args:
+        cmd.append(args)
+    result = subprocess.run(
+        cmd, capture_output=True, text=True, encoding="utf-8",
+        errors="replace", timeout=CLI_TIMEOUT_S, check=False, **_no_window_kwargs(),
+    )
+    if result.returncode != 0:
+        lines = (result.stderr or result.stdout or "").strip().splitlines()
+        message = lines[-1] if lines else f"exit code {result.returncode}"
+        raise RuntimeError(message[:200])
+    return parse(result.stdout or "")
+
+
 class EdamameWatch:
     """Background reader of EDAMAME's findings for the scenarios being run.
 
-    Only read-only RPCs are used (findings, blacklisted sessions, divergence
-    verdict, protection status). The simulator never clears or dismisses
-    anything in EDAMAME: that is the operator's call, in the EDAMAME app."""
+    Watching uses read-only RPCs only (findings, blacklisted sessions,
+    divergence verdict, protection status). The one write is ``dismiss``:
+    the operator's own choice, at cleanup, to dismiss the detections the
+    simulator's runs raised, after confirming the list in the app."""
 
     def __init__(self, triggers_dir: Path, post: Callable[[tuple], None]) -> None:
         self.triggers_dir = triggers_dir
@@ -1074,17 +1101,22 @@ class EdamameWatch:
         self._post(("watch_status", True, f"edamame_cli {shown}", cli))
         return True
 
-    def _rpc(self, method: str) -> Any:
+    @property
+    def ready(self) -> bool:
+        """True once a usable edamame_cli was found."""
+        return self._cli is not None
+
+    def _rpc(self, method: str, args: Optional[str] = None) -> Any:
         assert self._cli is not None
-        result = subprocess.run(
-            [self._cli, "rpc", method], capture_output=True, text=True, encoding="utf-8",
-            errors="replace", timeout=CLI_TIMEOUT_S, check=False, **_no_window_kwargs(),
-        )
-        if result.returncode != 0:
-            lines = (result.stderr or result.stdout or "").strip().splitlines()
-            message = lines[-1] if lines else f"exit code {result.returncode}"
-            raise RuntimeError(message[:200])
-        return self._cli_module._parse_cli_output(result.stdout or "")
+        return run_cli_rpc(self._cli, method, args, self._cli_module._parse_cli_output)
+
+    def fetch_findings(self) -> List[Any]:
+        """EDAMAME's current attack-pattern findings (raises when unreadable)."""
+        return self._match_module.findings_of(self._rpc("get_attack_pattern_findings"))
+
+    def dismiss(self, finding: "DemoFinding") -> Tuple[bool, str, bool]:
+        """Dismiss one demo detection; see ``dismiss_demo_finding``."""
+        return dismiss_demo_finding(self._rpc, finding)
 
     def _poll(self, targets: List[WatchTarget]) -> None:
         kinds = {e.kind for t in targets for e in t.expectations}
@@ -1140,6 +1172,12 @@ class EdamameWatch:
                     continue
                 hits.append({
                     "key": str(finding.get("finding_key") or finding.get("description") or ""),
+                    "kind": KIND_FINDING,
+                    "finding_key": str(finding.get("finding_key") or "").strip(),
+                    "check": str(finding.get("check") or ""),
+                    "first_detected": finding.get("first_detected"),
+                    "subject": finding_subject(finding),
+                    "process_name": finding_process_name(finding),
                     "severity": match.normalize_severity(finding),
                     "alertable": match.is_alertable(finding),
                     "dismissed": match.is_dismissed(finding),
@@ -1154,7 +1192,7 @@ class EdamameWatch:
                 if status.get("active"):
                     dst = session.get("dst_ip")
                     hits.append({
-                        "key": f"session:{item.get('uid') or dst}",
+                        "key": f"session:{item.get('uid') or dst}", "kind": KIND_BLACKLIST,
                         "severity": "", "alertable": True, "dismissed": False,
                         "text": f"active session to {dst}:{session.get('dst_port')}",
                     })
@@ -1170,6 +1208,7 @@ class EdamameWatch:
                 dismissed = bool(evidence.get("dismissed"))
                 hits.append({
                     "key": str(evidence.get("finding_key") or description),
+                    "kind": KIND_DIVERGENCE,
                     "severity": severity,
                     "alertable": deterministic == "DIVERGENCE" and not dismissed
                     and severity in match.ALERTABLE_SEVERITIES,
@@ -1177,6 +1216,296 @@ class EdamameWatch:
                     "text": " ".join(description.split())[:220],
                 })
         return hits
+
+
+# ---------------------------------------------------------------------------
+# Demo detections: the findings the simulator's own runs raised, and the
+# operator's choice at cleanup to dismiss them (UI-free, unit-testable)
+# ---------------------------------------------------------------------------
+
+# The operator-plane RPC that dismisses one finding by key. The argument name
+# is the wire contract of its rpc! declaration in edamame_core
+# (src/api/api_agentic.rs): one string carrying the request as JSON.
+DISMISS_RPC_METHOD = "agentic_dismiss_with_scope"
+DISMISS_RPC_ARG = "request_json"
+DISMISS_REASON = "Attack Simulator demo"
+# The rules expire so that repeated demos do not fill EDAMAME's rule store; a
+# finding they dismissed stays dismissed after its rule expires.
+DISMISS_TTL_SECS = 30 * 24 * 3600
+# Tolerance when comparing a finding's first detection with a run's start
+# (both read from this machine's clock).
+FIRST_DETECTED_SLACK_S = 1.0
+
+ORIGIN_SESSION = "session"  # confirmed by the watch during one of this session's runs
+ORIGIN_LINEAGE = "lineage"  # its process came from the simulator's own scripts or Python
+
+# Finding fields naming the process a finding is about and what started it.
+LINEAGE_FIELDS = ("process_path", "parent_process_path", "parent_script_path")
+
+
+@dataclass(frozen=True)
+class DemoFinding:
+    key: str
+    check: str
+    severity: str
+    subject: str
+    origin: str
+    scenario: str = ""
+    process_name: str = ""
+
+
+def parse_rfc3339(value: Any) -> Optional[float]:
+    """Epoch seconds of an RFC 3339 timestamp as EDAMAME writes them
+    (``2026-10-23T08:12:34.123456789Z``), or None when absent or unreadable.
+    Python 3.9's ``fromisoformat`` takes neither ``Z`` nor nanoseconds."""
+    import re
+
+    if not isinstance(value, str):
+        return None
+    match = re.match(
+        r"^(\d{4}-\d{2}-\d{2})[T ](\d{2}:\d{2}:\d{2})(?:\.(\d+))?(Z|z|[+-]\d{2}:?\d{2})?$",
+        value.strip(),
+    )
+    if not match:
+        return None
+    day, clock, fraction, zone = match.groups()
+    micros = ((fraction or "") + "000000")[:6]
+    if zone in (None, "Z", "z"):
+        zone = "+00:00"
+    elif ":" not in zone:
+        zone = zone[:3] + ":" + zone[3:]
+    try:
+        return datetime.fromisoformat(f"{day}T{clock}.{micros}{zone}").timestamp()
+    except ValueError:
+        return None
+
+
+def _path_pieces(value: Any) -> List[str]:
+    return [p for p in str(value or "").strip().replace("\\", "/").split("/") if p]
+
+
+def _path_tail(value: Any, parts: int = 2) -> str:
+    pieces = _path_pieces(value)
+    if not pieces:
+        return ""
+    tail = "/".join(pieces[-parts:])
+    return tail if len(pieces) <= parts else "…/" + tail
+
+
+def finding_process_name(finding: Any) -> str:
+    if not isinstance(finding, dict):
+        return ""
+    name = str(finding.get("process_name") or "").strip()
+    if name:
+        return name
+    pieces = _path_pieces(finding.get("process_path"))
+    return pieces[-1] if pieces else ""
+
+
+def finding_subject(finding: Any, limit: int = 96) -> str:
+    """A short "process -> object" line built from a finding's structured
+    fields (never its free-text description)."""
+    if not isinstance(finding, dict):
+        return ""
+    process = finding_process_name(finding)
+    target = _path_tail(finding.get("subject_path"))
+    if not target:
+        host = str(finding.get("destination_domain") or finding.get("destination_ip") or "").strip()
+        if host:
+            port = finding.get("destination_port")
+            target = f"{host}:{port}" if port not in (None, "") else host
+    if not target:
+        files = finding.get("open_files")
+        if isinstance(files, (list, tuple)) and files:
+            target = _path_tail(files[0])
+    text = " → ".join(part for part in (process, target) if part)
+    return text if len(text) <= limit else text[: limit - 1] + "…"
+
+
+def _norm_path(value: Any) -> str:
+    text = str(value or "").strip().replace("\\", "/")
+    if text.startswith("//?/"):
+        text = text[4:]
+    text = text.rstrip("/")
+    return text.lower() if (IS_WINDOWS or IS_MACOS) else text
+
+
+def simulator_roots(triggers_dir: Path) -> Tuple[str, ...]:
+    """Directories only the simulator runs code from: its trigger scripts and
+    its private Python runtime (in the bundle, and the copy macOS runs from)."""
+    home = _norm_path(Path.home())
+    roots: Set[str] = set()
+    for candidate in (triggers_dir, app_resources_dir() / "python", _cache_root() / "python"):
+        forms = [candidate]
+        try:
+            forms.append(candidate.resolve())
+        except OSError:
+            pass
+        for form in forms:
+            root = _norm_path(form)
+            # Never a filesystem root, the home folder or one of its parents:
+            # those hold far more than the simulator's own code.
+            if not root or root.count("/") < 2 or home == root or home.startswith(root + "/"):
+                continue
+            roots.add(root)
+    return tuple(sorted(roots))
+
+
+def has_simulator_lineage(finding: Any, roots: Sequence[str]) -> bool:
+    """Whether the process a finding names, or what started it, runs from one
+    of the simulator's own directories."""
+    if not isinstance(finding, dict) or not roots:
+        return False
+    for name in LINEAGE_FIELDS:
+        path = _norm_path(finding.get(name))
+        if path and any(path == root or path.startswith(root + "/") for root in roots):
+            return True
+    return False
+
+
+def run_caused(hit: Dict[str, Any], run_started_epoch: float, in_baseline: bool, baseline_reliable: bool) -> bool:
+    """Whether a finding the watch matched for a run was raised by that run.
+
+    The finding must be an active attack-pattern finding with a key. When
+    EDAMAME reports its first detection, that decides: at or after the run's
+    start. Otherwise it must be absent from a baseline read early in the run.
+    Anything else (EDAMAME held it before, or this cannot be told) is not the
+    run's."""
+    if hit.get("kind") != KIND_FINDING or hit.get("dismissed") or not hit.get("finding_key"):
+        return False
+    first = parse_rfc3339(hit.get("first_detected"))
+    if first is not None:
+        return first >= run_started_epoch - FIRST_DETECTED_SLACK_S
+    return baseline_reliable and not in_baseline
+
+
+def select_demo_findings(
+    findings: Sequence[Any], recorded: Dict[str, DemoFinding], roots: Sequence[str],
+) -> List[DemoFinding]:
+    """The findings the cleanup offers to dismiss: EDAMAME's active findings
+    that this session's runs raised (``recorded``) or whose process lineage is
+    the simulator's own (``roots``). Nothing else. Most severe first."""
+    selected: List[DemoFinding] = []
+    seen: Set[str] = set()
+    for finding in findings:
+        if not isinstance(finding, dict) or finding.get("dismissed"):
+            continue
+        key = str(finding.get("finding_key") or "").strip()
+        if not key or key in seen:
+            continue
+        if key in recorded:
+            origin, scenario = ORIGIN_SESSION, recorded[key].scenario
+        elif has_simulator_lineage(finding, roots):
+            origin, scenario = ORIGIN_LINEAGE, ""
+        else:
+            continue
+        seen.add(key)
+        severity = str(finding.get("severity") or "").strip().upper()
+        selected.append(DemoFinding(
+            key=key, check=str(finding.get("check") or ""), severity=severity,
+            subject=finding_subject(finding), origin=origin, scenario=scenario,
+            process_name=finding_process_name(finding),
+        ))
+    selected.sort(key=lambda f: (-SEVERITY_RANK.get(f.severity, 0), f.origin != ORIGIN_SESSION, f.check, f.key))
+    return selected
+
+
+def dismiss_request(finding: DemoFinding) -> Dict[str, Any]:
+    """The ``agentic_dismiss_with_scope`` request for one demo detection: the
+    exact finding key only (Finding scope), never a broader rule. A CRITICAL
+    finding needs the critical-capable ceiling; the operator saw its severity
+    in the list before confirming."""
+    context = {
+        "finding_title": finding.scenario,
+        "check_or_category": finding.check,
+        "process_name": finding.process_name,
+        "severity": finding.severity,
+        "details": finding.subject,
+    }
+    return {
+        "domain": "vulnerability",
+        "scope": "finding",
+        "finding_key": finding.key,
+        "ttl_secs": DISMISS_TTL_SECS,
+        "reason": DISMISS_REASON,
+        "severity_ceiling": "critical_capable" if finding.severity == "CRITICAL" else "high_and_below",
+        "source_context": {k: v for k, v in context.items() if v},
+    }
+
+
+def dismiss_rpc_args(finding: DemoFinding) -> str:
+    """The named-argument object ``edamame_cli rpc`` passes to the RPC."""
+    return json.dumps({DISMISS_RPC_ARG: json.dumps(dismiss_request(finding), ensure_ascii=False)})
+
+
+def parse_dismiss_envelope(value: Any) -> Tuple[bool, str]:
+    """``(success, error)`` from the RPC's ``{"success": bool, "error": ...}``."""
+    if not isinstance(value, dict):
+        return False, "unexpected answer from EDAMAME"
+    if value.get("success") is True:
+        return True, ""
+    return False, str(value.get("error") or "EDAMAME did not dismiss it")
+
+
+def dismiss_demo_finding(rpc: Callable[[str, Optional[str]], Any], finding: DemoFinding) -> Tuple[bool, str, bool]:
+    """Dismiss one finding through ``rpc(method, args)``. Returns ``(ok, error,
+    fatal)``; fatal means EDAMAME did not answer, so the rest are not tried."""
+    try:
+        value = rpc(DISMISS_RPC_METHOD, dismiss_rpc_args(finding))
+    except subprocess.TimeoutExpired:
+        return False, "EDAMAME did not answer in time", True
+    except Exception as exc:
+        return False, str(exc) or exc.__class__.__name__, False
+    ok, error = parse_dismiss_envelope(value)
+    return ok, error, False
+
+
+class DemoDismissal:
+    """The cleanup's offer to dismiss demo detections, without the UI.
+
+    It dismisses nothing until the operator confirms: ``begin`` (called only by
+    the dialog's Dismiss button) claims the offer, then ``run`` dismisses the
+    listed findings. ``keep`` -- the default answer -- closes the offer and
+    makes ``begin`` refuse."""
+
+    PENDING, KEPT, DISMISSING, DONE = "pending", "kept", "dismissing", "done"
+
+    def __init__(self, candidates: Sequence[DemoFinding], dismiss: Callable[[DemoFinding], Tuple[bool, str, bool]]) -> None:
+        self.candidates: Tuple[DemoFinding, ...] = tuple(candidates)
+        self._dismiss = dismiss
+        self._lock = threading.Lock()
+        self.state = self.PENDING
+        self.results: List[Tuple[DemoFinding, bool, str]] = []
+
+    def keep(self) -> bool:
+        with self._lock:
+            if self.state != self.PENDING:
+                return False
+            self.state = self.KEPT
+            return True
+
+    def begin(self) -> bool:
+        with self._lock:
+            if self.state != self.PENDING or not self.candidates:
+                return False
+            self.state = self.DISMISSING
+            return True
+
+    def run(self, on_result: Callable[[DemoFinding, bool, str], None] = lambda *_: None) -> List[Tuple[DemoFinding, bool, str]]:
+        if self.state != self.DISMISSING:
+            raise RuntimeError("the dismissal was not confirmed")
+        stopped = ""
+        for finding in self.candidates:
+            if stopped:
+                ok, error = False, f"not tried: {stopped}"
+            else:
+                ok, error, fatal = self._dismiss(finding)
+                if fatal:
+                    stopped = error
+            self.results.append((finding, ok, error))
+            on_result(finding, ok, error)
+        self.state = self.DONE
+        return self.results
 
 
 # ---------------------------------------------------------------------------
@@ -2480,6 +2809,210 @@ class CleanupDialog(tk.Toplevel):
 
 
 # ---------------------------------------------------------------------------
+# Dismiss-demo-detections dialog
+# ---------------------------------------------------------------------------
+
+
+class DismissDialog(tk.Toplevel):
+    """Offers, after cleanup, to dismiss the detections the simulator's runs
+    raised in EDAMAME. It lists them first. Keep is the default: Return,
+    Escape and closing the window all keep them; only the Dismiss button
+    dismisses (see DemoDismissal)."""
+
+    def __init__(self, app: "AttackSimulator", dismissal: DemoDismissal) -> None:
+        # Bring the main window back first if it was minimized: the question
+        # needs the operator, and on macOS Tk stalls when this dialog is made
+        # transient for a hidden window.
+        try:
+            if app.state() in ("iconic", "withdrawn"):
+                app.deiconify()
+        except tk.TclError:
+            pass
+        super().__init__(app)
+        t = app.theme
+        self.app = app
+        self.theme = t
+        self.dismissal = dismissal
+        self.done = False
+        self.failures: List[Tuple[DemoFinding, str]] = []
+        self.succeeded = 0
+        count = len(dismissal.candidates)
+        plural = "s" if count != 1 else ""
+        self.title("Dismiss demo detections")
+        self.configure(bg=t.SURFACE)
+        self.transient(app)
+        self.minsize(t.px(560), t.px(360))
+        self.protocol("WM_DELETE_WINDOW", self._on_close)
+
+        body = tk.Frame(self, bg=t.SURFACE, padx=t.px(22), pady=t.px(18))
+        body.pack(fill="both", expand=True)
+        self.heading = tk.Label(
+            body, text=f"Dismiss {count} demo detection{plural} in EDAMAME?", font=t.h2,
+            bg=t.SURFACE, fg=t.TEXT, anchor="w", justify="left",
+        )
+        self.heading.pack(fill="x")
+        tk.Label(
+            body,
+            text=(f"The simulator's scenarios raised {'these detections' if count != 1 else 'this detection'}. "
+                  f"Dismiss marks {'each one' if count != 1 else 'it'} as dismissed in EDAMAME, with the reason "
+                  f"“{DISMISS_REASON}”, so the demo leaves no alert behind. Nothing else is dismissed. "
+                  "Keep leaves them in EDAMAME's Security > Detections."),
+            font=t.small, bg=t.SURFACE, fg=t.MUTED, anchor="w", justify="left", wraplength=t.px(600),
+        ).pack(fill="x", pady=(t.px(4), t.px(12)))
+
+        listing = tk.Frame(body, bg=t.LOG_BG, highlightthickness=1, highlightbackground=t.BORDER)
+        listing.pack(fill="both", expand=True)
+        self.text = tk.Text(
+            listing, height=min(14, count + 4), width=86, wrap="none", font=t.mono_small,
+            bg=t.LOG_BG, fg=t.TEXT, bd=0, highlightthickness=0, padx=t.px(10), pady=t.px(8),
+            state="disabled", cursor="arrow", selectbackground=t.PRIMARY_SOFT,
+            selectforeground=t.TEXT, insertwidth=0,
+        )
+        scrollbar = ttk.Scrollbar(listing, orient="vertical", command=self.text.yview)
+        self.text.configure(yscrollcommand=scrollbar.set)
+        self.text.pack(side="left", fill="both", expand=True)
+        scrollbar.pack(side="right", fill="y")
+        for tag, color in (
+            ("group", t.SUBTLE), ("sev_alert", t.DANGER), ("sev_medium", t.WARNING),
+            ("sev_low", t.MUTED), ("check", t.TEXT), ("subject", t.MUTED),
+            ("ok", t.SUCCESS), ("err", t.DANGER),
+        ):
+            self.text.tag_configure(tag, foreground=color)
+        self.rows: Dict[str, int] = {}
+        self._fill()
+
+        self.bar = ttk.Progressbar(body, mode="determinate", maximum=max(1, count), style="Accent.Horizontal.TProgressbar")
+        self.status = tk.Label(body, text="", font=t.small, bg=t.SURFACE, fg=t.MUTED, anchor="w", justify="left", wraplength=t.px(600))
+        self.status.pack(fill="x", pady=(t.px(10), 0))
+
+        footer = tk.Frame(body, bg=t.SURFACE)
+        footer.pack(fill="x", pady=(t.px(12), 0))
+        self.keep_button = ttk.Button(footer, text="Keep", style="Primary.TButton", command=self._on_keep)
+        self.keep_button.pack(side="right")
+        self.dismiss_button = ttk.Button(footer, text=f"Dismiss {count}", style="DangerOutline.TButton", command=self._on_dismiss)
+        self.dismiss_button.pack(side="right", padx=(0, t.px(8)))
+        # The default answer is Keep (and Close once done).
+        self.bind("<Return>", lambda _e: self._on_close())
+        self.bind("<Escape>", lambda _e: self._on_close())
+
+        self.update_idletasks()
+        x = app.winfo_rootx() + max(0, (app.winfo_width() - self.winfo_reqwidth()) // 2)
+        y = app.winfo_rooty() + max(0, (app.winfo_height() - self.winfo_reqheight()) // 3)
+        self.geometry(f"+{x}+{y}")
+        self.lift()
+        self.keep_button.focus_set()
+        self.after_idle(self._grab)
+
+    def _grab(self) -> None:
+        try:
+            self.grab_set()
+        except tk.TclError:
+            pass
+
+    def _fill(self) -> None:
+        candidates = self.dismissal.candidates
+        width = min(28, max((len(c.check) for c in candidates), default=8)) + 2
+        groups = (
+            (ORIGIN_SESSION, "Raised by this session's scenarios"),
+            (ORIGIN_LINEAGE, "Raised earlier by the simulator's own scripts"),
+        )
+        self.text.configure(state="normal")
+        first = True
+        for origin, title in groups:
+            members = [c for c in candidates if c.origin == origin]
+            if not members:
+                continue
+            if not first:
+                self.text.insert("end", "\n")
+            first = False
+            self.text.insert("end", f"{title} ({len(members)})\n", "group")
+            for finding in members:
+                line = int(self.text.index("end-1c").split(".")[0])
+                self.rows[finding.key] = line
+                severity = finding.severity or "-"
+                tag = "sev_alert" if severity in ("CRITICAL", "HIGH") else ("sev_medium" if severity == "MEDIUM" else "sev_low")
+                check = finding.check if len(finding.check) <= width - 2 else finding.check[: width - 3] + "…"
+                self.text.insert("end", "  ")
+                self.text.insert("end", f"{severity:<10}", tag)
+                self.text.insert("end", f"{check:<{width}}", "check")
+                self.text.insert("end", (finding.subject or "-") + "\n", "subject")
+        self.text.configure(state="disabled")
+
+    def _on_keep(self) -> None:
+        if self.dismissal.keep():
+            count = len(self.dismissal.candidates)
+            self.app.log_line(None, "EDAMAME", f"kept {count} demo detection(s) in EDAMAME", "sys")
+            self._close_now()
+
+    def _on_close(self) -> None:
+        state = self.dismissal.state
+        if state == DemoDismissal.PENDING:
+            self._on_keep()
+        elif state == DemoDismissal.DISMISSING:
+            self.bell()
+        else:
+            self._close_now()
+
+    def _close_now(self) -> None:
+        try:
+            self.grab_release()
+        except tk.TclError:
+            pass
+        self.destroy()
+        self.app.end_dismissal(shown=True)
+
+    def _on_dismiss(self) -> None:
+        if not self.dismissal.begin():
+            return
+        self.keep_button.state(["disabled"])
+        self.dismiss_button.state(["disabled"])
+        self.bar.pack(fill="x", pady=(self.theme.px(10), 0), before=self.status)
+        self.status.configure(text="Dismissing in EDAMAME...", fg=self.theme.MUTED)
+        self.app.start_dismissal(self.dismissal)
+
+    def feed_result(self, finding: DemoFinding, ok: bool, error: str) -> None:
+        if ok:
+            self.succeeded += 1
+        else:
+            self.failures.append((finding, error))
+        line = self.rows.get(finding.key)
+        if line is not None:
+            self.text.configure(state="normal")
+            self.text.delete(f"{line}.0", f"{line}.2")
+            self.text.insert(f"{line}.0", "✓ " if ok else "✗ ", "ok" if ok else "err")
+            self.text.configure(state="disabled")
+        done = self.succeeded + len(self.failures)
+        self.bar.configure(value=done)
+        self.status.configure(text=f"Dismissing in EDAMAME...  {done} of {len(self.dismissal.candidates)}")
+
+    def finish(self) -> None:
+        t = self.theme
+        self.done = True
+        if self.failures:
+            self.text.configure(state="normal")
+            self.text.insert("end", "\nNot dismissed\n", "group")
+            for finding, error in self.failures:
+                self.text.insert("end", f"  {finding.check}: ", "check")
+                self.text.insert("end", f"{error}\n", "err")
+            self.text.configure(state="disabled")
+            self.text.see("end")
+            left = len(self.failures)
+            summary = (f"{self.succeeded} dismissed; {left} could not be dismissed (listed above). "
+                       f"{'They remain' if left != 1 else 'It remains'} in EDAMAME's Security > Detections.")
+            self.status.configure(text=summary, fg=t.WARNING)
+            self.bar.configure(style="Warning.Horizontal.TProgressbar")
+            self.heading.configure(text="Some detections were not dismissed")
+        else:
+            self.status.configure(text=f"{self.succeeded} dismissed in EDAMAME.", fg=t.SUCCESS)
+            self.bar.configure(style="Success.Horizontal.TProgressbar")
+            self.heading.configure(text="Demo detections dismissed")
+        self.dismiss_button.pack_forget()
+        self.keep_button.configure(text="Close", command=self._close_now)
+        self.keep_button.state(["!disabled"])
+        self.keep_button.focus_set()
+
+
+# ---------------------------------------------------------------------------
 # Main window
 # ---------------------------------------------------------------------------
 
@@ -2512,6 +3045,11 @@ class AttackSimulator(tk.Tk):
         self._busy = False
         self._dirty = False
         self.cleanup_dialog: Optional[CleanupDialog] = None
+        # Attack-pattern findings this session's runs raised (finding key ->
+        # finding), which cleanup offers to dismiss in EDAMAME.
+        self.session_findings: Dict[str, DemoFinding] = {}
+        self.dismiss_dialog: Optional[DismissDialog] = None
+        self._quit_after_dismissal = False
 
         # Consent + a persistent record of which agent types have been run, in
         # the per-user cache dir so it survives a reboot that clears the temp
@@ -2596,7 +3134,7 @@ class AttackSimulator(tk.Tk):
         Tooltip(self.stop_all_button, "Stop every scenario that is running.", t)
         self.cleanup_button = ttk.Button(actions, text="Run cleanup", style="DangerOutline.TButton", command=self.run_cleanup)
         self.cleanup_button.pack(side="left", padx=(t.px(8), 0))
-        Tooltip(self.cleanup_button, "Stop everything and remove the demo files the scenarios created.", t)
+        Tooltip(self.cleanup_button, "Stop everything and remove the demo files the scenarios created, then offer to dismiss the detections they raised in EDAMAME.", t)
 
         options = tk.Frame(controls, bg=t.SURFACE)
         options.pack(anchor="e", pady=(t.px(10), 0))
@@ -3077,10 +3615,14 @@ class AttackSimulator(tk.Tk):
             return
         agent = self.agent_type.get()
         state_dir = self.current_state_dir()
+        then = ""
+        if self.watch_available and self.watch_var.get():
+            then = ("\n\nAfterwards you can choose whether to dismiss, in EDAMAME, the detections "
+                    "the scenarios raised. Nothing is dismissed unless you confirm.")
         if not messagebox.askyesno(
             "Run cleanup",
             f"Stop every running scenario and remove the demo files for agent type '{agent}'?\n\n"
-            f"State directory: {state_dir}",
+            f"State directory: {state_dir}{then}",
             parent=self,
         ):
             return
@@ -3110,6 +3652,62 @@ class AttackSimulator(tk.Tk):
 
         threading.Thread(target=worker, daemon=True).start()
         self._update_all()
+
+    # -- dismissing the demo's detections (after cleanup) ----------------
+
+    def _offer_demo_dismissal(self, then_quit: bool) -> None:
+        """Look up the detections the simulator's runs raised and, if any are
+        still active in EDAMAME, ask whether to dismiss them. Reads EDAMAME
+        only through the watch's edamame_cli, and only while watching is on."""
+        self._quit_after_dismissal = then_quit
+        if self.watch_available is not True or not self.watch.ready:
+            self.log_line(None, "EDAMAME", "EDAMAME cannot be read from here: review the demo's detections in the EDAMAME app", "sys")
+            self.end_dismissal(shown=False)
+            return
+        if not self.watch_var.get():
+            self.log_line(None, "EDAMAME", "EDAMAME watch is off: review the demo's detections in the EDAMAME app", "sys")
+            self.end_dismissal(shown=False)
+            return
+        self._busy = True
+        recorded = dict(self.session_findings)
+        roots = simulator_roots(self.triggers_dir)
+        self.log_line(None, "EDAMAME", "looking for detections the simulator raised", "sys")
+
+        def worker() -> None:
+            try:
+                findings = self.watch.fetch_findings()
+            except subprocess.TimeoutExpired:
+                self.events.put(("dismiss_candidates", [], "EDAMAME did not answer in time"))
+                return
+            except Exception as exc:
+                self.events.put(("dismiss_candidates", [], str(exc) or exc.__class__.__name__))
+                return
+            self.events.put(("dismiss_candidates", select_demo_findings(findings, recorded, roots), ""))
+
+        threading.Thread(target=worker, daemon=True).start()
+        self._update_all()
+
+    def start_dismissal(self, dismissal: DemoDismissal) -> None:
+        """Run a dismissal the operator confirmed (DismissDialog's Dismiss)."""
+        self.log_line(None, "EDAMAME", f"dismissing {len(dismissal.candidates)} demo detection(s), reason “{DISMISS_REASON}”", "sys")
+
+        def worker() -> None:
+            try:
+                dismissal.run(lambda finding, ok, error: self.events.put(("dismiss_result", finding, ok, error)))
+            except Exception as exc:
+                self.events.put(("dismiss_result", None, False, f"dismissal stopped: {exc}"))
+            self.events.put(("dismiss_done",))
+
+        threading.Thread(target=worker, daemon=True).start()
+
+    def end_dismissal(self, shown: bool) -> None:
+        """The offer is answered (or there was nothing to offer)."""
+        self.dismiss_dialog = None
+        self._busy = False
+        self.mark_dirty()
+        if self._quit_after_dismissal:
+            # Leave the cleanup result on screen briefly when nothing else was asked.
+            self.after(200 if shown else 2000, self.destroy)
 
     # -- demo mode ------------------------------------------------------
 
@@ -3180,6 +3778,14 @@ class AttackSimulator(tk.Tk):
         self._update_all()
 
     def on_close(self) -> None:
+        if self.dismiss_dialog is not None:
+            # Answer the dismissal offer first (Keep closes it).
+            try:
+                self.dismiss_dialog.lift()
+                self.dismiss_dialog.focus_set()
+            except tk.TclError:
+                self.dismiss_dialog = None
+            return
         live = self._live_runs()
         if live:
             answer = messagebox.askyesnocancel(
@@ -3314,10 +3920,38 @@ class AttackSimulator(tk.Tk):
                 self._clear_ran_ledger()
             self._scan_pid_files(reschedule=False)
             self.mark_dirty()
-            if getattr(self, "_quit_after_cleanup", False):
-                # Cleanup was started from the quit prompt: show its result
-                # briefly, then close.
-                self.after(2000, self.destroy)
+            # Then offer to dismiss the detections the demo raised. When
+            # cleanup was started from the quit prompt, the app closes once
+            # that offer is answered.
+            self._offer_demo_dismissal(then_quit=bool(getattr(self, "_quit_after_cleanup", False)))
+        elif kind == "dismiss_candidates":
+            _, candidates, error = event
+            if error:
+                self.log_line(None, "EDAMAME", f"could not read EDAMAME's detections: {error}", "warn")
+                self.end_dismissal(shown=False)
+            elif not candidates:
+                self.log_line(None, "EDAMAME", "no detection raised by the simulator is waiting in EDAMAME", "sys")
+                self.end_dismissal(shown=False)
+            else:
+                self.log_line(None, "EDAMAME", f"{len(candidates)} demo detection(s) can be dismissed; asking first", "sys")
+                self.dismiss_dialog = DismissDialog(self, DemoDismissal(candidates, self.watch.dismiss))
+        elif kind == "dismiss_result":
+            _, finding, ok, error = event
+            if finding is None:
+                self.log_line(None, "EDAMAME", error, "err")
+                return
+            if ok:
+                self.session_findings.pop(finding.key, None)
+                self.log_line(None, "EDAMAME", f"dismissed {finding.severity} {finding.check}: {finding.subject}", "ok")
+            else:
+                self.log_line(None, "EDAMAME", f"could not dismiss {finding.severity} {finding.check} ({finding.subject}): {error}", "err")
+            if self.dismiss_dialog is not None:
+                self.dismiss_dialog.feed_result(finding, ok, error)
+        elif kind == "dismiss_done":
+            if self.dismiss_dialog is not None:
+                self.dismiss_dialog.finish()
+            else:
+                self.end_dismissal(shown=True)
 
     def _on_output_line(self, run: TriggerRun, text: str) -> None:
         run.lines += 1
@@ -3369,7 +4003,9 @@ class AttackSimulator(tk.Tk):
             if detection.baseline is None:
                 recent = (now - run.started_at) <= BASELINE_WINDOW_S
                 detection.baseline = seen if recent else set()
+                detection.baseline_reliable = recent and not any(r.get("error") for r in per.values())
             for label, result in per.items():
+                self._remember_demo_findings(run, label, result.get("hits", []))
                 status = detection.per_expectation.setdefault(label, ExpectationStatus())
                 if status.status == DET_DETECTED:
                     continue
@@ -3394,6 +4030,23 @@ class AttackSimulator(tk.Tk):
                     status.status, status.detail = DET_WAITING, ""
                 self._log_detection(run, label, status)
         self.mark_dirty()
+
+    def _remember_demo_findings(self, run: TriggerRun, label: str, hits: Sequence[Dict[str, Any]]) -> None:
+        """Note the attack-pattern findings this run raised, for the cleanup's
+        offer to dismiss them (see run_caused)."""
+        detection = run.detection
+        baseline = detection.baseline or set()
+        for hit in hits:
+            in_baseline = f"{label}|{hit.get('key')}" in baseline
+            if not run_caused(hit, run.started_epoch, in_baseline, detection.baseline_reliable):
+                continue
+            key = str(hit["finding_key"])
+            if key not in self.session_findings:
+                self.session_findings[key] = DemoFinding(
+                    key=key, check=str(hit.get("check") or ""), severity=str(hit.get("severity") or ""),
+                    subject=str(hit.get("subject") or ""), origin=ORIGIN_SESSION,
+                    scenario=run.scenario.title, process_name=str(hit.get("process_name") or ""),
+                )
 
     def _log_detection(self, run: TriggerRun, label: str, status: ExpectationStatus) -> None:
         if run.logged_detection.get(label) == status.status or status.status in (DET_WAITING, DET_PENDING):

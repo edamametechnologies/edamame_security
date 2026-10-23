@@ -100,7 +100,12 @@ Tcl/Tk).
 2. Press **Start**. The scenario reports its progress step by step.
 3. Switch to EDAMAME and watch the finding appear in **Security > Detections**.
    Detections land at EDAMAME's next detection tick, so allow a minute or two.
-4. Press **Run cleanup** when you are done.
+4. Press **Run cleanup** when you are done. When the simulator can read
+   EDAMAME, cleanup then lists the detections its scenarios raised and offers
+   to dismiss them in EDAMAME, so the demo leaves no alert behind. Only those
+   detections are listed, and nothing is dismissed unless you choose
+   **Dismiss**: **Keep**, the default, leaves them in **Security >
+   Detections**.
 
 A guided **10-minute demo** walks a recommended sequence of scenarios in order.
 An **Engineer details** toggle reveals the script, the detector check, the
