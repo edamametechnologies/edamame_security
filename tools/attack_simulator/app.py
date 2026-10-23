@@ -1185,31 +1185,42 @@ class EdamameWatch:
 
 
 class Theme:
-    BG = "#F2F4F7"
-    SURFACE = "#FFFFFF"
-    SURFACE_ALT = "#F7F9FA"
-    BORDER = "#DDE3E9"
-    BORDER_STRONG = "#C5CED8"
-    TEXT = "#16202A"
-    MUTED = "#566472"
-    SUBTLE = "#8A95A1"
-    PRIMARY = "#0E7A6D"
-    PRIMARY_HOVER = "#0B6157"
-    PRIMARY_PRESSED = "#094F47"
-    PRIMARY_SOFT = "#E2F2EF"
-    SUCCESS = "#1E7F43"
-    SUCCESS_SOFT = "#E4F4E9"
-    WARNING = "#A65A06"
-    WARNING_SOFT = "#FCF1E0"
-    DANGER = "#B3261E"
-    DANGER_HOVER = "#8F1E18"
-    DANGER_SOFT = "#FBE9E7"
-    INFO = "#2457C5"
-    INFO_SOFT = "#E7EEFC"
-    SELECTED = "#EAF5F3"
-    TRACK = "#E5EAEF"
-    LOG_BG = "#FAFBFC"
-    LINK = "#0B6157"
+    # Dark only, fixed rather than derived from the OS appearance, so the
+    # simulator looks the same on macOS, Windows and Linux (the configurable
+    # ``clam`` ttk theme is styled explicitly). Slate surfaces, one teal
+    # accent; text and glyphs on a filled color use the ON_* inks.
+    BG = "#0E1116"
+    SURFACE = "#161B22"
+    SURFACE_ALT = "#1C222B"
+    BORDER = "#2A313C"
+    BORDER_STRONG = "#3D4652"
+    TEXT = "#E6EDF3"
+    MUTED = "#9DA7B3"
+    SUBTLE = "#848D97"
+    PRIMARY = "#2BD6C6"
+    PRIMARY_HOVER = "#5BE3D6"
+    PRIMARY_PRESSED = "#1F9E93"
+    PRIMARY_SOFT = "#0F2D2A"
+    SUCCESS = "#3FB950"
+    SUCCESS_SOFT = "#12261A"
+    WARNING = "#D29922"
+    WARNING_SOFT = "#2A2111"
+    DANGER = "#F85149"
+    DANGER_HOVER = "#FF7B72"
+    DANGER_SOFT = "#2D1517"
+    DANGER_FILL = "#DA3633"
+    DANGER_FILL_HOVER = "#B62324"
+    INFO = "#58A6FF"
+    INFO_SOFT = "#121D33"
+    SELECTED = "#13302C"
+    TRACK = "#262D37"
+    LOG_BG = "#0B0E13"
+    LINK = "#2BD6C6"
+    ON_PRIMARY = "#06211E"
+    ON_FILL = "#0D1117"
+    ON_DANGER = "#FFFFFF"
+    TOOLTIP_BG = "#2D333B"
+    TOOLTIP_FG = "#E6EDF3"
 
     MONO_PREFERENCES = (
         "SF Mono", "Menlo", "Cascadia Mono", "Consolas", "DejaVu Sans Mono",
@@ -1297,12 +1308,12 @@ class Theme:
         pad = (self.px(14), self.px(6))
         small_pad = (self.px(10), self.px(3))
         flat("TButton", c.SURFACE, c.SURFACE_ALT, c.TRACK, c.TEXT, c.BORDER_STRONG, c.SURFACE_ALT, self.body, pad)
-        flat("Primary.TButton", c.PRIMARY, c.PRIMARY_HOVER, c.PRIMARY_PRESSED, "#FFFFFF", c.PRIMARY, c.TRACK, self.body_bold, pad)
-        flat("Danger.TButton", c.DANGER, c.DANGER_HOVER, c.DANGER_HOVER, "#FFFFFF", c.DANGER, c.TRACK, self.body_bold, pad)
+        flat("Primary.TButton", c.PRIMARY, c.PRIMARY_HOVER, c.PRIMARY_PRESSED, c.ON_PRIMARY, c.PRIMARY, c.TRACK, self.body_bold, pad)
+        flat("Danger.TButton", c.DANGER_FILL, c.DANGER_FILL_HOVER, c.DANGER_FILL_HOVER, c.ON_DANGER, c.DANGER_FILL, c.TRACK, self.body_bold, pad)
         flat("DangerOutline.TButton", c.SURFACE, c.DANGER_SOFT, c.DANGER_SOFT, c.DANGER, c.DANGER, c.SURFACE_ALT, self.body_bold, pad)
         flat("Ghost.TButton", c.SURFACE, c.PRIMARY_SOFT, c.PRIMARY_SOFT, c.PRIMARY, c.SURFACE, c.SURFACE, self.body, (self.px(10), self.px(6)))
-        flat("Small.Primary.TButton", c.PRIMARY, c.PRIMARY_HOVER, c.PRIMARY_PRESSED, "#FFFFFF", c.PRIMARY, c.TRACK, self.small_bold, small_pad)
-        flat("Small.Danger.TButton", c.DANGER, c.DANGER_HOVER, c.DANGER_HOVER, "#FFFFFF", c.DANGER, c.TRACK, self.small_bold, small_pad)
+        flat("Small.Primary.TButton", c.PRIMARY, c.PRIMARY_HOVER, c.PRIMARY_PRESSED, c.ON_PRIMARY, c.PRIMARY, c.TRACK, self.small_bold, small_pad)
+        flat("Small.Danger.TButton", c.DANGER_FILL, c.DANGER_FILL_HOVER, c.DANGER_FILL_HOVER, c.ON_DANGER, c.DANGER_FILL, c.TRACK, self.small_bold, small_pad)
         flat("Small.TButton", c.SURFACE, c.SURFACE_ALT, c.TRACK, c.TEXT, c.BORDER_STRONG, c.SURFACE_ALT, self.small, small_pad)
 
         for name, color in (
@@ -1341,7 +1352,7 @@ class Theme:
 
         style.configure(
             "Surface.TCheckbutton", background=c.SURFACE, foreground=c.TEXT,
-            indicatorbackground=c.SURFACE, indicatorforeground="#FFFFFF",
+            indicatorbackground=c.SURFACE, indicatorforeground=c.ON_PRIMARY,
             upperbordercolor=c.BORDER_STRONG, lowerbordercolor=c.BORDER_STRONG, focuscolor=c.SURFACE,
         )
         style.map(
@@ -1417,7 +1428,7 @@ class Tooltip:
         outer = tk.Frame(tw, bg=self.theme.BORDER_STRONG, bd=0)
         outer.pack()
         tk.Label(
-            outer, text=self.text, bg=self.theme.TEXT, fg="#FFFFFF", font=self.theme.small,
+            outer, text=self.text, bg=self.theme.TOOLTIP_BG, fg=self.theme.TOOLTIP_FG, font=self.theme.small,
             justify="left", wraplength=self.theme.px(300),
             padx=self.theme.px(9), pady=self.theme.px(7),
         ).pack(padx=1, pady=1)
@@ -1475,19 +1486,19 @@ class StepIcon(tk.Canvas):
             self.create_oval(7, 7, 13, 13, fill=t.PRIMARY, outline="")
         elif state == "done":
             self.create_oval(1, 1, 19, 19, fill=t.SUCCESS, outline="")
-            self.create_line(6, 10.5, 9, 13.5, 14.5, 7, fill="#FFFFFF", width=width, capstyle="round", joinstyle="round")
+            self.create_line(6, 10.5, 9, 13.5, 14.5, 7, fill=t.ON_FILL, width=width, capstyle="round", joinstyle="round")
         elif state == "warn":
             self.create_oval(1, 1, 19, 19, fill=t.WARNING, outline="")
-            self.create_line(10, 5.5, 10, 11.5, fill="#FFFFFF", width=width, capstyle="round")
-            self.create_oval(9, 13.5, 11, 15.5, fill="#FFFFFF", outline="")
+            self.create_line(10, 5.5, 10, 11.5, fill=t.ON_FILL, width=width, capstyle="round")
+            self.create_oval(9, 13.5, 11, 15.5, fill=t.ON_FILL, outline="")
         elif state == "failed":
             self.create_oval(1, 1, 19, 19, fill=t.DANGER, outline="")
-            self.create_line(7, 7, 13, 13, fill="#FFFFFF", width=width, capstyle="round")
-            self.create_line(13, 7, 7, 13, fill="#FFFFFF", width=width, capstyle="round")
+            self.create_line(7, 7, 13, 13, fill=t.ON_FILL, width=width, capstyle="round")
+            self.create_line(13, 7, 7, 13, fill=t.ON_FILL, width=width, capstyle="round")
         elif state == "info":
             self.create_oval(1, 1, 19, 19, fill=t.INFO, outline="")
-            self.create_oval(9, 4.5, 11, 6.5, fill="#FFFFFF", outline="")
-            self.create_line(10, 9, 10, 15, fill="#FFFFFF", width=width, capstyle="round")
+            self.create_oval(9, 4.5, 11, 6.5, fill=t.ON_FILL, outline="")
+            self.create_line(10, 9, 10, 15, fill=t.ON_FILL, width=width, capstyle="round")
         else:  # skipped
             self.create_oval(1, 1, 19, 19, fill=t.TRACK, outline="")
             self.create_line(6.5, 10, 13.5, 10, fill=t.SUBTLE, width=width, capstyle="round")
@@ -2334,7 +2345,7 @@ class AttackSimulator(tk.Tk):
         size = t.px(46)
         logo = tk.Canvas(header, width=size, height=size, bg=t.SURFACE, highlightthickness=0, bd=0)
         round_rect(logo, 1, 1, size - 1, size - 1, t.px(12), fill=t.PRIMARY, outline="")
-        logo.create_text(size / 2, size / 2, text="E", fill="#FFFFFF", font=t.logo)
+        logo.create_text(size / 2, size / 2, text="E", fill=t.ON_PRIMARY, font=t.logo)
         logo.grid(row=0, column=0, rowspan=2, sticky="w", padx=(0, t.px(14)))
         tk.Label(header, text=self.texts.get("name", "EDAMAME Attack Simulator"), font=t.title, bg=t.SURFACE, fg=t.TEXT, anchor="w").grid(row=0, column=1, sticky="sw")
         tk.Label(header, text=self.texts.get("tagline", ""), font=t.small, bg=t.SURFACE, fg=t.MUTED, anchor="w", justify="left", wraplength=t.px(560)).grid(row=1, column=1, sticky="nw", pady=(t.px(2), 0))
