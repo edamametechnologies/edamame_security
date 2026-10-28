@@ -23,6 +23,10 @@
         "prefix": "01",
         "multipane": false
       },
+      "security_ai_history": {
+        "prefix": "01",
+        "multipane": true
+      },
       "security_score": {
         "prefix": "01",
         "multipane": false
@@ -343,6 +347,22 @@
             "en": "An instruction file (rules, CLAUDE.md, AGENTS.md, ...) tells an AI agent how to work. Text hidden in it with invisible Unicode characters passes a human review and still steers the agent. EDAMAME raises such a write as a Critical finding: open it to see which file changed and which process wrote it, then remove the hidden text before the agent reads the file again.",
             "fr": "Un fichier d'instructions (règles, CLAUDE.md, AGENTS.md, ...) indique à un agent IA comment travailler. Du texte caché dedans avec des caractères Unicode invisibles passe une relecture humaine et oriente quand même l'agent. EDAMAME signale une telle écriture comme un constat Critique : ouvrez-le pour voir quel fichier a changé et quel processus l'a écrit, puis retirez le texte caché avant que l'agent ne relise le fichier."
           }
+        },
+        {
+          "name": "security_ai_history",
+          "title": {
+            "en": "AI History – The Assistant's Actions",
+            "fr": "Historique IA – Les actions de l'Assistant"
+          },
+          "visual": {
+            "en": "AI History lists each action of the Assistant on your todos with its status: Resolved, Pending confirmation, Escalated for review or Failed. On a wide window, the selected action opens beside the list with the Assistant's analysis and what you can do next: confirm it, undo it or retry it.",
+            "fr": "Historique IA liste chaque action de l'Assistant sur vos tâches avec son statut : Résolu, En attente de confirmation, Escaladé pour examen ou Échec. Sur une fenêtre large, l'action sélectionnée s'ouvre à côté de la liste avec l'analyse de l'Assistant et ce que vous pouvez faire ensuite : la confirmer, l'annuler ou la relancer."
+          },
+          "description": {
+            "en": "AI History appears while a model is connected, the EDAMAME Portal or your own. Review the pending actions before you confirm them, follow what was escalated, and retry what failed.",
+            "fr": "Historique IA apparaît lorsqu'un modèle est connecté, le Portail EDAMAME ou le vôtre. Examinez les actions en attente avant de les confirmer, suivez ce qui a été escaladé et relancez ce qui a échoué."
+          },
+          "has_dual_screenshots": true
         },
         {
           "name": "security_score",
