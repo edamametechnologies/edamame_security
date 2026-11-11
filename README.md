@@ -1,15 +1,16 @@
 # EDAMAME Security
 
-> **EDAMAME** is the developer-first, agent-first runtime security layer for the SDLC. **EDAMAME Security** protects workstations and local coding sessions, **EDAMAME Posture** secures CI/CD runners, build hosts, and self-hosted agent hosts, **EDAMAME Hub** gives teams fleet visibility and proof, and **EDAMAME Portal** handles account access and managed LLM subscription.
+> **EDAMAME** is the trust layer for AI agents and the machines they run on, proven by both security posture and runtime behavior. **EDAMAME Security** protects workstations and the AI agents on them, **EDAMAME Posture** secures CI/CD runners and any server running AI agents, cloud or self-hosted, **EDAMAME Hub** gives teams fleet visibility, AI governance and proof, and **EDAMAME Portal** handles account access and the managed LLM subscription.
 
 ## Overview
 
-EDAMAME Security is your all-in-one tool to secure, understand, and prove the security of your development workstation—from OS to network.
+EDAMAME Security is your all-in-one tool to secure, understand, and prove the security of your workstation and the AI agents on it—from OS to network.
 
 **Download:** [macOS, Windows, Linux, iOS, Android](#download-and-installation)
 | **Learn more:** [Feature wiki](https://github.com/edamametechnologies/edamame_security/wiki)
 | [AI Assistant user guide](#ai-assistant--user-guide)
 | [Attack Simulator](#see-edamame-detect-the-attack-simulator)
+| [Videos](#videos)
 | [Troubleshooting](#troubleshooting)
 
 ![EDAMAME Security: the Security radar](macos/screenshots/01_security_overview.png)
@@ -51,9 +52,11 @@ provider (Cloud LLM, Claude, OpenAI, or local Ollama).
 - Sort issues by priority and category
 - Be notified of new issues in real-time
 
-### Agent Visibility (Agent Detection & Response)
+<a id="agent-visibility-agent-detection--response"></a>
 
-EDAMAME observes the AI coding agents already running on your machine
+### Agent Visibility
+
+EDAMAME observes the AI agents already running on your machine
 (Cursor, Claude Code, Claude Desktop, OpenClaw, Codex, Hermes) and turns them
 into first-class, governed assets. Most of this is **structural** — on-disk,
 in-process, and on-the-wire evidence that needs **no LLM**. It sits *on top of*
@@ -170,6 +173,27 @@ These screenshots come from the app's demo mode, with simulated data, and are
 refreshed automatically as the app changes. Every screen, on every platform,
 is documented with screenshots in the
 [feature wiki](https://github.com/edamametechnologies/edamame_security/wiki).
+
+## Videos
+
+<a href="https://youtu.be/AfYh3FlyryM"><img src="https://img.youtube.com/vi/AfYh3FlyryM/maxresdefault.jpg" alt="Watch the EDAMAME Security walkthrough: from first launch to a trusted machine" width="640"></a>
+
+[EDAMAME Security walkthrough: from first launch to a trusted machine](https://youtu.be/AfYh3FlyryM)
+
+| Feature | Video |
+|---|---|
+| Security score | [Your machine's security score, and the one fix that moves it most](https://youtu.be/4OQg28OTsuc) |
+| AI Assistant | [An AI assistant that fixes your machine, with you in the loop](https://youtu.be/eEjcXBtwQ0U) |
+| Agents › Exposure | [See every AI agent on your machine and what it can reach](https://youtu.be/nyZ-QQLXsy8) |
+| Agents › Divergence | [Did your AI agent do what it said? Catch it drifting from its task](https://youtu.be/lDenRwA_8dY) |
+| Agents › Augmentation | [How well do you work with AI agents? A self-augmentation score](https://youtu.be/73sbltXwth0) |
+| Agents › Frameworks | [AI agent posture mapped to OWASP GenAI, MITRE ATLAS and Trust Controls](https://youtu.be/G21IwY7EH74) |
+| Network › LAN scan | [Every device on your network, mapped: the LAN scan](https://youtu.be/rZd98IKLgjo) |
+| System › Traffic | [See every connection your computer makes, and which app made it](https://youtu.be/kNZuK4IAG5o) |
+| Identity | [Is your email in a data breach? Breach monitoring](https://youtu.be/o2WL_Wf3wc0) |
+| Trust | [Prove your machine is secure: Trust, policies and a signed posture report](https://youtu.be/TtUPFwgiGtQ) |
+
+All of them: the [EDAMAME Security playlist](https://www.youtube.com/playlist?list=PLacoWebxaum4). The videos use the app's demo mode, with simulated data. The Attack Simulator's replays are [below](#see-edamame-detect-the-attack-simulator).
 
 ## Download and Installation
 
@@ -376,8 +400,8 @@ For managed fleets, [auto_provisioning](https://github.com/edamametechnologies/a
 
 The **EDAMAME Attack Simulator** reproduces the host-visible behaviour of
 real attack techniques on your own machine, and shows EDAMAME catching each
-one. The techniques are those aimed at developer laptops, CI runners and AI
-coding agents. Each scenario names the real-world incident or technique it
+one. The techniques are those aimed at laptops, CI runners and AI
+agents. Each scenario names the real-world incident or technique it
 models, says what EDAMAME shows and how soon, and has a short talk track. A
 guided 10-minute demo walks through the highlights.
 
@@ -395,6 +419,8 @@ Every version is also attached to this repository's
 [releases](https://github.com/edamametechnologies/edamame_security/releases),
 with SHA-256 checksums. Details:
 [tools/attack_simulator](tools/attack_simulator/README.md).
+
+Watch: [Does your EDR see AI-agent attacks? 8 real attacks caught live](https://youtu.be/TGY_1rwXjDg), then one attack per video: [a trojanized npm package steals a token](https://youtu.be/vcPH1lD_ChY), [one SSH key over ordinary HTTPS](https://youtu.be/AErMfD3gNpE), [hidden instructions in a rules file](https://youtu.be/7RkmbTDA6d0), [a re-spelled denied command](https://youtu.be/oh9To4_PgF0), [a poisoned MCP tool](https://youtu.be/ZXJ_FQID_dk) ([Attack Simulator playlist](https://www.youtube.com/playlist?list=PLO8OBTXPWuyc)).
 
 ## Agent Plugins
 
@@ -545,7 +571,7 @@ agentic process: an intelligent automation feature that manages your security
 posture by automatically analyzing and resolving security issues, network
 alerts, and policy violations.
 
-Unlike the [Agent Visibility](#agent-visibility-agent-detection--response)
+Unlike the [Agent Visibility](#agent-visibility)
 capabilities above — which are deterministic and run without any model — the AI
 Assistant **requires a configured LLM provider** (Cloud LLM, Claude, OpenAI, or
 local Ollama). It is the one place where EDAMAME *uses* an LLM rather than
