@@ -69,3 +69,12 @@ jobs:
             # Exit with 0 to indicate success (no push needed/attempted)
             exit 0
           fi
+
+  notify:
+    name: Slack alert
+    needs: [build-wiki]
+    if: always() && github.event_name != 'pull_request'
+    uses: edamametechnologies/.github/.github/workflows/slack-notify.yml@main
+    with:
+      results: ${{ toJSON(needs) }}
+    secrets: inherit
